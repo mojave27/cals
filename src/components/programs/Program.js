@@ -1,12 +1,21 @@
 import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
+  card: {
+    boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+    transition: '0.3s',
+    // width: '40%',
+    "&:hover": {
+      backgroundColor: "lightgreen",
+      boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)'
+    },
   },
+  
+  container: {
+    padding: '2px 16px'
+  },
+
   paper: {
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -14,41 +23,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// export default function Program() {
   const Program = (props) => {
   const classes = useStyles();
 
-  function ProgramRow() {
-    return (
-      <React.Fragment>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>item</Paper>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-
   return (
-    <div className={classes.root}>
-      <Grid container spacing={1}>
-        <Grid container item xs={12} spacing={3}>
-          <ProgramRow />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <ProgramRow />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <ProgramRow />
-        </Grid>
-      </Grid>
+    <div className={classes.card}>{props.program.name}
     </div>
   );
 }
 
-export default withStyles(Program)
+export default Program
