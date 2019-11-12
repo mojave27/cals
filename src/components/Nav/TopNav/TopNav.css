@@ -1,8 +1,9 @@
 /* Navbar container */
 .navbar {
   overflow: hidden;
-  background-color: #292B37;
-  border-bottom:solid 1px #777;
+  /* background-color: #292B37; */
+  background-color: #1B2026;
+  border-bottom:solid 1px #80858C;
   font-family: Arial;
 }
 
@@ -10,7 +11,7 @@
 .navbar a {
   float: left;
   font-size: 14px;
-  color: white;
+  color:#80858C;
   text-align: center;
   text-decoration: none;
 }
@@ -36,6 +37,7 @@
 /* Add a red background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
   background-color: #444650;
+  /* background-color: #818B8C; */
 }
 
 /* Dropdown content (hidden by default) */

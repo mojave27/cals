@@ -1,42 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import retrieve from '../../api/retrievePrograms'
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import Program from './Program'
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core'
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'grid',
-    // gridTemplateColumns: 'repeat(12, 1fr)',
-    gridTemplateColumns: 'auto',
-    gridGap: '10px'
-  },
-  paper: {
-    margin: '5px',
-//     padding: theme.spacing(1),
-//     textAlign: 'center',
-//     color: theme.palette.text.secondary
-  }
-}))
+const container = css({
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  gridGap: '10px'
+})
+
+const paper = css({
+  margin: '5px'
+  //     padding: theme.spacing(1),
+  //     textAlign: 'center',
+  //     color: theme.palette.text.secondary
+})
 
 const Programs = props => {
   const [programs, setPrograms] = useState([])
-    const classes = useStyles()
 
   const ProgramRow = program => {
-    console.log(`in ProgramRow with ${program}`)
     let index = program.id
     return (
-    //   <React.Fragment key={index}>
-    //     <Grid container item xs={12}>
-    //       <Grid item xs={12}>
-    //         <Paper className={classes.paper}>{program.name}</Paper>
-    //       </Grid>
-    //     </Grid>
-    //   </React.Fragment>
-            // <div key={index} style={{ border: '1px solid lime ', textAlign: 'center' }} >
-            //   <div className={classes.paper}>{program.name}</div>
-            // </div>
-            <Program program={program} />
+      <Program key={index} program={program} />
     )
   }
 
@@ -48,7 +36,7 @@ const Programs = props => {
         return ProgramRow(program)
       })
     } else {
-      return <div>No Progams</div>
+      return <div></div>
     }
   }
 
@@ -71,11 +59,7 @@ const Programs = props => {
   }, [])
 
   //   return <React.Fragment>{renderPrograms(programs)}</React.Fragment>
-  return (
-    <div className={classes.container}>
-        {renderPrograms(programs)}
-    </div>
-  )
+  return <div css={container}>{renderPrograms(programs)}</div>
 }
 
 export default Programs
