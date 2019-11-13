@@ -26,16 +26,19 @@ export let darkTheme = {
 export let card = css({
   border: `1px solid ${darkTheme.color4}`,
   borderRadius: '2px',
-  backgroundColor: `${darkTheme.color2}`,
+//   backgroundColor: `${darkTheme.color2}`,
+//   backgroundColor: `#E4E4E6`,
+  backgroundColor: `#CACACD`,
   margin: '5px 10px',
   padding: '10px 5px',
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
   transition: '0.3s',
   textAlign: 'center',
-  color: `${darkTheme.color4}`,
+  color: `${darkTheme.color2}`,
   '&:hover': {
     boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
-    border: `1px solid ${darkTheme.color5}`
+    border: `1px solid ${darkTheme.color5}`,
+    backgroundColor: `#E4E4E6`
   }
 })
 
@@ -50,7 +53,7 @@ export let cardTitle = css({
     margin: '0 auto' /* This will center the border. */,
     width: '50%',
     paddingTop: '5px',
-    borderBottom: '1px solid rgb(3,166,150,0.25)'
+    borderBottom: '1px solid rgb(3,166,150,0.75)'
   }
 })
 

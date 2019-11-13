@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import retrieve from '../../api/retrievePrograms'
-// import { makeStyles } from '@material-ui/core/styles';
-import Program from './Program'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { useState, useEffect } from 'react'
+import retrieve from '../../api/retrievePrograms'
+import retrieveWorkouts from '../../api/retrieveWorkoutsByProgramId'
+import Program from './Program'
 
 const container = css({
   display: 'grid',
@@ -11,28 +11,37 @@ const container = css({
   gridGap: '10px'
 })
 
-const paper = css({
-  margin: '5px'
-  //     padding: theme.spacing(1),
-  //     textAlign: 'center',
-  //     color: theme.palette.text.secondary
-})
-
 const Programs = props => {
   const [programs, setPrograms] = useState([])
+  const [selectedProgram, setSelectedProgram] = useState([])
+
+  const handleProgramSelect = event => {
+    let id = event.currentTarget.id
+    // let program = programs.find( program => {
+    //   return program.id == id
+    // })
+    retrieveProgram(id)
+    // setSelectedProgram(program)
+  }
+
+  const retrieveProgram = (programId) => {
+    async function fetchWorkoutsForProgram(programId) {
+      const response = await retrieveWorkouts(programId)
+      console.log(response)
+    }
+    fetchWorkoutsForProgram(programId)
+  }
 
   const ProgramRow = program => {
     let index = program.id
     return (
-      <Program key={index} program={program} />
+      <Program key={index} program={program} onClick={handleProgramSelect}/>
     )
   }
 
   const renderPrograms = programs => {
     if (programs && programs.length > 0) {
-      console.log(`we have programs`)
       return programs.map(program => {
-        console.log(program)
         return ProgramRow(program)
       })
     } else {
