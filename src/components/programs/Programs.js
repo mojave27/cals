@@ -2,8 +2,9 @@
 import { jsx, css } from '@emotion/core'
 import { useState, useEffect } from 'react'
 import retrieve from '../../api/retrievePrograms'
-import retrieveWorkouts from '../../api/retrieveWorkoutsByProgramId'
-import Program from './Program'
+import retrieveProgram from '../../api/retrieveProgramById'
+import ProgramHighlightCard from './ProgramHighlightCard'
+import { isEmpty } from 'lodash'
 
 const container = css({
   display: 'grid',
@@ -13,29 +14,26 @@ const container = css({
 
 const Programs = props => {
   const [programs, setPrograms] = useState([])
-  const [selectedProgram, setSelectedProgram] = useState([])
+  const [selectedProgram, setSelectedProgram] = useState({})
 
   const handleProgramSelect = event => {
     let id = event.currentTarget.id
-    // let program = programs.find( program => {
-    //   return program.id == id
-    // })
-    retrieveProgram(id)
-    // setSelectedProgram(program)
+    retrieveFullProgram(id)
   }
 
-  const retrieveProgram = (programId) => {
-    async function fetchWorkoutsForProgram(programId) {
-      const response = await retrieveWorkouts(programId)
-      console.log(response)
+  const retrieveFullProgram = programId => {
+    async function fetchProgram(programId) {
+      const response = await retrieveProgram(programId)
+      console.log(response.fullProgram)
+      setSelectedProgram(response.fullProgram)
     }
-    fetchWorkoutsForProgram(programId)
+    fetchProgram(programId)
   }
 
   const ProgramRow = program => {
     let index = program.id
     return (
-      <Program key={index} program={program} onClick={handleProgramSelect}/>
+      <ProgramHighlightCard key={index} program={program} onClick={handleProgramSelect}/>
     )
   }
 
@@ -67,8 +65,12 @@ const Programs = props => {
     } // Remember if we start fetching something else
   }, [])
 
-  //   return <React.Fragment>{renderPrograms(programs)}</React.Fragment>
-  return <div css={container}>{renderPrograms(programs)}</div>
+  //   TODO: fix this conditional render.
+  return(
+    isEmpty(selectedProgram)
+      ? <div css={container}>{renderPrograms(programs)}</div>
+      : <div>{selectedProgram.name}</div>
+    )
 }
 
 export default Programs
