@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import retrieve from '../../api/retrievePrograms'
 import retrieveProgram from '../../api/retrieveProgramById'
 import ProgramHighlightCard from './ProgramHighlightCard'
+import ProgramCard from './ProgramCard'
 import { isEmpty } from 'lodash'
 
 const container = css({
@@ -12,13 +13,14 @@ const container = css({
   gridGap: '10px'
 })
 
-const Programs = props => {
+const Programs = () => {
   const [programs, setPrograms] = useState([])
   const [selectedProgram, setSelectedProgram] = useState({})
 
   const handleProgramSelect = event => {
     let id = event.currentTarget.id
-    retrieveFullProgram(id)
+    const program = retrieveFullProgram(id)
+    setSelectedProgram(program)
   }
 
   const retrieveFullProgram = programId => {
@@ -69,7 +71,8 @@ const Programs = props => {
   return(
     isEmpty(selectedProgram)
       ? <div css={container}>{renderPrograms(programs)}</div>
-      : <div>{selectedProgram.name}</div>
+      // : <div>{selectedProgram.name}</div>
+      : <ProgramCard program={selectedProgram} />
     )
 }
 

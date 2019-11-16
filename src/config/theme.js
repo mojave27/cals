@@ -60,3 +60,60 @@ export let cardTitle = css({
 export let cardInfo = css({
   marginBottom: '10px'
 })
+
+export let detailCard = css({
+  border: '5px dotted #bbb' /* Dotted border */,
+  width: '80%',
+  borderRadius: '15px' /* Rounded border */,
+  margin: '0 auto' /* Center the coupon */,
+  maxWidth: '600px'
+})
+
+export let container = css({
+  padding: '2px 16px',
+  backgroundColor: '#f1f1f1'
+})
+
+export let stripe = css({
+  backgroundColor: darkTheme.color2,
+  height: '10px'
+})
+
+export let promo = css({
+  background: '#ccc',
+  padding: '3px'
+})
+
+export let expire = css({
+  color: 'red'
+})
+
+export let collapsible = css({
+  backgroundColor: darkTheme.color3,
+  color: 'white',
+  cursor: 'pointer',
+  padding: '3px 8px',
+  width: '100%',
+  border: 'none',
+  textAlign: 'left',
+  outline: 'none',
+  fontSize: '.9em',
+  '&:hover': {
+    backgroundColor: darkTheme.color1
+  }
+})
+
+export let active =css({
+    display:'block'
+})
+
+export let inActive =css({
+    display:'none'
+})
+
+export let collapsibleContent = css({
+  padding: '0 10px',
+  // display: 'none',
+  overflow: 'hidden',
+  backgroundColor: '#f1f1f1'
+})
