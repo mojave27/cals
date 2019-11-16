@@ -62,9 +62,9 @@ export let cardInfo = css({
 })
 
 export let detailCard = css({
-  border: '5px dotted #bbb' /* Dotted border */,
+  border: `3px solid ${darkTheme.color4}` /* Dotted border */,
   width: '80%',
-  borderRadius: '15px' /* Rounded border */,
+  borderRadius: '5px' /* Rounded border */,
   margin: '0 auto' /* Center the coupon */,
   maxWidth: '600px'
 })
@@ -75,7 +75,7 @@ export let container = css({
 })
 
 export let stripe = css({
-  backgroundColor: darkTheme.color2,
+  backgroundColor: darkTheme.color4,
   height: '10px'
 })
 
@@ -113,7 +113,6 @@ export let inActive =css({
 
 export let collapsibleContent = css({
   padding: '0 10px',
-  // display: 'none',
   overflow: 'hidden',
   backgroundColor: '#f1f1f1'
 })

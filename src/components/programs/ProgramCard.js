@@ -14,14 +14,10 @@ import {
 } from '../../config/theme'
 
 class ProgramCard extends React.Component {
-  state = {isActive:false}
+  state = { sections: {} }
 
   render() {
-
-    let collapseClass = [collapsibleContent, inActive]
-    if (this.state.isActive) {
-      collapseClass = [collapsibleContent, active]
-    }
+    // console.log(`workouts: ${JSON.stringify(this.props.program.workouts)}`)
 
     return (
       <React.Fragment>
@@ -34,39 +30,58 @@ class ProgramCard extends React.Component {
             <h4>
               <b>{this.props.program.description}</b>
             </h4>
-            {/* <p>Lorem ipsum..</p> */}
           </div>
           <div css={container}>
-            <button id={'collapse1'} type='button' css={collapsible} onClick={this.handleCollapseExpand}>
-              Workout id or name here
-            </button>
-            <div css={collapseClass}>
-              {/* <p> */}
-                workout content here
-              {/* </p> */}
-            </div>
-
+            {this.renderWorkouts(this.props.program.workouts)}
             <p>
               Use Promo Code: <span css={promo}>BOH232</span>
             </p>
             <p css={expire}>Expires: Jan 03, 2021</p>
-          </div>{' '}
-          */}
+          </div>
         </div>
       </React.Fragment>
     )
   }
 
-  handleCollapseExpand = (event) => {
-    // console.log(event.target.id)
-    // let id = event.target.id
-    // let section = this.state.sections[id]
-    // this.setState()
-    this.setState(prevState => {
-      return { isActive: !prevState.isActive }
+  renderWorkouts = workouts => {
+    return workouts.map(workout => {
+      let id=`${workout.name}-${workout.id}`
+      return (
+        <React.Fragment key={id}>
+          <button
+            id={id}
+            type='button'
+            css={collapsible}
+            onClick={this.handleCollapseExpand}
+          >
+            Workout id or name here
+          </button>
+          <div css={this.getClassName(id)}>
+            workout component here
+          </div>
+        </React.Fragment>
+      )
     })
   }
 
+  getClassName = (id) => {
+    console.log(id)
+    let collapseClass = [collapsibleContent, inActive]
+    if(this.state.sections[id] && this.state.sections[id].active){
+      collapseClass = [collapsibleContent, active]
+    }
+    return collapseClass
+  }
+
+  handleCollapseExpand = event => {
+    let id = event.target.id
+    let isActive = this.state.sections[id] && this.state.sections[id].active ? false : true
+    this.setState(prevState => {
+      let sections = prevState.sections
+      sections[id] = { active: isActive}
+      return { sections }
+    })
+  }
 }
 
 export default ProgramCard
