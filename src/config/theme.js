@@ -109,7 +109,7 @@ export let active =css({
     display:'block'
 })
 
-export let inActive =css({
+export let inactive =css({
     display:'none'
 })
 
