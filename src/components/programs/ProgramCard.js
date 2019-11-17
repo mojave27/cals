@@ -6,7 +6,7 @@ import {
   container,
   stripe,
   promo,
-  expire,
+  warn,
   collapsible,
   collapsibleContent,
   active,
@@ -14,10 +14,9 @@ import {
 } from '../../config/theme'
 
 class ProgramCard extends React.Component {
-  state = { sections: {} }
+  state = { sections: {}, expandText:'Expand', expandAll: false }
 
   render() {
-    // console.log(`workouts: ${JSON.stringify(this.props.program.workouts)}`)
 
     return (
       <React.Fragment>
@@ -26,21 +25,33 @@ class ProgramCard extends React.Component {
             <h3>{this.props.program.name}</h3>
           </div>
           <div css={stripe} />
-          <div css={container} style={{ backgroundColor: 'white' }}>
-            <h4>
-              <b>{this.props.program.description}</b>
-            </h4>
+          <div css={container}>
+            <h4>{this.props.program.description}</h4>
           </div>
+          <div onClick={this.toggleAll} style={{color:'#fff'}}> {this.state.expandText} All</div>
           <div css={container}>
             {this.renderWorkouts(this.props.program.workouts)}
             <p>
               Use Promo Code: <span css={promo}>BOH232</span>
             </p>
-            <p css={expire}>Expires: Jan 03, 2021</p>
+            <p css={warn}>last updated: Jan 03, 2021</p>
           </div>
         </div>
       </React.Fragment>
     )
+  }
+
+  toggleAll = () => {
+    let expandText = 'Expand'
+    if(this.state.expandText === 'Expand'){
+      expandText = 'Collapse'
+    }
+    this.setState(prevState => {
+      return {
+        expandText: expandText,
+        expandAll: !prevState.expandAll
+      }
+    })
   }
 
   renderWorkouts = workouts => {
@@ -54,10 +65,10 @@ class ProgramCard extends React.Component {
             css={collapsible}
             onClick={this.handleCollapseExpand}
           >
-            Workout id or name here
+            {workout.name}
           </button>
           <div css={this.getClassName(id)}>
-            workout component here
+            sets w/ exercises here
           </div>
         </React.Fragment>
       )
@@ -67,10 +78,17 @@ class ProgramCard extends React.Component {
   getClassName = (id) => {
     console.log(id)
     let collapseClass = [collapsibleContent, inActive]
-    if(this.state.sections[id] && this.state.sections[id].active){
+    if(this.isSectionActive(id)){
       collapseClass = [collapsibleContent, active]
     }
     return collapseClass
+  }
+
+  isSectionActive = (id) => {
+    if(this.state.expandAll){
+      return true
+    }
+    return (this.state.sections[id] && this.state.sections[id].active)
   }
 
   handleCollapseExpand = event => {

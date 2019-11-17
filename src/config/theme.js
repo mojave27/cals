@@ -84,7 +84,7 @@ export let promo = css({
   padding: '3px'
 })
 
-export let expire = css({
+export let warn = css({
   color: 'red'
 })
 
@@ -94,7 +94,9 @@ export let collapsible = css({
   cursor: 'pointer',
   padding: '3px 8px',
   width: '100%',
-  border: 'none',
+  // border: 'none',
+  borderTop: 'none',
+  borderBottom:`1px solid ${darkTheme.color1}`,
   textAlign: 'left',
   outline: 'none',
   fontSize: '.9em',
@@ -114,5 +116,6 @@ export let inActive =css({
 export let collapsibleContent = css({
   padding: '0 10px',
   overflow: 'hidden',
-  backgroundColor: '#f1f1f1'
+  backgroundColor: '#f1f1f1',
+  border:`1px solid ${darkTheme.color4}`
 })
