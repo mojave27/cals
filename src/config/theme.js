@@ -94,7 +94,6 @@ export let collapsible = css({
   cursor: 'pointer',
   padding: '3px 8px',
   width: '100%',
-  // border: 'none',
   borderTop: 'none',
   borderBottom:`1px solid ${darkTheme.color1}`,
   textAlign: 'left',

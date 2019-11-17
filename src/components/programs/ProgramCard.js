@@ -27,10 +27,10 @@ class ProgramCard extends React.Component {
           <div css={container}>
             <h4>{this.props.program.description}</h4>
           </div>
-          <div onClick={this.toggleAll} style={{ color: '#fff' }}>
+          {/* <div onClick={this.toggleAll} style={{ color: '#fff' }}>
             {' '}
             {this.state.expandText} All
-          </div>
+          </div> */}
           <div css={container}>
             {this.renderWorkouts(this.props.program.workouts)}
             <p>
@@ -71,9 +71,9 @@ class ProgramCard extends React.Component {
   }
 
   isSectionActive = id => {
-    if (this.state.expandAll) {
-      return true
-    }
+    // if (this.state.expandAll) {
+    //   return true
+    // }
     return this.state.sections[id] && this.state.sections[id].active
   }
 
