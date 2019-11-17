@@ -1,3 +1,4 @@
+import React from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { useState, useEffect } from 'react'
@@ -35,7 +36,11 @@ const Programs = () => {
   const ProgramRow = program => {
     let index = program.id
     return (
-      <ProgramHighlightCard key={index} program={program} onClick={handleProgramSelect}/>
+      <ProgramHighlightCard
+        key={index}
+        program={program}
+        onClick={handleProgramSelect}
+      />
     )
   }
 
@@ -68,12 +73,14 @@ const Programs = () => {
   }, [])
 
   //   TODO: fix this conditional render.
-  return(
-    isEmpty(selectedProgram)
-      ? <div css={container}>{renderPrograms(programs)}</div>
-      // : <div>{selectedProgram.name}</div>
-      : <ProgramCard program={selectedProgram} />
-    )
+  return isEmpty(selectedProgram) ? (
+    <React.Fragment>
+      <button>Add Program</button>
+      <div css={container}>{renderPrograms(programs)}</div>
+    </React.Fragment>
+  ) : (
+    <ProgramCard program={selectedProgram} />
+  )
 }
 
 export default Programs

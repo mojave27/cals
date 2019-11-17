@@ -25,6 +25,7 @@ class App extends Component {
           <Router>
             <Home path='/' />
             <Programs path='/programs' />
+            <ProgramForm path='/program-form' />
             <Exercises path='/exercises' />
             <Workouts path='/workouts' />
           </Router>
