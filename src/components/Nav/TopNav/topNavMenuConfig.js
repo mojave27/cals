@@ -6,8 +6,11 @@ export const menuConfig = [
   },
   {
     name: 'programs',
-    type: 'button',
-    link: { to: '/programs', text: 'programs' }
+    type: 'dropdown',
+    items: [
+      { to: '/programs', text: 'programs' },
+      { to: '/program-form', text: 'add program' }
+    ]
   },
   {
     name: 'workouts',

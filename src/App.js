@@ -5,6 +5,7 @@ import TopNav from './components/Nav/TopNav/TopNav'
 import Home from './components/Home/Home'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Programs from './components/programs/Programs'
+import ProgramForm from './components/programs/ProgramForm'
 import Exercises from './components/exercises/Exercises'
 import Workouts from './components/workouts/Workouts'
 

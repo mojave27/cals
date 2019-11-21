@@ -1,12 +1,14 @@
 import React from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { navigate } from '@reach/router'
 import { useState, useEffect } from 'react'
 import retrieve from '../../api/retrievePrograms'
 import retrieveProgram from '../../api/retrieveProgramById'
 import ProgramHighlightCard from './ProgramHighlightCard'
 import ProgramCard from './ProgramCard'
 import { isEmpty } from 'lodash'
+import { formButton } from '../../styles/theme'
 
 const container = css({
   display: 'grid',
@@ -72,10 +74,16 @@ const Programs = () => {
     } // Remember if we start fetching something else
   }, [])
 
+  const handleAddProgramClick = async () => {
+    await navigate(
+      `/program-form`
+    )
+  }
+
   //   TODO: fix this conditional render.
   return isEmpty(selectedProgram) ? (
     <React.Fragment>
-      <button>Add Program</button>
+      <button css={formButton} style={{float:'none',marginBottom: '10px'}} onClick={handleAddProgramClick}>Add Program</button>
       <div css={container}>{renderPrograms(programs)}</div>
     </React.Fragment>
   ) : (

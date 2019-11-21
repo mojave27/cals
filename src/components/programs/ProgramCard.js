@@ -11,7 +11,7 @@ import {
   collapsibleContent,
   active,
   inactive
-} from '../../config/theme'
+} from '../../styles/theme'
 
 class ProgramCard extends React.Component {
   state = { sections: {}, expandText: 'Expand', expandAll: false }

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React from 'react'
-import { detailCard, container, stripe, promo, expire } from '../../config/theme'
+import { detailCard, container, stripe, promo, expire } from '../../styles/theme'
 
 const Set = props => {
   return (
