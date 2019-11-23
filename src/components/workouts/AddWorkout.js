@@ -7,7 +7,7 @@ import {
   container,
   formButton,
   stripe
-} from '../../styles/theme'
+} from '../../styles/main-styles'
 
 const Workout = props => {
   const [workout, setWorkout] = useState({})

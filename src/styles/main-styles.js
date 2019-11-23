@@ -28,28 +28,45 @@ const buildRgba = (red, green, blue, alpha) => {
 }
 
 export let darkTheme = {
-  color1: { 
-    hex: '#2D3540', 
-    rgba: (alpha) => buildRgba(45, 53, 64, alpha)
+  color1: {
+    hex: '#2D3540',
+    rgba: alpha => buildRgba(45, 53, 64, alpha)
   },
-  color2: { 
-    hex: '#1B2026', 
-    rgba: (alpha) => buildRgba(27, 32, 38, alpha)
+  color2: {
+    hex: '#1B2026',
+    rgba: alpha => buildRgba(27, 32, 38, alpha)
   },
-  color3: { 
-    hex: '#80858C', 
-    rgba: (alpha) => buildRgba(128, 133, 140, alpha)
+  color3: {
+    hex: '#80858C',
+    rgba: alpha => buildRgba(128, 133, 140, alpha)
   },
-  color4: { 
-    hex: '#B0B7BF', 
-    rgba: (alpha) => buildRgba(176, 183, 191, alpha)
+  color4: {
+    hex: '#B0B7BF',
+    rgba: alpha => buildRgba(176, 183, 191, alpha)
   },
-  color5: { 
-    hex: '#03A696', 
-    rgba: (alpha) => buildRgba(3, 166, 150, alpha)
+  color5: {
+    hex: '#03A696',
+    rgba: alpha => buildRgba(3, 166, 150, alpha)
   }
 }
 
+export let miniCard = css({
+  width: '50%',
+  border: `1px solid ${darkTheme.color4.hex}`,
+  borderRadius: '2px',
+  backgroundColor: `#CACACD`,
+  margin: '2px 10px',
+  padding: '3px 5px',
+  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+  transition: '0.3s',
+  textAlign: 'center',
+  color: `${darkTheme.color2.hex}`,
+  '&:hover': {
+    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+    border: `1px solid ${darkTheme.color5.hex}`,
+    backgroundColor: `#E4E4E6`
+  }
+})
 
 export let card = css({
   border: `1px solid ${darkTheme.color4.hex}`,
@@ -99,7 +116,7 @@ export let container = css({
   padding: '2px 16px',
   backgroundColor: '#f1f1f1',
   // border: '1px solid ' + darkTheme.color2.hex,
-  borderRadius: '2px' /* Rounded border */,
+  borderRadius: '2px' /* Rounded border */
   // backgroundColor: darkTheme.color4.hex
 })
 
@@ -128,7 +145,7 @@ export let collapsible = css({
   padding: '3px 8px',
   width: '100%',
   borderTop: 'none',
-  borderBottom:`1px solid ${darkTheme.color1.hex}`,
+  borderBottom: `1px solid ${darkTheme.color1.hex}`,
   textAlign: 'left',
   outline: 'none',
   fontSize: '.9em',
@@ -138,19 +155,19 @@ export let collapsible = css({
   }
 })
 
-export let active =css({
-    display:'block'
+export let active = css({
+  display: 'block'
 })
 
-export let inactive =css({
-    display:'none'
+export let inactive = css({
+  display: 'none'
 })
 
 export let collapsibleContent = css({
   padding: '0 10px',
   overflow: 'hidden',
   backgroundColor: '#f1f1f1',
-  border:`1px solid ${darkTheme.color4.hex}`
+  border: `1px solid ${darkTheme.color4.hex}`
 })
 
 // Program Form ****************************************************** /
@@ -160,7 +177,7 @@ export let programForm = css({
 
 // export let input[type=text], select, textarea = css({
 export let formInput = css({
-  fontSize:'1.0em',
+  fontSize: '1.0em',
   width: '100%',
   padding: '12px',
   border: `1px solid #ccc`,
@@ -169,7 +186,11 @@ export let formInput = css({
 })
 
 export let selectInput = css({
-  padding:'12px'
+  fontSize: '1.0em',
+  padding: '12px',
+  width: '100%',
+  border: `1px solid #ccc`,
+  borderRadius: '2px'
 })
 
 export let label = css({
@@ -186,9 +207,9 @@ export let inputSubmit = css({
   borderRadius: '4px',
   cursor: 'pointer',
   float: 'right',
-    '&:hover': {
-      backgroundColor: '#00b5a3'
-    }
+  '&:hover': {
+    backgroundColor: '#00b5a3'
+  }
 })
 
 export let formButton = css({
@@ -200,12 +221,12 @@ export let formButton = css({
   borderRadius: '4px',
   cursor: 'pointer',
   // float: 'left',
-    '&:hover': {
-      backgroundColor: '#00b5a3'
-    }
+  '&:hover': {
+    backgroundColor: '#00b5a3'
+  }
 })
 
-export let programFormContainer = css({
+export let formContainer = css({
   borderRadius: '5px',
   backgroundColor: '#f2f2f2',
   padding: '20px'
@@ -227,8 +248,9 @@ export let col75 = css({
 export let row = css({
   '&:after': {
     content: '""',
-  display: 'table',
-  clear: 'both'}
+    display: 'table',
+    clear: 'both'
+  }
 })
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
@@ -238,3 +260,70 @@ export let row = css({
 //     marginTop: 0;
 //   }
 // })
+
+/*the container must be positioned relative:*/
+export let customSelect = {
+  position: 'relative',
+  fontFamily: 'Arial',
+  '& select': {
+    display: 'none' /*hide original SELECT element:*/
+  }
+}
+
+export let selectSelected = {
+  // backgroundColor: 'DodgerBlue',
+  backgroundColor: darkTheme.color5.hex,
+  color: '#ffffff',
+  padding: '8px 16px',
+  /*style the arrow inside the select element:*/
+  '& after': {
+    position: 'absolute',
+    content: '""',
+    top: '14px',
+    right: '10px',
+    width: '0',
+    height: '0',
+    border: '6px solid transparent',
+    borderColor: '#fff transparent transparent transparent'
+  },
+  /*point the arrow upwards when the select box is open (active):*/
+  // '& .select-arrow-active:after': {
+  '&:after': {
+    borderColor: 'transparent transparent #fff transparent',
+    top: '7px'
+  }
+}
+
+export let selectArrowActive = {}
+
+/*style items (options):*/
+export let selectItems = {
+  position: 'absolute',
+  // backgroundColor: 'DodgerBlue',
+  backgroundColor: darkTheme.color5.hex,
+  top: '100%',
+  left: '0',
+  right: '0',
+  zIndex: '99',
+  /*style the items (options), including the selected item:*/
+  '& div,.selectSelected': {
+    color: '#ffffff',
+    padding: '8px 16px',
+    border: '1px solid transparent',
+    borderColor: 'transparent transparent rgba(0, 0, 0, 0.1) transparent',
+    cursor: 'pointer',
+    userSelect: 'none'
+  },
+  '& div:hover': {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)'
+  }
+}
+
+export let sameAsSelected = {
+  backgroundColor: 'rgba(0, 0, 0, 0.1)'
+}
+
+/*hide the items when the select box is closed:*/
+export let selectHide = {
+  display: 'none'
+}

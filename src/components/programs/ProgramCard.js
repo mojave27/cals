@@ -7,11 +7,11 @@ import {
   collapsible,
   collapsibleContent,
   container,
-  programDetailCard,
+  // programDetailCard,
   inactive,
   stripe,
   viewContainer
-} from '../../styles/program'
+} from '../../styles/main-styles'
 
 class ProgramCard extends React.Component {
   state = { sections: {}, expandText: 'Expand', expandAll: false }
@@ -19,7 +19,8 @@ class ProgramCard extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div css={programDetailCard}>
+        {/* <div css={programDetailCard}> */}
+        <div >
           <div css={container}>
             <h3>{this.props.program.name}</h3>
           </div>

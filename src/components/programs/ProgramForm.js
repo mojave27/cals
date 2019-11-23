@@ -4,14 +4,14 @@ import React from 'react'
 import Modal from '../Modal'
 import Workout from '../workouts/Workout'
 import {
-  programFormContainer,
+  formContainer,
   row,
   col25,
   col75,
   inputSubmit,
   formInput,
   formButton
-} from '../../styles/theme'
+} from '../../styles/main-styles'
 
 class ProgramForm extends React.Component {
   state = {
@@ -26,7 +26,7 @@ class ProgramForm extends React.Component {
       ? <Modal handleClose={this.toggleWorkoutModal}>
           <Workout />
         </Modal>
-      : <div css={programFormContainer}>
+      : <div css={formContainer}>
         <form>
           <div css={row}>
             <div css={col25}>

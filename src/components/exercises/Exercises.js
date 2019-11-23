@@ -1,34 +1,48 @@
 import React from 'react'
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core'
 import retrieve from '../../api/retrieveExercises'
+import { miniCard, formButton } from '../../styles/main-styles'
+import Modal from '../Modal'
+import Exercise from '../exercises/Exercise'
 
 class Exercises extends React.Component {
-  state = {}
+  state = { exercises: [], showModal: false }
 
   render() {
     return (
-      <React.Fragment>
+      this.state.showModal
+      ? <Modal handleClose={this.toggleWorkoutModal}>
+          <Exercise />
+        </Modal>
+      : <React.Fragment>
         {this.renderExercises(this.state.exercises)}
+      <button css={formButton} style={{float:'none', margin: '10px 10px'}} onClick={this.toggleModal}>Add Exercise</button>
       </React.Fragment>
     )
   }
 
   componentDidMount = () => {
-      retrieve()
-      .then(exercises => {
-          this.setState({exercises})
-      })
+    retrieve().then(exercises => {
+      this.setState({ exercises })
+    })
+  }
+
+  toggleModal = () => {
+    this.setState( prevState => {
+      return {showModal: !prevState.showModal}
+    })
   }
 
   renderExercises = exercises => {
-    if(exercises && exercises.length > 0){
-      return exercises.map( exercise => {
-        console.log(exercise)
-        let index = exercise.id
-        return (<div key={index}>{exercise.name} has id of {exercise.id}</div>)
-      })
-    }else{
-      return (<div>No Exercises</div>)
-    }
+    return exercises.map(exercise => {
+      let index = exercise.id
+      return (
+        <div css={miniCard} key={index}>
+          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
+        </div>
+      )
+    })
   }
 }
 

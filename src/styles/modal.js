@@ -1,5 +1,5 @@
 import { css } from '@emotion/core'
-import { darkTheme } from './theme'
+import { darkTheme } from './main-styles'
 
 export let modal = {
   // display: 'none' /* Hidden by default */,

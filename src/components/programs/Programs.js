@@ -6,10 +6,9 @@ import { useState, useEffect } from 'react'
 import retrieve from '../../api/retrievePrograms'
 import retrieveProgram from '../../api/retrieveProgramById'
 import ProgramHighlightCard from './ProgramHighlightCard'
-import ProgramCard from './ProgramCard'
 import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
-import { formButton } from '../../styles/theme'
+import { formButton } from '../../styles/main-styles'
 
 const container = css({
   display: 'grid',

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React from 'react'
-import { detailCard, container, stripe, promo, warn } from '../../styles/theme'
+import { detailCard, container, stripe, promo, warn } from '../../styles/main-styles'
 
 const ExercistList = props => {
 

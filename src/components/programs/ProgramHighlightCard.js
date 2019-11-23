@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import { card, cardTitle, cardInfo } from '../../styles/theme'
+import { card, cardTitle, cardInfo } from '../../styles/main-styles'
 
 const ProgramHighlightCard = props => {
   return (

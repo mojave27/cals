@@ -1,11 +1,11 @@
 import { css } from '@emotion/core'
-import { darkTheme } from './theme'
+import { darkTheme } from './main-styles'
 
 export let table = {
   borderCollapse: 'collapse',
   borderSpacing: '0',
   width: '100%',
-  border: '1px solid #ddd',
+  border: `1px solid ${darkTheme.color5.hex}`,
   '& th': {
     backgroundColor: darkTheme.color5.hex
   },
