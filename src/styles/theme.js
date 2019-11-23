@@ -97,8 +97,14 @@ export let detailCard = css({
 
 export let container = css({
   padding: '2px 16px',
-  backgroundColor: '#f1f1f1'
+  backgroundColor: '#f1f1f1',
+  // border: '1px solid ' + darkTheme.color2.hex,
+  borderRadius: '2px' /* Rounded border */,
   // backgroundColor: darkTheme.color4.hex
+})
+
+export let viewContainer = css({
+  padding: '20px 0px'
 })
 
 export let stripe = css({
@@ -126,6 +132,7 @@ export let collapsible = css({
   textAlign: 'left',
   outline: 'none',
   fontSize: '.9em',
+  borderRadius: '3px',
   '&:hover': {
     backgroundColor: darkTheme.color1.hex
   }
@@ -192,7 +199,7 @@ export let formButton = css({
   border: 'none',
   borderRadius: '4px',
   cursor: 'pointer',
-  float: 'left',
+  // float: 'left',
     '&:hover': {
       backgroundColor: '#00b5a3'
     }

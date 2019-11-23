@@ -8,7 +8,7 @@ const Modal = props => {
     <React.Fragment>
       <div id='myModal' css={modal}>
         <div css={modalContent}>
-          <span css={close}>&times;</span>
+          <span css={close} onClick={props.handleClose}>&times;</span>
           {props.children}
         </div>
       </div>

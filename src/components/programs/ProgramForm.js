@@ -23,7 +23,9 @@ class ProgramForm extends React.Component {
   render() {
     return (
       this.state.showWorkoutModal
-      ? <Modal><Workout /></Modal>
+      ? <Modal handleClose={this.toggleWorkoutModal}>
+          <Workout />
+        </Modal>
       : <div css={programFormContainer}>
         <form>
           <div css={row}>

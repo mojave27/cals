@@ -1,16 +1,16 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React from 'react'
+import Workout from '../workouts/Workout'
 import {
-  detailCard,
-  container,
-  stripe,
-  promo,
-  warn,
+  active,
   collapsible,
   collapsibleContent,
-  active,
-  inactive
+  container,
+  detailCard,
+  inactive,
+  stripe,
+  viewContainer
 } from '../../styles/theme'
 
 class ProgramCard extends React.Component {
@@ -27,16 +27,15 @@ class ProgramCard extends React.Component {
           <div css={container}>
             <h4>{this.props.program.description}</h4>
           </div>
+          <div css={stripe} />
           {/* <div onClick={this.toggleAll} style={{ color: '#fff' }}>
             {' '}
             {this.state.expandText} All
           </div> */}
           <div css={container}>
-            {this.renderWorkouts(this.props.program.workouts)}
-            <p>
-              Use Promo Code: <span css={promo}>BOH232</span>
-            </p>
-            <p css={warn}>last updated: Jan 03, 2021</p>
+            <div css={viewContainer}>
+              {this.renderWorkouts(this.props.program.workouts)}
+            </div>
           </div>
         </div>
       </React.Fragment>
@@ -46,6 +45,7 @@ class ProgramCard extends React.Component {
   renderWorkouts = workouts => {
     return workouts.map(workout => {
       let id = `${workout.name}-${workout.id}`
+      // let className = this.getClassName(id)
       return (
         <React.Fragment key={id}>
           <button
@@ -56,7 +56,10 @@ class ProgramCard extends React.Component {
           >
             {workout.name}
           </button>
-          <div css={this.getClassName(id)}>sets w/ exercises here</div>
+          <div css={this.getClassName(id)}><Workout workout={workout} /></div>
+          {/* <div css={[{viewContainer},{className}]} style={{padding:'10px 0px'}}>
+            <Workout workout={workout} />
+          </div> */}
         </React.Fragment>
       )
     })

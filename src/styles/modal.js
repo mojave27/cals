@@ -23,7 +23,9 @@ export let modalContent = {
   backgroundColor: darkTheme.color2.hex,
   margin: 'auto',
   padding: '20px',
-  border: '1px solid #888',
+  // border: '1px solid #888',
+  border: `1px solid ${darkTheme.color4.hex}`,
+  borderRadius: '5px',
   width: '80%'
 }
 
