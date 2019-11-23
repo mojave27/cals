@@ -7,6 +7,7 @@ import retrieve from '../../api/retrievePrograms'
 import retrieveProgram from '../../api/retrieveProgramById'
 import ProgramHighlightCard from './ProgramHighlightCard'
 import ProgramCard from './ProgramCard'
+import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
 import { formButton } from '../../styles/theme'
 
@@ -87,7 +88,8 @@ const Programs = () => {
       <div css={container}>{renderPrograms(programs)}</div>
     </React.Fragment>
   ) : (
-    <ProgramCard program={selectedProgram} />
+    // <ProgramCard program={selectedProgram} />
+    <ProgramOverview program={selectedProgram} />
   )
 }
 

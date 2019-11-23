@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import React from 'react'
-import Workout from '../workouts/Workout'
+// import Workout from '../workouts/Workout'
+import Table from '../tables/Table'
+
 import {
   active,
   collapsible,
@@ -13,57 +15,39 @@ import {
   viewContainer
 } from '../../styles/program'
 
-class ProgramCard extends React.Component {
+class ProgramOverview extends React.Component {
   state = { sections: {}, expandText: 'Expand', expandAll: false }
 
   render() {
     return (
       <React.Fragment>
-        <div css={programDetailCard}>
-          <div css={container}>
-            <h3>{this.props.program.name}</h3>
-          </div>
-          <div css={stripe} />
-          <div css={container}>
-            <h4>{this.props.program.description}</h4>
-          </div>
-          <div css={stripe} />
-          {/* <div onClick={this.toggleAll} style={{ color: '#fff' }}>
-            {' '}
-            {this.state.expandText} All
-          </div> */}
-          <div css={container}>
-            <div css={viewContainer}>
-              {this.renderWorkouts(this.props.program.workouts)}
-            </div>
-          </div>
-        </div>
+        <Table data={'data'} />
       </React.Fragment>
     )
   }
 
-  renderWorkouts = workouts => {
-    return workouts.map(workout => {
-      let id = `${workout.name}-${workout.id}`
-      // let className = this.getClassName(id)
-      return (
-        <React.Fragment key={id}>
-          <button
-            id={id}
-            type='button'
-            css={collapsible}
-            onClick={this.handleCollapseExpand}
-          >
-            {workout.name}
-          </button>
-          <div css={this.getClassName(id)}><Workout workout={workout} /></div>
-          {/* <div css={[{viewContainer},{className}]} style={{padding:'10px 0px'}}>
-            <Workout workout={workout} />
-          </div> */}
-        </React.Fragment>
-      )
-    })
-  }
+  // renderWorkouts = workouts => {
+  //   return workouts.map(workout => {
+  //     let id = `${workout.name}-${workout.id}`
+  //     // let className = this.getClassName(id)
+  //     return (
+  //       <React.Fragment key={id}>
+  //         <button
+  //           id={id}
+  //           type='button'
+  //           css={collapsible}
+  //           onClick={this.handleCollapseExpand}
+  //         >
+  //           {workout.name}
+  //         </button>
+  //         <div css={this.getClassName(id)}><Workout workout={workout} /></div>
+  //         {/* <div css={[{viewContainer},{className}]} style={{padding:'10px 0px'}}>
+  //           <Workout workout={workout} />
+  //         </div> */}
+  //       </React.Fragment>
+  //     )
+  //   })
+  // }
 
   getClassName = id => {
     let collapseClass = [collapsibleContent, inactive]
@@ -119,4 +103,4 @@ class ProgramCard extends React.Component {
   }
 }
 
-export default ProgramCard
+export default ProgramOverview
