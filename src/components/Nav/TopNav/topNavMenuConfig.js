@@ -28,7 +28,8 @@ export const menuConfig = [
     items: [
       { to: '/programs', text: 'programs' },
       { to: '/workouts', text: 'workouts' },
-      { to: '/exercises', text: 'exercises' }
+      { to: '/exercises', text: 'exercises' },
+      { to: '/sets', text: 'sets' }
     ]
   },
   {

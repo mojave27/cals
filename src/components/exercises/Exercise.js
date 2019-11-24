@@ -2,6 +2,8 @@
 import { jsx, css } from '@emotion/core'
 import React from 'react'
 import Select from '../inputs/Select'
+import { EXERCISE_TYPES } from '../../constants'
+import addExercise from '../../api/addExercise'
 
 import {
   formContainer,
@@ -12,70 +14,91 @@ import {
   formInput
 } from '../../styles/main-styles'
 
+const options = [
+  'Select type:',
+  EXERCISE_TYPES.COMPOUND,
+  EXERCISE_TYPES.ISOLATION
+]
+
 class Exercise extends React.Component {
   state = {
     exerciseName: '',
-    exerciseDescription: '',
+    // exerciseReps: '',
+    exerciseType: '',
     showWorkoutModal: false
   }
 
   render() {
     return (
       <div css={formContainer}>
-        <form>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='exerciseName'>Exercise Name</label>
-            </div>
-            <div css={col75}>
-              <input
-                css={formInput}
-                type='text'
-                id='exerciseName'
-                name='exerciseName'
-                value={this.state.exerciseName}
-                placeholder='exercise name..'
-                onChange={this.handleTextChange}
-              />
-            </div>
+        <div css={row}>
+          <div css={col25}>
+            <label htmlFor='exerciseName'>Exercise Name</label>
           </div>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='exerciseDescription'>Description</label>
-            </div>
-            <div css={col75}>
-              <textarea
-                css={formInput}
-                id='exerciseDescription'
-                name='exerciseDescription'
-                placeholder='exercise description..'
-                onChange={this.handleTextChange}
-                style={{ height: '42px' }}
-              ></textarea>
-            </div>
+          <div css={col75}>
+            <input
+              css={formInput}
+              type='text'
+              id='exerciseName'
+              name='exerciseName'
+              value={this.state.exerciseName}
+              placeholder='exercise name..'
+              onChange={this.handleTextChange}
+            />
           </div>
+        </div>
+        {/* <div css={row}>
+          <div css={col25}>
+            <label htmlFor='exerciseReps'>Reps</label>
+          </div>
+          <div css={col75}>
+            <textarea
+              css={formInput}
+              id='exerciseReps'
+              name='exerciseReps'
+              placeholder='exercise reps..'
+              onChange={this.handleTextChange}
+              style={{ height: '42px' }}
+            ></textarea>
+          </div>
+        </div> */}
 
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='country'>Type</label>
-            </div>
-            <div css={col75}>
-                <Select />
-              {/* <div css={customSelect}>
-              <select id='exerciseType' name='exerciseType'>
-                <option value='compound'>compound</option>
-                <option value='isolation'>isolation</option>
-              </select>
-              </div> */}
-            </div>
+        <div css={row}>
+          <div css={col25}>
+            <label htmlFor='country'>Type</label>
           </div>
+          <div css={col75}>
+            <Select options={options} onSelect={this.handleSelectType} />
+          </div>
+        </div>
 
-          <div css={row}>
-            <input type='submit' value='Submit' css={inputSubmit} />
-          </div>
-        </form>
+        <div css={row}>
+          <input
+            type='submit'
+            value='Submit'
+            css={inputSubmit}
+            onClick={this.addExerciseToDb}
+          />
+        </div>
       </div>
     )
+  }
+
+  addExerciseToDb = () => {
+    const exercise = {
+      name: this.state.exerciseName,
+      reps: this.state.exerciseReps,
+      type: this.state.exerciseType
+    }
+    addExercise(exercise).then(response => {
+    //   console.log(`response: ${JSON.stringify(response)}`)
+      this.props.done()
+    })
+  }
+
+  handleSelectType = e => {
+    let text = e.target.textContent
+    this.setState({ exerciseType: text })
   }
 
   handleTextChange = e => {

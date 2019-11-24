@@ -55,7 +55,7 @@ export let miniCard = css({
   border: `1px solid ${darkTheme.color4.hex}`,
   borderRadius: '2px',
   backgroundColor: `#CACACD`,
-  margin: '2px 10px',
+  margin: '2px auto',
   padding: '3px 5px',
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
   transition: '0.3s',
@@ -66,6 +66,10 @@ export let miniCard = css({
     border: `1px solid ${darkTheme.color5.hex}`,
     backgroundColor: `#E4E4E6`
   }
+})
+
+export let selectedMiniCard = css({
+  backgroundColor: darkTheme.color5.hex
 })
 
 export let card = css({
@@ -200,6 +204,7 @@ export let label = css({
 
 // export let input[type=submit] = css({
 export let inputSubmit = css({
+  fontSize: 'inherit',
   backgroundColor: darkTheme.color5.hex,
   color: 'white',
   padding: '8px 20px',
@@ -213,6 +218,7 @@ export let inputSubmit = css({
 })
 
 export let formButton = css({
+  fontSize: 'inherit',
   backgroundColor: darkTheme.color5.hex,
   color: 'white',
   padding: '8px 20px',

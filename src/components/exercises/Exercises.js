@@ -10,27 +10,46 @@ class Exercises extends React.Component {
   state = { exercises: [], showModal: false }
 
   render() {
-    return (
-      this.state.showModal
-      ? <Modal handleClose={this.toggleWorkoutModal}>
-          <Exercise />
-        </Modal>
-      : <React.Fragment>
+    return this.state.showModal ? (
+      <Modal handleClose={this.toggleModal}>
+        <Exercise done={this.done} />
+      </Modal>
+    ) : (
+      <React.Fragment>
+        <button
+          css={formButton}
+          style={{ float: 'none', margin: '10px 10px' }}
+          onClick={this.toggleModal}
+        >
+          Add Exercise
+        </button>
         {this.renderExercises(this.state.exercises)}
-      <button css={formButton} style={{float:'none', margin: '10px 10px'}} onClick={this.toggleModal}>Add Exercise</button>
       </React.Fragment>
     )
   }
 
   componentDidMount = () => {
+    this.retrieveExercises()
+  }
+
+  retrieveExercises = () => {
     retrieve().then(exercises => {
       this.setState({ exercises })
     })
   }
 
+  done = () => {
+    retrieve().then(exercises => {
+      this.setState({
+        exercises: exercises,
+        showModal: false
+      })
+    })
+  }
+
   toggleModal = () => {
-    this.setState( prevState => {
-      return {showModal: !prevState.showModal}
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal }
     })
   }
 
