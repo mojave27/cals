@@ -1,12 +1,14 @@
 import React from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
+import { navigate } from '@reach/router'
 import { useState, useEffect } from 'react'
 import retrieve from '../../api/retrievePrograms'
 import retrieveProgram from '../../api/retrieveProgramById'
 import ProgramHighlightCard from './ProgramHighlightCard'
-import ProgramCard from './ProgramCard'
+import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
+import { formButton } from '../../styles/main-styles'
 
 const container = css({
   display: 'grid',
@@ -14,9 +16,16 @@ const container = css({
   gridGap: '10px'
 })
 
-const Programs = () => {
+
+const Programs = props => {
+  const [routeKey, setRouteKey] = useState(0)
   const [programs, setPrograms] = useState([])
   const [selectedProgram, setSelectedProgram] = useState({})
+
+  const forceUpdate = routeKey => {
+    setSelectedProgram({})
+    setRouteKey(routeKey)
+  }
 
   const handleProgramSelect = event => {
     let id = event.currentTarget.id
@@ -27,7 +36,6 @@ const Programs = () => {
   const retrieveFullProgram = programId => {
     async function fetchProgram(programId) {
       const response = await retrieveProgram(programId)
-      console.log(response.fullProgram)
       setSelectedProgram(response.fullProgram)
     }
     fetchProgram(programId)
@@ -61,7 +69,6 @@ const Programs = () => {
       const response = await retrieve()
       if (!didCancel) {
         // Ignore if we started fetching something else
-        console.log(response)
         setPrograms(response)
       }
     }
@@ -72,15 +79,29 @@ const Programs = () => {
     } // Remember if we start fetching something else
   }, [])
 
+  const handleAddProgramClick = async () => {
+    await navigate(`/program-form`)
+  }
+
+
   //   TODO: fix this conditional render.
-  return isEmpty(selectedProgram) ? (
+  return props.location.key != routeKey ? (
+    forceUpdate(props.location.key)
+  ) : isEmpty(selectedProgram) ? (
     <React.Fragment>
-      <button>Add Program</button>
+      <button
+        css={formButton}
+        style={{ float: 'none', marginBottom: '10px' }}
+        onClick={handleAddProgramClick}
+      >
+        Add Program
+      </button>
       <div css={container}>{renderPrograms(programs)}</div>
     </React.Fragment>
   ) : (
-    <ProgramCard program={selectedProgram} />
+    <ProgramOverview program={selectedProgram} />
   )
+
 }
 
 export default Programs

@@ -1,35 +1,72 @@
 import React from 'react'
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core'
 import retrieve from '../../api/retrieveExercises'
+import { formButton } from '../../styles/main-styles'
+import Modal from '../Modal'
+import Exercise from '../exercises/Exercise'
+import Table from '../tables/Table'
+import { dynamicSort } from '../ArrayUtils'
 
 class Exercises extends React.Component {
-  state = {}
+  state = { exercises: [], showModal: false }
 
   render() {
-    return (
+    return this.state.showModal ? (
+      <Modal handleClose={this.toggleModal}>
+        <Exercise done={this.done} />
+      </Modal>
+    ) : (
       <React.Fragment>
+      <div style={{maxWidth: '500px', margin: '0px auto'}}>
+        <button
+          css={formButton}
+          style={{ float: 'none', margin: '10px 10px' }}
+          onClick={this.toggleModal}
+        >
+          Add Exercise
+        </button>
         {this.renderExercises(this.state.exercises)}
+        </div>
       </React.Fragment>
     )
   }
 
   componentDidMount = () => {
-      retrieve()
-      .then(exercises => {
-          this.setState({exercises})
+    this.retrieveExercises()
+  }
+
+  retrieveExercises = () => {
+    retrieve().then(exercises => {
+      this.setState({ exercises })
+    })
+  }
+
+  done = () => {
+    retrieve().then(exercises => {
+      this.setState({
+        exercises: exercises,
+        showModal: false
       })
+    })
+  }
+
+  toggleModal = () => {
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal }
+    })
   }
 
   renderExercises = exercises => {
-    if(exercises && exercises.length > 0){
-      return exercises.map( exercise => {
-        console.log(exercise)
-        let index = exercise.id
-        return (<div key={index}>{exercise.name} has id of {exercise.id}</div>)
-      })
-    }else{
-      return (<div>No Exercises</div>)
+    let sortedExercises = [...exercises]
+    sortedExercises.sort(dynamicSort('name', true))
+    let data = {
+      headers: ['name', 'type', 'id'],
+      rows: sortedExercises
     }
+    return <Table data={data} />
   }
+
 }
 
 export default Exercises
