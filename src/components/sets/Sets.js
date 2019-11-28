@@ -54,16 +54,18 @@ class Sets extends React.Component {
     })
   }
 
+  handleSetSelect = (e) => {
+    console.log(e.target.id)
+  }
+
   renderSets = sets => {
+    if (sets.length > 0) {
     return sets.map(set => {
       let index = set.id
       return (
-        // <div css={card} key={index} >
-        //   set id: {set.id}
-        // </div>
-        <SetViewer set={set} />
+        <SetViewer key={index} set={set} onClick={this.handleSetSelect} />
       )
-    })
+    })}
   }
 }
 

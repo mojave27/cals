@@ -88,7 +88,6 @@ class Set extends React.Component {
     })
   }
 
-
   renderAllExercises = exercises => {
     return exercises.map(exercise => {
       let index = exercise.id
@@ -132,8 +131,6 @@ class Set extends React.Component {
 
   handleRepsChange = e => {
     let { id, value } = e.target
-    console.log(id)
-    console.log(value)
     let exercisesForSet = [...this.state.exercisesForSet]
     let index = exercisesForSet.findIndex( exercise => exercise.id == id)
     exercisesForSet[index].reps = value
@@ -180,7 +177,7 @@ class Set extends React.Component {
 
   addSetToDb = () => {
     const set = {
-      exercises: this.state.exercises
+      exercises: this.state.exercisesForSet
     }
     addSet(set).then(response => {
       this.props.done()

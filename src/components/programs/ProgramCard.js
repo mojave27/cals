@@ -111,7 +111,6 @@ class ProgramCard extends React.Component {
     let id = event.target.id
     let isActive =
       this.state.sections[id] && this.state.sections[id].active ? false : true
-    console.log(`isActive: ${isActive}`)
     this.setState(prevState => {
       let sections = prevState.sections
       sections[id] = { active: isActive }

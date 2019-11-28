@@ -11,19 +11,14 @@ export let modal = {
   width: '100%' /* Full width */,
   height: '100%' /* Full height */,
   overflow: 'auto' /* Enable scroll if needed */,
-  // backgroundColor: 'rgb(0,0,0)' /* Fallback color */,
-  // backgroundColor: 'red' /* Black w/ opacity */
-  // backgroundColor: 'rgba(104, 120, 140, 0.4)' /* Black w/ opacity */
   backgroundColor: darkTheme.color1.rgba(.75)
 }
 
 /* Modal Content */
 export let modalContent = {
-  // backgroundColor: '#fefefe',
   backgroundColor: darkTheme.color2.hex,
   margin: 'auto',
   padding: '20px',
-  // border: '1px solid #888',
   border: `1px solid ${darkTheme.color4.hex}`,
   borderRadius: '5px',
   width: '80%'
@@ -33,10 +28,12 @@ export let modalContent = {
 export let close = {
   color: '#aaaaaa',
   float: 'right',
-  fontSize: '28px',
+  fontSize: '24px',
   fontWeight: 'bold',
+  padding: '0px 10px',
+  margin: '3px 5px',
   '&:hover': {
-    color: '#000',
+    color: darkTheme.color5.hex,
     textDecoration: 'none',
     cursor: 'pointer'
   },

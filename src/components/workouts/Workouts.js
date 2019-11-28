@@ -10,7 +10,7 @@ const Workouts = props => {
     async function fetchMyAPI() {
       const response = await retrieve()
       if (!didCancel) { // Ignore if we started fetching something else
-        console.log(response);
+        // console.log(response);
       }
     }  
   

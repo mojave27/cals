@@ -11,8 +11,11 @@ export let table = {
   },
   '& th, td': {
     textAlign: 'left',
-    padding: '8px'
+    padding: '3px'
   },
+  // '& tr:hover': {
+  //     border: `1px solid ${darkTheme.color5_highlight.hex}`
+  // },
   '& tr:nth-of-type(odd)': {
     backgroundColor: darkTheme.color3.hex
   },

@@ -11,6 +11,10 @@ import Workouts from './components/workouts/Workouts'
 import Sets from './components/sets/Sets'
 
 class App extends Component {
+  routeChange = () => {
+    return Math.random() + Math.random()
+  }
+
   render() {
     return (
       <div style={{ backgroundColor: '#2D3540' }}>
@@ -19,14 +23,14 @@ class App extends Component {
         <div
           style={{
             backgroundColor: '#2D3540',
-            height: '100vh',
+            height: '200vh',
             maxWidth: '80%',
             margin: '20px auto'
           }}
         >
           <Router>
             <Home path='/' />
-            <Programs path='/programs' />
+            <Programs onChange={this.routeChange} path='/programs' />
             <ProgramForm path='/program-form' />
             <Exercises path='/exercises' />
             <Workouts path='/workouts' />

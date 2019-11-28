@@ -2,9 +2,11 @@ import React from 'react'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import retrieve from '../../api/retrieveExercises'
-import { miniCard, formButton } from '../../styles/main-styles'
+import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import Exercise from '../exercises/Exercise'
+import Table from '../tables/Table'
+import { dynamicSort } from '../ArrayUtils'
 
 class Exercises extends React.Component {
   state = { exercises: [], showModal: false }
@@ -16,6 +18,7 @@ class Exercises extends React.Component {
       </Modal>
     ) : (
       <React.Fragment>
+      <div style={{maxWidth: '500px', margin: '0px auto'}}>
         <button
           css={formButton}
           style={{ float: 'none', margin: '10px 10px' }}
@@ -24,6 +27,7 @@ class Exercises extends React.Component {
           Add Exercise
         </button>
         {this.renderExercises(this.state.exercises)}
+        </div>
       </React.Fragment>
     )
   }
@@ -54,15 +58,15 @@ class Exercises extends React.Component {
   }
 
   renderExercises = exercises => {
-    return exercises.map(exercise => {
-      let index = exercise.id
-      return (
-        <div css={miniCard} key={index}>
-          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
-        </div>
-      )
-    })
+    let sortedExercises = [...exercises]
+    sortedExercises.sort(dynamicSort('name', true))
+    let data = {
+      headers: ['name', 'type', 'id'],
+      rows: sortedExercises
+    }
+    return <Table data={data} />
   }
+
 }
 
 export default Exercises

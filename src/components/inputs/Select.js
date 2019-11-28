@@ -35,7 +35,6 @@ class Select extends React.Component {
   handleSelectOption = e => {
       this.props.onSelect(e)
       let selected = Number(e.currentTarget.id)
-      console.log(selected)
     this.setState({ selected })
   }
 

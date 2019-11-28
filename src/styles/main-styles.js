@@ -47,6 +47,10 @@ export let darkTheme = {
   color5: {
     hex: '#03A696',
     rgba: alpha => buildRgba(3, 166, 150, alpha)
+  },
+  color5_highlight: {
+    hex: '#05E6CF',
+    rgba: alpha => buildRgba(230, 207, 90, alpha)
   }
 }
 

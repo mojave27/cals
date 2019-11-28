@@ -27,7 +27,7 @@ import { table } from '../../styles/table'
 //     }]
 // }
 
-class ProgramOverview extends React.Component {
+class Table extends React.Component {
   state = {}
 
   render() {
@@ -68,4 +68,4 @@ class ProgramOverview extends React.Component {
   }
 }
 
-export default ProgramOverview
+export default Table

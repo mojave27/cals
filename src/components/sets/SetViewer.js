@@ -2,13 +2,9 @@
 import { jsx, css } from '@emotion/core'
 import { useEffect, useState } from 'react'
 import retrieve from '../../api/retrieveExercises'
+import Table from '../tables/Table'
 
-import {
-  row,
-  col25,
-  col75,
-  card,
-} from '../../styles/main-styles'
+import { row, col25, col75, card } from '../../styles/main-styles'
 
 const SetViewer = props => {
   const [exercises, setExercises] = useState([])
@@ -20,7 +16,6 @@ const SetViewer = props => {
       const response = await retrieve()
       if (!didCancel) {
         // Ignore if we started fetching something else
-        console.log(response)
         setExercises(response)
       }
     }
@@ -32,40 +27,44 @@ const SetViewer = props => {
   }, [])
 
   const renderExercises = exercises => {
-    console.log(JSON.stringify(exercises))
-    return exercises.map(exercise => {
-        return (
-        <div
-        //   id={exercise.id}
-        //   key={exercise.id}
-        >
-          {/* name: {exercise.name} - type: {exercise.type} - id: {exercise.id} */}
-        </div>
-        )
-    })
-
+    let data = {
+      headers: ['name', 'reps'],
+      rows: exercises
+    }
+    return (
+      <div style={{maxWidth: '200px', margin: '0px auto'}}>
+        <Table data={data} />
+      </div>
+    )
   }
 
-  const inflateExercises = partialExercises => {
-    return partialExercises.map(partialExercise => {
-      let index = exercises.findIndex( exercise => {
-        return exercise.id == partialExercise.id
-      })
-      let ex = exercises[index]
-      return ex
+  const findExerciseById = id => {
+    let index = exercises.findIndex(exercise => {
+      return Number(exercise.id) === Number(id)
     })
+    return exercises[index]
+  }
 
+  const inflateExercises = setExercises => {
+    return setExercises.map(partialExercise => {
+      let fullExercise = findExerciseById(partialExercise.id)
+      fullExercise.reps = partialExercise.reps
+      return fullExercise
+    })
   }
 
   return (
-    <div css={card}>
+    <div css={card} style={{maxWidth:'300px', margin: '0px auto'}} onClick={props.onClick}>
       <div css={row}>
         <div css={col25}>
-          <label htmlFor='whatevs'>{props.set.id}</label>
+          <label htmlFor='whatevs'>set {props.set.id}</label>
         </div>
         <div css={col75}>
-          <div css={row} >
-            {renderExercises( inflateExercises(props.set.exercises) )}
+          <div css={row}>
+            {/* handle when exercises aren't loaded yet */}
+            {exercises.length > 0
+            ? renderExercises(inflateExercises(props.set.exercises))
+            : null}
           </div>
         </div>
       </div>
