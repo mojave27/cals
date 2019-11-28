@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import React from 'react'
 import { detailCard, container, stripe } from '../../styles/main-styles'
 import Set from '../sets/Set'

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import React from 'react'
 import Select from '../inputs/Select'
 import { EXERCISE_TYPES } from '../../constants'

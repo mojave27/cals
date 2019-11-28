@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import React from 'react'
 import { table } from '../../styles/table'
 
@@ -61,7 +61,13 @@ class Table extends React.Component {
   renderRows = data => {
     let headerRow = this.renderHeader(data.headers)
     let rows = data.rows.map((row, index) => {
-      return <tr key={index}>{this.renderRow(row, data.headers)}</tr>
+      let id = (typeof row.id === 'undefined') ? index : row.id
+      return  <tr 
+                id={id} 
+                onClick={this.props.onClick} 
+                key={index}>
+                  {this.renderRow(row, data.headers)}
+              </tr>
     })
     let allRows = [headerRow, ...rows]
     return allRows

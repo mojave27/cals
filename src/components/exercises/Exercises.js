@@ -1,6 +1,6 @@
 import React from 'react'
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import retrieve from '../../api/retrieveExercises'
 import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
@@ -64,7 +64,12 @@ class Exercises extends React.Component {
       headers: ['name', 'type', 'id'],
       rows: sortedExercises
     }
-    return <Table data={data} />
+    return <Table onClick={this.handleClickRow} data={data} />
+  }
+
+  handleClickRow = event => {
+    let target = event.currentTarget
+    console.log({target})
   }
 
 }

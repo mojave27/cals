@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import { useEffect, useState } from 'react'
 import retrieve from '../../api/retrieveExercises'
 import Table from '../tables/Table'

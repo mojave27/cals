@@ -85,7 +85,7 @@ const Programs = props => {
 
 
   //   TODO: fix this conditional render.
-  return props.location.key != routeKey ? (
+  return props.location.key !== routeKey ? (
     forceUpdate(props.location.key)
   ) : isEmpty(selectedProgram) ? (
     <React.Fragment>

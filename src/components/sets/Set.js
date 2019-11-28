@@ -1,9 +1,9 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import React from 'react'
 import retrieve from '../../api/retrieveExercises'
 import addSet from '../../api/addSet'
-import { miniCard, formButton } from '../../styles/main-styles'
+import { miniCard } from '../../styles/main-styles'
 
 import {
   formContainer,
@@ -132,14 +132,14 @@ class Set extends React.Component {
   handleRepsChange = e => {
     let { id, value } = e.target
     let exercisesForSet = [...this.state.exercisesForSet]
-    let index = exercisesForSet.findIndex( exercise => exercise.id == id)
+    let index = exercisesForSet.findIndex( exercise => Number(exercise.id) === Number(id))
     exercisesForSet[index].reps = value
     this.setState({exercisesForSet})
   }
 
   getClasses = id => {
     let index = this.state.selectedExercises.findIndex(exercise => {
-      return exercise.id == id
+      return Number(exercise.id) === Number(id)
     })
     if (index === -1) {
       return miniCard

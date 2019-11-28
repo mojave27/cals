@@ -1,6 +1,6 @@
 import React from 'react'
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import {
   customSelect,
   selectItems,
