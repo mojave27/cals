@@ -41,6 +41,9 @@ class Table extends React.Component {
   }
 
   renderHeader = headers => {
+    if ( this.props.edit && this.props.edit === true ){
+      headers.push('edit?')
+    }
     return (
       <tr key={headers.toString()}>
         {headers.map(header => (
@@ -54,6 +57,11 @@ class Table extends React.Component {
     let tds = []
     for (let i = 0; i < headers.length; i++) {
       tds.push(<td key={i}>{row[headers[i]]}</td>)
+    }
+    // amend the edit column
+    if ( this.props.edit && this.props.edit === true ){
+      let lastIndex = tds.length -1
+      tds[lastIndex] = <td><input type={'checkbox'} /></td>
     }
     return tds
   }

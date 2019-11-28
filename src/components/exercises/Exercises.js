@@ -64,7 +64,8 @@ class Exercises extends React.Component {
       headers: ['name', 'type', 'id'],
       rows: sortedExercises
     }
-    return <Table onClick={this.handleClickRow} data={data} />
+    return <Table edit={true} onClick={this.handleClickRow} data={data} />
+    // return <Table onClick={this.handleClickRow} data={data} />
   }
 
   handleClickRow = event => {
