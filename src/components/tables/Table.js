@@ -2,84 +2,49 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { table } from '../../styles/table'
+import { useTable } from 'react-table'
 
-// SAMPLE DATA OBJECT
-// const data = {
-//   headers: ['name', 'reps'],
-//   rows: [
-//     {
-//       id: 0,
-//       reps: 'max',
-//       name: 'chins',
-//       type: 'compound'
-//     },
-//     {
-//       id: 8,
-//       reps: 'max',
-//       name: 'glute bridge',
-//       type: 'compound'
-//     },
-//     {
-//       id: 9,
-//       reps: 'max',
-//       name: 'inv row',
-//       type: 'compound'
-//     }]
-// }
 
-class Table extends React.Component {
-  state = {}
+const Table = ({ columns, data }) => {
+  // Use the state and functions returned from useTable to build your UI
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data,
+  })
 
-  render() {
-    return (
-      <div style={{ overflowX: 'auto' }}>
-        <table css={table}>
-          <tbody>{this.renderRows(this.props.data)}</tbody>
-        </table>
-      </div>
-    )
-  }
-
-  renderHeader = headers => {
-    if ( this.props.edit && this.props.edit === true ){
-      headers.push('edit?')
-    }
-    return (
-      <tr key={headers.toString()}>
-        {headers.map(header => (
-          <th key={header}>{header}</th>
+  // Render the UI for your table
+  return (
+    <table css={table} {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            ))}
+          </tr>
         ))}
-      </tr>
-    )
-  }
-
-  renderRow = (row, headers) => {
-    let tds = []
-    for (let i = 0; i < headers.length; i++) {
-      tds.push(<td key={i}>{row[headers[i]]}</td>)
-    }
-    // amend the edit column
-    if ( this.props.edit && this.props.edit === true ){
-      let lastIndex = tds.length -1
-      tds[lastIndex] = <td><input type={'checkbox'} /></td>
-    }
-    return tds
-  }
-
-  renderRows = data => {
-    let headerRow = this.renderHeader(data.headers)
-    let rows = data.rows.map((row, index) => {
-      let id = (typeof row.id === 'undefined') ? index : row.id
-      return  <tr 
-                id={id} 
-                onClick={this.props.onClick} 
-                key={index}>
-                  {this.renderRow(row, data.headers)}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map(
+          (row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                })}
               </tr>
-    })
-    let allRows = [headerRow, ...rows]
-    return allRows
-  }
+            )}
+        )}
+      </tbody>
+    </table>
+  )
 }
 
 export default Table

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import retrieve from '../../api/retrieveExercises'
@@ -8,41 +8,54 @@ import Exercise from '../exercises/Exercise'
 import Table from '../tables/Table'
 import { dynamicSort } from '../ArrayUtils'
 
-class Exercises extends React.Component {
-  state = { exercises: [], showModal: false }
+const Exercises = props => {
+  const [exercises, setExercises] = useState([])
+  const [showModal, setShowModal] = useState(false)
 
-  render() {
-    return this.state.showModal ? (
-      <Modal handleClose={this.toggleModal}>
-        <Exercise done={this.done} />
-      </Modal>
-    ) : (
-      <React.Fragment>
-      <div style={{maxWidth: '500px', margin: '0px auto'}}>
-        <button
-          css={formButton}
-          style={{ float: 'none', margin: '10px 10px' }}
-          onClick={this.toggleModal}
-        >
-          Add Exercise
-        </button>
-        {this.renderExercises(this.state.exercises)}
-        </div>
-      </React.Fragment>
-    )
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'name',
+        accessor: 'name'
+      },
+      // {
+      //   Header: 'reps',
+      //   accessor: 'reps'
+      // },
+      {
+        Header: 'type',
+        accessor: 'type'
+      },
+      {
+        Header: 'id',
+        accessor: 'id'
+      }
+    ],
+    []
+  )
+
+  useEffect(() => {
+    let didCancel = false
+    async function fetchMyAPI() {
+      const response = await retrieve()
+      if (!didCancel) {
+        console.log({response})
+        // Ignore if we started fetching something else
+        setExercises(response)
+      }
+    }
+
+    fetchMyAPI()
+    return () => {
+      didCancel = true
+    } // Remember if we start fetching something else
+  }, [])
+
+  const toggleModal = () => {
+    setShowModal(!showModal)
   }
 
-  componentDidMount = () => {
-    this.retrieveExercises()
-  }
-
-  retrieveExercises = () => {
-    retrieve().then(exercises => {
-      this.setState({ exercises })
-    })
-  }
-
-  done = () => {
+  const done = () => {
     retrieve().then(exercises => {
       this.setState({
         exercises: exercises,
@@ -51,27 +64,30 @@ class Exercises extends React.Component {
     })
   }
 
-  toggleModal = () => {
-    this.setState(prevState => {
-      return { showModal: !prevState.showModal }
-    })
-  }
-
-  renderExercises = exercises => {
+  const renderExercises = exercises => {
     let sortedExercises = [...exercises]
     sortedExercises.sort(dynamicSort('name', true))
-    let data = {
-      headers: ['name', 'type', 'id'],
-      rows: sortedExercises
-    }
-    return <Table edit={true} onClick={this.handleClickRow} data={data} />
-    // return <Table onClick={this.handleClickRow} data={data} />
+    return <Table edit={true} columns={columns} data={sortedExercises} />
   }
 
-  handleClickRow = event => {
-    let target = event.currentTarget
-    console.log({target})
-  }
+  return showModal ? (
+    <Modal handleClose={toggleModal}>
+      <Exercise done={done} />
+    </Modal>
+  ) : (
+    <React.Fragment>
+      <div style={{ maxWidth: '500px', margin: '0px auto' }}>
+        <button
+          css={formButton}
+          style={{ float: 'none', margin: '10px 10px' }}
+          onClick={toggleModal}
+        >
+          Add Exercise
+        </button>
+        {renderExercises(exercises)}
+      </div>
+    </React.Fragment>
+  )
 
 }
 
