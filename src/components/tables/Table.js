@@ -3,6 +3,8 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import { table } from '../../styles/table'
 import { useTable, useSortBy } from 'react-table'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 
 const Table = ({ columns, data }) => {
@@ -33,11 +35,9 @@ const Table = ({ columns, data }) => {
                 <span>
                 {column.isSorted
                       ? column.isSortedDesc
-                        // ? ' v'
-                        // : ' ^'
-                        ? ' 🔽'
-                        : ' 🔼'
-                      : ' 🔽'}
+                        ? <FontAwesomeIcon style={{marginLeft:'5px'}} icon={faAngleUp} />
+                        : <FontAwesomeIcon style={{marginLeft:'5px'}} icon={faAngleDown} />
+                      : <FontAwesomeIcon style={{marginLeft:'5px'}} icon={faAngleDown} />}
                   </span>
               </th>
             ))}
