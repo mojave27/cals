@@ -2,12 +2,12 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { table } from '../../styles/table'
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useSortBy, useRowSelect } from 'react-table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data, callback }) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -15,15 +15,23 @@ const Table = ({ columns, data }) => {
     headerGroups,
     rows,
     prepareRow,
+    selectedFlatRows,
+    state: { selectedRowPaths },
   } = useTable({
     columns,
     data,
   },
-    useSortBy
+    useSortBy, useRowSelect
   )
+
+  const submitTable = () => {
+    // props.submitTable()
+    callback(selectedRowPaths)
+  }
 
   // Render the UI for your table
   return (
+    <React.Fragment>
     <table css={table} {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
@@ -58,6 +66,23 @@ const Table = ({ columns, data }) => {
         )}
       </tbody>
     </table>
+    <button onClick={submitTable} >Submit</button>
+    <p>Selected Rows: {selectedRowPaths.length}</p>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              selectedRowPaths,
+              'selectedFlatRows[].original': selectedFlatRows.map(
+                d => d.original
+              ),
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
+    </React.Fragment>
   )
 }
 

@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import { useEffect, useState } from 'react'
 import retrieve from '../../api/retrieveExercises'
-import Table from '../tables/Table'
+import Table from '../tables/SortableTable'
 
 import { row, col25, col75, card } from '../../styles/main-styles'
 
