@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { useEffect, useState } from 'react'
-import retrieve from '../../api/retrieveExercises'
-import Table from '../tables/SortableTable'
+import { retrieve } from '../../api/exercisesApi'
+import Table from '../tables/SimpleTable'
 
 import { row, col25, col75, card } from '../../styles/main-styles'
 

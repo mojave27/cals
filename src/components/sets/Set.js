@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import retrieve from '../../api/retrieveExercises'
+import { retrieve } from '../../api/exercisesApi'
 import addSet from '../../api/addSet'
 import { miniCard } from '../../styles/main-styles'
 

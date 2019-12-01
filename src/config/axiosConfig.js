@@ -1,7 +1,7 @@
 // import axios from 'axios';
 
 export const config = {
-baseURL: 'http://localhost:3030'
+    baseURL: 'http://localhost:3030'
 }
 
 // export const axios = axios.create({

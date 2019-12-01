@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import Table from '../tables/SortableTable'
+import Table from '../tables/SimpleTable'
 
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
 

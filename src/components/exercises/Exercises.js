@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import retrieve from '../../api/retrieveExercises'
+import { deleteExerciseById, deleteExercisesById, retrieve } from '../../api/exercisesApi'
 import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
-import Exercise from '../exercises/Exercise'
-import Table from '../tables/SortableTable'
-import { dynamicSort } from '../ArrayUtils'
+import Exercise from './Exercise'
+import ExercisesTable from './ExercisesTable'
+import { dynamicSort, findIndexOfId } from '../ArrayUtils'
 
 const Exercises = props => {
   const [exercises, setExercises] = useState([])
@@ -15,21 +15,15 @@ const Exercises = props => {
 
   const columns = React.useMemo(
     () => [
-      // Let's make a column for selection
       {
         id: 'selection',
-        // The header can use the table's getToggleAllRowsSelectedProps method
-        // to render a checkbox
         Header: ({ getToggleAllRowsSelectedProps }) => (
           <div>
             <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
           </div>
         ),
-        // The cell can use the individual row's getToggleRowSelectedProps method
-        // to the render a checkbox
         Cell: ({ row }) => (
           <div>
-            {/* <input onClick={handleRowSelect} data-id={row.values.id} type="checkbox" {...row.getToggleRowSelectedProps()} /> */}
             <input type="checkbox" {...row.getToggleRowSelectedProps()} />
           </div>
         ),
@@ -38,10 +32,6 @@ const Exercises = props => {
         Header: 'name',
         accessor: 'name'
       },
-      // {
-      //   Header: 'reps',
-      //   accessor: 'reps'
-      // },
       {
         Header: 'type',
         accessor: 'type'
@@ -68,7 +58,7 @@ const Exercises = props => {
     fetchMyAPI()
     return () => {
       didCancel = true
-    } // Remember if we start fetching something else
+    }
   }, [])
 
   const toggleModal = () => {
@@ -77,30 +67,46 @@ const Exercises = props => {
 
   const done = () => {
     retrieve().then(exercises => {
-      this.setState({
-        exercises: exercises,
-        showModal: false
+      setExercises(exercises)
+      setShowModal(false)
+    })
+  }
+
+  const submitTable = ids => {
+    console.log(ids)
+    let exercisesToAdd = ids.map( id => {
+      let index = findExerciseById(id)
+      return exercises[index]
+    })
+    updateSelectedExercises(exercisesToAdd)
+  }
+
+  const findExerciseById = id => {
+    // let index = exercises.findIndex( exercise => Number(exercise.id) === Number(id))
+    let index = findIndexOfId(id, exercises)
+    return index
+  }
+
+  const updateSelectedExercises = exercisesToAdd => {
+    let newSelectedExerciseIds = [...selectedExerciseIds, ...exercisesToAdd]
+    let uniqueIds = new Set(newSelectedExerciseIds)
+    let updatedSelectedExerciseIds = Array.from(uniqueIds)
+    setSelectedExerciseIds(updatedSelectedExerciseIds)
+  }
+
+  const deleteExercises = exerciseIds => {
+    let id = exerciseIds[0]
+    deleteExerciseById(id).then( response => {
+      retrieve().then( response => {
+        setExercises(response)
       })
     })
   }
 
-  const submitTable = data => {
-    console.log(data)
-  }
-
-  // const handleRowSelect = event => {
-  //   let id = event.currentTarget.dataset.id
-  //   let updatedSelectedExerciseIds = [...selectedExerciseIds]
-  //   updatedSelectedExerciseIds.push(id)
-  //   let uniqueIds = new Set(updatedSelectedExerciseIds)
-  //   updatedSelectedExerciseIds = Array.from(uniqueIds)
-  //   setSelectedExerciseIds(updatedSelectedExerciseIds)
-  // }
-
   const renderExercises = exercises => {
     let sortedExercises = [...exercises]
     sortedExercises.sort(dynamicSort('name', true))
-    return <Table callback={submitTable} edit={true} columns={columns} data={sortedExercises} />
+    return <ExercisesTable deleteExercises={deleteExercises} edit={true} columns={columns} data={sortedExercises} />
   }
 
   return showModal ? (

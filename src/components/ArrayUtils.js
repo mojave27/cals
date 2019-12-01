@@ -12,3 +12,8 @@ export let dynamicSort = (property, ignoreCase) => {
     return result * sortOrder
   }
 }
+
+export let findIndexOfId = (id, list) => {
+  let index = list.findIndex( element => Number(element.id) === Number(id) )
+  return index
+}
