@@ -1,5 +1,5 @@
 // import { css } from '@emotion/core'
-import { darkTheme } from './main-styles'
+import { activeTheme } from './main-styles'
 
 export let modal = {
   // display: 'none' /* Hidden by default */,
@@ -11,15 +11,15 @@ export let modal = {
   width: '100%' /* Full width */,
   height: '100%' /* Full height */,
   overflow: 'auto' /* Enable scroll if needed */,
-  backgroundColor: darkTheme.color1.rgba(.75)
+  backgroundColor: activeTheme.color1.rgba(.75)
 }
 
 /* Modal Content */
 export let modalContent = {
-  backgroundColor: darkTheme.color2.hex,
+  backgroundColor: activeTheme.color2.hex,
   margin: 'auto',
   padding: '20px',
-  border: `1px solid ${darkTheme.color4.hex}`,
+  border: `1px solid ${activeTheme.color4.hex}`,
   borderRadius: '5px',
   width: '80%'
 }
@@ -33,7 +33,7 @@ export let close = {
   padding: '0px 10px',
   margin: '3px 5px',
   '&:hover': {
-    color: darkTheme.color5.hex,
+    color: activeTheme.color5.hex,
     textDecoration: 'none',
     cursor: 'pointer'
   },

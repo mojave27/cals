@@ -9,20 +9,19 @@ import ProgramForm from './components/programs/ProgramForm'
 import Exercises from './components/exercises/Exercises'
 import Workouts from './components/workouts/Workouts'
 import Sets from './components/sets/Sets'
+import { activeTheme } from './styles/main-styles'
 
 class App extends Component {
-  routeChange = () => {
-    return Math.random() + Math.random()
-  }
 
   render() {
     return (
-      <div style={{ backgroundColor: '#2D3540' }}>
+      <div style={{ backgroundColor: `${activeTheme.color1.hex}` }}>
         <TopNav />
         <CssBaseline />
         <div
           style={{
-            backgroundColor: '#2D3540',
+            // backgroundColor: '#2D3540',
+            backgroundColor: `${activeTheme.color1.hex}`,
             height: '200vh',
             maxWidth: '80%',
             margin: '20px auto'
@@ -30,7 +29,7 @@ class App extends Component {
         >
           <Router>
             <Home path='/' />
-            <Programs onChange={this.routeChange} path='/programs' />
+            <Programs path='/programs' />
             <ProgramForm path='/program-form' />
             <Exercises path='/exercises' />
             <Workouts path='/workouts' />

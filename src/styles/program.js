@@ -23,11 +23,11 @@ rgba(3, 166, 150, 1)
 
 import { css } from '@emotion/core'
 
-import { darkTheme } from './main-styles'
+import { activeTheme } from './main-styles'
 
 export let workoutHeader = css({
-  backgroundColor: darkTheme.color2.hex,
-  // color: darkTheme.color5.hex,
+  backgroundColor: activeTheme.color2.hex,
+  // color: activeTheme.color5.hex,
   color: '#fff',
   fontWeight: 'bold',
   padding: '2px 5px'
@@ -35,9 +35,9 @@ export let workoutHeader = css({
 
 export let workoutBlock = css({
   display: 'inline-block',
-  // border: `1px solid ${darkTheme.color2.hex}`
+  // border: `1px solid ${activeTheme.color2.hex}`
 })
 
 export let setBlock = css({
-  border: `1px solid ${darkTheme.color2.hex}`
+  border: `1px solid ${activeTheme.color2.hex}`
 })
