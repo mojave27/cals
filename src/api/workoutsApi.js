@@ -47,17 +47,22 @@ export const updateWorkout = workout => {
   })
 }
 
+export const deleteWorkout = id => {
+  let url = `${URL}/${id}`
+  return axios
+  .delete(url, config)
+  .then( response => {
+    const data = parseResponse(response)
+    return data
+  })
+  .catch( error => {
+    console.log(`workouts api - deleteWorkout error: ${error}`)
+    return {}
+  })
+}
+
 
 const parseResponse = (response) => {
-    // console.log(`response ${JSON.stringify(response)}`)
-    // const responseData = response.data
-    // console.log(response.data)
-    // let data = { 
-    //   totalHits: responseData.totalHits,
-    //   currentPage: responseData.currentPage,
-    //   totalPages: responseData.totalPages,
-    //   foods: responseData.foods
-    // }
     return response.data;
 }
 

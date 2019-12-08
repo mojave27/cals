@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import { useState, useEffect } from 'react'
 import Table from '../tables/SimpleTable'
-import { retrieve } from '../../api/workoutsApi'
+import { retrieve, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
@@ -11,23 +11,10 @@ const Workouts = props => {
   const [workouts, setWorkouts] = useState([])
 
   useEffect(() => {
-    let didCancel = false
-
-    async function fetchMyAPI() {
-      const response = await retrieve()
-      if (!didCancel) {
-        // Ignore if we started fetching something else
-        setWorkouts(response)
-      }
-    }
-
     fetchMyAPI()
-    return () => {
-      didCancel = true
-    } // Remember if we start fetching something else
   }, [])
 
-  // render rows of 5
+  //TODO: render rows of 5
   const renderWorkouts = workouts => {
     // let maxSets = this.getMaxSets(this.state.program.workouts)
     return workouts.map(wo => {
@@ -36,6 +23,7 @@ const Workouts = props => {
           key={wo.id}
           id={wo.id}
           css={workoutBlock}
+          style={{marginLeft: '5px', marginBottom: '10px'}}
         >
           <div css={workoutHeader}>
             {wo.name}
@@ -80,9 +68,18 @@ const Workouts = props => {
     console.log(`would edit workout with id: ${id}`)
   }
 
-  const deleteWorkout = event => {
+  const deleteWorkout = async event => {
     let id = event.currentTarget.id
-    console.log(`would delete workout with id: ${id}`)
+    console.log(`deleting workout with id: ${id}`)
+    await deleteWorkoutApi(id)
+    fetchMyAPI()
+    // update array in state as well?  or force refresh/useEffect call?
+    
+  }
+
+  const fetchMyAPI = async () => {
+    const response = await retrieve()
+    setWorkouts(response)
   }
 
   return (
