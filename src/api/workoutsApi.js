@@ -63,6 +63,7 @@ export const deleteWorkout = id => {
 
 
 const parseResponse = (response) => {
+    console.log({response})
     return response.data;
 }
 

@@ -60,8 +60,10 @@ export const updateProgram = program => {
 
 const _handleError = error => {
   console.log(`[${NAME}]: ${error}`)
+  // console.log(JSON.stringify(error))
 }
 
 const parseResponse = (response) => {
+  console.log({response})
   return response.data;
 }
