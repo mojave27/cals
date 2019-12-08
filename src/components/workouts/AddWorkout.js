@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import SetCard from '../sets/SetCard'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import { isEmpty } from 'lodash'
+import Table from '../tables/SimpleTable'
+import { setBlock } from '../../styles/program'
 import {
   detailCard,
   container,
@@ -62,6 +64,21 @@ const AddWorkout = props => {
     let updatedWorkout = {...workout}
     updatedWorkout.sets.push(set)
     setWorkout(updatedWorkout)
+    setShowSetDialog(false)
+  }
+
+  const renderSets = sets => {
+    return sets.map(set => {
+      let data = {
+        headers: ['name', 'reps'],
+        rows: [...set.exercises]
+      }
+      return (
+        <div key={set.id} css={setBlock}>
+          <Table data={data} />
+        </div>
+      )
+    })
   }
 
   return (
@@ -106,6 +123,7 @@ const AddWorkout = props => {
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
             <div style={{ paddingBottom: '10px' }}>Sets go here</div>
+            {renderSets(workout.sets)}
             <input
               type='button'
               value='Add Set'

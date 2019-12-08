@@ -3,10 +3,12 @@ import { config } from '../config/axiosConfig'
 
 const URL = 'workouts'
 
-export const retrieve = searchTerm => {
+export const retrieve = () => {
+  console.log('calling /workouts')
   return axios
     .get(URL, config)
     .then(function(response) {
+      // console.log(JSON.stringify(response))
       const data = parseResponse(response)
       return data
     })
