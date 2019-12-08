@@ -4,8 +4,10 @@ import { jsx } from '@emotion/core'
 import retrieve from '../../api/retrieveSets'
 import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
-import Set from './Set'
+import SetCard from './SetCard'
 import SetViewer from './SetViewer'
+import { findIndexOfId } from '../ArrayUtils'
+import { isEmpty } from 'lodash'
 
 class Sets extends React.Component {
   state = { sets: [], showModal: false, selectedSet: {} }
@@ -13,10 +15,12 @@ class Sets extends React.Component {
   render() {
     return this.state.showModal ? (
       <Modal handleClose={this.toggleModal}>
-        <Set done={this.done} />
+        <SetCard done={this.done} />
       </Modal>
     ) : (
-       <React.Fragment>
+
+      isEmpty(this.state.selectedSet)
+      ? <React.Fragment>
         <button
           css={formButton}
           style={{ float: 'none', margin: '10px auto' }}
@@ -26,6 +30,7 @@ class Sets extends React.Component {
         </button>
         {this.renderSets(this.state.sets)}
       </React.Fragment>
+      : <SetCard set={this.state.selectedSet} />
       )
   }
 
@@ -55,7 +60,10 @@ class Sets extends React.Component {
   }
 
   handleSetSelect = (e) => {
-    console.log(e.target.id)
+    let id = e.currentTarget.id
+    let index = findIndexOfId(id, this.state.sets)
+    let set = {...this.state.sets[index]}
+    this.setState({selectedSet: set})
   }
 
   renderSets = sets => {
@@ -63,7 +71,7 @@ class Sets extends React.Component {
     return sets.map(set => {
       let index = set.id
       return (
-        <SetViewer key={index} set={set} onClick={this.handleSetSelect} />
+        <SetViewer id={index} key={index} set={set} onClick={this.handleSetSelect} />
       )
     })}
   }

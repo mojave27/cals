@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { deleteExerciseById, deleteExercisesById, retrieve } from '../../api/exercisesApi'
+import { deleteExerciseById, retrieve } from '../../api/exercisesApi'
 import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import Exercise from './Exercise'

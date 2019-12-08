@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import retrieve from '../../api/retrieveWorkouts'
+import { retrieve } from '../../api/workoutsApi'
 
 const Workouts = props => {
   const [workouts, setWorkouts] = useState([])

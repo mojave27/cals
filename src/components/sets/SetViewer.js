@@ -54,7 +54,7 @@ const SetViewer = props => {
   }
 
   return (
-    <div css={card} style={{maxWidth:'300px', margin: '0px auto'}} onClick={props.onClick}>
+    <div css={card} style={{maxWidth:'300px', margin: '0px auto'}} id={props.id} onClick={props.onClick}>
       <div css={row}>
         <div css={col25}>
           <label htmlFor='whatevs'>set {props.set.id}</label>

@@ -31,6 +31,7 @@ class App extends Component {
             <Home path='/' />
             <Programs path='/programs' />
             <ProgramForm path='/program-form' />
+            <ProgramForm path='/program-form/:programId' />
             <Exercises path='/exercises' />
             <Workouts path='/workouts' />
             <Sets path='/sets' />

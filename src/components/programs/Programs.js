@@ -3,8 +3,8 @@ import React from 'react'
 import { jsx, css } from '@emotion/core'
 import { navigate } from '@reach/router'
 import { useState, useEffect } from 'react'
-import retrieve from '../../api/retrievePrograms'
-import retrieveProgram from '../../api/retrieveProgramById'
+import { retrievePrograms as retrieve } from '../../api/programsApi'
+import { retrieveProgramById as retrieveProgram } from '../../api/programsApi'
 import ProgramHighlightCard from './ProgramHighlightCard'
 import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
@@ -31,6 +31,10 @@ const Programs = props => {
     let id = event.currentTarget.id
     const program = retrieveFullProgram(id)
     setSelectedProgram(program)
+  }
+
+  const clearSelectedProgram = () => {
+    setSelectedProgram({})
   }
 
   const retrieveFullProgram = programId => {
@@ -99,7 +103,7 @@ const Programs = props => {
       <div css={container}>{renderPrograms(programs)}</div>
     </React.Fragment>
   ) : (
-    <ProgramOverview program={selectedProgram} />
+    <ProgramOverview handleClose={clearSelectedProgram} program={selectedProgram} />
   )
 
 }
