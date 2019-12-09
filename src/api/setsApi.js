@@ -1,7 +1,7 @@
 import axios from "axios";
 import { config } from '../config/axiosConfig'
 
-const retrieve = () => {
+export const retrieve = () => {
   const url = 'sets'
 
   return axios
@@ -17,9 +17,17 @@ const retrieve = () => {
     });
 };
 
+export const retrieveSetById = id => {
+  const url = `sets/${id}`
+  return axios
+  .get(url, config)
+  .then( response => {
+    let data = parseResponse(response)
+    return data
+  })
+}
+
 const parseResponse = (response) => {
     // console.log(response.data)
     return response.data;
 }
-
-export default retrieve;

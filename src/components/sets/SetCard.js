@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { retrieve } from '../../api/exercisesApi'
+import { retrieveSetById } from '../../api/setsApi'
 import addSet from '../../api/addSet'
 import { miniCard } from '../../styles/main-styles'
 
@@ -45,7 +46,9 @@ class SetCard extends React.Component {
         </div>
       </React.Fragment>
     ) : (
-      <div css={formContainer} style={{border:'3px solid cyan'}}>
+      this.props.set
+      ? <div>{this.renderExercisesForSet(this.props.set.exercises)}</div>
+      : <div css={formContainer} style={{border:'3px solid cyan'}}>
         <div css={row}>
           <div css={col25}>
             <label htmlFor='exercises'>exercises for set</label>
@@ -107,20 +110,26 @@ class SetCard extends React.Component {
   renderExercisesForSet = exercises => {
     return exercises.map(exercise => {
       let index = exercise.id
+      let fullExercise = {}
+      this.state.exercises.forEach( fullEx => {
+        if ( Number(fullEx.id) === Number(exercise.id) ) {
+          fullExercise = fullEx
+        }
+      })
       return (
         <div
           id={index}
-          css={this.getClasses(exercise.id)}
+          css={this.getClasses(fullExercise.id)}
           key={index}
           onClick={this.selectExercise}
         >
-          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
+          name: {fullExercise.name} - type: {fullExercise.type} - id: {fullExercise.id}
            <input
               css={[formInput, {width: '100px'}]}
               type='text'
-              id={exercise.id}
+              id={fullExercise.id}
               name='exerciseReps'
-              value={exercise.reps}
+              value={fullExercise.reps}
               placeholder='exercise reps..'
               onChange={this.handleRepsChange}
             />
@@ -184,7 +193,9 @@ class SetCard extends React.Component {
       // console.log(JSON.stringify(response))
       /* save response instead of set, since response is *
        * the set with an id assigned.                    */
-      this.props.saveSet(response)
+      if( this.props.saveSet ) {
+        this.props.saveSet(response)
+      }
     })
   }
 }

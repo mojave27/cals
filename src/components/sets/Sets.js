@@ -1,7 +1,7 @@
 import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import retrieve from '../../api/retrieveSets'
+import { retrieve } from '../../api/setsApi'
 import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import SetCard from './SetCard'

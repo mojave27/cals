@@ -136,7 +136,8 @@ export let miniCard = css({
 })
 
 export let selectedMiniCard = css({
-  backgroundColor: activeTheme.color5.hex
+  // backgroundColor: activeTheme.color5.hex
+  backgroundColor: 'lightYellow'
 })
 
 export let card = css({
