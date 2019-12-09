@@ -2,13 +2,13 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { detailCard, container, stripe } from '../../styles/main-styles'
-import Set from '../sets/Set'
+import SetCard from '../sets/SetCard'
 
 const Workout = props => {
 
   const renderSets = (sets) => {
     return sets.map( set => {
-      return (<Set key={set.id} set={set} />)
+      return (<SetCard key={set.id} set={set} />)
     })
   }
 

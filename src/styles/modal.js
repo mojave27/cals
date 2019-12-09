@@ -11,6 +11,7 @@ export let modal = {
   width: '100%' /* Full width */,
   height: '100%' /* Full height */,
   overflow: 'auto' /* Enable scroll if needed */,
+  transition: '0.3s',
   backgroundColor: activeTheme.color1.rgba(.75)
 }
 
@@ -21,7 +22,8 @@ export let modalContent = {
   padding: '20px',
   border: `1px solid ${activeTheme.color4.hex}`,
   borderRadius: '5px',
-  width: '80%'
+  width: '80%',
+  transition: '0.3s',
 }
 
 /* The Close Button */
@@ -32,6 +34,7 @@ export let close = {
   fontWeight: 'bold',
   padding: '0px 10px',
   margin: '3px 5px',
+  transition: '0.3s',
   '&:hover': {
     color: activeTheme.color5.hex,
     textDecoration: 'none',

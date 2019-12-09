@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useState } from 'react'
+import React from 'react'
 import SetCard from '../sets/SetCard'
-import { addWorkout, updateWorkout } from '../../api/workoutsApi'
-import { isEmpty } from 'lodash'
+import { addWorkout, retrieveWorkoutById, updateWorkout } from '../../api/workoutsApi'
+import { isUndefined } from 'lodash'
 import Table from '../tables/SimpleTable'
 import { setBlock } from '../../styles/program'
 import {
@@ -24,50 +24,68 @@ const emptyWorkout = {
   "sets": []
 }
 
-const AddWorkout = props => {
-  const [workout, setWorkout] = useState(emptyWorkout)
-  const [showSetDialog, setShowSetDialog] = useState(false)
-
-  const toggleSetDialog = () => {
-    setShowSetDialog(true)
+class WorkoutForm extends React.Component {
+  state = {
+    workout: emptyWorkout,
+    showSetDialog: false
   }
 
-  const saveWorkout = () => {
-    if (workout.id) {
-      console.log('updating workout with id: ' + workout.id)
-      updateWorkout(workout)
+  componentDidMount = () => {
+    if (!isUndefined(this.props.workoutId)) { 
+      this.fetchWorkout(this.props.workoutId)
+    }
+  }
+
+  fetchWorkout = id => {
+    retrieveWorkoutById(id)
+    .then( response => {
+      this.setState({workout: response})
+    })
+  }
+
+  toggleSetDialog = () => {
+     this.setState(prevState => {
+       return {showSetDialog: !prevState.showSetDialog}
+     })
+  }
+
+  saveWorkout = () => {
+    if (this.state.workout.id) {
+      console.log('updating workout with id: ' + this.state.workout.id)
+      updateWorkout(this.state.workout)
         .then(response => {
-          setWorkout(response)
+          this.setState({workout: response})
         })
     } else {
       console.log('adding workout')
-      addWorkout(workout)
+      addWorkout(this.state.workout)
         .then(response => {
-          // props.saveWorkout(response)
-          setWorkout(response)
+          this.setState({workout: response})
           return response
         })
         .then(response => {
-          props.saveWorkout(response)
+          this.props.saveWorkout(response)
         })
     }
   }
 
-  const handleTextChange = event => {
+  handleTextChange = event => {
     let { id, value } = event.target
-    let updatedWorkout = { ...workout }
+    let updatedWorkout = { ...this.state.workout }
     updatedWorkout[id] = value
-    setWorkout(updatedWorkout)
+    this.setState({workout: updatedWorkout})
   }
 
-  const saveSet = set => {
-    let updatedWorkout = {...workout}
+  saveSet = set => {
+    let updatedWorkout = {...this.state.workout}
     updatedWorkout.sets.push(set)
-    setWorkout(updatedWorkout)
-    setShowSetDialog(false)
+    this.setState({
+      workout: updatedWorkout,
+      showSetDialog: false
+    })
   }
 
-  const renderSets = sets => {
+  renderSets = sets => {
     return sets.map(set => {
       let data = {
         headers: ['name', 'reps'],
@@ -81,6 +99,7 @@ const AddWorkout = props => {
     })
   }
 
+  render(){
   return (
     <React.Fragment>
       <div css={detailCard}>
@@ -95,9 +114,9 @@ const AddWorkout = props => {
                 type='text'
                 id='name'
                 name='name'
-                value={workout.name}
+                value={this.state.workout.name}
                 placeholder='workout name..'
-                onChange={handleTextChange}
+                onChange={this.handleTextChange}
               />
             </div>
           </div>
@@ -111,9 +130,9 @@ const AddWorkout = props => {
                 type='text'
                 id='description'
                 name='description'
-                value={workout.description}
+                value={this.state.workout.description}
                 placeholder='workout description..'
-                onChange={handleTextChange}
+                onChange={this.handleTextChange}
               />
             </div>
           </div>
@@ -123,28 +142,28 @@ const AddWorkout = props => {
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
             <div style={{ paddingBottom: '10px' }}>Sets go here</div>
-            {renderSets(workout.sets)}
+            {this.renderSets(this.state.workout.sets)}
             <input
               type='button'
               value='Add Set'
               css={formButton}
-              onClick={toggleSetDialog}
+              onClick={this.toggleSetDialog}
               style={{ display: 'block' }}
             />
             <input
               type='button'
               value='Save Workout'
               css={formButton}
-              onClick={saveWorkout}
+              onClick={this.saveWorkout}
               style={{ display: 'block' }}
             />
-            {showSetDialog ? <SetCard saveSet={saveSet} done={toggleSetDialog} /> : null}
+            {this.state.showSetDialog ? <SetCard saveSet={this.saveSet} done={this.toggleSetDialog} /> : null}
           </div>
         </div>
       </div>
     </React.Fragment>
-  )
+  )}
 
 }
 
-export default AddWorkout
+export default WorkoutForm

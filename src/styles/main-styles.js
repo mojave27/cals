@@ -403,3 +403,23 @@ export let sameAsSelected = {
 export let selectHide = {
   display: 'none'
 }
+
+/* The Close Button */
+export let closeButton = {
+  color: '#aaaaaa',
+  float: 'right',
+  fontSize: '24px',
+  fontWeight: 'bold',
+  padding: '0px 10px',
+  margin: '3px 5px',
+  '&:hover': {
+    color: activeTheme.color5.hex,
+    textDecoration: 'none',
+    cursor: 'pointer'
+  },
+  '&:focus': {
+    color: '#000',
+    textDecoration: 'none',
+    cursor: 'pointer'
+  }
+}
