@@ -6,9 +6,13 @@ import { retrieve, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsA
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import Modal from '../Modal'
+import WorkoutForm from './WorkoutForm'
 
 const Workouts = props => {
   const [workouts, setWorkouts] = useState([])
+  const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  const [selectedWorkoutId, setSelectedWorkoutId] = useState(-1)
 
   useEffect(() => {
     fetchMyAPI()
@@ -65,7 +69,9 @@ const Workouts = props => {
 
   const editWorkout = event => {
     let id = event.currentTarget.id
-    console.log(`would edit workout with id: ${id}`)
+    setSelectedWorkoutId(id)
+    // setShowWorkoutModal(true)
+    toggleModal()
   }
 
   const deleteWorkout = async event => {
@@ -82,10 +88,21 @@ const Workouts = props => {
     setWorkouts(response)
   }
 
+  const toggleModal = () => {
+    let newValue = !showWorkoutModal 
+    console.log(`old value: ${showWorkoutModal}`)
+    console.log(`new value: ${newValue}`)
+    setShowWorkoutModal(newValue)
+  }
+
   return (
-    workouts.length > 0
+    showWorkoutModal
+    ? <Modal handleClose={toggleModal}>
+        <WorkoutForm workoutId={selectedWorkoutId} />
+      </Modal>
+    : (workouts.length > 0
     ? <div>{renderWorkouts(workouts)}</div>
-    : <div>Workouts</div>
+    : <div>Workouts</div>)
   )
 }
 

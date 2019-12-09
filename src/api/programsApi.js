@@ -64,6 +64,6 @@ const _handleError = error => {
 }
 
 const parseResponse = (response) => {
-  console.log({response})
+  // console.log({response})
   return response.data;
 }
