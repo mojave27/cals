@@ -4,7 +4,7 @@ import React from 'react'
 import { retrieve } from '../../api/exercisesApi'
 import { retrieveSetById } from '../../api/setsApi'
 import addSet from '../../api/addSet'
-import { closeButton, miniCard } from '../../styles/main-styles'
+import { miniCard } from '../../styles/main-styles'
 
 import {
   formContainer,
@@ -20,15 +20,14 @@ class SetCard extends React.Component {
   state = {
     selectedExercises: [],
     exercisesForSet: [],
-    allExercises: [],
+    exercises: [],
     showExerciseList: false
   }
 
   render() {
     return this.state.showExerciseList ? (
       <React.Fragment>
-        <div onClick={this.props.done}>close</div>
-        <div css={row}>{this.renderAllExercises(this.state.allExercises)}</div>
+        <div css={row}>{this.renderAllExercises(this.state.exercises)}</div>
         <div css={row}>
           <input
             style={{ margin: '5px' }}
@@ -48,10 +47,7 @@ class SetCard extends React.Component {
       </React.Fragment>
     ) : (
       this.props.set
-      ? <div>
-          {/* <span css={closeButton} onClick={this.props.done}>&times;</span> */}
-          {this.renderExercisesForSet(this.props.set.exercises)}
-        </div>
+      ? <div>{this.renderExercisesForSet(this.props.set.exercises)}</div>
       : <div css={formContainer} style={{border:'3px solid cyan'}}>
         <div css={row}>
           <div css={col25}>
@@ -99,7 +95,7 @@ class SetCard extends React.Component {
 
   retrieveExercises = () => {
     retrieve().then(exercises => {
-      this.setState({ allExercises: exercises })
+      this.setState({ exercises })
     })
   }
 
@@ -123,7 +119,7 @@ class SetCard extends React.Component {
     return exercises.map(exercise => {
       let index = exercise.id
       let fullExercise = {}
-      this.state.allExercises.forEach( fullEx => {
+      this.state.exercises.forEach( fullEx => {
         if ( Number(fullEx.id) === Number(exercise.id) ) {
           fullExercise = fullEx
         }
@@ -172,7 +168,7 @@ class SetCard extends React.Component {
   selectExercise = event => {
     let id = event.target.id
     let selectedExercises = [...this.state.selectedExercises]
-    selectedExercises.push(this.state.allExercises[id])
+    selectedExercises.push(this.state.exercises[id])
     this.setState({ selectedExercises })
   }
 

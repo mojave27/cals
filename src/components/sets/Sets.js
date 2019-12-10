@@ -9,6 +9,11 @@ import SetViewer from './SetViewer'
 import { findIndexOfId } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
 
+// const emptySet = {
+//   exercises: []
+// }
+// const SetContext = React.createContext(emptySet)
+
 class Sets extends React.Component {
   state = { sets: [], showModal: false, selectedSet: {} }
 
