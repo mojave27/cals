@@ -4,6 +4,8 @@ import { config } from '../config/axiosConfig'
 export let retrieve = () => {
   const url = 'exercises'
 
+  console.log('retrieving....')
+
   return axios
     .get(url, config)
     .then(function(response) {
