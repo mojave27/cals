@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { retrieve } from '../../api/setsApi'
@@ -8,78 +8,87 @@ import SetCard from './SetCard'
 import SetViewer from './SetViewer'
 import { findIndexOfId } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
+import WoContext from '../../context/WoContext'
 
-// const emptySet = {
-//   exercises: []
-// }
-// const SetContext = React.createContext(emptySet)
 
-class Sets extends React.Component {
-  state = { sets: [], showModal: false, selectedSet: {} }
+const Sets = () => {
+  let context = useContext(WoContext)
+  const [showModal, setShowModal] = useState(false)
+  const [sets, setSets] = useState([])
 
-  render() {
-    return this.state.showModal ? (
-      <Modal handleClose={this.toggleModal}>
-        <SetCard done={this.done} />
-      </Modal>
-    ) : (
+  useEffect(() => {
+    console.log('in Sets useEffect')
+    async function fetchMyAPI() {
+      const response = await retrieveSets()
+      // setSets(response)
+    }
 
-      isEmpty(this.state.selectedSet)
-      ? <React.Fragment>
-        <button
-          css={formButton}
-          style={{ float: 'none', margin: '10px auto' }}
-          onClick={this.toggleModal}
-        >
-          Add Set
-        </button>
-        {this.renderSets(this.state.sets)}
-      </React.Fragment>
-      : <SetCard set={this.state.selectedSet} />
-      )
+    fetchMyAPI()
+  }, [])
+
+
+  const retrieveSets = () => {
+    retrieve().then(sets => { setSets(sets) })
   }
 
-  componentDidMount = () => {
-    this.retrieveSets()
-  }
 
-  retrieveSets = () => {
+  // updateSelectedSet = set => {
+  //   this.setState({selectedSet: set})
+  // }
+
+  const done = () => {
     retrieve().then(sets => {
-      this.setState({ sets })
+      setSets(sets)
+      setShowModal(false)
     })
   }
 
-  done = () => {
-    retrieve().then(sets => {
-      this.setState({
-        sets: sets,
-        showModal: false
-      })
-    })
+  const toggleModal = () => {
+    setShowModal(!showModal)
   }
 
-  toggleModal = () => {
-    this.setState(prevState => {
-      return { showModal: !prevState.showModal }
-    })
-  }
-
-  handleSetSelect = (e) => {
+  const handleSetSelect = (e) => {
     let id = e.currentTarget.id
-    let index = findIndexOfId(id, this.state.sets)
-    let set = {...this.state.sets[index]}
-    this.setState({selectedSet: set})
+    let index = findIndexOfId(id, sets)
+    let set = { ...sets[index] }
+    // console.log(`setting this set into context: ${JSON.stringify(set)}`)
+    context.updateSet(set)
+    toggleModal()
   }
 
-  renderSets = sets => {
+  const renderSets = sets => {
     if (sets.length > 0) {
-    return sets.map(set => {
-      let index = set.id
-      return (
-        <SetViewer id={index} key={index} set={set} onClick={this.handleSetSelect} />
-      )
-    })}
+      return sets.map(set => {
+        let index = set.id
+        return (
+          <SetViewer id={index} key={index} set={set} onClick={handleSetSelect} />
+        )
+      })
+    }
   }
+
+  return (
+      (showModal ? (
+        <Modal handleClose={toggleModal}>
+          <SetCard done={done} />
+        </Modal>
+      ) : (
+
+          isEmpty(context.selectedSet)
+            ? <React.Fragment>
+              <button
+                css={formButton}
+                style={{ float: 'none', margin: '10px auto' }}
+                onClick={toggleModal}
+              >
+                Add Set
+        </button>
+              {renderSets(sets)}
+            </React.Fragment>
+            : <SetCard set={context.set} />
+        ))
+  )
+
 }
 
 export default Sets

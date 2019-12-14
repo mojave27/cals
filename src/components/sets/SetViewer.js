@@ -7,24 +7,6 @@ import Table from '../tables/SimpleTable'
 import { row, col25, col75, card } from '../../styles/main-styles'
 
 const SetViewer = props => {
-  const [exercises, setExercises] = useState([])
-
-  useEffect(() => {
-    let didCancel = false
-
-    async function fetchMyAPI() {
-      const response = await retrieve()
-      if (!didCancel) {
-        // Ignore if we started fetching something else
-        setExercises(response)
-      }
-    }
-
-    fetchMyAPI()
-    return () => {
-      didCancel = true
-    } // Remember if we start fetching something else
-  }, [])
 
   const renderExercises = exercises => {
     let data = {
@@ -38,21 +20,6 @@ const SetViewer = props => {
     )
   }
 
-  const findExerciseById = id => {
-    let index = exercises.findIndex(exercise => {
-      return Number(exercise.id) === Number(id)
-    })
-    return exercises[index]
-  }
-
-  const inflateExercises = setExercises => {
-    return setExercises.map(partialExercise => {
-      let fullExercise = findExerciseById(partialExercise.id)
-      fullExercise.reps = partialExercise.reps
-      return fullExercise
-    })
-  }
-
   return (
     <div css={card} style={{maxWidth:'300px', margin: '0px auto'}} id={props.id} onClick={props.onClick}>
       <div css={row}>
@@ -62,8 +29,8 @@ const SetViewer = props => {
         <div css={col75}>
           <div css={row}>
             {/* handle when exercises aren't loaded yet */}
-            {exercises.length > 0
-            ? renderExercises(inflateExercises(props.set.exercises))
+            {props.set.exercises.length > 0
+            ? renderExercises(props.set.exercises)
             : null}
           </div>
         </div>

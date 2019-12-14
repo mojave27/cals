@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { retrieve } from '../../api/exercisesApi'
-import { retrieveSetById } from '../../api/setsApi'
+// import { retrieveSetById } from '../../api/setsApi'
 import addSet from '../../api/addSet'
 import { closeButton, miniCard } from '../../styles/main-styles'
+import WoContext from '../../context/WoContext'
 
 import {
   formContainer,
@@ -16,50 +17,46 @@ import {
   selectedMiniCard
 } from '../../styles/main-styles'
 
-class SetCard extends React.Component {
-  state = {
-    selectedExercises: [],
-    exercisesForSet: [],
-    allExercises: [],
-    showExerciseList: false
-  }
+const SetCard = props => {
+  let context = useContext(WoContext)
+  // allExercises: [],
+  const [allExercises, setAllExercises] = useState([])
+  // selectedExercises: [],
+  const [selectedExercises, setSelectedExercises] = useState([])
+  // showExerciseList: false
+  const [showExerciseList, setShowExerciseList] = useState(false)
 
-  render() {
-    return this.state.showExerciseList ? (
-      <React.Fragment>
-        <div onClick={this.props.done}>close</div>
-        <div css={row}>{this.renderAllExercises(this.state.allExercises)}</div>
-        <div css={row}>
-          <input
-            style={{ margin: '5px' }}
-            type='button'
-            value='Save to Set'
-            css={inputSubmit}
-            onClick={this.addExercisesToSet}
-          />
-          <input
-            style={{ margin: '5px' }}
-            type='button'
-            value='Cancel'
-            css={inputSubmit}
-            onClick={this.toggleModal}
-          />
-        </div>
-      </React.Fragment>
-    ) : (
-      this.props.set
-      ? <div>
-          {/* <span css={closeButton} onClick={this.props.done}>&times;</span> */}
-          {this.renderExercisesForSet(this.props.set.exercises)}
-        </div>
-      : <div css={formContainer} style={{border:'3px solid cyan'}}>
+
+  useEffect(() => {
+    console.log('in SetCard useEffect')
+    let didCancel = false
+
+    async function fetchData() {
+      const response = await retrieve()
+      if (!didCancel) {
+        console.log(`useEffect retrieved: ${JSON.stringify(response)}`)
+        setAllExercises(response)
+      }
+    }
+
+    fetchData()
+    return () => {
+      didCancel = true
+    } // Remember if we start fetching something else
+  }, [])
+
+
+  const renderSet = () => {
+    return (
+      <div css={formContainer} style={{ border: '3px solid cyan' }}>
         <div css={row}>
           <div css={col25}>
+            <div>{`id: ${context.set.id}`}</div>
             <label htmlFor='exercises'>exercises for set</label>
           </div>
           <div css={col75}>
             <div css={row} >
-              {this.renderExercisesForSet(this.state.exercisesForSet)}
+              {renderExercisesForSet(context.set.exercises)}
             </div>
             <div css={row}>
               <input
@@ -67,7 +64,7 @@ class SetCard extends React.Component {
                 type='button'
                 value='Add Exercise'
                 css={inputSubmit}
-                onClick={this.toggleModal}
+                onClick={toggleModal}
               />
             </div>
           </div>
@@ -77,7 +74,7 @@ class SetCard extends React.Component {
               type='button'
               value='Save Set'
               css={inputSubmit}
-              onClick={this.addSetToDb}
+              onClick={addSetToDb}
             />
           </div>
         </div>
@@ -85,33 +82,42 @@ class SetCard extends React.Component {
     )
   }
 
-  componentDidMount = () => {
-    this.retrieveExercises()
-    if(this.props.set){
-      retrieveSetById(this.props.set.id)
-      .then( response => {
-        // console.log(JSON.stringify(response))
-        let exercises = response.exercises
-        this.setState({exercisesForSet: exercises})
-      })
-    }
+  const renderExerciseList = () => {
+    return (
+      <React.Fragment>
+        <div onClick={props.done}>close</div>
+        <div css={row}>{renderAllExercises(allExercises)}</div>
+        <div css={row}>
+          <input
+            style={{ margin: '5px' }}
+            type='button'
+            value='Save to Set'
+            css={inputSubmit}
+            onClick={addExercisesToSet}
+          />
+          <input
+            style={{ margin: '5px' }}
+            type='button'
+            value='Cancel'
+            css={inputSubmit}
+            onClick={toggleModal}
+          />
+        </div>
+      </React.Fragment>
+    )
   }
 
-  retrieveExercises = () => {
-    retrieve().then(exercises => {
-      this.setState({ allExercises: exercises })
-    })
-  }
 
-  renderAllExercises = exercises => {
+
+  const renderAllExercises = exercises => {
     return exercises.map(exercise => {
       let index = exercise.id
       return (
         <div
           id={index}
-          css={this.getClasses(exercise.id)}
+          css={getClasses(exercise.id)}
           key={index}
-          onClick={this.selectExercise}
+          onClick={selectExercise}
         >
           name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
         </div>
@@ -119,47 +125,42 @@ class SetCard extends React.Component {
     })
   }
 
-  renderExercisesForSet = exercises => {
+  const renderExercisesForSet = exercises => {
     return exercises.map(exercise => {
       let index = exercise.id
-      let fullExercise = {}
-      this.state.allExercises.forEach( fullEx => {
-        if ( Number(fullEx.id) === Number(exercise.id) ) {
-          fullExercise = fullEx
-        }
-      })
       return (
         <div
           id={index}
-          css={this.getClasses(fullExercise.id)}
+          css={getClasses(exercise.id)}
           key={index}
-          onClick={this.selectExercise}
+          // onClick={selectExercise}
         >
-          name: {fullExercise.name} - type: {fullExercise.type} - id: {fullExercise.id}
-           <input
-              css={[formInput, {width: '100px'}]}
-              type='text'
-              id={fullExercise.id}
-              name='exerciseReps'
-              value={fullExercise.reps}
-              placeholder='exercise reps..'
-              onChange={this.handleRepsChange}
-            />
+          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
+          <input
+            css={[formInput, { width: '100px' }]}
+            type='text'
+            id={exercise.id}
+            name='exerciseReps'
+            value={exercise.reps}
+            placeholder='exercise reps..'
+            onChange={handleRepsChange}
+            // onClick={handleRepsChange}
+          />
         </div>
       )
     })
   }
 
-  handleRepsChange = e => {
-    let { id, value } = e.target
-    let exercisesForSet = [...this.state.exercisesForSet]
-    let index = exercisesForSet.findIndex( exercise => Number(exercise.id) === Number(id))
-    exercisesForSet[index].reps = value
-    this.setState({exercisesForSet})
+  const getFullExercise = exerciseId => {
+    let fullExercise = allExercises.find(fullEx => {
+      return (Number(fullEx.id) === Number(exerciseId))
+    })
+    console.log(`fullExercises is: ${JSON.stringify(fullExercise)}`)
+    return fullExercise
   }
 
-  getClasses = id => {
-    let index = this.state.selectedExercises.findIndex(exercise => {
+  const getClasses = id => {
+    let index = selectedExercises.findIndex(exercise => {
       return Number(exercise.id) === Number(id)
     })
     if (index === -1) {
@@ -169,47 +170,64 @@ class SetCard extends React.Component {
     }
   }
 
-  selectExercise = event => {
-    let id = event.target.id
-    let selectedExercises = [...this.state.selectedExercises]
-    selectedExercises.push(this.state.allExercises[id])
-    this.setState({ selectedExercises })
+  const handleRepsChange = event => {
+    event.stopPropagation()
+    let { id, value } = event.target
+    let exercisesForSet = [...context.set.exercises]
+    let index = exercisesForSet.findIndex(exercise => Number(exercise.id) === Number(id))
+    exercisesForSet[index].reps = value
+    context.updateExercisesForSet(exercisesForSet)
   }
 
-  addExercisesToSet = () => {
-    let tempSelectedExercises = [...this.state.selectedExercises] 
+  const selectExercise = event => {
+    let id = event.target.id
+    let updatedSelectedExercises = [...selectedExercises]
+    updatedSelectedExercises.push(allExercises[id])
+    setSelectedExercises(updatedSelectedExercises)
+  }
+
+  const addExercisesToSet = () => {
+    let tempSelectedExercises = [...selectedExercises]
     let modifiedSelectedExercises = tempSelectedExercises.map(exercise => {
       exercise.reps = ''
       return exercise
     })
 
     let exercisesForSet = [
-      ...this.state.exercisesForSet,
+      ...context.set.exercises,
       ...modifiedSelectedExercises
     ]
-    this.setState({ exercisesForSet: exercisesForSet, showExerciseList: false })
+    context.set.updateExercisesForSet(exercisesForSet)
+    setShowExerciseList(false)
   }
 
-  toggleModal = () => {
-    this.setState(prevState => {
-      return { showExerciseList: !prevState.showExerciseList }
-    })
+  const toggleModal = () => {
+    let newShowExerciseList = !showExerciseList
+    setShowExerciseList(newShowExerciseList)
   }
 
-  addSetToDb = () => {
-    const set = {
-      exercises: this.state.exercisesForSet
-    }
+  const addSetToDb = () => {
     // add set to db, then call saveSet from parent
-    addSet(set).then(response => {
-      // console.log(JSON.stringify(response))
+    addSet(context.set).then(response => {
       /* save response instead of set, since response is *
        * the set with an id assigned.                    */
-      if( this.props.saveSet ) {
-        this.props.saveSet(response)
+      if (props.saveSet) {
+        props.saveSet(response)
       }
     })
   }
+
+  return (
+    showExerciseList
+      ? renderExerciseList()
+      : (props.set
+        ? <div>
+          {renderExercisesForSet(context.set.exercises)}
+        </div>
+        : renderSet()
+      )
+  )
+
 }
 
 export default SetCard
