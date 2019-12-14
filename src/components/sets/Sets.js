@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { retrieve } from '../../api/setsApi'
+import { deleteSet as deleteSetById, retrieve } from '../../api/setsApi'
 import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import SetCard from './SetCard'
@@ -17,30 +17,28 @@ const Sets = () => {
   const [sets, setSets] = useState([])
 
   useEffect(() => {
-    console.log('in Sets useEffect')
     async function fetchMyAPI() {
-      const response = await retrieveSets()
-      // setSets(response)
+      await retrieveSets()
     }
 
     fetchMyAPI()
   }, [])
 
-
   const retrieveSets = () => {
     retrieve().then(sets => { setSets(sets) })
   }
-
-
-  // updateSelectedSet = set => {
-  //   this.setState({selectedSet: set})
-  // }
 
   const done = () => {
     retrieve().then(sets => {
       setSets(sets)
       setShowModal(false)
     })
+  }
+
+  const addSet = () => {
+    let emptySet = { exercises: [] }
+    context.updateSet(emptySet)
+    toggleModal()
   }
 
   const toggleModal = () => {
@@ -51,9 +49,18 @@ const Sets = () => {
     let id = e.currentTarget.id
     let index = findIndexOfId(id, sets)
     let set = { ...sets[index] }
-    // console.log(`setting this set into context: ${JSON.stringify(set)}`)
     context.updateSet(set)
     toggleModal()
+  }
+
+  const deleteSet = event => {
+    event.stopPropagation()
+    deleteSetById(event.currentTarget.id)
+    retrieveSets()
+  }
+
+  const saveSet = set => {
+    retrieveSets()
   }
 
   const renderSets = sets => {
@@ -61,7 +68,7 @@ const Sets = () => {
       return sets.map(set => {
         let index = set.id
         return (
-          <SetViewer id={index} key={index} set={set} onClick={handleSetSelect} />
+          <SetViewer id={index} key={index} set={set} deleteSet={deleteSet} selectSet={handleSetSelect} />
         )
       })
     }
@@ -70,7 +77,7 @@ const Sets = () => {
   return (
       (showModal ? (
         <Modal handleClose={toggleModal}>
-          <SetCard done={done} />
+          <SetCard done={done} saveSet={saveSet} />
         </Modal>
       ) : (
 
@@ -79,13 +86,14 @@ const Sets = () => {
               <button
                 css={formButton}
                 style={{ float: 'none', margin: '10px auto' }}
-                onClick={toggleModal}
+                onClick={addSet}
               >
                 Add Set
         </button>
               {renderSets(sets)}
             </React.Fragment>
-            : <SetCard set={context.set} />
+            // : <SetCard set={context.set} />
+            : <SetCard done={done} saveSet={saveSet} />
         ))
   )
 

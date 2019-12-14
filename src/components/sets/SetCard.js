@@ -3,8 +3,9 @@ import { jsx } from '@emotion/core'
 import React, { useContext, useEffect, useState } from 'react'
 import { retrieve } from '../../api/exercisesApi'
 // import { retrieveSetById } from '../../api/setsApi'
-import addSet from '../../api/addSet'
+import { addSet, updateSet } from '../../api/setsApi'
 import { closeButton, miniCard } from '../../styles/main-styles'
+import { isUndefined } from 'lodash'
 import WoContext from '../../context/WoContext'
 
 import {
@@ -19,30 +20,20 @@ import {
 
 const SetCard = props => {
   let context = useContext(WoContext)
-  // allExercises: [],
   const [allExercises, setAllExercises] = useState([])
-  // selectedExercises: [],
   const [selectedExercises, setSelectedExercises] = useState([])
-  // showExerciseList: false
   const [showExerciseList, setShowExerciseList] = useState(false)
 
-
   useEffect(() => {
-    console.log('in SetCard useEffect')
     let didCancel = false
 
     async function fetchData() {
       const response = await retrieve()
-      if (!didCancel) {
-        console.log(`useEffect retrieved: ${JSON.stringify(response)}`)
-        setAllExercises(response)
-      }
+      setAllExercises(response)
     }
 
     fetchData()
-    return () => {
-      didCancel = true
-    } // Remember if we start fetching something else
+    return () => { didCancel = true }
   }, [])
 
 
@@ -51,7 +42,7 @@ const SetCard = props => {
       <div css={formContainer} style={{ border: '3px solid cyan' }}>
         <div css={row}>
           <div css={col25}>
-            <div>{`id: ${context.set.id}`}</div>
+            <div>{`id: ${getSetId()}`} </div>
             <label htmlFor='exercises'>exercises for set</label>
           </div>
           <div css={col75}>
@@ -74,12 +65,16 @@ const SetCard = props => {
               type='button'
               value='Save Set'
               css={inputSubmit}
-              onClick={addSetToDb}
+              onClick={saveSet}
             />
           </div>
         </div>
       </div>
     )
+  }
+
+  const getSetId = () => {
+    return isUndefined(context.set.id) ? ' ' : context.set.id
   }
 
   const renderExerciseList = () => {
@@ -107,8 +102,6 @@ const SetCard = props => {
     )
   }
 
-
-
   const renderAllExercises = exercises => {
     return exercises.map(exercise => {
       let index = exercise.id
@@ -133,7 +126,7 @@ const SetCard = props => {
           id={index}
           css={getClasses(exercise.id)}
           key={index}
-          // onClick={selectExercise}
+        // onClick={selectExercise}
         >
           name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
           <input
@@ -144,7 +137,7 @@ const SetCard = props => {
             value={exercise.reps}
             placeholder='exercise reps..'
             onChange={handleRepsChange}
-            // onClick={handleRepsChange}
+          // onClick={handleRepsChange}
           />
         </div>
       )
@@ -197,7 +190,7 @@ const SetCard = props => {
       ...context.set.exercises,
       ...modifiedSelectedExercises
     ]
-    context.set.updateExercisesForSet(exercisesForSet)
+    context.updateExercisesForSet(exercisesForSet)
     setShowExerciseList(false)
   }
 
@@ -206,26 +199,24 @@ const SetCard = props => {
     setShowExerciseList(newShowExerciseList)
   }
 
-  const addSetToDb = () => {
-    // add set to db, then call saveSet from parent
-    addSet(context.set).then(response => {
-      /* save response instead of set, since response is *
-       * the set with an id assigned.                    */
-      if (props.saveSet) {
-        props.saveSet(response)
-      }
-    })
+  const saveSet = async () => {
+    let response = {}
+    if (context.set.id) {
+      response = await updateSet(context.set)
+    } else {
+      response = await addSet(context.set)
+    }
+
+    if (props.saveSet) {
+      props.saveSet(response)
+    }
+
   }
 
   return (
     showExerciseList
       ? renderExerciseList()
-      : (props.set
-        ? <div>
-          {renderExercisesForSet(context.set.exercises)}
-        </div>
-        : renderSet()
-      )
+      : renderSet()
   )
 
 }
