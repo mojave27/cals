@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
+import { gridContainer, gridItem } from '../../styles/gridStyles'
 
 const Workouts = props => {
   const [workouts, setWorkouts] = useState([])
@@ -20,13 +21,12 @@ const Workouts = props => {
 
   //TODO: render rows of 5
   const renderWorkouts = workouts => {
-    // let maxSets = this.getMaxSets(this.state.program.workouts)
     return workouts.map(wo => {
       return (
         <div
           key={wo.id}
           id={wo.id}
-          css={workoutBlock}
+          css={workoutBlock, gridItem}
           style={{marginLeft: '5px', marginBottom: '10px'}}
         >
           <div css={workoutHeader}>
@@ -101,7 +101,7 @@ const Workouts = props => {
         <WorkoutForm workoutId={selectedWorkoutId} />
       </Modal>
     : (workouts.length > 0
-    ? <div>{renderWorkouts(workouts)}</div>
+    ? <div css={gridContainer}>{renderWorkouts(workouts)}</div>
     : <div>Workouts</div>)
   )
 }

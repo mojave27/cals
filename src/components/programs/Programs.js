@@ -9,6 +9,7 @@ import ProgramHighlightCard from './ProgramHighlightCard'
 import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
 import { formButton } from '../../styles/main-styles'
+import { gridContainer, gridItem } from '../../styles/gridStyles'
 
 const container = css({
   display: 'grid',
@@ -62,7 +63,7 @@ const Programs = props => {
         return ProgramRow(program)
       })
     } else {
-      return <div></div>
+      return <div css={gridItem}></div>
     }
   }
 
@@ -100,7 +101,8 @@ const Programs = props => {
       >
         Add Program
       </button>
-      <div css={container}>{renderPrograms(programs)}</div>
+      {/* <div css={gridContainer, container}>{renderPrograms(programs)}</div> */}
+      <div css={gridContainer}>{renderPrograms(programs)}</div>
     </React.Fragment>
   ) : (
     <ProgramOverview handleClose={clearSelectedProgram} program={selectedProgram} />

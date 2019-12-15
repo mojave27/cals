@@ -9,7 +9,7 @@ export let workoutHeader = css({
 })
 
 export let workoutBlock = css({
-  display: 'inline-block',
+  display: 'inline-grid',
   // color: activeTheme.color2_text.hex
 })
 

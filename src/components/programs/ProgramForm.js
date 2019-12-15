@@ -11,8 +11,8 @@ import AddWorkout from '../workouts/AddWorkout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import {
+  card,
   closeButton,
-  formContainer,
   row,
   col25,
   col75,
@@ -41,10 +41,10 @@ class ProgramForm extends React.Component {
     return (
       this.state.showWorkoutModal
         ? <Modal handleClose={this.toggleWorkoutModal}>
-          <AddWorkout saveWorkout={this.saveWorkout} />
-        </Modal>
+            <AddWorkout saveWorkout={this.saveWorkout} />
+          </Modal>
         : <div>
-          <div css={formContainer}>
+          <div css={card}>
             <div css={row}>
               <span css={closeButton} onClick={this.handleClose}>&times;</span>
             </div>
