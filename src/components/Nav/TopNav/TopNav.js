@@ -1,8 +1,11 @@
-import React, { Component } from "react";
+import { Component } from "react";
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import { Link } from "@reach/router";
 import { menuConfig } from './topNavMenuConfig';
+import { navbar, dropdown, dropbtn, dropdownContent } from '../../../styles/topNavStyles'
 
-import "./TopNav.css";
+// import "./TopNav.css";
 
 class TopNav extends Component {
     state = {
@@ -39,13 +42,13 @@ class TopNav extends Component {
 
     renderButton = (menuConfig, index) => {
         let menuName = menuConfig.name;
-        return (<div key={index} className="dropdown">
+        return (<div key={index} css={dropdown}>
             <Link to={menuConfig.link.to} >
             <button
                 onMouseOver={this.mouseOver}
                 onMouseOut={this.mouseOut}
                 menu-name={menuName}
-                className="dropbtn"
+                css={dropbtn}
             >
                 {menuName}
             </button>
@@ -55,12 +58,12 @@ class TopNav extends Component {
 
     renderDropDownMenu = (menuConfig, index) => {
         let menuName = menuConfig.name;
-        return (<div key={index} className="dropdown">
+        return (<div key={index} css={dropdown}>
             <button
                 onMouseOver={this.mouseOver}
                 onMouseOut={this.mouseOut}
                 menu-name={menuName}
-                className="dropbtn"
+                css={dropbtn}
             >
                 {menuName}
                 <i className="fa fa-caret-down" />
@@ -71,7 +74,7 @@ class TopNav extends Component {
                 onClick={this.handleClick}
                 onMouseOver={this.mouseOver}
                 onMouseOut={this.mouseOut}
-                className="dropdown-content"
+                css={dropdownContent}
             >
                 {menuConfig.items.map((menuItem, index) => {
                     return (<Link key={index} menu-name={menuName} to={menuItem.to}>{menuItem.text}</Link>)
@@ -83,7 +86,7 @@ class TopNav extends Component {
     render() {
         return (
             <div>
-                <div className="navbar">
+                <div css={navbar}>
                     {menuConfig.map((menu, index) => {
                         return this.renderMenu(menu, index)
                     })}

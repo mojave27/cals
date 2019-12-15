@@ -7,19 +7,20 @@ export let table = {
   width: '100%',
   border: `1px solid ${activeTheme.color5.hex}`,
   '& th': {
-    backgroundColor: activeTheme.color5.hex
+    backgroundColor: activeTheme.color5.hex,
+    color: activeTheme.color5_text.hex
   },
   '& th, td': {
     textAlign: 'left',
     padding: '3px'
   },
-  // '& tr:hover': {
-  //     border: `1px solid ${activeTheme.color5_highlight.hex}`
-  // },
+
   '& tr:nth-of-type(odd)': {
-    backgroundColor: activeTheme.color3.hex
+    backgroundColor: activeTheme.color1.hex,
+    color: activeTheme.color1_text.hex
   },
   '& tr:nth-of-type(even)': {
-    backgroundColor: activeTheme.color4.hex
+    backgroundColor: activeTheme.color2.hex,
+    color: activeTheme.color2_text.hex
   }
 }
