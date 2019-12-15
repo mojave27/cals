@@ -7,46 +7,44 @@ export let navbar = {
   backgroundColor: activeTheme.color5.hex,
   borderBottom: `solid 1px ${activeTheme.color4.hex}`,
   fontFamily: 'Arial',
-  // fontSize: '14px',
+  // padding: '12px 14px',
+  fontSize: '14px',
   /* Links inside the navbar */
   '& a': {
     float: 'left',
     fontSize: '14px',
-    color: activeTheme.color4.hex,
+    // color: activeTheme.color4_text.hex,
+    backgroundColor: activeTheme.color1.hex,
     textAlign: 'center',
     textDecoration: 'none'
   },
-  '& a:hover': {
-    backgroundColor: activeTheme.color4.hex,
-    color: activeTheme.color4_text.hex
-  }
+  // '& a:hover': {
+  //   backgroundColor: activeTheme.color4.hex,
+  //   color: activeTheme.color4_text.hex
+  // }
 }
 
 /* The dropdown container */
 export const dropdown = {
   float: 'left',
   overflow: 'hidden',
-  // fontSize: '14px',
-  /* Dropdown button */
   '& .dropbtn': {
-    fontSize: '14px',
     border: 'none',
     outline: 'none',
-    color: 'white',
+    color: 'red',
     padding: '14px 16px;',
-    // backgroundColor: 'inherit',
+    backgroundColor: 'inherit',
     fontFamily: 'inherit',
-    /* Important for vertical align on mobile phones */
     margin: '0'
   },
-  '& :hover': {
-    backgroundColor: activeTheme.color4.hex,
-    color: activeTheme.color4_text.hex,
-    /* Show the dropdown menu on hover */
-    '& .dropdownContent': {
-      display: 'block'
-    }
-  }
+  // '& :hover': {
+  //   backgroundColor: activeTheme.color4.hex,
+  //   color: activeTheme.color4_text.hex,
+  //   /* Show the dropdown menu on hover */
+  //   '& .dropdownContent': {
+  //     display: 'block'
+  //   }
+  // }
 }
 
 export const dropbtn = {
@@ -79,8 +77,8 @@ export const dropdownContent = {
   },
   /* Add background color to dropdown links on hover */
   '& a:hover': {
-    backgroundColor: activeTheme.color1.hex,
-    color: activeTheme.color1_text.hex
+    backgroundColor: activeTheme.color4.hex,
+    color: activeTheme.color4_text.hex
   }
 }
 
