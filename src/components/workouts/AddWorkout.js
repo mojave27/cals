@@ -3,7 +3,6 @@ import { jsx } from '@emotion/core'
 import React, { useState } from 'react'
 import SetCard from '../sets/SetCard'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
-import { isEmpty } from 'lodash'
 import Table from '../tables/SimpleTable'
 import { setBlock } from '../../styles/program'
 import {

@@ -12,6 +12,7 @@ import WorkoutForm from './components/workouts/WorkoutForm'
 import Sets from './components/sets/Sets'
 import { activeTheme } from './styles/main-styles'
 import WoProvider from './context/WoProvider'
+import DataConsistency from './components/Admin/DataConsistency'
 
 
 class App extends Component {
@@ -40,6 +41,7 @@ class App extends Component {
               <WorkoutForm path='/workout-form' />
               <WorkoutForm path='/workout-form/:workoutId' />
               <Sets path='/sets' />
+              <DataConsistency path='/admin/consistency-check' />
             </Router>
           </div>
         </div>

@@ -36,5 +36,15 @@ export const menuConfig = [
     name: 'calcs',
     type: 'dropdown',
     items: [{ to: '1rm', text: '1 rep max' }]
+  },
+  {
+    name: 'admin',
+    type: 'dropdown',
+    items: [
+      { to: '/admin/consistency-check', text: 'data check' },
+      // { to: '/workouts', text: 'workouts' },
+      // { to: '/exercises', text: 'exercises' },
+      // { to: '/sets', text: 'sets' }
+    ]
   }
 ];
