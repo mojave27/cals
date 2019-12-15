@@ -6,11 +6,11 @@ import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import Exercise from './Exercise'
 import ExercisesTable from './ExercisesTable'
-import { dynamicSort, findIndexOfId } from '../ArrayUtils'
+import { dynamicSort } from '../ArrayUtils'
 
 const Exercises = props => {
   const [exercises, setExercises] = useState([])
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState([])
+  // const [selectedExerciseIds, setSelectedExerciseIds] = useState([])
   const [showModal, setShowModal] = useState(false)
 
   const columns = React.useMemo(
@@ -49,8 +49,6 @@ const Exercises = props => {
     async function fetchMyAPI() {
       const response = await retrieve()
       if (!didCancel) {
-        console.log({ response })
-        // Ignore if we started fetching something else
         setExercises(response)
       }
     }
@@ -72,27 +70,27 @@ const Exercises = props => {
     })
   }
 
-  const submitTable = ids => {
-    console.log(ids)
-    let exercisesToAdd = ids.map( id => {
-      let index = findExerciseById(id)
-      return exercises[index]
-    })
-    updateSelectedExercises(exercisesToAdd)
-  }
+  // const submitTable = ids => {
+  //   console.log(ids)
+  //   let exercisesToAdd = ids.map( id => {
+  //     let index = findExerciseById(id)
+  //     return exercises[index]
+  //   })
+  //   updateSelectedExercises(exercisesToAdd)
+  // }
 
-  const findExerciseById = id => {
-    // let index = exercises.findIndex( exercise => Number(exercise.id) === Number(id))
-    let index = findIndexOfId(id, exercises)
-    return index
-  }
+  // const findExerciseById = id => {
+  //   // let index = exercises.findIndex( exercise => Number(exercise.id) === Number(id))
+  //   let index = findIndexOfId(id, exercises)
+  //   return index
+  // }
 
-  const updateSelectedExercises = exercisesToAdd => {
-    let newSelectedExerciseIds = [...selectedExerciseIds, ...exercisesToAdd]
-    let uniqueIds = new Set(newSelectedExerciseIds)
-    let updatedSelectedExerciseIds = Array.from(uniqueIds)
-    setSelectedExerciseIds(updatedSelectedExerciseIds)
-  }
+  // const updateSelectedExercises = exercisesToAdd => {
+  //   let newSelectedExerciseIds = [...selectedExerciseIds, ...exercisesToAdd]
+  //   let uniqueIds = new Set(newSelectedExerciseIds)
+  //   let updatedSelectedExerciseIds = Array.from(uniqueIds)
+  //   setSelectedExerciseIds(updatedSelectedExerciseIds)
+  // }
 
   const deleteExercises = exerciseIds => {
     let id = exerciseIds[0]

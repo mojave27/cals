@@ -1,10 +1,6 @@
 import React from 'react'
 import WoContext from './WoContext'
 
-const emptySet = {
-    exercises:[]
-}
-
 class WoProvider extends React.Component {
     state = {
         set: {

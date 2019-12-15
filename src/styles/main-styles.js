@@ -1,61 +1,61 @@
 import { css } from '@emotion/core'
 
-/* Theme 1 ******************
-2D3540, 1B2026, 80858C, B0B7BF, 03A696
+// const themeOne = {
+//   color1: {
+//     hex: '#2D3540',
+//     rgba: alpha => buildRgba(45, 53, 64, alpha)
+//   },
+//   color2: {
+//     hex: '#1B2026',
+//     rgba: alpha => buildRgba(27, 32, 38, alpha)
+//   },
+//   color3: {
+//     hex: '#80858C',
+//     rgba: alpha => buildRgba(128, 133, 140, alpha)
+//   },
+//   color4: {
+//     hex: '#B0B7BF',
+//     rgba: alpha => buildRgba(176, 183, 191, alpha)
+//   },
+//   color5: {
+//     hex: '#03A696',
+//     rgba: alpha => buildRgba(3, 166, 150, alpha)
+//   },
+//   color5_highlight: {
+//     hex: '#05E6CF',
+//     rgba: alpha => buildRgba(230, 207, 90, alpha)
+//   }
+// }
 
-rgba(45, 53, 64, 1)
-rgba(27, 32, 38, 1)
-rgba(128, 133, 140, 1)
-rgba(176, 183, 191, 1)
-rgba(3, 166, 150, 1)
-*/
 
-const themeOne = {
-  color1: {
-    hex: '#2D3540',
-    rgba: alpha => buildRgba(45, 53, 64, alpha)
-  },
-  color2: {
-    hex: '#1B2026',
-    rgba: alpha => buildRgba(27, 32, 38, alpha)
-  },
-  color3: {
-    hex: '#80858C',
-    rgba: alpha => buildRgba(128, 133, 140, alpha)
-  },
-  color4: {
-    hex: '#B0B7BF',
-    rgba: alpha => buildRgba(176, 183, 191, alpha)
-  },
-  color5: {
-    hex: '#03A696',
-    rgba: alpha => buildRgba(3, 166, 150, alpha)
-  },
-  color5_highlight: {
-    hex: '#05E6CF',
-    rgba: alpha => buildRgba(230, 207, 90, alpha)
-  }
-}
+// const themeTwo = {
+//   color4: {
+//     hex: '#2D3540',
+//     rgba: alpha => buildRgba(45, 53, 6, alpha)
+//   },
+//   color5: {
+//     hex: '#68788C',
+//     rgba: alpha => buildRgba(104, 120, 140, alpha)
+//   },
+//   color3: {
+//     hex: '#03A696',
+//     rgba: alpha => buildRgba(3, 166, 150, alpha)
+//   },
+//   color1: {
+//     hex: '#C0D904',
+//     rgba: alpha => buildRgba(192, 217, 4, alpha)
+//   },
+//   color2: {
+//     hex: '#93A603',
+//     rgba: alpha => buildRgba(147, 166, 3, alpha)
+//   },
+//   color5_highlight: {
+//     hex: '#93A603',
+//     rgba: alpha => buildRgba(147, 166, 3, alpha)
+//   }
+// }
 
-/* Theme 2 ******************
- #2D3540, #68788C, #03A696, #C0D904, #93A603
 
- rgba(45, 53, 64, 1),
- rgba(104, 120, 140, 1),
- rgba(3, 166, 150, 1),
- rgba(192, 217, 4, 1),
- rgba(147, 166, 3, 1)
-*/
-
-/* Theme 3 ******************
-#F2F2F2, #BFBFBF, #8C8C8C, #595959, #262626
-
-rgba(242, 242, 242, 1)
-rgba(191, 191, 191, 1)
-rgba(140, 140, 140, 1)
-rgba(89, 89, 89, 1)
-rgba(38, 38, 38, 1)
-*/
 const themeThree = {
   color4: {
     hex: '#F2F2F2',
@@ -90,32 +90,6 @@ const buildRgba = (red, green, blue, alpha) => {
 
 export let activeTheme = themeThree
 
-// export let activeTheme = {
-//   color1: {
-//     hex: '#2D3540',
-//     rgba: alpha => buildRgba(45, 53, 64, alpha)
-//   },
-//   color2: {
-//     hex: '#1B2026',
-//     rgba: alpha => buildRgba(27, 32, 38, alpha)
-//   },
-//   color3: {
-//     hex: '#80858C',
-//     rgba: alpha => buildRgba(128, 133, 140, alpha)
-//   },
-//   color4: {
-//     hex: '#B0B7BF',
-//     rgba: alpha => buildRgba(176, 183, 191, alpha)
-//   },
-//   color5: {
-//     hex: '#03A696',
-//     rgba: alpha => buildRgba(3, 166, 150, alpha)
-//   },
-//   color5_highlight: {
-//     hex: '#05E6CF',
-//     rgba: alpha => buildRgba(230, 207, 90, alpha)
-//   }
-// }
 
 export let miniCard = css({
   width: '50%',
