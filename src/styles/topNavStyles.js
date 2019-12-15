@@ -1,60 +1,33 @@
 import { activeTheme } from './main-styles'
 
-
 /* Navbar container */
 export let navbar = {
   overflow: 'hidden',
   backgroundColor: activeTheme.color5.hex,
   borderBottom: `solid 1px ${activeTheme.color4.hex}`,
   fontFamily: 'Arial',
-  // padding: '12px 14px',
   fontSize: '14px',
-  /* Links inside the navbar */
-  '& a': {
-    float: 'left',
-    fontSize: '14px',
-    // color: activeTheme.color4_text.hex,
-    backgroundColor: activeTheme.color1.hex,
-    textAlign: 'center',
-    textDecoration: 'none'
-  },
-  // '& a:hover': {
-  //   backgroundColor: activeTheme.color4.hex,
-  //   color: activeTheme.color4_text.hex
-  // }
 }
 
 /* The dropdown container */
 export const dropdown = {
   float: 'left',
-  overflow: 'hidden',
-  '& .dropbtn': {
-    border: 'none',
-    outline: 'none',
-    color: 'red',
-    padding: '14px 16px;',
-    backgroundColor: 'inherit',
-    fontFamily: 'inherit',
-    margin: '0'
-  },
-  // '& :hover': {
-  //   backgroundColor: activeTheme.color4.hex,
-  //   color: activeTheme.color4_text.hex,
-  //   /* Show the dropdown menu on hover */
-  //   '& .dropdownContent': {
-  //     display: 'block'
-  //   }
-  // }
+  overflow: 'hidden'
 }
 
+
 export const dropbtn = {
-    backgroundColor: activeTheme.color5.hex,
+    border: 'none',
+    outline: 'none',
+    padding: '14px 16px;',
+    backgroundColor: 'inherit',
     color: activeTheme.color5_text.hex,
     fontSize: '14px',
-    border: activeTheme.color5.hex
-    // '& :hover': {
-    //   backgroundColor: activeTheme.color4.hex
-    // }
+    fontFamily: 'inherit',
+    margin: '0',
+    '&:hover': {
+      backgroundColor: activeTheme.color4.hex
+    }
 }
 
 /* Dropdown content (hidden by default) */
@@ -69,7 +42,7 @@ export const dropdownContent = {
   /* Links inside the dropdown */
   '& a': {
     float: 'none',
-    color: 'black',
+    color: activeTheme.color5.hex,
     padding: '12px 16px',
     textDecoration: 'none',
     display: 'block',
@@ -81,4 +54,3 @@ export const dropdownContent = {
     color: activeTheme.color4_text.hex
   }
 }
-
