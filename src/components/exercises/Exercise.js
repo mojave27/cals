@@ -6,11 +6,11 @@ import { EXERCISE_TYPES } from '../../constants'
 import addExercise from '../../api/addExercise'
 
 import {
+  basicButton,
   formContainer,
   row,
   col25,
   col75,
-  inputSubmit,
   formInput
 } from '../../styles/main-styles'
 
@@ -76,7 +76,7 @@ class Exercise extends React.Component {
           <input
             type='submit'
             value='Submit'
-            css={inputSubmit}
+            css={[basicButton, {float:'right'}]}
             onClick={this.addExerciseToDb}
           />
         </div>

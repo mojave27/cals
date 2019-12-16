@@ -11,7 +11,6 @@ import {
   row,
   col25,
   col75,
-  inputSubmit,
   selectedMiniCard
 } from '../../styles/main-styles'
 
@@ -32,14 +31,14 @@ class Set extends React.Component {
             style={{ margin: '5px' }}
             type='button'
             value='Save to Set'
-            css={inputSubmit}
+            css={[basicButton, {float:'right'}]}
             onClick={this.addExercisesToSet}
           />
           <input
             style={{ margin: '5px' }}
             type='button'
             value='Cancel'
-            css={inputSubmit}
+            css={[basicButton, {float:'right'}]}
             onClick={this.toggleModal}
           />
         </div>
@@ -59,7 +58,7 @@ class Set extends React.Component {
                 style={{ margin: '5px' }}
                 type='button'
                 value='Add Exercise'
-                css={inputSubmit}
+                css={[basicButton, {float:'right'}]}
                 onClick={this.toggleModal}
               />
             </div>
@@ -69,7 +68,7 @@ class Set extends React.Component {
               style={{ margin: '5px' }}
               type='button'
               value='Save Set'
-              css={inputSubmit}
+              css={[basicButton, {float:'right'}]}
               onClick={this.addSetToDb}
             />
           </div>

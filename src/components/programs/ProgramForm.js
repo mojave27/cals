@@ -11,12 +11,12 @@ import AddWorkout from '../workouts/AddWorkout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import {
+  basicButton,
   card,
   closeButton,
   row,
   col25,
   col75,
-  inputSubmit,
   formInput,
   formButton
 } from '../../styles/main-styles'
@@ -98,7 +98,7 @@ class ProgramForm extends React.Component {
               </div>
             </div>
             <div css={row}>
-              <input type='submit' value='Submit' css={inputSubmit} onClick={this.saveProgram} />
+              <input type='submit' value='Submit' css={[basicButton, {float:'right'}]} onClick={this.saveProgram} />
             </div>
           </div>
         </div>

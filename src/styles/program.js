@@ -5,7 +5,8 @@ export let workoutHeader = css({
   backgroundColor: activeTheme.color3.hex,
   color: activeTheme.color3_text.hex,
   fontWeight: 'bold',
-  padding: '2px 5px'
+  padding: '2px 5px',
+  textAlign: 'left'
 })
 
 export let workoutBlock = css({

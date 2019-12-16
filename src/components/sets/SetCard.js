@@ -8,12 +8,12 @@ import { isUndefined } from 'lodash'
 import WoContext from '../../context/WoContext'
 
 import {
+  basicButton,
   formContainer,
   formInput,
   row,
   col25,
   col75,
-  inputSubmit,
   selectedMiniCard
 } from '../../styles/main-styles'
 
@@ -35,7 +35,7 @@ const SetCard = props => {
 
   const renderSet = () => {
     return (
-      <div css={formContainer} style={{ border: '3px solid cyan' }}>
+      <div css={formContainer}>
         <div css={row}>
           <div css={col25}>
             <div>{`id: ${getSetId()}`} </div>
@@ -48,7 +48,7 @@ const SetCard = props => {
                 style={{ margin: '5px' }}
                 type='button'
                 value='Add Exercise'
-                css={inputSubmit}
+                css={[basicButton, {float:'right'}]}
                 onClick={toggleModal}
               />
             </div>
@@ -58,7 +58,7 @@ const SetCard = props => {
               style={{ margin: '5px' }}
               type='button'
               value='Save Set'
-              css={inputSubmit}
+              css={[basicButton, {float:'right'}]}
               onClick={saveSet}
             />
           </div>
@@ -81,14 +81,14 @@ const SetCard = props => {
             style={{ margin: '5px' }}
             type='button'
             value='Save to Set'
-            css={inputSubmit}
+            css={[basicButton, {float:'right'}]}
             onClick={addExercisesToSet}
           />
           <input
             style={{ margin: '5px' }}
             type='button'
             value='Cancel'
-            css={inputSubmit}
+            css={[basicButton, {float:'right'}]}
             onClick={toggleModal}
           />
         </div>

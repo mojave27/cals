@@ -21,7 +21,7 @@ export let deleteExercisesById = ids => {
   let responses = []
   ids.forEach( async id => {
     let response = await deleteExerciseById(id)
-    console.log(response)
+    // console.log(response)
     responses.push(response)
   })
   return responses

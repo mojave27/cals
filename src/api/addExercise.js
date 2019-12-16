@@ -22,7 +22,7 @@ const addExercise = exercise => {
 const parseResponse = (response) => {
     // console.log(`response ${JSON.stringify(response)}`)
     // const responseData = response.data
-    console.log(response.data)
+    // console.log(response.data)
     // let data = { 
     //   totalHits: responseData.totalHits,
     //   currentPage: responseData.currentPage,

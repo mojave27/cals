@@ -26,9 +26,10 @@ export let card = css({
 
 export let miniCard = css({
   width: '50%',
-  border: `1px solid ${activeTheme.color4.hex}`,
+  border: `1px solid ${activeTheme.color5.hex}`,
   borderRadius: '2px',
-  backgroundColor: `#CACACD`,
+  backgroundColor: activeTheme.color4.hex,
+  color: activeTheme.color4_text.hex,
   margin: '2px auto',
   padding: '3px 5px',
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
@@ -36,15 +37,17 @@ export let miniCard = css({
   textAlign: 'center',
   color: `${activeTheme.color2.hex}`,
   '&:hover': {
-    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+    boxShadow: `0 8px 16px 0 ${activeTheme.color5.rgba(.2)}`,
     border: `1px solid ${activeTheme.color5.hex}`,
-    backgroundColor: `#E4E4E6`
+    backgroundColor: activeTheme.color1.hex,
+    color: activeTheme.color1_text.hex
   }
 })
 
 export let selectedMiniCard = css({
-  // backgroundColor: activeTheme.color5.hex
-  backgroundColor: 'lightYellow'
+  color: activeTheme.color1_text.hex,
+  backgroundColor: 'lightYellow',
+  fontWeight: '700'
 })
 
 export let cardTitle = css({
@@ -160,17 +163,14 @@ export let label = css({
   // display: 'inline-block'
 })
 
-// export let input[type=submit] = css({
-export let inputSubmit = css({
+export let basicButton = css({
+  padding: '6px 20px',
   fontSize: 'inherit',
-  backgroundColor: activeTheme.color5.hex,
-  color: activeTheme.color5_text.hex,
-  // color: 'white',
-  padding: '8px 20px',
-  border: 'none',
-  borderRadius: '4px',
+  backgroundColor: activeTheme.color1.hex,
+  color: activeTheme.color1_text.hex,
+  border: `1px solid ${activeTheme.color5.hex}`,
+  borderRadius: '2px',
   cursor: 'pointer',
-  float: 'right',
   '&:hover': {
     backgroundColor: activeTheme.color5_highlight.hex,
     color: '#fff'
@@ -179,12 +179,13 @@ export let inputSubmit = css({
 
 export let formButton = css({
   fontSize: 'inherit',
-  backgroundColor: activeTheme.color5.hex,
-  color: activeTheme.color5_text.hex,
+  backgroundColor: activeTheme.color1.hex,
+  color: activeTheme.color1_text.hex,
   padding: '8px 20px',
-  margin: '0px 10px',
-  border: 'none',
-  borderRadius: '4px',
+  margin: '3px 10px',
+  // border: 'none',
+  border: `1px solid ${activeTheme.color5.hex}`,
+  borderRadius: '2px',
   cursor: 'pointer',
   // float: 'left',
   '&:hover': {

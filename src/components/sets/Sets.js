@@ -9,6 +9,7 @@ import SetViewer from './SetViewer'
 import { findIndexOfId } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
 import WoContext from '../../context/WoContext'
+import { gridContainer } from '../../styles/gridStyles'
 
 
 const Sets = () => {
@@ -24,8 +25,8 @@ const Sets = () => {
     fetchMyAPI()
   }, [])
 
-  const retrieveSets = () => {
-    retrieve().then(sets => { setSets(sets) })
+  const retrieveSets = async () => {
+    await retrieve().then(sets => { setSets(sets) })
   }
 
   const done = () => {
@@ -53,14 +54,15 @@ const Sets = () => {
     toggleModal()
   }
 
-  const deleteSet = event => {
+  const deleteSet = async event => {
     event.stopPropagation()
-    deleteSetById(event.currentTarget.id)
+    await deleteSetById(event.currentTarget.id)
     retrieveSets()
   }
 
-  const saveSet = set => {
-    retrieveSets()
+  const saveSet = async set => {
+    await retrieveSets()
+    toggleModal()
   }
 
   const renderSets = sets => {
@@ -89,8 +91,10 @@ const Sets = () => {
                 onClick={addSet}
               >
                 Add Set
-        </button>
-              {renderSets(sets)}
+              </button>
+              <div css={gridContainer} >
+                {renderSets(sets)}
+              </div>
             </React.Fragment>
             // : <SetCard set={context.set} />
             : <SetCard done={done} saveSet={saveSet} />

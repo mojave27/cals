@@ -93,7 +93,7 @@ const Input = props => {
       type='text' 
       disabled={props.disabled} 
       value={props.data} 
-      style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'.9em'}} 
+      style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'1em', width:'100%', lineHeight:'14px'}} 
       // onClick={props.clickPart} 
       onChange={props.onChange}
     />
