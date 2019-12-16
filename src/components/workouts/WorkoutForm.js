@@ -85,6 +85,11 @@ class WorkoutForm extends React.Component {
     })
   }
 
+  // handleRowClick = event => {
+  //   let id = event.currentTarget.id
+  //   console.log(id)
+  // }
+
   renderSets = sets => {
     return sets.map(set => {
       let data = {
@@ -93,7 +98,7 @@ class WorkoutForm extends React.Component {
       }
       return (
         <div key={set.id} css={setBlock}>
-          <Table data={data} />
+          <Table disabled={false} data={data} onClick={this.handleRowClick}/>
         </div>
       )
     })
@@ -141,8 +146,10 @@ class WorkoutForm extends React.Component {
 
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
-            <div style={{ paddingBottom: '10px' }}>Sets go here</div>
+            <div style={{ paddingBottom: '10px', color: 'red' }}>Sets</div>
+
             {this.renderSets(this.state.workout.sets)}
+
             <input
               type='button'
               value='Add Set'

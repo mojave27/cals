@@ -61,7 +61,7 @@ const Workouts = props => {
       }
       return (
         <div key={set.id} css={setBlock}>
-          <Table data={data} />
+          <Table data={data} disabled={true} />
         </div>
       )
     })

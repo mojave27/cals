@@ -15,5 +15,6 @@ export let workoutBlock = css({
 
 export let setBlock = css({
   border: `1px solid ${activeTheme.color2.hex}`,
+  margin: '5px'
   // color: activeTheme.color2_text.hex
 })

@@ -4,31 +4,31 @@ import React from 'react'
 import { table } from '../../styles/table'
 
 // SAMPLE DATA OBJECT
-// const data = {
-//   headers: ['name', 'reps'],
-//   rows: [
-//     {
-//       id: 0,
-//       reps: 'max',
-//       name: 'chins',
-//       type: 'compound'
-//     },
-//     {
-//       id: 8,
-//       reps: 'max',
-//       name: 'glute bridge',
-//       type: 'compound'
-//     },
-//     {
-//       id: 9,
-//       reps: 'max',
-//       name: 'inv row',
-//       type: 'compound'
-//     }]
-// }
+const sampleData = {
+  headers: ['name', 'reps'],
+  rows: [
+    {
+      id: 0,
+      reps: 'max',
+      name: 'chins',
+      type: 'compound'
+    },
+    {
+      id: 8,
+      reps: 'max',
+      name: 'glute bridge',
+      type: 'compound'
+    },
+    {
+      id: 9,
+      reps: 'max',
+      name: 'inv row',
+      type: 'compound'
+    }]
+}
 
 class Table extends React.Component {
-  state = {}
+  state = { }
 
   render() {
     return (
@@ -40,10 +40,25 @@ class Table extends React.Component {
     )
   }
 
-  renderHeader = headers => {
-    if ( this.props.edit && this.props.edit === true ){
-      headers.push('edit?')
-    }
+  renderRows = data => {
+    let headerRow = this.renderHeaders(data.headers)
+    let rows = data.rows.map((row, index) => {
+      let id = (typeof row.id === 'undefined') ? index : row.id
+      return <tr
+        id={id}
+        // onClick={this.props.onClick}
+        key={index}>
+        {this.renderRow(row, data.headers)}
+      </tr>
+    })
+    let allRows = [headerRow, ...rows]
+    return allRows
+  }
+
+  renderHeaders = headers => {
+    // if (this.props.edit && this.props.edit === true) {
+    //   headers.push('edit?')
+    // }
     return (
       <tr key={headers.toString()}>
         {headers.map(header => (
@@ -56,30 +71,33 @@ class Table extends React.Component {
   renderRow = (row, headers) => {
     let tds = []
     for (let i = 0; i < headers.length; i++) {
-      tds.push(<td key={i}>{row[headers[i]]}</td>)
-    }
-    // amend the edit column
-    if ( this.props.edit && this.props.edit === true ){
-      let lastIndex = tds.length -1
-      tds[lastIndex] = <td><input type={'checkbox'} /></td>
+      tds.push(
+          <td onClick={this.clickPart} style={{borderLeft:'1px solid #000'}} key={i}>
+            <Input data={row[headers[i]]}  onChange={this.handleTextChange} disabled={this.props.disabled} />
+          </td>)
     }
     return tds
   }
 
-  renderRows = data => {
-    let headerRow = this.renderHeader(data.headers)
-    let rows = data.rows.map((row, index) => {
-      let id = (typeof row.id === 'undefined') ? index : row.id
-      return  <tr 
-                id={id} 
-                onClick={this.props.onClick} 
-                key={index}>
-                  {this.renderRow(row, data.headers)}
-              </tr>
-    })
-    let allRows = [headerRow, ...rows]
-    return allRows
+  clickPart = event => { }
+
+  handleTextChange = event => {
+    console.log(event.target.value)
   }
+
+}
+
+const Input = props => {
+  return (
+    <input 
+      type='text' 
+      disabled={props.disabled} 
+      value={props.data} 
+      style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'.9em'}} 
+      // onClick={props.clickPart} 
+      onChange={props.onChange}
+    />
+  )
 }
 
 export default Table
