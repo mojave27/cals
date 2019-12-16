@@ -35,7 +35,6 @@ export let miniCard = css({
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
   transition: '0.3s',
   textAlign: 'center',
-  color: `${activeTheme.color2.hex}`,
   '&:hover': {
     boxShadow: `0 8px 16px 0 ${activeTheme.color5.rgba(.2)}`,
     border: `1px solid ${activeTheme.color5.hex}`,

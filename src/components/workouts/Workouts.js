@@ -26,7 +26,7 @@ const Workouts = props => {
         <div
           key={wo.id}
           id={wo.id}
-          css={workoutBlock, gridItem}
+          css={[workoutBlock, gridItem]}
           style={{marginLeft: '5px', marginBottom: '10px'}}
         >
           <div css={workoutHeader}>

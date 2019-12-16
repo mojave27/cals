@@ -124,7 +124,7 @@ class ProgramForm extends React.Component {
     // let maxSets = this.getMaxSets(this.state.program.workouts)
     return this.state.program.workouts.map(wo => {
       return (
-        <div key={wo.id} id={wo.id} css={workoutBlock, gridItem} style={{marginLeft:'5px'}}>
+        <div key={wo.id} id={wo.id} css={[workoutBlock, gridItem]} style={{marginLeft:'5px'}}>
           <div css={workoutHeader}>
             {wo.name}
             <FontAwesomeIcon alt={'remove workout from program'} id={wo.id} style={{ marginLeft:'10px', float:'right' }} icon={faTrashAlt}  onClick={this.deleteWorkout} />

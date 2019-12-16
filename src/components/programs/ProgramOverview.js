@@ -28,7 +28,7 @@ class ProgramOverview extends React.Component {
   renderWorkouts = workouts => {
     return workouts.map(wo => {
       return (
-        <div key={wo.id} css={workoutBlock, gridItem}>
+        <div key={wo.id} css={[workoutBlock, gridItem]}>
           <div css={workoutHeader}>{wo.name}</div>
           <div>{this.renderSets(wo.sets)}</div>
         </div>
@@ -44,7 +44,7 @@ class ProgramOverview extends React.Component {
       }
       return (
         <div key={set.id} css={setBlock}>
-          <Table data={data} />
+          <Table data={data} disabled={true} />
         </div>
       )
     })

@@ -3,27 +3,29 @@ import WoContext from './WoContext'
 
 class WoProvider extends React.Component {
     state = {
-        set: {
-            exercises: []
+        workout: {
+            set: {
+                exercises: []
+            }
         }
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <WoContext.Provider value={{
-                set: this.state.set,
-                updateSet: set => {
-                    this.setState({set})
+                workout: this.state.workout,
+                updateWorkout: workout => {
+                    this.setState({ workout })
                 },
-                addExercise: exercise => { 
-                    const set = Object.assign({},this.state.set)
-                    set.exercises.push(exercise)
-                    this.setState(set)
+                addSet: set => {
+                    const workout = Object.assign({}, this.state.workout)
+                    workout.set.push(set)
+                    this.setState(workout)
                 },
-                updateExercisesForSet: exercises => {
-                    const set = Object.assign({},this.state.set)
-                    set.exercises = exercises
-                    this.setState(set)
+                updateSetsForWorkout: set => {
+                    const workout = Object.assign({}, this.state.workout)
+                    workout.set = set
+                    this.setState(workout)
                 }
             }}>
                 {this.props.children}

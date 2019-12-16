@@ -22,7 +22,7 @@ const SetViewer = props => {
   }
 
   return (
-    <div css={card, gridItem} style={{ maxWidth: '300px', margin: '0px auto' }} id={props.id} onClick={props.selectSet}>
+    <div css={[card, gridItem]} style={{ maxWidth: '300px', margin: '0px auto' }} id={props.id} onClick={props.selectSet}>
       <div css={row}>
         <div css={workoutHeader}>
           set {props.set.id}

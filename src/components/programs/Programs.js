@@ -1,6 +1,6 @@
 import React from 'react'
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
+import { jsx } from '@emotion/core'
 import { navigate } from '@reach/router'
 import { useState, useEffect } from 'react'
 import { retrievePrograms as retrieve } from '../../api/programsApi'
@@ -10,12 +10,6 @@ import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
 import { formButton } from '../../styles/main-styles'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
-
-const container = css({
-  display: 'grid',
-  gridTemplateColumns: 'auto',
-  gridGap: '10px'
-})
 
 
 const Programs = props => {

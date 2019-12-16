@@ -5,7 +5,7 @@ import { retrieve } from '../../api/exercisesApi'
 import { addSet, updateSet } from '../../api/setsApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'
-import WoContext from '../../context/WoContext'
+import SetContext from '../../context/SetContext'
 
 import {
   basicButton,
@@ -18,7 +18,7 @@ import {
 } from '../../styles/main-styles'
 
 const SetCard = props => {
-  let context = useContext(WoContext)
+  let context = useContext(SetContext)
   const [allExercises, setAllExercises] = useState([])
   const [selectedExercises, setSelectedExercises] = useState([])
   const [showExerciseList, setShowExerciseList] = useState(false)

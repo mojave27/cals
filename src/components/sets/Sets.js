@@ -8,12 +8,12 @@ import SetCard from './SetCard'
 import SetViewer from './SetViewer'
 import { findIndexOfId } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
-import WoContext from '../../context/WoContext'
+import SetContext from '../../context/SetContext'
 import { gridContainer } from '../../styles/gridStyles'
 
 
 const Sets = () => {
-  let context = useContext(WoContext)
+  let context = useContext(SetContext)
   const [showModal, setShowModal] = useState(false)
   const [sets, setSets] = useState([])
 
