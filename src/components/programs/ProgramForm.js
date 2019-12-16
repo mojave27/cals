@@ -10,6 +10,7 @@ import Modal from '../Modal'
 import AddWorkout from '../workouts/AddWorkout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { gridContainer, gridItem } from '../../styles/gridStyles'
 import {
   basicButton,
   card,
@@ -86,7 +87,7 @@ class ProgramForm extends React.Component {
               </div>
               <div css={col75}>
                 {this.state.program.workouts.length > 0
-                  ? this.renderWorkouts()
+                  ? <div css={gridContainer}>{this.renderWorkouts()}</div>
                   : null}
                 <input
                   style={{ display: 'block' }}
@@ -123,7 +124,7 @@ class ProgramForm extends React.Component {
     // let maxSets = this.getMaxSets(this.state.program.workouts)
     return this.state.program.workouts.map(wo => {
       return (
-        <div key={wo.id} id={wo.id} css={workoutBlock} style={{marginLeft:'5px'}}>
+        <div key={wo.id} id={wo.id} css={workoutBlock, gridItem} style={{marginLeft:'5px'}}>
           <div css={workoutHeader}>
             {wo.name}
             <FontAwesomeIcon alt={'remove workout from program'} id={wo.id} style={{ marginLeft:'10px', float:'right' }} icon={faTrashAlt}  onClick={this.deleteWorkout} />
