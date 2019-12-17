@@ -190,6 +190,8 @@ const SetCard = props => {
     console.log(JSON.stringify(exercisesForSet))
 
     await context.updateExercisesForSet(exercisesForSet)
+    console.log('context.set:')
+    console.log(JSON.stringify(context.set))
     setShowExerciseList(false)
   }
 
@@ -212,9 +214,13 @@ const SetCard = props => {
   }
 
   return (
+    // <SetContext.Consumer>
+      // { setContext => 
     showExerciseList 
     ? renderExerciseList() 
     : renderSet()
+    // }
+    // </SetContext.Consumer>
   )
 }
 

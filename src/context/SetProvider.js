@@ -15,17 +15,18 @@ class SetProvider extends React.Component {
     }
 
     updateExercisesForSet = exercises => {
-        console.log('........................')
-        const set = Object.assign({}, this.state.set)
+        console.log('========================')
+        const set = {...this.state.set}
         set.exercises = exercises
         console.log(JSON.stringify(set))
-        this.setState(set)
+        console.log('------------------------')
+        this.setState({set})
     }
 
     render() {
-        // console.log('re-rendering SetProvider')
-        // console.log('set from context')
-        // console.log(JSON.stringify(this.state.set))
+        console.log('re-rendering SetProvider')
+        console.log('set from state')
+        console.log(JSON.stringify(this.state.set))
         return (
             <SetContext.Provider value={{
                 set: this.state.set,
@@ -38,7 +39,7 @@ class SetProvider extends React.Component {
                 addExercise: exercise => {
                     const set = Object.assign({}, this.state.set)
                     set.exercises.push(exercise)
-                    this.setState(set)
+                    this.setState({set})
                 },
                 updateExercisesForSet: this.updateExercisesForSet
             }}>
