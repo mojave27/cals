@@ -34,6 +34,7 @@ const SetCard = props => {
   }, [])
 
   const renderSet = () => {
+    console.log('renderSet')
     return (
       <div css={formContainer}>
         <div css={row}>
@@ -72,6 +73,7 @@ const SetCard = props => {
   }
 
   const renderExerciseList = () => {
+    console.log('renderExerciseList')
     return (
       <React.Fragment>
         <div onClick={props.done}>close</div>
@@ -113,6 +115,7 @@ const SetCard = props => {
   }
 
   const renderExercisesForSet = exercises => {
+    console.log('renderExerciseForSet')
     return exercises.map(exercise => {
       let index = exercise.id
       return (
@@ -131,7 +134,6 @@ const SetCard = props => {
             value={exercise.reps}
             placeholder='exercise reps..'
             onChange={handleRepsChange}
-            // onClick={handleRepsChange}
           />
         </div>
       )
@@ -167,18 +169,27 @@ const SetCard = props => {
     setSelectedExercises(updatedSelectedExercises)
   }
 
-  const addExercisesToSet = () => {
+  const addExercisesToSet = async () => {
     let tempSelectedExercises = [...selectedExercises]
     let modifiedSelectedExercises = tempSelectedExercises.map(exercise => {
       exercise.reps = ''
       return exercise
     })
 
+    console.log('context.set.exercises')
+    console.log(JSON.stringify(context.set.exercises))
+    console.log('modifiedSelectedExercises')
+    console.log(JSON.stringify(modifiedSelectedExercises))
+
     let exercisesForSet = [
       ...context.set.exercises,
       ...modifiedSelectedExercises
     ]
-    context.updateExercisesForSet(exercisesForSet)
+
+    console.log('exercisesForSet')
+    console.log(JSON.stringify(exercisesForSet))
+
+    await context.updateExercisesForSet(exercisesForSet)
     setShowExerciseList(false)
   }
 
@@ -200,7 +211,11 @@ const SetCard = props => {
     }
   }
 
-  return showExerciseList ? renderExerciseList() : renderSet()
+  return (
+    showExerciseList 
+    ? renderExerciseList() 
+    : renderSet()
+  )
 }
 
 export default SetCard

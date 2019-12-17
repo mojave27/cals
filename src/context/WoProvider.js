@@ -1,13 +1,16 @@
 import React from 'react'
 import WoContext from './WoContext'
 
+const emptyWorkout = {
+    "name": "",
+    "description": "",
+    "type": "",
+    "sets": []
+  }
+
 class WoProvider extends React.Component {
     state = {
-        workout: {
-            set: {
-                exercises: []
-            }
-        }
+        workout: {...emptyWorkout}
     }
 
     render() {

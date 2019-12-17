@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import SetCard from '../sets/SetCard'
-import { addWorkout, updateWorkout } from '../../api/workoutsApi'
-import { addSet, updateSet } from '../../api/setsApi'
+import { addWorkout, retrieveWorkoutById, updateWorkout } from '../../api/workoutsApi'
+import { isUndefined } from 'lodash'
 import Table from '../tables/SimpleTable'
 import { setBlock } from '../../styles/program'
-import WoContext from '../../context/WoContext'
-import SetContext from '../../context/SetContext'
 import {
   detailCard,
   container,
@@ -19,55 +17,80 @@ import {
   stripe
 } from '../../styles/main-styles'
 
+const emptyWorkout = {
+  "name": "",
+  "description": "",
+  "type": "",
+  "sets": []
+}
 
-const WorkoutForm = props => {
-  let woContext = useContext(WoContext)
-  let setContext = useContext(SetContext)
-  const [showSetDialog, setShowSetDialog] = useState(false)
-
-  const toggleSetDialog = () => {
-    setShowSetDialog(!showSetDialog)
+class WorkoutForm extends React.Component {
+  state = {
+    workout: emptyWorkout,
+    showSetDialog: false
   }
 
-  const addSetToWorkout = () => {
-    setContext.clearSet() 
-    toggleSetDialog()
-  }
-
-  const saveWorkout = async () => {
-    let response = {}
-    if (woContext.workout.id) {
-      response = await updateWorkout(woContext.workout)
-    }else{
-      response = await addWorkout(woContext.workout)
-    }
-
-    if (props.saveWorkout){
-      props.saveWorkout(woContext.workout)
+  componentDidMount = () => {
+    if (!isUndefined(this.props.workoutId)) { 
+      this.fetchWorkout(this.props.workoutId)
     }
   }
 
-  const handleTextChange = event => {
+  fetchWorkout = id => {
+    retrieveWorkoutById(id)
+    .then( response => {
+      this.setState({workout: response})
+    })
+  }
+
+  toggleSetDialog = () => {
+     this.setState(prevState => {
+       return {showSetDialog: !prevState.showSetDialog}
+     })
+  }
+
+  saveWorkout = () => {
+    if (this.state.workout.id) {
+      console.log('updating workout with id: ' + this.state.workout.id)
+      updateWorkout(this.state.workout)
+        .then(response => {
+          this.setState({workout: response})
+        })
+    } else {
+      console.log('adding workout')
+      addWorkout(this.state.workout)
+        .then(response => {
+          this.setState({workout: response})
+          return response
+        })
+        .then(response => {
+          this.props.saveWorkout(response)
+        })
+    }
+  }
+
+  handleTextChange = event => {
     let { id, value } = event.target
-    let updatedWorkout = { ...woContext.workout }
+    let updatedWorkout = { ...this.state.workout }
     updatedWorkout[id] = value
-    woContext.updateWorkout(updatedWorkout)
+    this.setState({workout: updatedWorkout})
   }
 
-  const saveSet = set => {
-    // add/update set in workout context
-    let updatedWorkout = {...woContext.workout}
+  saveSet = set => {
+    let updatedWorkout = {...this.state.workout}
     updatedWorkout.sets.push(set)
-    woContext.updateWorkout(updatedWorkout)
-    setShowSetDialog(false)
+    this.setState({
+      workout: updatedWorkout,
+      showSetDialog: false
+    })
   }
 
-  const handleRowClick = event => {
-    let id = event.currentTarget.id
-    console.log(id)
-  }
+  // handleRowClick = event => {
+  //   let id = event.currentTarget.id
+  //   console.log(id)
+  // }
 
-  const renderSets = sets => {
+  renderSets = sets => {
     return sets.map(set => {
       let data = {
         headers: ['name', 'reps'],
@@ -75,12 +98,13 @@ const WorkoutForm = props => {
       }
       return (
         <div key={set.id} css={setBlock}>
-          <Table disabled={false} data={data} onClick={handleRowClick}/>
+          <Table disabled={false} data={data} onClick={this.handleRowClick}/>
         </div>
       )
     })
   }
 
+  render(){
   return (
     <React.Fragment>
       <div css={detailCard}>
@@ -95,9 +119,9 @@ const WorkoutForm = props => {
                 type='text'
                 id='name'
                 name='name'
-                value={woContext.workout.name}
+                value={this.state.workout.name}
                 placeholder='workout name..'
-                onChange={handleTextChange}
+                onChange={this.handleTextChange}
               />
             </div>
           </div>
@@ -111,9 +135,9 @@ const WorkoutForm = props => {
                 type='text'
                 id='description'
                 name='description'
-                value={woContext.workout.description}
+                value={this.state.workout.description}
                 placeholder='workout description..'
-                onChange={handleTextChange}
+                onChange={this.handleTextChange}
               />
             </div>
           </div>
@@ -124,29 +148,28 @@ const WorkoutForm = props => {
           <div style={{ display: 'block', paddingBottom: '10px' }}>
             <div style={{ paddingBottom: '10px', color: 'red' }}>Sets</div>
 
-            {renderSets(woContext.workout.sets)}
+            {this.renderSets(this.state.workout.sets)}
 
             <input
               type='button'
               value='Add Set'
               css={formButton}
-              // onClick={toggleSetDialog}
-              onClick={addSetToWorkout}
+              onClick={this.toggleSetDialog}
               style={{ display: 'block' }}
             />
             <input
               type='button'
               value='Save Workout'
               css={formButton}
-              onClick={saveWorkout}
+              onClick={this.saveWorkout}
               style={{ display: 'block' }}
             />
-            {showSetDialog ? <SetCard saveSet={saveSet} done={toggleSetDialog} /> : null}
+            {this.state.showSetDialog ? <SetCard saveSet={this.saveSet} done={this.toggleSetDialog} /> : null}
           </div>
         </div>
       </div>
     </React.Fragment>
-  )
+  )}
 
 }
 

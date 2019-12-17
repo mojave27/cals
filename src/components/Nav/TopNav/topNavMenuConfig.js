@@ -18,6 +18,11 @@ export const menuConfig = [
     link: { to: '/workouts', text: 'workouts' }
   },
   {
+    name: 'sets',
+    type: 'button',
+    link: { to: '/sets', text: 'sets' }
+  },
+  {
     name: 'exercises',
     type: 'button',
     link: { to: '/exercises', text: 'exercises' }

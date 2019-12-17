@@ -16,7 +16,7 @@ const SetViewer = props => {
     }
     return (
       <div style={{ maxWidth: '200px', margin: '0px auto' }}>
-        <Table data={data} />
+        <Table data={data} disabled={true} />
       </div>
     )
   }

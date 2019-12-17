@@ -1,16 +1,19 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useState, useEffect } from 'react'
-import Table from '../tables/SimpleTable'
+import { useContext, useState, useEffect } from 'react'
+import WoContext from '../../context/WoContext'
 import { retrieve, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
-import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
+import { findIndexOfId } from '../ArrayUtils'
 
 const Workouts = props => {
+  let context = useContext(WoContext)
   const [workouts, setWorkouts] = useState([])
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(-1)
@@ -69,9 +72,16 @@ const Workouts = props => {
 
   const editWorkout = event => {
     let id = event.currentTarget.id
-    setSelectedWorkoutId(id)
+    setSelectedWorkoutToContext(id)
     // setShowWorkoutModal(true)
     toggleModal()
+  }
+
+  const setSelectedWorkoutToContext = workoutId => {
+    let index = findIndexOfId(workoutId, workouts)
+    if (index != -1) {
+      context.updateWorkout(workouts[index])
+    }
   }
 
   const deleteWorkout = async event => {

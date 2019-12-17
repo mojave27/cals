@@ -18,10 +18,10 @@ const Sets = () => {
   const [sets, setSets] = useState([])
 
   useEffect(() => {
+    console.log('firing useEffect in Sets.js')
     async function fetchMyAPI() {
       await retrieveSets()
     }
-
     fetchMyAPI()
   }, [])
 
