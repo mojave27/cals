@@ -34,7 +34,6 @@ const SetCard = props => {
   }, [])
 
   const renderSet = () => {
-    console.log('renderSet')
     return (
       <div css={formContainer}>
         <div css={row}>
@@ -73,7 +72,6 @@ const SetCard = props => {
   }
 
   const renderExerciseList = () => {
-    console.log('renderExerciseList')
     return (
       <React.Fragment>
         <div onClick={props.done}>close</div>
@@ -115,7 +113,6 @@ const SetCard = props => {
   }
 
   const renderExercisesForSet = exercises => {
-    console.log('renderExerciseForSet')
     return exercises.map(exercise => {
       let index = exercise.id
       return (
@@ -123,7 +120,6 @@ const SetCard = props => {
           id={index}
           css={getClasses(exercise.id)}
           key={index}
-          // onClick={selectExercise}
         >
           name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
           <input
@@ -176,22 +172,12 @@ const SetCard = props => {
       return exercise
     })
 
-    console.log('context.set.exercises')
-    console.log(JSON.stringify(context.set.exercises))
-    console.log('modifiedSelectedExercises')
-    console.log(JSON.stringify(modifiedSelectedExercises))
-
     let exercisesForSet = [
       ...context.set.exercises,
       ...modifiedSelectedExercises
     ]
 
-    console.log('exercisesForSet')
-    console.log(JSON.stringify(exercisesForSet))
-
     await context.updateExercisesForSet(exercisesForSet)
-    console.log('context.set:')
-    console.log(JSON.stringify(context.set))
     setShowExerciseList(false)
   }
 
@@ -214,13 +200,9 @@ const SetCard = props => {
   }
 
   return (
-    // <SetContext.Consumer>
-      // { setContext => 
     showExerciseList 
     ? renderExerciseList() 
     : renderSet()
-    // }
-    // </SetContext.Consumer>
   )
 }
 

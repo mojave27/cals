@@ -23,12 +23,12 @@ class WoProvider extends React.Component {
                 addSet: set => {
                     const workout = Object.assign({}, this.state.workout)
                     workout.set.push(set)
-                    this.setState(workout)
+                    this.setState({workout})
                 },
                 updateSetsForWorkout: set => {
                     const workout = Object.assign({}, this.state.workout)
                     workout.set = set
-                    this.setState(workout)
+                    this.setState({workout})
                 }
             }}>
                 {this.props.children}

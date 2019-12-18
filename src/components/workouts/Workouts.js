@@ -100,8 +100,6 @@ const Workouts = props => {
 
   const toggleModal = () => {
     let newValue = !showWorkoutModal 
-    console.log(`old value: ${showWorkoutModal}`)
-    console.log(`new value: ${newValue}`)
     setShowWorkoutModal(newValue)
   }
 

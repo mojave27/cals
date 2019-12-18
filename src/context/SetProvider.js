@@ -2,9 +2,7 @@ import React from 'react'
 import SetContext from './SetContext'
 
 let emptySet = {
-    set: {
-        exercises: []
-    }
+   exercises: []
 }
 
 class SetProvider extends React.Component {
@@ -15,18 +13,12 @@ class SetProvider extends React.Component {
     }
 
     updateExercisesForSet = exercises => {
-        console.log('========================')
         const set = {...this.state.set}
         set.exercises = exercises
-        console.log(JSON.stringify(set))
-        console.log('------------------------')
         this.setState({set})
     }
 
     render() {
-        console.log('re-rendering SetProvider')
-        console.log('set from state')
-        console.log(JSON.stringify(this.state.set))
         return (
             <SetContext.Provider value={{
                 set: this.state.set,
