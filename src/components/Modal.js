@@ -4,7 +4,7 @@ import React from 'react'
 import { modal, modalContent, close } from '../styles/modal'
 
 const Modal = props => {
-  return (
+  return props.showModal ? (
     <React.Fragment>
       <div id='myModal' css={modal}>
         <div css={modalContent}>
@@ -13,7 +13,7 @@ const Modal = props => {
         </div>
       </div>
     </React.Fragment>
-  )
+    ) : null
 }
 
 export default Modal

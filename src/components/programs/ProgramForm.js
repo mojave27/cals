@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import React from 'react'
 import { useContext, useState } from 'react'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
@@ -24,7 +25,6 @@ import {
   formInput,
   formButton
 } from '../../styles/main-styles'
-
 
 const ProgramForm = props => {
   let programContext = useContext(ProgramContext)
@@ -116,81 +116,95 @@ const ProgramForm = props => {
     navigate('/programs')
   }
 
-  return showWorkoutModal ? (
-    <Modal handleClose={toggleWorkoutModal}>
-      <AddWorkout saveWorkout={saveWorkout} />
-    </Modal>
-  ) : (
-    <div>
-      <div css={card}>
-        <div css={row}>
-          <span css={closeButton} onClick={handleClose}>
-            &times;
-          </span>
-        </div>
-        <div css={row}>
-          <div css={col25}>
-            <label htmlFor='name'>Program Name</label>
+  const renderMainForm = () => {
+    return (
+      <div>
+        <div css={card}>
+          <div css={row}>
+            <span css={closeButton} onClick={handleClose}>
+              &times;
+            </span>
           </div>
-          <div css={col75}>
+          <div css={row}>
+            <div css={col25}>
+              <label htmlFor='name'>Program Name</label>
+            </div>
+            <div css={col75}>
+              <input
+                css={formInput}
+                type='text'
+                id='name'
+                name='name'
+                value={
+                  isUndefined(programContext.program.name)
+                    ? 'program name...'
+                    : programContext.program.name
+                }
+                placeholder='program name..'
+                onChange={handleTextChange}
+              />
+            </div>
+          </div>
+          <div css={row}>
+            <div css={col25}>
+              <label htmlFor='description'>Description</label>
+            </div>
+            <div css={col75}>
+              <textarea
+                css={formInput}
+                id='description'
+                name='description'
+                value={
+                  isUndefined(programContext.program)
+                    ? 'program description...'
+                    : programContext.program.description
+                }
+                placeholder='program description..'
+                onChange={handleTextChange}
+                style={{ height: '42px' }}
+              ></textarea>
+            </div>
+          </div>
+          <div css={row}>
+            <div css={col25}>
+              <label htmlFor='workouts'>Workouts</label>
+            </div>
+            <div css={col75}>
+              {programContext.program.workouts &&
+              programContext.program.workouts.length > 0 ? (
+                <div css={gridContainer}>
+                  {renderWorkouts(programContext.program.workouts)}
+                </div>
+              ) : null}
+              <input
+                style={{ display: 'block' }}
+                type='button'
+                value='Add Workout'
+                css={formButton}
+                onClick={toggleWorkoutModal}
+              />
+            </div>
+          </div>
+          <div css={row}>
             <input
-              css={formInput}
-              type='text'
-              id='name'
-              name='name'
-              value={
-                isUndefined(programContext.program.name) ? 'program name...' : programContext.program.name
-              }
-              placeholder='program name..'
-              onChange={handleTextChange}
+              type='submit'
+              value='Save Program'
+              css={[basicButton, { float: 'right' }]}
+              onClick={saveProgram}
             />
           </div>
-        </div>
-        <div css={row}>
-          <div css={col25}>
-            <label htmlFor='description'>Description</label>
-          </div>
-          <div css={col75}>
-            <textarea
-              css={formInput}
-              id='description'
-              name='description'
-              value={
-                isUndefined(programContext.program) ? 'program description...' : programContext.program.description
-              }
-              placeholder='program description..'
-              onChange={handleTextChange}
-              style={{ height: '42px' }}
-            ></textarea>
-          </div>
-        </div>
-        <div css={row}>
-          <div css={col25}>
-            <label htmlFor='country'>Workouts</label>
-          </div>
-          <div css={col75}>
-            {programContext.program.workouts && programContext.program.workouts.length > 0 ? (
-              <div css={gridContainer}>{renderWorkouts(programContext.program.workouts)}</div>
-            ) : null}
-            <input
-              style={{ display: 'block' }}
-              type='button'
-              value='Add Workout'
-              css={formButton}
-              onClick={toggleWorkoutModal}
-            />
-          </div>
-        </div>
-        <div css={row}>
-          <input
-            type='submit'
-            value='Save Program'
-            css={[basicButton, { float: 'right' }]}
-            onClick={saveProgram}
-          />
         </div>
       </div>
-    </div>
+    )
+  }
+
+  return (
+    <React.Fragment>
+      <Modal showModal={showWorkoutModal} handleClose={toggleWorkoutModal}>
+        <AddWorkout saveWorkout={saveWorkout} />
+      </Modal>
+      {renderMainForm()}
+    </React.Fragment>
   )
 }
 

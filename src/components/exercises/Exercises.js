@@ -19,14 +19,14 @@ const Exercises = props => {
         id: 'selection',
         Header: ({ getToggleAllRowsSelectedProps }) => (
           <div>
-            <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
+            <input type='checkbox' {...getToggleAllRowsSelectedProps()} />
           </div>
         ),
         Cell: ({ row }) => (
           <div>
-            <input type="checkbox" {...row.getToggleRowSelectedProps()} />
+            <input type='checkbox' {...row.getToggleRowSelectedProps()} />
           </div>
-        ),
+        )
       },
       {
         Header: 'name',
@@ -94,8 +94,8 @@ const Exercises = props => {
 
   const deleteExercises = exerciseIds => {
     let id = exerciseIds[0]
-    deleteExerciseById(id).then( response => {
-      retrieve().then( response => {
+    deleteExerciseById(id).then(response => {
+      retrieve().then(response => {
         setExercises(response)
       })
     })
@@ -104,28 +104,34 @@ const Exercises = props => {
   const renderExercises = exercises => {
     let sortedExercises = [...exercises]
     sortedExercises.sort(dynamicSort('name', true))
-    return <ExercisesTable deleteExercises={deleteExercises} edit={true} columns={columns} data={sortedExercises} />
+    return (
+      <ExercisesTable
+        deleteExercises={deleteExercises}
+        edit={true}
+        columns={columns}
+        data={sortedExercises}
+      />
+    )
   }
 
-  return showModal ? (
-    <Modal handleClose={toggleModal}>
-      <Exercise done={done} />
-    </Modal>
-  ) : (
-      <React.Fragment>
-        <div style={{ maxWidth: '500px', margin: '0px auto' }}>
-          <button
-            css={formButton}
-            style={{ float: 'none', margin: '10px 10px' }}
-            onClick={toggleModal}
-          >
-            Add Exercise
+  // return showModal ? (
+  return (
+    <React.Fragment>
+      <Modal showModal={showModal} handleClose={toggleModal}>
+        <Exercise done={done} />
+      </Modal>
+      <div style={{ maxWidth: '500px', margin: '0px auto' }}>
+        <button
+          css={formButton}
+          style={{ float: 'none', margin: '10px 10px' }}
+          onClick={toggleModal}
+        >
+          Add Exercise
         </button>
-          {renderExercises(exercises)}
-        </div>
-      </React.Fragment>
-    )
-
+        {renderExercises(exercises)}
+      </div>
+    </React.Fragment>
+  )
 }
 
 export default Exercises

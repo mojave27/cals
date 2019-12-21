@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import WoContext from '../../context/WoContext'
 import { retrieve as retrieveWorkouts, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
@@ -109,13 +109,14 @@ const Workouts = props => {
   }
 
   return (
-    showWorkoutModal
-    ? <Modal handleClose={toggleModal}>
+    <React.Fragment>
+      <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
         <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
-    : (woContext.workouts.length > 0
+    {woContext.workouts.length > 0
     ? <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
-    : <div>Workouts</div>)
+    : <div>Workouts</div>}
+    </React.Fragment>
   )
 }
 

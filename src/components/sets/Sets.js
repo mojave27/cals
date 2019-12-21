@@ -77,13 +77,12 @@ const Sets = () => {
   }
 
   return (
-      (showModal ? (
-        <Modal handleClose={toggleModal}>
+        <React.Fragment>
+        <Modal showModal={showModal} handleClose={toggleModal}>
           <SetCard done={done} saveSet={saveSet} />
         </Modal>
-      ) : (
 
-          isEmpty(context.selectedSet)
+          {isEmpty(context.selectedSet)
             ? <React.Fragment>
               <button
                 css={formButton}
@@ -96,10 +95,10 @@ const Sets = () => {
                 {renderSets(sets)}
               </div>
             </React.Fragment>
-            // : <SetCard set={context.set} />
-            : <SetCard done={done} saveSet={saveSet} />
-        ))
-  )
+            // : <SetCard set={context.set} /> 
+            : <SetCard done={done} saveSet={saveSet} />}
+            </React.Fragment>
+        )
 
 }
 
