@@ -169,7 +169,7 @@ const ProgramForm = props => {
             <label htmlFor='country'>Workouts</label>
           </div>
           <div css={col75}>
-            {programContext.program.workouts.length > 0 ? (
+            {programContext.program.workouts && programContext.program.workouts.length > 0 ? (
               <div css={gridContainer}>{renderWorkouts(programContext.program.workouts)}</div>
             ) : null}
             <input
