@@ -46,6 +46,8 @@ const WorkoutForm = props => {
       console.log({response})
     }
 
+    woContext.updateWorkout(response)
+
     if (props.saveWorkout){
       props.saveWorkout(woContext.workout)
     }

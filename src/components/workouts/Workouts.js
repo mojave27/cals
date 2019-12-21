@@ -2,7 +2,10 @@
 import { jsx } from '@emotion/core'
 import React, { useContext, useState, useEffect } from 'react'
 import WoContext from '../../context/WoContext'
-import { retrieve as retrieveWorkouts, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
+import {
+  retrieve as retrieveWorkouts,
+  deleteWorkout as deleteWorkoutApi
+} from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
@@ -16,9 +19,9 @@ const Workouts = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
 
-  useEffect( () => {
+  useEffect(() => {
     fetchMyAPI()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderWorkouts = workouts => {
@@ -29,7 +32,7 @@ const Workouts = props => {
           key={wo.id}
           id={wo.id}
           css={[workoutBlock, gridItem]}
-          style={{marginLeft: '5px', marginBottom: '10px'}}
+          style={{ marginLeft: '5px', marginBottom: '10px' }}
         >
           <div css={workoutHeader}>
             {wo.name}
@@ -95,7 +98,6 @@ const Workouts = props => {
     await deleteWorkoutApi(id)
     fetchMyAPI()
     // update array in state as well?  or force refresh/useEffect call?
-    
   }
 
   const fetchMyAPI = async () => {
@@ -104,7 +106,7 @@ const Workouts = props => {
   }
 
   const toggleModal = () => {
-    let newValue = !showWorkoutModal 
+    let newValue = !showWorkoutModal
     setShowWorkoutModal(newValue)
   }
 
@@ -113,9 +115,11 @@ const Workouts = props => {
       <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
         <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
-    {woContext.workouts.length > 0
-    ? <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
-    : <div>Workouts</div>}
+      {woContext.workouts.length > 0 ? (
+        <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
+      ) : (
+        <div>Workouts</div>
+      )}
     </React.Fragment>
   )
 }

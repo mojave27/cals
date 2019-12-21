@@ -21,6 +21,9 @@ class WoProvider extends React.Component {
                 updateWorkout: workout => {
                     this.setState({ workout })
                 },
+                setEmptyWorkout: () => {
+                    this.setState({ workout: emptyWorkout })
+                },
                 addSet: set => {
                     const workout = Object.assign({}, this.state.workout)
                     workout.set.push(set)

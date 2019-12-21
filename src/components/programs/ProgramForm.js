@@ -2,13 +2,15 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { useContext, useState } from 'react'
+import { findIndexOfId, updateItemById } from '../ArrayUtils'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
 import { updateProgram, addProgram } from '../../api/programsApi'
+import { retrieveWorkoutById } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
-import AddWorkout from '../workouts/AddWorkout'
+import WorkoutForm from '../workouts/WorkoutForm'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { isUndefined } from 'lodash'
@@ -39,11 +41,54 @@ const ProgramForm = props => {
     }
   }
 
+  const addWorkout = async () => {
+    await woContext.setEmptyWorkout()
+    toggleWorkoutModal()
+  }
+
   const saveWorkout = workout => {
     let updatedProgram = { ...programContext.program }
-    updatedProgram.workouts.push(workout)
+    let index = findIndexOfId(workout.id, updatedProgram.workouts)
+    if (index > -1){
+      let workouts = updateItemById(workout.id, updatedProgram.workouts)
+      updatedProgram.workouts = workouts
+    }else{
+      updatedProgram.workouts.push(workout)
+    }
     programContext.updateProgram(updatedProgram)
   }
+
+  const editWorkout = async event => {
+    let id = event.currentTarget.id
+    console.log(`retrieving workout with id: ${id}`)
+    let workout = await retrieveWorkoutById(id)
+    await woContext.updateWorkout(workout)
+    console.log(JSON.stringify(workout))
+    // console.log(JSON.stringify(woContext.workout))
+    toggleWorkoutModal()
+    console.log(JSON.stringify(woContext.workout))
+  }
+
+  const deleteWorkout = event => {
+    let id = event.currentTarget.id
+    console.log(`would delete workout with id: ${id}`)
+  }
+
+  const handleTextChange = e => {
+    let { id, value } = e.target
+    let updatedProgram = { ...programContext.program }
+    updatedProgram[id] = value
+    programContext.updateProgram(updatedProgram)
+  }
+
+  const toggleWorkoutModal = () => {
+    setShowWorkoutModal(!showWorkoutModal)
+  }
+
+  const handleClose = () => {
+    navigate('/programs')
+  }
+
 
   const renderWorkouts = workouts => {
     return programContext.program.workouts.map(wo => {
@@ -77,16 +122,6 @@ const ProgramForm = props => {
     })
   }
 
-  const editWorkout = event => {
-    let id = event.currentTarget.id
-    console.log(`would edit workout with id: ${id}`)
-  }
-
-  const deleteWorkout = event => {
-    let id = event.currentTarget.id
-    console.log(`would delete workout with id: ${id}`)
-  }
-
   const renderSets = sets => {
     return sets.map(set => {
       let data = {
@@ -99,21 +134,6 @@ const ProgramForm = props => {
         </div>
       )
     })
-  }
-
-  const handleTextChange = e => {
-    let { id, value } = e.target
-    let updatedProgram = { ...programContext.program }
-    updatedProgram[id] = value
-    programContext.updateProgram(updatedProgram)
-  }
-
-  const toggleWorkoutModal = () => {
-    setShowWorkoutModal(!showWorkoutModal)
-  }
-
-  const handleClose = () => {
-    navigate('/programs')
   }
 
   const renderMainForm = () => {
@@ -181,7 +201,7 @@ const ProgramForm = props => {
                 type='button'
                 value='Add Workout'
                 css={formButton}
-                onClick={toggleWorkoutModal}
+                onClick={addWorkout}
               />
             </div>
           </div>
@@ -201,7 +221,7 @@ const ProgramForm = props => {
   return (
     <React.Fragment>
       <Modal showModal={showWorkoutModal} handleClose={toggleWorkoutModal}>
-        <AddWorkout saveWorkout={saveWorkout} />
+        <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
       {renderMainForm()}
     </React.Fragment>
