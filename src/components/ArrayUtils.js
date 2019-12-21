@@ -1,5 +1,5 @@
 export let dynamicSort = (property, ignoreCase) => {
-  ignoreCase = (typeof ignoreCase === 'undefined') ? false : ignoreCase
+  ignoreCase = typeof ignoreCase === 'undefined' ? false : ignoreCase
   var sortOrder = 1
   if (property[0] === '-') {
     sortOrder = -1
@@ -14,6 +14,28 @@ export let dynamicSort = (property, ignoreCase) => {
 }
 
 export let findIndexOfId = (id, list) => {
-  let index = list.findIndex( element => Number(element.id) === Number(id) )
+  let index = list.findIndex(element => Number(element.id) === Number(id))
   return index
+}
+
+export let retrieveItemById = (id, list) => {
+  let index = findIndexOfId(id, list)
+  if (index > -1) {
+    return list[index]
+  } else {
+    throw new Error(`No item found matching id: ${id}`)
+  }
+}
+
+/* takes an updated item, id, and list.                  *
+ * overwrites the item in the list with the matching id. *
+ * returns the updated list.                             */
+export let updateItemById = (update, id, list) => {
+  let index = findIndexOfId(id, list)
+  if (index > -1) {
+    list[index] = update
+    return list
+  } else {
+    throw new Error(`No item found matching id: ${id}`)
+  }
 }

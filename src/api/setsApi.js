@@ -71,6 +71,5 @@ export const deleteSet = id => {
 }
 
 const parseResponse = (response) => {
-    // console.log(response.data)
     return response.data;
 }

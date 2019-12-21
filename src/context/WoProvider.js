@@ -10,7 +10,8 @@ const emptyWorkout = {
 
 class WoProvider extends React.Component {
     state = {
-        workout: {...emptyWorkout}
+        workout: {...emptyWorkout},
+        workouts: []
     }
 
     render() {
@@ -25,10 +26,17 @@ class WoProvider extends React.Component {
                     workout.set.push(set)
                     this.setState({workout})
                 },
-                updateSetsForWorkout: set => {
+                updateSetsForWorkout: sets => {
                     const workout = Object.assign({}, this.state.workout)
-                    workout.set = set
+                    workout.sets = sets
                     this.setState({workout})
+                },
+                workouts: this.state.workouts,
+                updateWorkouts: workouts => {
+                    this.setState({ workouts })
+                },
+                clearWorkouts: () => {
+                    this.setState({ workouts: [] })
                 }
             }}>
                 {this.props.children}

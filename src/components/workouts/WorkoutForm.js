@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
 import SetCard from '../sets/SetCard'
-import { findIndexOfId } from '../ArrayUtils'
+import { retrieveItemById, findIndexOfId, updateItemById } from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import { addSet, updateSet } from '../../api/setsApi'
 import Table from '../tables/SimpleTable'
@@ -38,9 +38,13 @@ const WorkoutForm = props => {
   const saveWorkout = async () => {
     let response = {}
     if (woContext.workout.id) {
+      console.log(`updating existing workout with id ${woContext.workout.id}`)
       response = await updateWorkout(woContext.workout)
+      console.log({response})
     }else{
+      console.log(`adding workout from context`)
       response = await addWorkout(woContext.workout)
+      console.log({response})
     }
 
     if (props.saveWorkout){
@@ -68,20 +72,27 @@ const WorkoutForm = props => {
     console.log(id)
   }
 
+  // lots of changes going on here...
   const handleSetChange = update => {
     console.log(`update: ${JSON.stringify(update)}`)
     // get set with matching id
+    let set = {...retrieveItemById(update.setId, woContext.workout.sets)}
 
     // find exercise with matching id
+    let targetExercise = {...retrieveItemById(update.id, set.exercises)}
 
-    // let index = findIndexOfId(update.id, set.exercises)
-    // if (index > -1) {
-    //   // update the appropriate value (based on name field - which will be either 'name' or 'reps')
-    //   // set that value to update.value
-    //   set[update.name] = update.value
-    // }
+    // update the appropriate value (based on name field - which will be either 'name' or 'reps')
+    //   set that value to update.value
+    targetExercise[update.name] = update.value
+
+    // update set
+    let updatedExerciseList = updateItemById(targetExercise, update.id, set.exercises)
+    set.exercises = updatedExerciseList
+
+    let updatedSetList = updateItemById(set, update.setId, woContext.workout.sets)
 
     //update context
+    woContext.updateSetsForWorkout(updatedSetList)
   }
 
   const renderSets = sets => {

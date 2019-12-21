@@ -13,8 +13,7 @@ import { gridContainer, gridItem } from '../../styles/gridStyles'
 import { findIndexOfId } from '../ArrayUtils'
 
 const Workouts = props => {
-  let context = useContext(WoContext)
-  const [workouts, setWorkouts] = useState([])
+  let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(-1)
 
@@ -22,8 +21,8 @@ const Workouts = props => {
     fetchMyAPI()
   }, [])
 
-  //TODO: render rows of 5
   const renderWorkouts = workouts => {
+    console.log('rendering workouts...')
     return workouts.map(wo => {
       return (
         <div
@@ -70,17 +69,23 @@ const Workouts = props => {
     })
   }
 
+  const saveWorkout = async workout => {
+    await fetchMyAPI()
+  }
+
   const editWorkout = event => {
     let id = event.currentTarget.id
     setSelectedWorkoutToContext(id)
+    // woContext.updateWorkout()
     // setShowWorkoutModal(true)
     toggleModal()
   }
 
   const setSelectedWorkoutToContext = workoutId => {
-    let index = findIndexOfId(workoutId, workouts)
-    if (index != -1) {
-      context.updateWorkout(workouts[index])
+    let index = findIndexOfId(workoutId, woContext.workouts)
+    if (index > -1) {
+      // console.log(`using workout ${JSON.stringify(workouts[index])}`)
+      woContext.updateWorkout(woContext.workouts[index])
     }
   }
 
@@ -95,7 +100,8 @@ const Workouts = props => {
 
   const fetchMyAPI = async () => {
     const response = await retrieve()
-    setWorkouts(response)
+    console.log(JSON.stringify(response))
+    woContext.updateWorkouts(response)
   }
 
   const toggleModal = () => {
@@ -106,10 +112,10 @@ const Workouts = props => {
   return (
     showWorkoutModal
     ? <Modal handleClose={toggleModal}>
-        <WorkoutForm workoutId={selectedWorkoutId} />
+        <WorkoutForm workoutId={selectedWorkoutId} saveWorkout={saveWorkout} />
       </Modal>
-    : (workouts.length > 0
-    ? <div css={gridContainer}>{renderWorkouts(workouts)}</div>
+    : (woContext.workouts.length > 0
+    ? <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
     : <div>Workouts</div>)
   )
 }

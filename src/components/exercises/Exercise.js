@@ -91,7 +91,6 @@ class Exercise extends React.Component {
       type: this.state.exerciseType
     }
     addExercise(exercise).then(response => {
-    //   console.log(`response: ${JSON.stringify(response)}`)
       this.props.done()
     })
   }

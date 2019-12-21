@@ -8,7 +8,6 @@ export const retrieve = () => {
   return axios
     .get(URL, config)
     .then(function(response) {
-      // console.log(JSON.stringify(response))
       const data = parseResponse(response)
       return data
     })
@@ -77,6 +76,5 @@ export const deleteWorkout = id => {
 }
 
 const parseResponse = response => {
-  // console.log({response})
   return response.data
 }
