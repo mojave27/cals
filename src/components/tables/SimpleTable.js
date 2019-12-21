@@ -5,6 +5,7 @@ import { table } from '../../styles/table'
 
 // SAMPLE DATA OBJECT
 const sampleData = {
+  setId: 999,
   headers: ['name', 'reps'],
   rows: [
     {
@@ -27,6 +28,8 @@ const sampleData = {
     }]
 }
 
+//TODO: update this table to use context instead of passing the props/data all around it.
+
 class Table extends React.Component {
   state = { }
 
@@ -34,7 +37,7 @@ class Table extends React.Component {
     return (
       <div style={{ overflowX: 'auto' }}>
         <table css={table}>
-          <tbody>{this.renderRows(this.props.data)}</tbody>
+          <tbody id={this.props.setId}>{this.renderRows(this.props.data)}</tbody>
         </table>
       </div>
     )
@@ -46,7 +49,7 @@ class Table extends React.Component {
       let id = (typeof row.id === 'undefined') ? index : row.id
       return <tr
         id={id}
-        // onClick={this.props.onClick}
+        data-setid={data.setId}
         key={index}>
         {this.renderRow(row, data.headers)}
       </tr>
@@ -56,9 +59,6 @@ class Table extends React.Component {
   }
 
   renderHeaders = headers => {
-    // if (this.props.edit && this.props.edit === true) {
-    //   headers.push('edit?')
-    // }
     return (
       <tr key={headers.toString()}>
         {headers.map(header => (
@@ -73,16 +73,20 @@ class Table extends React.Component {
     for (let i = 0; i < headers.length; i++) {
       tds.push(
           <td onClick={this.clickPart} style={{borderLeft:'1px solid #000'}} key={i}>
-            <Input data={row[headers[i]]}  onChange={this.handleTextChange} disabled={this.props.disabled} />
+            <Input id={row.id} name={headers[i]} data={row[headers[i]]}  onChange={this.handleSetChange} disabled={this.props.disabled} />
           </td>)
     }
     return tds
   }
 
-  clickPart = event => { }
-
-  handleTextChange = event => {
-    console.log(event.target.value)
+  // todo: need to give the exercise id
+  handleSetChange = event => {
+    // get setId from tr (parentNode/td > parentNode/tr)
+    let setId = event.target.parentNode.parentNode.dataset['setid']
+    let id = event.target.id
+    let name = event.target.name
+    let value = event.target.value
+    this.props.handleSetChange({setId: setId, id: id, name: name, value: value})
   }
 
 }
@@ -90,11 +94,13 @@ class Table extends React.Component {
 const Input = props => {
   return (
     <input 
+      id={props.id}
+      data-setid='999'
+      name={props.name}
       type='text' 
       disabled={props.disabled} 
       value={props.data} 
       style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'1em', width:'100%', lineHeight:'14px'}} 
-      // onClick={props.clickPart} 
       onChange={props.onChange}
     />
   )

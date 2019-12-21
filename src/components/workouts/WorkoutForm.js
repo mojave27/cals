@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
 import SetCard from '../sets/SetCard'
+import { findIndexOfId } from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import { addSet, updateSet } from '../../api/setsApi'
 import Table from '../tables/SimpleTable'
@@ -67,15 +68,32 @@ const WorkoutForm = props => {
     console.log(id)
   }
 
+  const handleSetChange = update => {
+    console.log(`update: ${JSON.stringify(update)}`)
+    // get set with matching id
+
+    // find exercise with matching id
+
+    // let index = findIndexOfId(update.id, set.exercises)
+    // if (index > -1) {
+    //   // update the appropriate value (based on name field - which will be either 'name' or 'reps')
+    //   // set that value to update.value
+    //   set[update.name] = update.value
+    // }
+
+    //update context
+  }
+
   const renderSets = sets => {
     return sets.map(set => {
       let data = {
+        setId: set.id,
         headers: ['name', 'reps'],
         rows: [...set.exercises]
       }
       return (
         <div key={set.id} css={setBlock}>
-          <Table disabled={false} data={data} onClick={handleRowClick}/>
+          <Table disabled={false} data={data} handleSetChange={handleSetChange} onClick={handleRowClick}/>
         </div>
       )
     })
@@ -118,6 +136,7 @@ const WorkoutForm = props => {
             </div>
           </div>
         </div>
+
         <div css={stripe} />
 
         <div css={container}>
