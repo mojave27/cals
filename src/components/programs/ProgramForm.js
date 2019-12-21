@@ -184,7 +184,7 @@ const ProgramForm = props => {
         <div css={row}>
           <input
             type='submit'
-            value='Submit'
+            value='Save Program'
             css={[basicButton, { float: 'right' }]}
             onClick={saveProgram}
           />
