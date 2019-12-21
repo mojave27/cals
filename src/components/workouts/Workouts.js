@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import { useContext, useState, useEffect } from 'react'
 import WoContext from '../../context/WoContext'
-import { retrieve, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
+import { retrieve as retrieveWorkouts, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
@@ -15,10 +15,10 @@ import { findIndexOfId } from '../ArrayUtils'
 const Workouts = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
-  const [selectedWorkoutId, setSelectedWorkoutId] = useState(-1)
 
-  useEffect(() => {
+  useEffect( () => {
     fetchMyAPI()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderWorkouts = workouts => {
@@ -99,8 +99,7 @@ const Workouts = props => {
   }
 
   const fetchMyAPI = async () => {
-    const response = await retrieve()
-    console.log(JSON.stringify(response))
+    const response = await retrieveWorkouts()
     woContext.updateWorkouts(response)
   }
 
@@ -112,7 +111,7 @@ const Workouts = props => {
   return (
     showWorkoutModal
     ? <Modal handleClose={toggleModal}>
-        <WorkoutForm workoutId={selectedWorkoutId} saveWorkout={saveWorkout} />
+        <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
     : (woContext.workouts.length > 0
     ? <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
