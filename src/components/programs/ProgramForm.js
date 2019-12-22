@@ -46,27 +46,24 @@ const ProgramForm = props => {
     toggleWorkoutModal()
   }
 
-  const saveWorkout = workout => {
+  const saveWorkout = () => {
     let updatedProgram = { ...programContext.program }
-    let index = findIndexOfId(workout.id, updatedProgram.workouts)
+    let index = findIndexOfId(woContext.workout.id, updatedProgram.workouts)
     if (index > -1){
-      let workouts = updateItemById(workout.id, updatedProgram.workouts)
+      let workouts = updateItemById(woContext.workout, woContext.workout.id, updatedProgram.workouts)
       updatedProgram.workouts = workouts
     }else{
-      updatedProgram.workouts.push(workout)
+      updatedProgram.workouts.push(woContext.workout)
     }
     programContext.updateProgram(updatedProgram)
+    saveProgram()
   }
 
   const editWorkout = async event => {
     let id = event.currentTarget.id
-    console.log(`retrieving workout with id: ${id}`)
     let workout = await retrieveWorkoutById(id)
     await woContext.updateWorkout(workout)
-    console.log(JSON.stringify(workout))
-    // console.log(JSON.stringify(woContext.workout))
     toggleWorkoutModal()
-    console.log(JSON.stringify(woContext.workout))
   }
 
   const deleteWorkout = event => {
@@ -130,7 +127,7 @@ const ProgramForm = props => {
       }
       return (
         <div key={set.id} css={setBlock}>
-          <Table data={data} />
+          <Table data={data} disabled={true} />
         </div>
       )
     })

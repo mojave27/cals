@@ -14,6 +14,8 @@ export let dynamicSort = (property, ignoreCase) => {
 }
 
 export let findIndexOfId = (id, list) => {
+  console.log(`[ArrayUtils] id: ${id}`)
+  console.log(`[ArrayUtils] list: ${JSON.stringify(list)}`)
   let index = list.findIndex(element => Number(element.id) === Number(id))
   return index
 }

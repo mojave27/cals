@@ -43,13 +43,16 @@ const WorkoutForm = props => {
     }else{
       console.log(`adding workout from context`)
       response = await addWorkout(woContext.workout)
-      console.log({response})
+      console.log(`response: ${JSON.stringify(response)}`)
     }
 
-    woContext.updateWorkout(response)
+    await woContext.updateWorkout(response)
+    console.log(JSON.stringify(woContext.workout))
 
     if (props.saveWorkout){
-      props.saveWorkout(woContext.workout)
+      // props.saveWorkout(woContext.workout)
+      // props.saveWorkout(response)
+      props.saveWorkout()
     }
   }
 
