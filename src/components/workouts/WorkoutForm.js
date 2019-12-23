@@ -36,15 +36,15 @@ const WorkoutForm = props => {
   const saveWorkout = async () => {
     let response = {}
     if (woContext.workout.id) {
-      console.log(`updating existing workout with id ${woContext.workout.id}`)
+      // console.log(`updating existing workout with id ${woContext.workout.id}`)
       response = await updateWorkout(woContext.workout)
       // console.log({response})
-      console.log(`updateWorkout response: ${JSON.stringify(response)}`)
+      // console.log(`updateWorkout response: ${JSON.stringify(response)}`)
     } else {
-      console.log(`adding workout from context`)
+      // console.log(`adding workout from context`)
       response = await addWorkout(woContext.workout)
-      console.log(`addWorkout response: ${JSON.stringify(response)}`)
-      console.log('updating context')
+      // console.log(`addWorkout response: ${JSON.stringify(response)}`)
+      // console.log('updating context')
       // update context because add would have an id
       await woContext.updateWorkout(response)
     }
