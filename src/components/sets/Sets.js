@@ -2,15 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { deleteSet as deleteSetById, retrieve } from '../../api/setsApi'
-import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import SetCard from './SetCard'
 import SetViewer from './SetViewer'
 import { findIndexOfId } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
 import SetContext from '../../context/SetContext'
+import { formButton } from '../../styles/main-styles'
 import { gridContainer } from '../../styles/gridStyles'
-
 
 const Sets = () => {
   let context = useContext(SetContext)
@@ -26,7 +25,9 @@ const Sets = () => {
   }, [])
 
   const retrieveSets = async () => {
-    await retrieve().then(sets => { setSets(sets) })
+    await retrieve().then(sets => {
+      setSets(sets)
+    })
   }
 
   const done = () => {
@@ -46,7 +47,7 @@ const Sets = () => {
     setShowModal(!showModal)
   }
 
-  const handleSetSelect = (e) => {
+  const handleSetSelect = e => {
     let id = e.currentTarget.id
     let index = findIndexOfId(id, sets)
     let set = { ...sets[index] }
@@ -70,37 +71,41 @@ const Sets = () => {
       return sets.map(set => {
         let index = set.id
         return (
-          <SetViewer id={index} key={index} set={set} deleteSet={deleteSet} selectSet={handleSetSelect} />
+          <SetViewer
+            id={index}
+            key={index}
+            set={set}
+            deleteSet={deleteSet}
+            selectSet={handleSetSelect}
+          />
         )
       })
     }
   }
 
   return (
-      (showModal ? (
-        <Modal handleClose={toggleModal}>
-          <SetCard done={done} saveSet={saveSet} />
-        </Modal>
+    <React.Fragment>
+      <Modal showModal={showModal} handleClose={toggleModal}>
+        <SetCard done={done} saveSet={saveSet} />
+      </Modal>
+
+      {isEmpty(context.selectedSet) ? (
+        <React.Fragment>
+          <button
+            css={formButton}
+            style={{ float: 'none', margin: '10px auto' }}
+            onClick={addSet}
+          >
+            Add Set
+          </button>
+          <div css={gridContainer}>{renderSets(sets)}</div>
+        </React.Fragment>
       ) : (
-
-          isEmpty(context.selectedSet)
-            ? <React.Fragment>
-              <button
-                css={formButton}
-                style={{ float: 'none', margin: '10px auto' }}
-                onClick={addSet}
-              >
-                Add Set
-              </button>
-              <div css={gridContainer} >
-                {renderSets(sets)}
-              </div>
-            </React.Fragment>
-            // : <SetCard set={context.set} />
-            : <SetCard done={done} saveSet={saveSet} />
-        ))
+        // : <SetCard set={context.set} />
+        <SetCard done={done} saveSet={saveSet} />
+      )}
+    </React.Fragment>
   )
-
 }
 
 export default Sets

@@ -95,11 +95,11 @@ const Input = props => {
   return (
     <input 
       id={props.id}
-      data-setid='999'
+      // data-setid={props.data.setId}
       name={props.name}
       type='text' 
       disabled={props.disabled} 
-      value={props.data} 
+      value={props.data ? props.data : ''} 
       style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'1em', width:'100%', lineHeight:'14px'}} 
       onChange={props.onChange}
     />

@@ -19,7 +19,6 @@ import {
   stripe
 } from '../../styles/main-styles'
 
-
 const WorkoutForm = props => {
   let woContext = useContext(WoContext)
   let setContext = useContext(SetContext)
@@ -29,25 +28,30 @@ const WorkoutForm = props => {
     setShowSetDialog(!showSetDialog)
   }
 
-  const addSetToWorkout = () => {
-    setContext.clearSet() 
+  const showSetCard = () => {
+    setContext.clearSet()
     toggleSetDialog()
   }
 
   const saveWorkout = async () => {
     let response = {}
     if (woContext.workout.id) {
-      console.log(`updating existing workout with id ${woContext.workout.id}`)
+      // console.log(`updating existing workout with id ${woContext.workout.id}`)
       response = await updateWorkout(woContext.workout)
-      console.log({response})
-    }else{
-      console.log(`adding workout from context`)
+      // console.log({response})
+      // console.log(`updateWorkout response: ${JSON.stringify(response)}`)
+    } else {
+      // console.log(`adding workout from context`)
       response = await addWorkout(woContext.workout)
-      console.log({response})
+      // console.log(`addWorkout response: ${JSON.stringify(response)}`)
+      // console.log('updating context')
     }
+    // update context because add would have an id
+    await woContext.updateWorkout(response)
 
-    if (props.saveWorkout){
-      props.saveWorkout(woContext.workout)
+    if (props.saveWorkout) {
+      console.log('calling props.saveWorkout')
+      props.saveWorkout(response)
     }
   }
 
@@ -58,9 +62,9 @@ const WorkoutForm = props => {
     woContext.updateWorkout(updatedWorkout)
   }
 
-  const saveSet = set => {
+  const addSetToWorkout = set => {
     // add/update set in workout context
-    let updatedWorkout = {...woContext.workout}
+    let updatedWorkout = { ...woContext.workout }
     updatedWorkout.sets.push(set)
     woContext.updateWorkout(updatedWorkout)
     setShowSetDialog(false)
@@ -73,40 +77,59 @@ const WorkoutForm = props => {
 
   // lots of changes going on here...
   const handleSetChange = update => {
-    console.log(`update: ${JSON.stringify(update)}`)
+    // console.log(`update: ${JSON.stringify(update)}`)
     // get set with matching id
-    let set = {...retrieveItemById(update.setId, woContext.workout.sets)}
+    let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
+    // console.log(`got matching set: ${JSON.stringify(set)}`)
 
     // find exercise with matching id
-    let targetExercise = {...retrieveItemById(update.id, set.exercises)}
+    let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
 
     // update the appropriate value (based on name field - which will be either 'name' or 'reps')
     //   set that value to update.value
     targetExercise[update.name] = update.value
 
     // update set
-    let updatedExerciseList = updateItemById(targetExercise, update.id, set.exercises)
+    let updatedExerciseList = updateItemById(
+      targetExercise,
+      update.id,
+      set.exercises
+    )
     set.exercises = updatedExerciseList
 
-    let updatedSetList = updateItemById(set, update.setId, woContext.workout.sets)
+    let updatedSetList = updateItemById(
+      set,
+      update.setId,
+      woContext.workout.sets
+    )
 
     //update context
     woContext.updateSetsForWorkout(updatedSetList)
+    // console.log(JSON.stringify(woContext.workout))
   }
 
   const renderSets = sets => {
-    return sets.map(set => {
-      let data = {
-        setId: set.id,
-        headers: ['name', 'reps'],
-        rows: [...set.exercises]
-      }
-      return (
-        <div key={set.id} css={setBlock}>
-          <Table disabled={false} data={data} handleSetChange={handleSetChange} onClick={handleRowClick}/>
-        </div>
-      )
-    })
+    if (sets && sets.length > 0) {
+      return sets.map(set => {
+        let data = {
+          setId: set.id,
+          headers: ['name', 'reps'],
+          rows: [...set.exercises]
+        }
+        return (
+          <div key={set.id} css={setBlock}>
+            <Table
+              disabled={false}
+              data={data}
+              handleSetChange={handleSetChange}
+              onClick={handleRowClick}
+            />
+          </div>
+        )
+      })
+    } else {
+      return null
+    }
   }
 
   return (
@@ -160,7 +183,7 @@ const WorkoutForm = props => {
               value='Add Set'
               css={formButton}
               // onClick={toggleSetDialog}
-              onClick={addSetToWorkout}
+              onClick={showSetCard}
               style={{ display: 'block' }}
             />
             <input
@@ -170,13 +193,14 @@ const WorkoutForm = props => {
               onClick={saveWorkout}
               style={{ display: 'block' }}
             />
-            {showSetDialog ? <SetCard saveSet={saveSet} done={toggleSetDialog} /> : null}
+            {showSetDialog ? (
+              <SetCard saveSet={addSetToWorkout} done={toggleSetDialog} />
+            ) : null}
           </div>
         </div>
       </div>
     </React.Fragment>
   )
-
 }
 
 export default WorkoutForm

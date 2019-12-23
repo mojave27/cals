@@ -17,10 +17,12 @@ class ProgramProvider extends React.Component {
         return (
             <ProgramContext.Provider value={{
                 program: this.state.program,
+                clearProgram: () => {
+                    this.setState({program: emptyProgram})
+                },
                 updateProgram: program => {
                     this.setState({ program })
                 },
-                // setProgram: program => updateProgram(program),
                 addWorkout: workout => {
                     const program = Object.assign({}, this.state.program)
                     program.workout.push(workout)

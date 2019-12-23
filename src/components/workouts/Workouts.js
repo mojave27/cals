@@ -1,24 +1,30 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { emptyWorkout } from '../../context/WoProvider'
 import WoContext from '../../context/WoContext'
-import { retrieve as retrieveWorkouts, deleteWorkout as deleteWorkoutApi } from '../../api/workoutsApi'
+import {
+  retrieve as retrieveWorkouts,
+  deleteWorkout as deleteWorkoutApi
+} from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
+import { findIndexOfId } from '../ArrayUtils'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
+import { formButton } from '../../styles/main-styles'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
-import { findIndexOfId } from '../ArrayUtils'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
 
-  useEffect( () => {
+  useEffect(() => {
     fetchMyAPI()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderWorkouts = workouts => {
@@ -29,7 +35,7 @@ const Workouts = props => {
           key={wo.id}
           id={wo.id}
           css={[workoutBlock, gridItem]}
-          style={{marginLeft: '5px', marginBottom: '10px'}}
+          style={{ marginLeft: '5px', marginBottom: '10px' }}
         >
           <div css={workoutHeader}>
             {wo.name}
@@ -57,6 +63,7 @@ const Workouts = props => {
   const renderSets = sets => {
     // console.log(`sets: ${JSON.stringify(sets)}`)
     return sets.map(set => {
+      // console.log(`set: ${JSON.stringify(set)}`)
       let data = {
         headers: ['name', 'reps'],
         rows: [...set.exercises]
@@ -69,13 +76,20 @@ const Workouts = props => {
     })
   }
 
-  const saveWorkout = async workout => {
-    await fetchMyAPI()
+  const addWorkout = () => {
+    woContext.updateWorkout(emptyWorkout)
+    toggleModal()
   }
 
-  const editWorkout = event => {
+  const saveWorkout = async workout => {
+    await woContext.saveWorkoutInWorkoutsList(workout)
+    // await fetchMyAPI()
+    toggleModal()
+  }
+
+  const editWorkout = async event => {
     let id = event.currentTarget.id
-    setSelectedWorkoutToContext(id)
+    await setSelectedWorkoutToContext(id)
     // woContext.updateWorkout()
     // setShowWorkoutModal(true)
     toggleModal()
@@ -84,18 +98,15 @@ const Workouts = props => {
   const setSelectedWorkoutToContext = workoutId => {
     let index = findIndexOfId(workoutId, woContext.workouts)
     if (index > -1) {
-      // console.log(`using workout ${JSON.stringify(workouts[index])}`)
       woContext.updateWorkout(woContext.workouts[index])
     }
   }
 
   const deleteWorkout = async event => {
     let id = event.currentTarget.id
-    console.log(`deleting workout with id: ${id}`)
     await deleteWorkoutApi(id)
     fetchMyAPI()
     // update array in state as well?  or force refresh/useEffect call?
-    
   }
 
   const fetchMyAPI = async () => {
@@ -104,18 +115,28 @@ const Workouts = props => {
   }
 
   const toggleModal = () => {
-    let newValue = !showWorkoutModal 
+    let newValue = !showWorkoutModal
     setShowWorkoutModal(newValue)
   }
 
   return (
-    showWorkoutModal
-    ? <Modal handleClose={toggleModal}>
+    <React.Fragment>
+      <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
         <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
-    : (woContext.workouts.length > 0
-    ? <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
-    : <div>Workouts</div>)
+      <button
+            css={formButton}
+            style={{ float: 'none', margin: '10px auto' }}
+            onClick={addWorkout}
+          >
+            Add Workout
+          </button>
+      {woContext.workouts.length > 0 ? (
+        <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
+      ) : (
+        <div>Workouts</div>
+      )}
+    </React.Fragment>
   )
 }
 

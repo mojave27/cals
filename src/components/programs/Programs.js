@@ -85,6 +85,10 @@ const Programs = props => {
     await navigate(`/program-form`)
   }
 
+  const saveProgram = program => {
+
+  }
+
 
   //   TODO: fix this conditional render.
   return props.location.key !== routeKey ? (
@@ -98,11 +102,11 @@ const Programs = props => {
       >
         Add Program
       </button>
-      {/* <div css={gridContainer, container}>{renderPrograms(programs)}</div> */}
       <div css={gridContainer}>{renderPrograms(programContext.programs)}</div>
     </React.Fragment>
   ) : (
     <ProgramOverview handleClose={clearSelectedProgram} program={programContext.program} />
+    // <ProgramOverview saveProgram={saveProgram} handleClose={clearSelectedProgram} />
   )
 
 }
