@@ -45,13 +45,13 @@ const WorkoutForm = props => {
       response = await addWorkout(woContext.workout)
       // console.log(`addWorkout response: ${JSON.stringify(response)}`)
       // console.log('updating context')
-      // update context because add would have an id
-      await woContext.updateWorkout(response)
     }
+    // update context because add would have an id
+    await woContext.updateWorkout(response)
 
     if (props.saveWorkout) {
       console.log('calling props.saveWorkout')
-      props.saveWorkout()
+      props.saveWorkout(response)
     }
   }
 
@@ -127,7 +127,7 @@ const WorkoutForm = props => {
           </div>
         )
       })
-    }else{
+    } else {
       return null
     }
   }

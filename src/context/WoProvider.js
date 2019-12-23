@@ -1,5 +1,6 @@
 import React from 'react'
 import WoContext from './WoContext'
+import { findIndexOfId, updateItemById } from '../components/ArrayUtils'
 
 export const emptyWorkout = {
     "name": "",
@@ -37,6 +38,20 @@ class WoProvider extends React.Component {
                 workouts: this.state.workouts,
                 updateWorkouts: workouts => {
                     this.setState({ workouts })
+                },
+                saveWorkoutInWorkoutsList: workout => {
+                    let workouts = [...this.state.workouts]
+                    if ( workout.id ) {
+                        let index = findIndexOfId(workout.id, workouts)
+                        if (index > -1) {
+                            updateItemById(workout, workout.id, workouts)
+                        }else{
+                            workouts.push(workout)
+                        }
+                    }else{
+                        workouts.push(workout)
+                    }
+                    this.setState({workouts})
                 },
                 clearWorkouts: () => {
                     this.setState({ workouts: [] })

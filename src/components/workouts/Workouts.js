@@ -82,8 +82,9 @@ const Workouts = props => {
   }
 
   const saveWorkout = async workout => {
+    await woContext.saveWorkoutInWorkoutsList(workout)
     // await fetchMyAPI()
-    // toggleModal()
+    toggleModal()
   }
 
   const editWorkout = async event => {
