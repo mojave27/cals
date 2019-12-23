@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { navigate } from '@reach/router'
 import React, { useContext, useState, useEffect } from 'react'
+import { emptyWorkout } from '../../context/WoProvider'
 import WoContext from '../../context/WoContext'
 import {
   retrieve as retrieveWorkouts,
@@ -10,11 +10,13 @@ import {
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
+import { findIndexOfId } from '../ArrayUtils'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
+import { formButton } from '../../styles/main-styles'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
-import { findIndexOfId } from '../ArrayUtils'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
@@ -74,15 +76,19 @@ const Workouts = props => {
     })
   }
 
-  const saveWorkout = async workout => {
-    await fetchMyAPI()
-    // toggleModal()
-    // await navigate(`/workouts`)
+  const addWorkout = () => {
+    woContext.updateWorkout(emptyWorkout)
+    toggleModal()
   }
 
-  const editWorkout = event => {
+  const saveWorkout = async workout => {
+    // await fetchMyAPI()
+    // toggleModal()
+  }
+
+  const editWorkout = async event => {
     let id = event.currentTarget.id
-    setSelectedWorkoutToContext(id)
+    await setSelectedWorkoutToContext(id)
     // woContext.updateWorkout()
     // setShowWorkoutModal(true)
     toggleModal()
@@ -117,6 +123,13 @@ const Workouts = props => {
       <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
         <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
+      <button
+            css={formButton}
+            style={{ float: 'none', margin: '10px auto' }}
+            onClick={addWorkout}
+          >
+            Add Workout
+          </button>
       {woContext.workouts.length > 0 ? (
         <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
       ) : (

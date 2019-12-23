@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { deleteSet as deleteSetById, retrieve } from '../../api/setsApi'
-import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import SetCard from './SetCard'
 import SetViewer from './SetViewer'
 import { findIndexOfId } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
 import SetContext from '../../context/SetContext'
+import { formButton } from '../../styles/main-styles'
 import { gridContainer } from '../../styles/gridStyles'
 
 const Sets = () => {

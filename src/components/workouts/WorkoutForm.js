@@ -36,18 +36,21 @@ const WorkoutForm = props => {
   const saveWorkout = async () => {
     let response = {}
     if (woContext.workout.id) {
-      // console.log(`updating existing workout with id ${woContext.workout.id}`)
+      console.log(`updating existing workout with id ${woContext.workout.id}`)
       response = await updateWorkout(woContext.workout)
       // console.log({response})
+      console.log(`updateWorkout response: ${JSON.stringify(response)}`)
     } else {
-      // console.log(`adding workout from context`)
+      console.log(`adding workout from context`)
       response = await addWorkout(woContext.workout)
-      // console.log(`response: ${JSON.stringify(response)}`)
+      console.log(`addWorkout response: ${JSON.stringify(response)}`)
+      console.log('updating context')
+      // update context because add would have an id
+      await woContext.updateWorkout(response)
     }
 
-    await woContext.updateWorkout(response)
-
     if (props.saveWorkout) {
+      console.log('calling props.saveWorkout')
       props.saveWorkout()
     }
   }
@@ -106,23 +109,27 @@ const WorkoutForm = props => {
   }
 
   const renderSets = sets => {
-    return sets.map(set => {
-      let data = {
-        setId: set.id,
-        headers: ['name', 'reps'],
-        rows: [...set.exercises]
-      }
-      return (
-        <div key={set.id} css={setBlock}>
-          <Table
-            disabled={false}
-            data={data}
-            handleSetChange={handleSetChange}
-            onClick={handleRowClick}
-          />
-        </div>
-      )
-    })
+    if (sets && sets.length > 0) {
+      return sets.map(set => {
+        let data = {
+          setId: set.id,
+          headers: ['name', 'reps'],
+          rows: [...set.exercises]
+        }
+        return (
+          <div key={set.id} css={setBlock}>
+            <Table
+              disabled={false}
+              data={data}
+              handleSetChange={handleSetChange}
+              onClick={handleRowClick}
+            />
+          </div>
+        )
+      })
+    }else{
+      return null
+    }
   }
 
   return (

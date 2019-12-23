@@ -7,7 +7,10 @@ import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
 import { updateProgram, addProgram } from '../../api/programsApi'
-import { retrieveWorkoutById } from '../../api/workoutsApi'
+import {
+  deleteWorkout as deleteWorkoutApi,
+  retrieveWorkoutById
+} from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from '../workouts/WorkoutForm'
@@ -49,10 +52,14 @@ const ProgramForm = props => {
   const saveWorkout = () => {
     let updatedProgram = { ...programContext.program }
     let index = findIndexOfId(woContext.workout.id, updatedProgram.workouts)
-    if (index > -1){
-      let workouts = updateItemById(woContext.workout, woContext.workout.id, updatedProgram.workouts)
+    if (index > -1) {
+      let workouts = updateItemById(
+        woContext.workout,
+        woContext.workout.id,
+        updatedProgram.workouts
+      )
       updatedProgram.workouts = workouts
-    }else{
+    } else {
       updatedProgram.workouts.push(woContext.workout)
     }
     programContext.updateProgram(updatedProgram)
@@ -68,7 +75,18 @@ const ProgramForm = props => {
 
   const deleteWorkout = event => {
     let id = event.currentTarget.id
-    console.log(`would delete workout with id: ${id}`)
+    console.log(`deleting workout with id: ${id}`)
+    deleteWorkoutApi(id)
+    removeWorkoutFromProgramInContext(id)
+  }
+
+  const removeWorkoutFromProgramInContext = workoutId => {
+    let program = programContext.program
+    let workouts = program.workouts
+    let indexOfWorkout = findIndexOfId(workoutId, workouts)
+    workouts.splice(indexOfWorkout, 1)
+    program.workouts = workouts
+    programContext.updateProgram(program)
   }
 
   const handleTextChange = e => {
@@ -85,7 +103,6 @@ const ProgramForm = props => {
   const handleClose = () => {
     navigate('/programs')
   }
-
 
   const renderWorkouts = workouts => {
     return programContext.program.workouts.map(wo => {
@@ -120,17 +137,21 @@ const ProgramForm = props => {
   }
 
   const renderSets = sets => {
-    return sets.map(set => {
-      let data = {
-        headers: ['name', 'reps'],
-        rows: [...set.exercises]
-      }
-      return (
-        <div key={set.id} css={setBlock}>
-          <Table data={data} disabled={true} />
-        </div>
-      )
-    })
+    if (sets && sets.length > 0) {
+      return sets.map(set => {
+        let data = {
+          headers: ['name', 'reps'],
+          rows: [...set.exercises]
+        }
+        return (
+          <div key={set.id} css={setBlock}>
+            <Table data={data} disabled={true} />
+          </div>
+        )
+      })
+    } else {
+      return null
+    }
   }
 
   const renderMainForm = () => {

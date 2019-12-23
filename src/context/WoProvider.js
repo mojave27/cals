@@ -1,7 +1,7 @@
 import React from 'react'
 import WoContext from './WoContext'
 
-const emptyWorkout = {
+export const emptyWorkout = {
     "name": "",
     "description": "",
     "type": "",
@@ -18,8 +18,8 @@ class WoProvider extends React.Component {
         return (
             <WoContext.Provider value={{
                 workout: this.state.workout,
-                updateWorkout: async workout => {
-                    await this.setState({ workout })
+                updateWorkout: workout => {
+                    this.setState({ workout })
                 },
                 setEmptyWorkout: () => {
                     this.setState({ workout: emptyWorkout })
