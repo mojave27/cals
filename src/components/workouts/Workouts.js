@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import { navigate } from '@reach/router'
 import React, { useContext, useState, useEffect } from 'react'
 import WoContext from '../../context/WoContext'
 import {
@@ -60,6 +61,7 @@ const Workouts = props => {
   const renderSets = sets => {
     // console.log(`sets: ${JSON.stringify(sets)}`)
     return sets.map(set => {
+      // console.log(`set: ${JSON.stringify(set)}`)
       let data = {
         headers: ['name', 'reps'],
         rows: [...set.exercises]
@@ -74,6 +76,8 @@ const Workouts = props => {
 
   const saveWorkout = async workout => {
     await fetchMyAPI()
+    // toggleModal()
+    // await navigate(`/workouts`)
   }
 
   const editWorkout = event => {
@@ -87,14 +91,12 @@ const Workouts = props => {
   const setSelectedWorkoutToContext = workoutId => {
     let index = findIndexOfId(workoutId, woContext.workouts)
     if (index > -1) {
-      // console.log(`using workout ${JSON.stringify(workouts[index])}`)
       woContext.updateWorkout(woContext.workouts[index])
     }
   }
 
   const deleteWorkout = async event => {
     let id = event.currentTarget.id
-    console.log(`deleting workout with id: ${id}`)
     await deleteWorkoutApi(id)
     fetchMyAPI()
     // update array in state as well?  or force refresh/useEffect call?
