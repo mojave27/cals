@@ -5,7 +5,7 @@ import { deleteSet as deleteSetById, retrieve } from '../../api/setsApi'
 import Modal from '../Modal'
 import SetCard from './SetCard'
 import SetViewer from './SetViewer'
-import { findIndexOfId } from '../ArrayUtils'
+import { findIndexOfId, removeItem } from '../ArrayUtils'
 import { isEmpty } from 'lodash'
 import SetContext from '../../context/SetContext'
 import { formButton } from '../../styles/main-styles'
@@ -48,7 +48,9 @@ const Sets = () => {
   const deleteSet = async event => {
     let id = event.currentTarget.id
     await deleteSetById(id)
-    fetchMyAPI()
+    // cleanup from context
+    let sets = removeItem(id, setContext.sets)
+    setContext.updateSets(sets)
   }
 
   const handleSetSelect = e => {

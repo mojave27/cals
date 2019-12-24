@@ -28,7 +28,7 @@ class ProgramOverview extends React.Component {
   renderWorkouts = workouts => {
     return workouts.map(wo => {
       return (
-        <div key={wo.id} css={[workoutBlock, gridItem]}>
+        <div key={`${wo.id}-${Math.random()}`} css={[workoutBlock, gridItem]}>
           <div css={blockHeader}>{wo.name}</div>
           <div>{this.renderSets(wo.sets)}</div>
         </div>

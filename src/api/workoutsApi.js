@@ -4,7 +4,7 @@ import { config } from '../config/axiosConfig'
 const URL = 'workouts'
 
 export const retrieve = () => {
-  console.log('calling /workouts')
+  // console.log('calling GET /workouts')
   return axios
     .get(URL, config)
     .then(function(response) {
@@ -19,6 +19,7 @@ export const retrieve = () => {
 }
 
 export const retrieveWorkoutById = id => {
+  // console.log(`calling GET /workouts/${id}`)
   let url = `${URL}/${id}`
   return axios
     .get(url, config)
@@ -34,6 +35,7 @@ export const retrieveWorkoutById = id => {
 }
 
 export const addWorkout = workout => {
+  console.log(`calling POST /workouts`)
   // let data = {...workout}
   return axios
     .post(URL, workout, config)
@@ -49,6 +51,7 @@ export const addWorkout = workout => {
 
 export const updateWorkout = workout => {
   let url = `${URL}/${workout.id}`
+  console.log(`calling PUT ${url}`)
   return axios
     .put(url, workout, config)
     .then(response => {
@@ -62,12 +65,11 @@ export const updateWorkout = workout => {
 }
 
 export const deleteWorkout = id => {
-  let url = `${URL}/${id}`
+  const url = `${URL}/${id}`
   return axios
     .delete(url, config)
     .then(response => {
-      const data = parseResponse(response)
-      return data
+      return parseResponse(response)
     })
     .catch(error => {
       console.log(`workouts api - deleteWorkout error: ${error}`)

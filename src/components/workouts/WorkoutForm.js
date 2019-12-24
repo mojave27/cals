@@ -124,6 +124,7 @@ const WorkoutForm = props => {
   const renderSets = sets => {
     if (sets && sets.length > 0) {
       return sets.map(set => {
+        console.log(`set: ${JSON.stringify(set)}`)
         let data = {
           setId: set.id,
           headers: ['name', 'reps'],

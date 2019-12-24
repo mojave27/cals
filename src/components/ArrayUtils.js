@@ -41,3 +41,9 @@ export let updateItemById = (update, id, list) => {
     throw new Error(`No item found matching id: ${id}`)
   }
 }
+
+export const removeItem = (id, list) => {
+  let index = findIndexOfId(id, list)
+  list.splice(index, 1)
+  return list
+}

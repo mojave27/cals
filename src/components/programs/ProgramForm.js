@@ -69,6 +69,7 @@ const ProgramForm = props => {
   const editWorkout = async event => {
     let id = event.currentTarget.id
     let workout = await retrieveWorkoutById(id)
+    console.log(`workout: ${JSON.stringify(workout)}`)
     await woContext.updateWorkout(workout)
     toggleWorkoutModal()
   }
@@ -108,7 +109,7 @@ const ProgramForm = props => {
     return programContext.program.workouts.map(wo => {
       return (
         <div
-          key={wo.id}
+          key={`${wo.id}-${Math.random()}`}
           id={wo.id}
           css={[workoutBlock, gridItem]}
           style={{ marginLeft: '5px' }}

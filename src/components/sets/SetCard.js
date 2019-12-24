@@ -1,11 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useEffect, useState } from 'react'
+import { findIndexOfId, retrieveItemById, updateItemById } from '../ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
 import { addSet, updateSet } from '../../api/setsApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'
 import SetContext from '../../context/SetContext'
+import BlockHeader from '../BlockHeader'
 
 import {
   basicButton,
@@ -18,7 +20,7 @@ import {
 } from '../../styles/main-styles'
 
 const SetCard = props => {
-  let context = useContext(SetContext)
+  let setContext = useContext(SetContext)
   const [allExercises, setAllExercises] = useState([])
   const [selectedExercises, setSelectedExercises] = useState([])
   const [showExerciseList, setShowExerciseList] = useState(false)
@@ -42,13 +44,13 @@ const SetCard = props => {
             <label htmlFor='exercises'>exercises for set</label>
           </div>
           <div css={col75}>
-            <div css={row}>{renderExercisesForSet(context.set.exercises)}</div>
+            <div css={row}>{renderExercisesForSet(setContext.set.exercises)}</div>
             <div css={row}>
               <input
                 style={{ margin: '5px' }}
                 type='button'
                 value='Add Exercise'
-                css={[basicButton, {float:'right'}]}
+                css={[basicButton, { float: 'right' }]}
                 onClick={toggleModal}
               />
             </div>
@@ -58,17 +60,13 @@ const SetCard = props => {
               style={{ margin: '5px' }}
               type='button'
               value='Save Set'
-              css={[basicButton, {float:'right'}]}
+              css={[basicButton, { float: 'right' }]}
               onClick={saveSet}
             />
           </div>
         </div>
       </div>
     )
-  }
-
-  const getSetId = () => {
-    return isUndefined(context.set.id) ? ' ' : context.set.id
   }
 
   const renderExerciseList = () => {
@@ -81,14 +79,14 @@ const SetCard = props => {
             style={{ margin: '5px' }}
             type='button'
             value='Save to Set'
-            css={[basicButton, {float:'right'}]}
+            css={[basicButton, { float: 'right' }]}
             onClick={addExercisesToSet}
           />
           <input
             style={{ margin: '5px' }}
             type='button'
             value='Cancel'
-            css={[basicButton, {float:'right'}]}
+            css={[basicButton, { float: 'right' }]}
             onClick={toggleModal}
           />
         </div>
@@ -116,11 +114,8 @@ const SetCard = props => {
     return exercises.map(exercise => {
       let index = exercise.id
       return (
-        <div
-          id={index}
-          css={getClasses(exercise.id)}
-          key={index}
-        >
+        <div id={index} css={getClasses(exercise.id)} key={index}>
+          <BlockHeader item={{ id: exercise.id, name: exercise.name }} deleteItem={deleteExercise} />
           name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
           <input
             css={[formInput, { width: '100px' }]}
@@ -134,6 +129,10 @@ const SetCard = props => {
         </div>
       )
     })
+  }
+
+  const getSetId = () => {
+    return isUndefined(setContext.set.id) ? ' ' : setContext.set.id
   }
 
   const getClasses = id => {
@@ -150,12 +149,12 @@ const SetCard = props => {
   const handleRepsChange = event => {
     event.stopPropagation()
     let { id, value } = event.target
-    let exercisesForSet = [...context.set.exercises]
+    let exercisesForSet = [...setContext.set.exercises]
     let index = exercisesForSet.findIndex(
       exercise => Number(exercise.id) === Number(id)
     )
     exercisesForSet[index].reps = value
-    context.updateExercisesForSet(exercisesForSet)
+    setContext.updateExercisesForSet(exercisesForSet)
   }
 
   const selectExercise = event => {
@@ -173,11 +172,11 @@ const SetCard = props => {
     })
 
     let exercisesForSet = [
-      ...context.set.exercises,
+      ...setContext.set.exercises,
       ...modifiedSelectedExercises
     ]
 
-    await context.updateExercisesForSet(exercisesForSet)
+    await setContext.updateExercisesForSet(exercisesForSet)
     setShowExerciseList(false)
   }
 
@@ -186,24 +185,35 @@ const SetCard = props => {
     setShowExerciseList(newShowExerciseList)
   }
 
+  const deleteExercise = event => {
+    let id = event.currentTarget.id
+    console.log(`would delete exercise with id ${id}`)
+    let exercises = setContext.set.exercises
+    let index = findIndexOfId(id, exercises)
+    if (index > -1) {
+      exercises.splice(index, 1)
+      setContext.updateExercisesForSet(exercises)
+      updateSet(setContext.set)
+    }
+  }
+
   const saveSet = async () => {
     let response = {}
-    if (context.set.id) {
-      response = await updateSet(context.set)
+    if (setContext.set.id) {
+      console.log(`saving changes to existing set ${setContext.set.id}`)
+      response = await updateSet(setContext.set)
     } else {
-      response = await addSet(context.set)
+      console.log(`adding new set ${JSON.stringify(setContext.set)}`)
+      response = await addSet(setContext.set)
     }
 
     if (props.saveSet) {
+      console.log(`calling props.saveSet with ${JSON.stringify(response)}`)
       props.saveSet(response)
     }
   }
 
-  return (
-    showExerciseList 
-    ? renderExerciseList() 
-    : renderSet()
-  )
+  return showExerciseList ? renderExerciseList() : renderSet()
 }
 
 export default SetCard

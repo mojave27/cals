@@ -1,10 +1,9 @@
-import axios from "axios";
+import axios from 'axios'
 import { config } from '../config/axiosConfig'
 
 export const addSet = set => {
   const url = 'sets'
-
-  let data = {...set}
+  let data = { ...set }
 
   return axios
     .post(url, data, config)
@@ -16,7 +15,7 @@ export const addSet = set => {
       // handle error
       console.log(`[api error] : ${error}`)
       return []
-    });
+    })
 }
 
 export const retrieve = () => {
@@ -29,16 +28,14 @@ export const retrieve = () => {
     })
     .catch(function(error) {
       // handle error
-      console.log(`[api error]: ${error}`);
-      return [];
-    });
-};
+      console.log(`[api error]: ${error}`)
+      return []
+    })
+}
 
 export const retrieveSetById = id => {
   const url = `sets/${id}`
-  return axios
-  .get(url, config)
-  .then( response => {
+  return axios.get(url, config).then(response => {
     let data = parseResponse(response)
     return data
   })
@@ -47,7 +44,7 @@ export const retrieveSetById = id => {
 export const updateSet = set => {
   const url = `sets/${set.id}`
 
-  let data = {...set}
+  let data = { ...set }
 
   return axios
     .put(url, data, config)
@@ -57,19 +54,22 @@ export const updateSet = set => {
     .catch(function(error) {
       console.log(`[api error] : ${error}`)
       return []
-    });
+    })
 }
-
 
 export const deleteSet = id => {
   const url = `sets/${id}`
   return axios
-  .delete(url, config)
-  .then (response => {
-    return parseResponse(response)
-  })
+    .delete(url, config)
+    .then(response => {
+      return parseResponse(response)
+    })
+    .catch(error => {
+      console.log(`sets api - deleteSet error: ${error}`)
+      return {}
+    })
 }
 
-const parseResponse = (response) => {
-    return response.data;
+const parseResponse = response => {
+  return response.data
 }
