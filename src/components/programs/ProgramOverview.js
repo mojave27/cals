@@ -5,7 +5,7 @@ import { navigate } from "@reach/router"
 import Table from '../tables/SimpleTable'
 import { card, cardTitle, cardInfo, closeButton, formButton } from '../../styles/main-styles'
 
-import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
+import { workoutBlock, blockHeader, setBlock } from '../../styles/program'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
 
 class ProgramOverview extends React.Component {
@@ -29,7 +29,7 @@ class ProgramOverview extends React.Component {
     return workouts.map(wo => {
       return (
         <div key={wo.id} css={[workoutBlock, gridItem]}>
-          <div css={workoutHeader}>{wo.name}</div>
+          <div css={blockHeader}>{wo.name}</div>
           <div>{this.renderSets(wo.sets)}</div>
         </div>
       )
