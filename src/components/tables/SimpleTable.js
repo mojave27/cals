@@ -5,29 +5,29 @@ import { table } from '../../styles/table'
 import BlockHeader from '../BlockHeader'
 
 // SAMPLE DATA OBJECT
-const sampleData = {
-  setId: 999,
-  headers: ['name', 'reps'],
-  rows: [
-    {
-      id: 0,
-      reps: 'max',
-      name: 'chins',
-      type: 'compound'
-    },
-    {
-      id: 8,
-      reps: 'max',
-      name: 'glute bridge',
-      type: 'compound'
-    },
-    {
-      id: 9,
-      reps: 'max',
-      name: 'inv row',
-      type: 'compound'
-    }]
-}
+// const sampleData = {
+//   setId: 999,
+//   headers: ['name', 'reps'],
+//   rows: [
+//     {
+//       id: 0,
+//       reps: 'max',
+//       name: 'chins',
+//       type: 'compound'
+//     },
+//     {
+//       id: 8,
+//       reps: 'max',
+//       name: 'glute bridge',
+//       type: 'compound'
+//     },
+//     {
+//       id: 9,
+//       reps: 'max',
+//       name: 'inv row',
+//       type: 'compound'
+//     }]
+// }
 
 //TODO: update this table to use context instead of passing the props/data all around it.
 
@@ -45,7 +45,7 @@ class Table extends React.Component {
   }
 
   setupBlockHeader = (colCount, id, deleteItem, editItem) => {
-    let item = { id: id, name: 'stuff' }
+    let item = { id: id, name: `set ${id}` }
     return (
       <tr style={{border:'1px solid cyan'}} key={Math.random()}>
         <th colSpan={colCount}>

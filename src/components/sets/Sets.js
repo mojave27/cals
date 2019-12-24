@@ -12,62 +12,55 @@ import { formButton } from '../../styles/main-styles'
 import { gridContainer } from '../../styles/gridStyles'
 
 const Sets = () => {
-  let context = useContext(SetContext)
+  let setContext = useContext(SetContext)
   const [showModal, setShowModal] = useState(false)
-  const [sets, setSets] = useState([])
 
   useEffect(() => {
-    console.log('firing useEffect in Sets.js')
-    async function fetchMyAPI() {
-      await retrieveSets()
-    }
     fetchMyAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const retrieveSets = async () => {
-    await retrieve().then(sets => {
-      setSets(sets)
-    })
+  const fetchMyAPI = async () => {
+    const response = await retrieve()
+    setContext.updateSets(response)
   }
 
   const done = () => {
-    retrieve().then(sets => {
-      setSets(sets)
-      setShowModal(false)
-    })
-  }
-
-  const addSet = () => {
-    let emptySet = { exercises: [] }
-    context.updateSet(emptySet)
-    toggleModal()
+    fetchMyAPI()
+    setShowModal(false)
   }
 
   const toggleModal = () => {
     setShowModal(!showModal)
   }
 
-  const handleSetSelect = e => {
-    let id = e.currentTarget.id
-    let index = findIndexOfId(id, sets)
-    let set = { ...sets[index] }
-    context.updateSet(set)
+  const addSet = () => {
+    let emptySet = { exercises: [] }
+    setContext.updateSet(emptySet)
+    toggleModal()
+  }
+
+  const saveSet = async set => {
+    await fetchMyAPI()
     toggleModal()
   }
 
   const deleteSet = async event => {
-    event.stopPropagation()
-    await deleteSetById(event.currentTarget.id)
-    retrieveSets()
+    let id = event.currentTarget.id
+    await deleteSetById(id)
+    fetchMyAPI()
   }
 
-  const saveSet = async set => {
-    await retrieveSets()
+  const handleSetSelect = e => {
+    let id = e.currentTarget.id
+    let index = findIndexOfId(id, setContext.sets)
+    let set = { ...setContext.sets[index] }
+    setContext.updateSet(set)
     toggleModal()
   }
 
   const renderSets = sets => {
-    if (sets.length > 0) {
+    if (sets && sets.length > 0) {
       return sets.map(set => {
         let index = set.id
         return (
@@ -89,7 +82,7 @@ const Sets = () => {
         <SetCard done={done} saveSet={saveSet} />
       </Modal>
 
-      {isEmpty(context.selectedSet) ? (
+      {isEmpty(setContext.selectedSet) ? (
         <React.Fragment>
           <button
             css={formButton}
@@ -98,10 +91,9 @@ const Sets = () => {
           >
             Add Set
           </button>
-          <div css={gridContainer}>{renderSets(sets)}</div>
+          <div css={gridContainer}>{renderSets(setContext.sets)}</div>
         </React.Fragment>
       ) : (
-        // : <SetCard set={context.set} />
         <SetCard done={done} saveSet={saveSet} />
       )}
     </React.Fragment>

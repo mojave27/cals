@@ -10,13 +10,12 @@ import {
 import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
+import BlockHeader from '../BlockHeader'
 import { findIndexOfId } from '../ArrayUtils'
 
 import { workoutBlock, setBlock } from '../../styles/program'
 import { formButton } from '../../styles/main-styles'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
-
-import BlockHeader from '../BlockHeader'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
@@ -27,37 +26,9 @@ const Workouts = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const renderWorkouts = workouts => {
-    console.log('rendering workouts...')
-    return workouts.map(wo => {
-      return (
-        <div
-          key={wo.id}
-          id={wo.id}
-          css={[workoutBlock, gridItem]}
-          style={{ marginLeft: '5px', marginBottom: '10px' }}
-        >
-          <BlockHeader item={wo} deleteItem={deleteWorkout} editItem={editWorkout} />
-          <div>{renderSets(wo.sets)}</div>
-        </div>
-      )
-    })
-  }
-
-  const renderSets = sets => {
-    // console.log(`sets: ${JSON.stringify(sets)}`)
-    return sets.map(set => {
-      // console.log(`set: ${JSON.stringify(set)}`)
-      let data = {
-        headers: ['name', 'reps'],
-        rows: [...set.exercises]
-      }
-      return (
-        <div key={set.id} css={setBlock}>
-          <Table data={data} disabled={true} />
-        </div>
-      )
-    })
+  const fetchMyAPI = async () => {
+    const response = await retrieveWorkouts()
+    woContext.updateWorkouts(response)
   }
 
   const addWorkout = () => {
@@ -65,17 +36,19 @@ const Workouts = props => {
     toggleModal()
   }
 
+  const toggleModal = () => {
+    setShowWorkoutModal(!showWorkoutModal)
+  }
+
   const saveWorkout = async workout => {
     await woContext.saveWorkoutInWorkoutsList(workout)
-    // await fetchMyAPI()
     toggleModal()
   }
 
   const editWorkout = async event => {
+    console.log({ event })
     let id = event.currentTarget.id
     await setSelectedWorkoutToContext(id)
-    // woContext.updateWorkout()
-    // setShowWorkoutModal(true)
     toggleModal()
   }
 
@@ -90,17 +63,41 @@ const Workouts = props => {
     let id = event.currentTarget.id
     await deleteWorkoutApi(id)
     fetchMyAPI()
-    // update array in state as well?  or force refresh/useEffect call?
   }
 
-  const fetchMyAPI = async () => {
-    const response = await retrieveWorkouts()
-    woContext.updateWorkouts(response)
+  const renderWorkouts = workouts => {
+    console.log('rendering workouts...')
+    return workouts.map(wo => {
+      return (
+        <div
+          key={wo.id}
+          id={wo.id}
+          css={[workoutBlock, gridItem]}
+          style={{ marginLeft: '5px', marginBottom: '10px' }}
+        >
+          <BlockHeader
+            item={wo}
+            deleteItem={deleteWorkout}
+            editItem={editWorkout}
+          />
+          <div>{renderSets(wo.sets)}</div>
+        </div>
+      )
+    })
   }
 
-  const toggleModal = () => {
-    let newValue = !showWorkoutModal
-    setShowWorkoutModal(newValue)
+  const renderSets = sets => {
+    return sets.map(set => {
+      let data = {
+        headers: ['name', 'reps'],
+        rows: [...set.exercises]
+      }
+      return (
+        <div key={set.id} css={setBlock}>
+          <Table data={data} disabled={true} />
+        </div>
+      )
+    })
   }
 
   return (
@@ -109,12 +106,12 @@ const Workouts = props => {
         <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
       <button
-            css={formButton}
-            style={{ float: 'none', margin: '10px auto' }}
-            onClick={addWorkout}
-          >
-            Add Workout
-          </button>
+        css={formButton}
+        style={{ float: 'none', margin: '10px auto' }}
+        onClick={addWorkout}
+      >
+        Add Workout
+      </button>
       {woContext.workouts.length > 0 ? (
         <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
       ) : (
