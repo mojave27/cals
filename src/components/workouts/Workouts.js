@@ -12,11 +12,11 @@ import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
 import { findIndexOfId } from '../ArrayUtils'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
+import { workoutBlock, setBlock } from '../../styles/program'
 import { formButton } from '../../styles/main-styles'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
+
+import BlockHeader from '../BlockHeader'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
@@ -37,23 +37,7 @@ const Workouts = props => {
           css={[workoutBlock, gridItem]}
           style={{ marginLeft: '5px', marginBottom: '10px' }}
         >
-          <div css={workoutHeader}>
-            {wo.name}
-            <FontAwesomeIcon
-              alt={'remove workout from program'}
-              id={wo.id}
-              style={{ marginLeft: '10px', float: 'right' }}
-              icon={faTrashAlt}
-              onClick={deleteWorkout}
-            />
-            <FontAwesomeIcon
-              alt={'edit workout'}
-              id={wo.id}
-              style={{ marginLeft: '10px', float: 'right' }}
-              icon={faEdit}
-              onClick={editWorkout}
-            />
-          </div>
+          <BlockHeader item={wo} deleteItem={deleteWorkout} editItem={editWorkout} />
           <div>{renderSets(wo.sets)}</div>
         </div>
       )

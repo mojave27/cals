@@ -5,7 +5,7 @@ import { useContext, useState } from 'react'
 import { findIndexOfId, updateItemById } from '../ArrayUtils'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
-import { workoutBlock, workoutHeader, setBlock } from '../../styles/program'
+import { workoutBlock, blockHeader, setBlock } from '../../styles/program'
 import { updateProgram, addProgram } from '../../api/programsApi'
 import {
   deleteWorkout as deleteWorkoutApi,
@@ -113,7 +113,7 @@ const ProgramForm = props => {
           css={[workoutBlock, gridItem]}
           style={{ marginLeft: '5px' }}
         >
-          <div css={workoutHeader}>
+          <div css={blockHeader}>
             {wo.name}
             <FontAwesomeIcon
               alt={'remove workout from program'}

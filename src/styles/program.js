@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
 import { activeTheme } from './main-styles'
 
-export let workoutHeader = css({
+export let blockHeader = css({
   backgroundColor: activeTheme.color3.hex,
   color: activeTheme.color3_text.hex,
   fontWeight: 'bold',

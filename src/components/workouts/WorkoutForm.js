@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
 import SetCard from '../sets/SetCard'
-import { retrieveItemById, updateItemById } from '../ArrayUtils'
+import { findIndexOfId, retrieveItemById, updateItemById } from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import { setBlock } from '../../styles/program'
@@ -108,6 +108,28 @@ const WorkoutForm = props => {
     // console.log(JSON.stringify(woContext.workout))
   }
 
+  const deleteExercise = event => {
+    console.log(event.target.id)
+    console.log(event.target.value)
+  }
+
+  const deleteSet = event => {
+    let id = event.currentTarget.id
+    console.log(id)
+    let sets = woContext.workout.sets
+    // throw up confirmation modal
+    // find set in woContext.workout.sets
+    let index = findIndexOfId(id, sets)
+    if (index > -1) {
+      // delete the set
+      sets.splice(index, 1)
+      woContext.updateSetsForWorkout(sets)
+      updateWorkout(woContext.workout)
+    }else{
+      console.log(`set with id ${id} not found in woContext.workout.sets`)
+    }
+  }
+
   const renderSets = sets => {
     if (sets && sets.length > 0) {
       return sets.map(set => {
@@ -123,6 +145,8 @@ const WorkoutForm = props => {
               data={data}
               handleSetChange={handleSetChange}
               onClick={handleRowClick}
+              deleteRow={deleteExercise}
+              deleteItem={deleteSet}
             />
           </div>
         )
