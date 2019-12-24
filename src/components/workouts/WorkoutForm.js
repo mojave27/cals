@@ -36,17 +36,11 @@ const WorkoutForm = props => {
   const saveWorkout = async () => {
     let response = {}
     if (woContext.workout.id) {
-      // console.log(`updating existing workout with id ${woContext.workout.id}`)
       response = await updateWorkout(woContext.workout)
-      // console.log({response})
-      // console.log(`updateWorkout response: ${JSON.stringify(response)}`)
     } else {
-      // console.log(`adding workout from context`)
       response = await addWorkout(woContext.workout)
-      // console.log(`addWorkout response: ${JSON.stringify(response)}`)
-      // console.log('updating context')
     }
-    // update context because add would have an id
+    // update context because addWorkout will have added an id
     await woContext.updateWorkout(response)
 
     if (props.saveWorkout) {
@@ -77,10 +71,8 @@ const WorkoutForm = props => {
 
   // lots of changes going on here...
   const handleSetChange = update => {
-    // console.log(`update: ${JSON.stringify(update)}`)
     // get set with matching id
     let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
-    // console.log(`got matching set: ${JSON.stringify(set)}`)
 
     // find exercise with matching id
     let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
@@ -105,7 +97,6 @@ const WorkoutForm = props => {
 
     //update context
     woContext.updateSetsForWorkout(updatedSetList)
-    // console.log(JSON.stringify(woContext.workout))
   }
 
   const deleteExercise = event => {
