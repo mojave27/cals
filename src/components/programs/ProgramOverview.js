@@ -1,10 +1,16 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { navigate } from "@reach/router"
+import { navigate } from '@reach/router'
 import Table from '../tables/SimpleTable'
-import { card, cardTitle, cardInfo, closeButton, formButton } from '../../styles/main-styles'
-
+import { isUndefined } from 'lodash'
+import {
+  card,
+  cardTitle,
+  cardInfo,
+  closeButton,
+  formButton
+} from '../../styles/main-styles'
 import { workoutBlock, blockHeader, setBlock } from '../../styles/program'
 import { gridContainer, gridItem } from '../../styles/gridStyles'
 
@@ -13,27 +19,35 @@ class ProgramOverview extends React.Component {
 
   render() {
     return (
-      <div css={card} id={this.props.program.id} >
-        <span css={closeButton} onClick={this.props.handleClose}>&times;</span>
+      <div css={card} id={this.props.program.id}>
+        <span css={closeButton} onClick={this.props.handleClose}>
+          &times;
+        </span>
         <div css={cardTitle}>{this.props.program.name}</div>
         <div css={cardInfo}>{this.props.program.description}</div>
         <div css={gridContainer}>
-          {this.renderWorkouts(this.props.program.workouts)}<br />
+          {this.renderWorkouts(this.props.program.workouts)}
+          <br />
         </div>
-        <button css={formButton} onClick={this.editProgram}>Edit</button>
+        <button css={formButton} onClick={this.editProgram}>
+          Edit
+        </button>
       </div>
     )
   }
 
   renderWorkouts = workouts => {
-    return workouts.map(wo => {
-      return (
-        <div key={`${wo.id}-${Math.random()}`} css={[workoutBlock, gridItem]}>
-          <div css={blockHeader}>{wo.name}</div>
-          <div>{this.renderSets(wo.sets)}</div>
-        </div>
-      )
-    })
+    if (!isUndefined(workouts)) {
+      return workouts.map(wo => {
+        return (
+          <div key={`${wo.id}-${Math.random()}`} css={[workoutBlock, gridItem]}>
+            <div css={blockHeader}>{wo.name}</div>
+            <div>{this.renderSets(wo.sets)}</div>
+          </div>
+        )
+      })
+    }
+    return null
   }
 
   renderSets = sets => {
@@ -53,7 +67,6 @@ class ProgramOverview extends React.Component {
   editProgram = () => {
     navigate(`/program-form/${this.props.program.id}`)
   }
-
 }
 
 export default ProgramOverview
