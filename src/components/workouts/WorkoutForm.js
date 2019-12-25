@@ -36,12 +36,15 @@ const WorkoutForm = props => {
   const saveWorkout = async () => {
     let response = {}
     if (woContext.workout.id) {
+      console.log(`updating existing workout with id ${woContext.workout.id}`)
       response = await updateWorkout(woContext.workout)
     } else {
+      console.log(`adding new workout ${JSON.stringify(woContext.workout)}`)
       response = await addWorkout(woContext.workout)
+      console.log(`  response from workout add: ${JSON.stringify(response)}`)
     }
     // update context because addWorkout will have added an id
-    await woContext.updateWorkout(response)
+    woContext.updateWorkout(response)
 
     if (props.saveWorkout) {
       console.log('calling props.saveWorkout')
@@ -124,7 +127,7 @@ const WorkoutForm = props => {
   const renderSets = sets => {
     if (sets && sets.length > 0) {
       return sets.map(set => {
-        console.log(`set: ${JSON.stringify(set)}`)
+        // console.log(`set: ${JSON.stringify(set)}`)
         let data = {
           setId: set.id,
           headers: ['name', 'reps'],
@@ -162,7 +165,7 @@ const WorkoutForm = props => {
                 type='text'
                 id='name'
                 name='name'
-                value={woContext.workout.name}
+                value={woContext.workout.name ? woContext.workout.name : ''}
                 placeholder='workout name..'
                 onChange={handleTextChange}
               />

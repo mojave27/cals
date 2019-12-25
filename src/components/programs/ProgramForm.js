@@ -36,11 +36,13 @@ const ProgramForm = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
 
-  const saveProgram = () => {
+  const saveProgram = async () => {
     if (typeof programContext.program.id !== 'undefined') {
-      updateProgram(programContext.program)
+      console.log(`updating program ${JSON.stringify(programContext.program)}`)
+      await updateProgram(programContext.program)
     } else {
-      addProgram(programContext.program)
+      console.log(`adding program ${JSON.stringify(programContext.program)}`)
+      await addProgram(programContext.program)
     }
   }
 
@@ -49,25 +51,26 @@ const ProgramForm = props => {
     toggleWorkoutModal()
   }
 
-  const saveWorkout = () => {
+  const saveWorkout = workout => {
     let updatedProgram = { ...programContext.program }
-    let index = findIndexOfId(woContext.workout.id, updatedProgram.workouts)
+    let index = findIndexOfId(workout.id, updatedProgram.workouts)
     if (index > -1) {
       let workouts = updateItemById(
-        woContext.workout,
-        woContext.workout.id,
+        workout,
+        workout.id,
         updatedProgram.workouts
       )
       updatedProgram.workouts = workouts
     } else {
-      updatedProgram.workouts.push(woContext.workout)
+      updatedProgram.workouts.push(workout)
     }
     programContext.updateProgram(updatedProgram)
-    saveProgram()
+    // saveProgram()
   }
 
   const editWorkout = async event => {
     let id = event.currentTarget.id
+    console.log(`[PROGRAM FORM] editWorkout with id ${id}`)
     let workout = await retrieveWorkoutById(id)
     console.log(`workout: ${JSON.stringify(workout)}`)
     await woContext.updateWorkout(workout)
