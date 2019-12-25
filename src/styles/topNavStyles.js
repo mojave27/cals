@@ -4,7 +4,7 @@ import { activeTheme } from './main-styles'
 export let navbar = {
   overflow: 'hidden',
   backgroundColor: activeTheme.color5.hex,
-  borderBottom: `solid 1px ${activeTheme.color4.hex}`,
+  borderBottom: `solid 1px ${activeTheme.color3.hex}`,
   fontFamily: 'Arial',
   fontSize: '14px',
 }

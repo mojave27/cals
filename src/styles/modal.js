@@ -29,7 +29,8 @@ export let modalContent = {
 
 /* The Close Button */
 export let close = {
-  color: '#aaaaaa',
+  // color: '#aaaaaa',
+  color: activeTheme.color3.hex,
   float: 'right',
   fontSize: '24px',
   fontWeight: 'bold',
@@ -37,12 +38,12 @@ export let close = {
   margin: '3px 5px',
   transition: '0.3s',
   '&:hover': {
-    color: activeTheme.color5.hex,
+    color: activeTheme.color1.hex,
     textDecoration: 'none',
     cursor: 'pointer'
   },
   '&:focus': {
-    color: '#000',
+    color: activeTheme.color5.hex,
     textDecoration: 'none',
     cursor: 'pointer'
   }

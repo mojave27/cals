@@ -189,11 +189,11 @@ const WorkoutForm = props => {
           </div>
         </div>
 
-        <div css={stripe} />
+        <div css={stripe} style={{marginTop:'10px', marginBottom:'5px'}} />
 
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
-            <div style={{ paddingBottom: '10px', color: 'red' }}>Sets</div>
+            <div style={{ paddingBottom: '10px' }}>Sets</div>
 
             {renderSets(woContext.workout.sets)}
 

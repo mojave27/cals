@@ -23,12 +23,12 @@ class App extends Component {
       <ProgramProvider>
         <WoProvider>
           <SetProvider>
-            <div style={{ backgroundColor: `${activeTheme.color1.hex}` }}>
+            <div style={{ backgroundColor: `${activeTheme.color5.hex}` }}>
               <TopNav />
               <CssBaseline />
               <div
                 style={{
-                  backgroundColor: `${activeTheme.color1.hex}`,
+                  backgroundColor: `${activeTheme.color5.hex}`,
                   height: '200vh',
                   maxWidth: '80%',
                   margin: '20px auto'
