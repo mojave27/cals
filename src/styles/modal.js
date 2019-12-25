@@ -17,11 +17,12 @@ export let modal = {
 
 /* Modal Content */
 export let modalContent = {
-  backgroundColor: activeTheme.color2.hex,
+  backgroundColor: activeTheme.color5.hex,
   margin: 'auto',
   padding: '20px',
-  border: `1px solid ${activeTheme.color4.hex}`,
-  borderRadius: '5px',
+  // borderTop: `1px solid ${activeTheme.color2.hex}`,
+  // borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  borderRadius: '3px',
   width: '80%',
   transition: '0.3s',
 }

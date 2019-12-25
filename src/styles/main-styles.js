@@ -165,13 +165,13 @@ export let label = css({
 export let basicButton = css({
   padding: '6px 20px',
   fontSize: 'inherit',
-  backgroundColor: activeTheme.color1.hex,
-  color: activeTheme.color1_text.hex,
-  border: `1px solid ${activeTheme.color5.hex}`,
+  backgroundColor: activeTheme.color4.hex,
+  color: activeTheme.color4_text.hex,
+  border: `1px solid ${activeTheme.color2.hex}`,
   borderRadius: '2px',
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: activeTheme.color5_highlight.hex,
+    backgroundColor: activeTheme.color3.hex,
     color: '#fff'
   }
 })
@@ -195,8 +195,10 @@ export let formButton = css({
 
 export let formContainer = css({
   borderRadius: '2px',
-  border: `1px solid ${activeTheme.color4.hex}`,
-  backgroundColor: activeTheme.color2.hex,
+  borderTop: `1px solid ${activeTheme.color2.hex}`,
+  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  backgroundColor: activeTheme.color5.hex,
+  color: activeTheme.color5_text.hex,
   padding: '20px'
 })
 
@@ -231,6 +233,7 @@ export let row = css({
 
 /*the container must be positioned relative:*/
 export let customSelect = {
+  border: `1px solid ${activeTheme.color2.hex}`,
   position: 'relative',
   fontFamily: 'Arial',
   '& select': {
