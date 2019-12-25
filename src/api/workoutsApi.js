@@ -35,7 +35,7 @@ export const retrieveWorkoutById = id => {
 }
 
 export const addWorkout = workout => {
-  console.log(`calling POST /workouts`)
+  console.log(`calling POST /workouts with ${workout}`)
   // let data = {...workout}
   return axios
     .post(URL, workout, config)
