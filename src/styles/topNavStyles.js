@@ -51,6 +51,7 @@ export const dropdownContent = {
   /* Add background color to dropdown links on hover */
   '& a:hover': {
     backgroundColor: activeTheme.color4.hex,
-    color: activeTheme.color4_text.hex
+    color: activeTheme.color4_text.hex,
+    border: `1px solid ${activeTheme.color2.rgba(0.75)}`
   }
 }
