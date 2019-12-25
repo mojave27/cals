@@ -17,18 +17,20 @@ export let modal = {
 
 /* Modal Content */
 export let modalContent = {
-  backgroundColor: activeTheme.color2.hex,
+  backgroundColor: activeTheme.color5.hex,
   margin: 'auto',
   padding: '20px',
-  border: `1px solid ${activeTheme.color4.hex}`,
-  borderRadius: '5px',
+  // borderTop: `1px solid ${activeTheme.color2.hex}`,
+  // borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  borderRadius: '3px',
   width: '80%',
   transition: '0.3s',
 }
 
 /* The Close Button */
 export let close = {
-  color: '#aaaaaa',
+  // color: '#aaaaaa',
+  color: activeTheme.color3.hex,
   float: 'right',
   fontSize: '24px',
   fontWeight: 'bold',
@@ -36,12 +38,12 @@ export let close = {
   margin: '3px 5px',
   transition: '0.3s',
   '&:hover': {
-    color: activeTheme.color5.hex,
+    color: activeTheme.color1.hex,
     textDecoration: 'none',
     cursor: 'pointer'
   },
   '&:focus': {
-    color: '#000',
+    color: activeTheme.color5.hex,
     textDecoration: 'none',
     cursor: 'pointer'
   }

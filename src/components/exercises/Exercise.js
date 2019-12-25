@@ -23,7 +23,6 @@ const options = [
 class Exercise extends React.Component {
   state = {
     exerciseName: '',
-    // exerciseReps: '',
     exerciseType: '',
     showWorkoutModal: false
   }
@@ -47,21 +46,6 @@ class Exercise extends React.Component {
             />
           </div>
         </div>
-        {/* <div css={row}>
-          <div css={col25}>
-            <label htmlFor='exerciseReps'>Reps</label>
-          </div>
-          <div css={col75}>
-            <textarea
-              css={formInput}
-              id='exerciseReps'
-              name='exerciseReps'
-              placeholder='exercise reps..'
-              onChange={this.handleTextChange}
-              style={{ height: '42px' }}
-            ></textarea>
-          </div>
-        </div> */}
 
         <div css={row}>
           <div css={col25}>

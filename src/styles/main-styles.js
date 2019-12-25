@@ -70,17 +70,20 @@ export let cardInfo = css({
 })
 
 export let detailCard = css({
-  border: `3px solid ${activeTheme.color4.hex}` /* Dotted border */,
+  border: `1px solid ${activeTheme.color2.hex}` /* Dotted border */,
   width: '80%',
-  borderRadius: '5px' /* Rounded border */,
+  borderRadius: '2px' /* Rounded border */,
   margin: '0 auto' /* Center the coupon */,
   maxWidth: '600px'
 })
 
 export let container = css({
   padding: '2px 16px',
-  backgroundColor: activeTheme.color1.hex,
-  borderRadius: '2px' /* Rounded border */
+  color: activeTheme.color5_text.hex,
+  backgroundColor: activeTheme.color5.hex,
+  borderRadius: '2px',
+  // borderTop: `1px solid ${activeTheme.color2.hex}`,
+  // borderBottom: `1px solid ${activeTheme.color2.hex}`
 })
 
 export let viewContainer = css({
@@ -165,38 +168,40 @@ export let label = css({
 export let basicButton = css({
   padding: '6px 20px',
   fontSize: 'inherit',
-  backgroundColor: activeTheme.color1.hex,
-  color: activeTheme.color1_text.hex,
-  border: `1px solid ${activeTheme.color5.hex}`,
+  backgroundColor: activeTheme.color4.hex,
+  color: activeTheme.color4_text.hex,
+  border: `1px solid ${activeTheme.color2.hex}`,
   borderRadius: '2px',
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: activeTheme.color5_highlight.hex,
+    backgroundColor: activeTheme.color3.hex,
     color: '#fff'
   }
 })
 
 export let formButton = css({
   fontSize: 'inherit',
-  backgroundColor: activeTheme.color1.hex,
-  color: activeTheme.color1_text.hex,
+  backgroundColor: activeTheme.color5.hex,
+  color: activeTheme.color5_text.hex,
   padding: '8px 20px',
   margin: '3px 10px',
   // border: 'none',
-  border: `1px solid ${activeTheme.color5.hex}`,
+  border: `1px solid ${activeTheme.color2.hex}`,
   borderRadius: '2px',
   cursor: 'pointer',
   // float: 'left',
   '&:hover': {
-    backgroundColor: activeTheme.color5_highlight.hex,
+    backgroundColor: activeTheme.color4.hex,
     color: '#fff'
   }
 })
 
 export let formContainer = css({
   borderRadius: '2px',
-  border: `1px solid ${activeTheme.color4.hex}`,
-  backgroundColor: activeTheme.color2.hex,
+  borderTop: `1px solid ${activeTheme.color2.hex}`,
+  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  backgroundColor: activeTheme.color5.hex,
+  color: activeTheme.color5_text.hex,
   padding: '20px'
 })
 
@@ -231,6 +236,7 @@ export let row = css({
 
 /*the container must be positioned relative:*/
 export let customSelect = {
+  border: `1px solid ${activeTheme.color2.hex}`,
   position: 'relative',
   fontFamily: 'Arial',
   '& select': {
