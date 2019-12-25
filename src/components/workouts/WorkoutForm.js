@@ -181,7 +181,7 @@ const WorkoutForm = props => {
                 type='text'
                 id='description'
                 name='description'
-                value={woContext.workout.description}
+                value={woContext.workout.description ? woContext.workout.description : ' '}
                 placeholder='workout description..'
                 onChange={handleTextChange}
               />
