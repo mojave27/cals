@@ -4,29 +4,36 @@ export const menuConfig = [
     type: 'button',
     link: { to: '/', text: 'home' }
   },
-  {
-    name: 'programs',
+    {
+    name: 'trackers',
     type: 'dropdown',
     items: [
-      { to: '/programs', text: 'programs' },
-      { to: '/program-form', text: 'add program' }
+      { to: '/workouts', text: 'workouts' }
     ]
   },
-  {
-    name: 'workouts',
-    type: 'button',
-    link: { to: '/workouts', text: 'workouts' }
-  },
-  {
-    name: 'sets',
-    type: 'button',
-    link: { to: '/sets', text: 'sets' }
-  },
-  {
-    name: 'exercises',
-    type: 'button',
-    link: { to: '/exercises', text: 'exercises' }
-  },
+  // {
+  //   name: 'programs',
+  //   type: 'dropdown',
+  //   items: [
+  //     { to: '/programs', text: 'programs' },
+  //     { to: '/program-form', text: 'add program' }
+  //   ]
+  // },
+  // {
+  //   name: 'workouts',
+  //   type: 'button',
+  //   link: { to: '/workouts', text: 'workouts' }
+  // },
+  // {
+  //   name: 'sets',
+  //   type: 'button',
+  //   link: { to: '/sets', text: 'sets' }
+  // },
+  // {
+  //   name: 'exercises',
+  //   type: 'button',
+  //   link: { to: '/exercises', text: 'exercises' }
+  // },
   {
     name: 'manage',
     type: 'dropdown',
