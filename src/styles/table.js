@@ -24,3 +24,16 @@ export let table = {
     color: activeTheme.color2_text.hex
   }
 }
+
+export let tableInput = {
+  backgroundColor: 'inherit',
+  border: 'none',
+  color: 'inherit',
+  fontSize: '1em',
+  width: '100%',
+  lineHeight: '14px'
+}
+
+export let workoutCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`
+}

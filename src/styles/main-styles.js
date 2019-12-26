@@ -3,6 +3,14 @@ import { stormTrooperTheme } from './colorThemes'
 
 export let activeTheme = stormTrooperTheme
 
+export let basics = css({
+  borderTop: `1px solid ${activeTheme.color2.hex}`,
+  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  borderRadius: '2px',
+  backgroundColor: activeTheme.color5.hex,
+  color: activeTheme.color5_text.hex
+})
+
 export let card = css({
   border: `1px solid ${activeTheme.color4.hex}`,
   borderRadius: '2px',
@@ -89,10 +97,10 @@ export let cardInfo = css({
 })
 
 export let detailCard = css({
-  border: `1px solid ${activeTheme.color2.hex}` /* Dotted border */,
-  width: '80%',
-  borderRadius: '2px' /* Rounded border */,
-  margin: '0 auto' /* Center the coupon */,
+  border: `1px solid ${activeTheme.color2.hex}`,
+  width: '100%',
+  borderRadius: '2px',
+  margin: '0 auto',
   maxWidth: '600px'
 })
 
@@ -101,8 +109,6 @@ export let container = css({
   color: activeTheme.color5_text.hex,
   backgroundColor: activeTheme.color5.hex,
   borderRadius: '2px',
-  // borderTop: `1px solid ${activeTheme.color2.hex}`,
-  // borderBottom: `1px solid ${activeTheme.color2.hex}`
 })
 
 export let viewContainer = css({
