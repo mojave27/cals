@@ -5,30 +5,15 @@ export const menuConfig = [
     link: { to: '/', text: 'home' }
   },
   {
-    name: 'workout',
-    type: 'button',
-    link: { to: '/workout', text: 'workout' }
-  },
-  {
     name: 'trackers',
     type: 'dropdown',
     items: [{ to: '/workout-tracker', text: 'workout' }]
   },
-  // {
-  //   name: 'workouts',
-  //   type: 'button',
-  //   link: { to: '/workouts', text: 'workouts' }
-  // },
-  // {
-  //   name: 'sets',
-  //   type: 'button',
-  //   link: { to: '/sets', text: 'sets' }
-  // },
-  // {
-  //   name: 'exercises',
-  //   type: 'button',
-  //   link: { to: '/exercises', text: 'exercises' }
-  // },
+  {
+    name: 'progress',
+    type: 'button',
+    link: { to: '/progress', text: 'workout progress' }
+  },
   {
     name: 'manage',
     type: 'dropdown',
@@ -49,9 +34,6 @@ export const menuConfig = [
     type: 'dropdown',
     items: [
       { to: '/admin/consistency-check', text: 'data check' }
-      // { to: '/workouts', text: 'workouts' },
-      // { to: '/exercises', text: 'exercises' },
-      // { to: '/sets', text: 'sets' }
     ]
   }
 ]

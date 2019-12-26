@@ -6,14 +6,14 @@ export let activeTheme = stormTrooperTheme
 export let card = css({
   border: `1px solid ${activeTheme.color4.hex}`,
   borderRadius: '2px',
-  backgroundColor: activeTheme.color2.hex,
+  backgroundColor: activeTheme.color4.hex,
   // margin: '5px 10px',
   padding: '20px',
   // padding: '10px 5px',
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
   transition: '0.3s',
   textAlign: 'center',
-  color: `${activeTheme.color2_text.hex}`,
+  color: `${activeTheme.color4_text.hex}`,
   '&:hover': {
     boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
     border: `1px solid ${activeTheme.color5.hex}`,
@@ -22,6 +22,25 @@ export let card = css({
     // backgroundColor: `#E4E4E6`
     transition: '0.3s',
   }
+})
+
+export let cardNoHover = css({
+  border: `1px solid ${activeTheme.color4.hex}`,
+  borderRadius: '2px',
+  backgroundColor: activeTheme.color4.hex,
+  padding: '20px',
+  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+  transition: '0.3s',
+  textAlign: 'center',
+  color: `${activeTheme.color4_text.hex}`,
+})
+
+export let section = css({
+  borderTop: `1px solid ${activeTheme.color2.hex}`,
+  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  backgroundColor: activeTheme.color4.hex,
+  textAlign: 'left',
+  padding: '5px 10px'
 })
 
 export let miniCard = css({
@@ -170,12 +189,12 @@ export let basicButton = css({
   fontSize: 'inherit',
   backgroundColor: activeTheme.color4.hex,
   color: activeTheme.color4_text.hex,
-  border: `1px solid ${activeTheme.color2.hex}`,
+  border: `1px solid ${activeTheme.color3.hex}`,
   borderRadius: '2px',
   cursor: 'pointer',
   '&:hover': {
     backgroundColor: activeTheme.color3.hex,
-    color: '#fff'
+    color: activeTheme.color3_text.hex,
   }
 })
 

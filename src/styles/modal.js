@@ -12,7 +12,7 @@ export let modal = {
   height: '100%' /* Full height */,
   overflow: 'auto' /* Enable scroll if needed */,
   transition: '0.3s',
-  backgroundColor: activeTheme.color1.rgba(.75)
+  backgroundColor: activeTheme.color3.rgba(.75)
 }
 
 /* Modal Content */

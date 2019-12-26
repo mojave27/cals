@@ -4,6 +4,7 @@ import './App.css'
 import { Router } from '@reach/router'
 import TopNav from './components/Nav/TopNav/TopNav'
 import Home from './components/Home/Home'
+import WorkoutTracker from './components/tracker/WorkoutTracker'
 import Programs from './components/programs/Programs'
 import ProgramForm from './components/programs/ProgramForm'
 import Exercises from './components/exercises/Exercises'
@@ -36,6 +37,7 @@ class App extends Component {
               >
                 <Router>
                   <Home path='/' />
+                  <WorkoutTracker path='/workout-tracker' />
                   <Programs path='/programs' />
                   <ProgramForm path='/program-form' />
                   <ProgramForm path='/program-form/:programId' />
