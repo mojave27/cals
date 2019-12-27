@@ -13,6 +13,27 @@ import {
   stripe
 } from '../../styles/main-styles'
 
+/* A WorkoutDay is based on a Workout (see workouts.json).  It is a different object, but is based
+ * on a Workout.  Each WorkoutDay is like an instance of a Workout - but with a Date, and completed
+ * sets/exercies - e.g. recorded weights and reps. */
+// {
+//   date: epoch-timestamp,
+//   id: this shouldn't be the workout id, but the workout-day id,
+//   workoutId: 1,
+//   name: "test workout",
+//   description: "test",
+//   type: "pull",
+//   sets: [{
+//       "exercises": [{
+//           "id": 0,
+//           "reps": "max...test",
+//           "weight": '',
+//           "actualReps": ''
+//       }],
+//       "id": 361
+//   }],
+// }
+
 const WorkoutDay = props => {
 
   const saveWorkout = async () => {
@@ -67,6 +88,14 @@ const WorkoutDay = props => {
         <div css={container}>
           <div css={row}>
             <div css={col25}>
+              <label htmlFor='workoutName'>Date</label>
+            </div>
+            <div css={[col75,basics]} style={{borderTop:'none'}}>
+             {props.workout.date}
+            </div>
+          </div>
+          <div css={row}>
+            <div css={col25}>
               <label htmlFor='workoutName'>Workout Name</label>
             </div>
             <div css={[col75,basics]} style={{borderTop:'none'}}>
@@ -83,7 +112,7 @@ const WorkoutDay = props => {
           </div>
         </div>
 
-        <div css={stripe} style={{marginTop:'10px', marginBottom:'5px'}} />
+        <div css={stripe} style={{marginTop:'5px', marginBottom:'5px'}} />
 
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>

@@ -8,10 +8,7 @@ import { retrieveWorkoutById } from '../../api/workoutsApi'
 import {
   basicButton,
   cardNoHover,
-  section,
-  container,
-  row,
-  stripe
+  row
 } from '../../styles/main-styles'
 import { isEmpty } from 'lodash'
 
@@ -28,17 +25,45 @@ const WorkoutTracker = props => {
     return date
   }
 
-  const newWorkout = () => {}
+  const copyWorkout = () => {}
 
-  const existingWorkout = () => {
+  const newWorkout = () => {
     toggleShowWorkoutList()
   }
 
   const handleSelectWorkout = event => {
     let id = event.currentTarget.id
     retrieveWorkoutById(id).then(response => {
-      setSelectedWorkout(response)
+      let workoutDay = convertToWorkoutDay(response)
+      setSelectedWorkout(workoutDay)
       toggleShowWorkoutList()
+    })
+  }
+
+  const convertToWorkoutDay = ({id, name, type, sets}) => {
+    let workoutDaySets = sets.map( set => {
+      let exercises = convertExercises(set.exercises)
+      set.exercises = exercises
+      return set
+    })
+
+    let workoutDay = {
+      date: getDate(),
+      workoutId: id,
+      name: name,
+      type: type,
+      sets: workoutDaySets
+    }
+    return workoutDay
+  }
+
+  const convertExercises = exercises => {
+    return exercises.map( exercise => {
+      exercise.targetReps = exercise.reps
+      exercise.weight = 0
+      exercise.actualReps = 0
+      delete exercise.reps
+      return exercise
     })
   }
 
@@ -65,9 +90,9 @@ const WorkoutTracker = props => {
             <input
               style={{ margin: '5px' }}
               type='button'
-              value='Existing'
+              value='Copy Existing'
               css={[basicButton, { float: 'left' }]}
-              onClick={existingWorkout}
+              onClick={copyWorkout}
             />
           </div>
         ) : (

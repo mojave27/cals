@@ -5,7 +5,7 @@ import { navigate } from '@reach/router'
 import Table from '../tables/SimpleTable'
 import { isUndefined } from 'lodash'
 import {
-  card,
+  cardNoHover,
   cardTitle,
   cardInfo,
   closeButton,
@@ -19,7 +19,7 @@ class ProgramOverview extends React.Component {
 
   render() {
     return (
-      <div css={card} id={this.props.program.id}>
+      <div css={cardNoHover} id={this.props.program.id}>
         <span css={closeButton} onClick={this.props.handleClose}>
           &times;
         </span>
