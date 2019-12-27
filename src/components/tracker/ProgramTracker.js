@@ -18,9 +18,8 @@ class ProgramOverview extends React.Component {
   state = { sections: {}, expandText: 'Expand', expandAll: false }
 
   render() {
-    // console.log(JSON.stringify(this.props.program))
     return (
-      <div css={cardNoHover} id={this.props.program.id} style={{border:'1px solid lime'}}>
+      <div css={cardNoHover} id={this.props.program.id}>
         <span css={closeButton} onClick={this.props.handleClose}>
           &times;
         </span>
@@ -30,16 +29,9 @@ class ProgramOverview extends React.Component {
           {this.renderWorkouts(this.props.program.workouts)}
           <br />
         </div>
-        {this.props.edit ? (
-          <button css={formButton} onClick={this.editProgram}>
-            Edit
-          </button>
-        ) : null}
-        {this.props.select ? (
-          <button id={this.props.program.id} css={formButton} onClick={this.props.selectProgram}>
-            Select
-          </button>
-        ) : null}
+        <button css={formButton} onClick={this.editProgram}>
+          Edit
+        </button>
       </div>
     )
   }

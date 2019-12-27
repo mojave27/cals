@@ -4,7 +4,7 @@ import './App.css'
 import { Router } from '@reach/router'
 import TopNav from './components/Nav/TopNav/TopNav'
 import Home from './components/Home/Home'
-import WorkoutTracker from './components/tracker/WorkoutTracker'
+import Tracker from './components/tracker/Tracker'
 import Programs from './components/programs/Programs'
 import ProgramForm from './components/programs/ProgramForm'
 import Exercises from './components/exercises/Exercises'
@@ -12,6 +12,7 @@ import Workouts from './components/workouts/Workouts'
 import WorkoutForm from './components/workouts/WorkoutForm'
 import Sets from './components/sets/Sets'
 import DataConsistency from './components/Admin/DataConsistency'
+import TrackerProvider from './context/TrackerProvider'
 import ProgramProvider from './context/ProgramProvider'
 import SetProvider from './context/SetProvider'
 import WoProvider from './context/WoProvider'
@@ -21,38 +22,40 @@ import { activeTheme } from './styles/main-styles'
 class App extends Component {
   render() {
     return (
-      <ProgramProvider>
-        <WoProvider>
-          <SetProvider>
-            <div style={{ backgroundColor: `${activeTheme.color5.hex}` }}>
-              <TopNav />
-              <CssBaseline />
-              <div
-                style={{
-                  backgroundColor: `${activeTheme.color5.hex}`,
-                  height: '200vh',
-                  maxWidth: '80%',
-                  margin: '20px auto'
-                }}
-              >
-                <Router>
-                  <Home path='/' />
-                  <WorkoutTracker path='/workout-tracker' />
-                  <Programs path='/programs' />
-                  <ProgramForm path='/program-form' />
-                  <ProgramForm path='/program-form/:programId' />
-                  <Exercises path='/exercises' />
-                  <Workouts path='/workouts' />
-                  <WorkoutForm path='/workout-form' />
-                  <WorkoutForm path='/workout-form/:workoutId' />
-                  <Sets path='/sets' />
-                  <DataConsistency path='/admin/consistency-check' />
-                </Router>
+      <TrackerProvider>
+        <ProgramProvider>
+          <WoProvider>
+            <SetProvider>
+              <div style={{ backgroundColor: `${activeTheme.color5.hex}` }}>
+                <TopNav />
+                <CssBaseline />
+                <div
+                  style={{
+                    backgroundColor: `${activeTheme.color5.hex}`,
+                    height: '200vh',
+                    maxWidth: '80%',
+                    margin: '20px auto'
+                  }}
+                >
+                  <Router>
+                    <Home path='/' />
+                    <Tracker path='/workout-tracker' />
+                    <Programs path='/programs' />
+                    <ProgramForm path='/program-form' />
+                    <ProgramForm path='/program-form/:programId' />
+                    <Exercises path='/exercises' />
+                    <Workouts path='/workouts' />
+                    <WorkoutForm path='/workout-form' />
+                    <WorkoutForm path='/workout-form/:workoutId' />
+                    <Sets path='/sets' />
+                    <DataConsistency path='/admin/consistency-check' />
+                  </Router>
+                </div>
               </div>
-            </div>
-          </SetProvider>
-        </WoProvider>
-      </ProgramProvider>
+            </SetProvider>
+          </WoProvider>
+        </ProgramProvider>
+      </TrackerProvider>
     )
   }
 }

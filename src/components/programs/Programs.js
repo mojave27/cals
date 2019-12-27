@@ -105,7 +105,7 @@ const Programs = props => {
       <div css={gridContainer}>{renderPrograms(programContext.programs)}</div>
     </React.Fragment>
   ) : (
-    <ProgramOverview handleClose={clearSelectedProgram} program={programContext.program} />
+    <ProgramOverview edit={true} handleClose={clearSelectedProgram} program={programContext.program} />
     // <ProgramOverview saveProgram={saveProgram} handleClose={clearSelectedProgram} />
   )
 
