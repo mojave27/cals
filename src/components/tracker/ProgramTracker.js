@@ -197,14 +197,12 @@ const testProgram = {
 }
 
 const City = props => {
-  return (
-    props.active ? (
+  return props.active ? (
     <div id={props.name} css={tabContent}>
       <h3>{props.name}</h3>
       <p>{props.message}</p>
     </div>
   ) : null
-  )
 }
 
 const testCities = [
@@ -249,11 +247,14 @@ class ProgramTracker extends React.Component {
 
   renderTabs = () => {
     return this.state.cities.map(city => {
+      let active = Number(this.state.activeCity) === Number(city.id)
+      let className = active ? 'active' : 'inactive'
+
       return (
         <button
           key={city.id}
           id={city.id}
-          className='tablinks'
+          className={className}
           name={city.name}
           onClick={this.openCity}
         >
@@ -261,19 +262,6 @@ class ProgramTracker extends React.Component {
         </button>
       )
     })
-  }
-
-  renderCity = () => {
-    let city = null
-    console.log(`activeCity: ${this.state.activeCity}`)
-    this.state.cities.forEach(city => {
-      console.log(JSON.stringify(city))
-      if (city.id === this.state.activeCity) {
-        console.log(`city.id: ${city.id}`)
-        city = <City key={city.id} name={city.name} message={city.message} />
-      }
-    })
-    return city
   }
 
   renderCities = () => {
