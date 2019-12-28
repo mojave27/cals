@@ -58,10 +58,11 @@ const WorkoutTracker = props => {
     console.log(id)
   }
 
-  const renderSets = sets => {
-    if (sets && sets.length > 0) {
-      return sets.map(set => {
+  const renderSets = workout => {
+    if (workout.sets && workout.sets.length > 0) {
+      return workout.sets.map(set => {
         let data = {
+          dates: workout.dates,
           setId: set.id,
           headers: ['name', 'reps', 'weight', 'actual reps'],
           rows: [...set.exercises]
@@ -108,7 +109,7 @@ const WorkoutTracker = props => {
 
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
-            {renderSets(props.workout.sets)}
+            {renderSets(props.workout)}
           </div>
         </div>
       </div>

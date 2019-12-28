@@ -21,7 +21,10 @@ const testProgram = {
       name: 'Nattie W1',
       description: 'n/a',
       type: 'pull',
-      dates: [{ id: 0, date: 'Fri Dec 27, 2019' }],
+      dates: [
+        { id: 0, date: 'Fri Dec 20, 2019' },
+        { id: 1, date: 'Fri Dec 27, 2019' }
+      ],
       sets: [
         {
           id: 0,
@@ -31,21 +34,30 @@ const testProgram = {
               reps: 'max',
               name: 'chins',
               type: 'compound',
-              dates: [{ date: 0, weight: 'bw', actualReps: '8' }]
+              dates: [
+                { date: 0, weight: 'bw', actualReps: '8' },
+                { date: 1, weight: 'bw', actualReps: '6' },
+              ]
             },
             {
               id: 8,
               reps: 'max',
               name: 'glute bridge',
               type: 'compound',
-              dates: [{ date: 0, weight: 'bw', actualReps: '8' }]
+              dates: [
+                { date: 0, weight: '90', actualReps: '8' },
+                { date: 1, weight: '90', actualReps: '9' },
+              ]
             },
             {
               id: 11,
               reps: 'max',
               name: 'bb curl',
               type: 'isolation',
-              dates: [{ date: 0, weight: 'bw', actualReps: '8' }]
+              dates: [
+                { date: 0, weight: '10', actualReps: '8' },
+                { date: 1, weight: '10', actualReps: '8' },
+              ]
             }
           ]
         },
