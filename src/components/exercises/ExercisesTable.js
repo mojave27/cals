@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 // import { findIndexOfId } from '../ArrayUtils'
 
-const Table = ({ columns, data, deleteExercises }) => {
+const ExerciseTable = ({ columns, data, deleteExercises }) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -116,4 +116,4 @@ const Table = ({ columns, data, deleteExercises }) => {
   )
 }
 
-export default Table
+export default ExerciseTable

@@ -2,8 +2,6 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import WorkoutTable from '../tables/WorkoutTable'
-import SetTable from '../tables/SetTable'
-import ExerciseTable from '../tables/ExerciseTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { setBlock } from '../../styles/program'
@@ -54,15 +52,8 @@ const WorkoutTracker = props => {
           rows: [...set.exercises]
         }
         return (
-          <div key={set.id} css={[Row, setBlock]} style={{minWidth:'700px',display:'inline-block'}}>
-            {/* <WorkoutTable */}
-            <SetTable
-              disabled={true}
-              data={data}
-              onClick={handleRowClick}
-              onCellChange={handleCellChange}
-            />
-            <ExerciseTable
+          <div key={set.id} css={[Row, setBlock]}>
+            <WorkoutTable
               disabled={true}
               data={data}
               onClick={handleRowClick}

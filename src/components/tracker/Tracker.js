@@ -22,12 +22,6 @@ const Tracker = props => {
     setShowProgramList(!showProgramList)
   }
 
-  const getDate = () => {
-    const timestamp = Number(new Date())
-    const date = new Date(timestamp).toDateString()
-    return date
-  }
-
   const newWorkout = () => {
     trackerContext.clearProgram()
     toggleShowProgramList()

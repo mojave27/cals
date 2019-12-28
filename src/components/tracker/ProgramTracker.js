@@ -8,7 +8,7 @@ import {
   cardInfo,
   closeButton
 } from '../../styles/main-styles'
-import { tab, tabContent } from '../../styles/programTracker.styles'
+import { tab } from '../../styles/programTracker.styles'
 import { getReadableDate } from '../DateUtils'
 import { generateNewId } from '../ArrayUtils'
 

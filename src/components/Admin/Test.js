@@ -21,8 +21,9 @@ const Table = () => {
     <Fragment>
       <div style={{ maxWidth:'150px',display: 'inline-block' }}>
         <table style={{border:'1px solid yellow'}}>
+          <tbody>
           <tr>
-            <th colspan='2'></th>
+            <th colSpan='2'></th>
           </tr>
           <tr>
             <th>header</th>
@@ -32,16 +33,18 @@ const Table = () => {
             <td>data</td>
             <td>data</td>
           </tr>
+          </tbody>
         </table>
       </div>
       <div style={{ maxWidth:'300px',display: 'inline-block', overflow: 'scroll' }}>
         <table style={{border:'1px solid lime'}}>
+          <tbody>
           <tr>
-            <th colspan='2'>date</th>
-            <th colspan='2'>date</th>
-            <th colspan='2'>date</th>
-            <th colspan='2'>date</th>
-            <th colspan='2'>date</th>
+            <th colSpan='2'>date</th>
+            <th colSpan='2'>date</th>
+            <th colSpan='2'>date</th>
+            <th colSpan='2'>date</th>
+            <th colSpan='2'>date</th>
           </tr>
           <tr>
             <th>header</th>
@@ -67,6 +70,7 @@ const Table = () => {
             <td>data</td>
             <td>data</td>
           </tr>
+          </tbody>
         </table>
       </div>
     </Fragment>
