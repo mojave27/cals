@@ -12,6 +12,7 @@ import Workouts from './components/workouts/Workouts'
 import WorkoutForm from './components/workouts/WorkoutForm'
 import Sets from './components/sets/Sets'
 import DataConsistency from './components/Admin/DataConsistency'
+import Test from './components/Admin/Test'
 import TrackerProvider from './context/TrackerProvider'
 import ProgramProvider from './context/ProgramProvider'
 import SetProvider from './context/SetProvider'
@@ -50,6 +51,7 @@ class App extends Component {
                     <WorkoutForm path='/workout-form/:workoutId' />
                     <Sets path='/sets' />
                     <DataConsistency path='/admin/consistency-check' />
+                    <Test path='/admin/test' />
                     <ProgramTracker path='/program-viewer' />
                   </Router>
                 </div>
