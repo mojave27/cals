@@ -47,3 +47,20 @@ export const removeItem = (id, list) => {
   list.splice(index, 1)
   return list
 }
+
+
+export const getUniqueIds = list => {
+  // what if list isn't a list?  
+  // what if length is 0?
+  let ids = Array.from(list, item => item.id)
+  ids.sort()
+  // ensure unique by converting to Set and back to array :)
+  let uniqueIds = Array.from(new Set(ids))
+  return uniqueIds
+}
+
+export const generateNewId = list => {
+  let currentIds = getUniqueIds(list)
+  var newId = Math.max(...currentIds) + 1
+  return newId
+}

@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
 import { isUndefined } from 'lodash'
+import { table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
 
 class Table extends React.Component {
   state = {}
@@ -42,7 +42,7 @@ class Table extends React.Component {
       : 0
     for (let i = 0; i < count; i++) {
       headers.push('exercise')
-      headers.push('target reps')
+      headers.push('actual reps')
       columnWidths.push('100px')
       columnWidths.push('100px')
     }

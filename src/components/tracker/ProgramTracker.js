@@ -9,6 +9,8 @@ import {
   closeButton
 } from '../../styles/main-styles'
 import { tab, tabContent } from '../../styles/programTracker.styles'
+import { getReadableDate } from '../DateUtils'
+import { generateNewId } from '../ArrayUtils'
 
 //TODO: change to use this.props.program...
 const testProgram = {
@@ -68,13 +70,21 @@ const testProgram = {
               id: 0,
               reps: '6-8-10',
               name: 'chins',
-              type: 'compound'
+              type: 'compound',
+              dates: [
+                { date: 0, weight: '15', actualReps: '5,4,3,2,1' },
+                { date: 1, weight: '', actualReps: '' },
+              ]
             },
             {
               id: 8,
               reps: 'myo reps',
               name: 'glute bridge',
-              type: 'compound'
+              type: 'compound',
+              dates: [
+                { date: 0, weight: '110', actualReps: '9+3+3+2' },
+                { date: 1, weight: '120', actualReps: '8+3+3+1' },
+              ]
             },
             {
               id: 11,
@@ -82,7 +92,8 @@ const testProgram = {
               name: 'bb curl',
               type: 'isolation',
               dates: [
-                { date: 0, weight: '22,17,12,2', actualReps: '6-8-10-20' }
+                { date: 0, weight: '22,17,12,2', actualReps: '6-8-10-20' },
+                { date: 0, weight: '', actualReps: '' }
               ]
             }
           ]
@@ -94,6 +105,7 @@ const testProgram = {
       name: 'Nattie W2',
       description: 'n/a',
       type: 'push',
+      dates: [],
       sets: [
         {
           id: 0,
@@ -192,28 +204,13 @@ const testProgram = {
   ]
 }
 
-const City = props => {
-  return props.active ? (
-    <div id={props.name} css={tabContent}>
-      <h3>{props.name}</h3>
-      <p>{props.message}</p>
-    </div>
-  ) : null
-}
-
-const testCities = [
-  { id: 0, name: 'London', message: 'London is the capital of England.' },
-  { id: 1, name: 'Paris', message: 'Paris is the capital of France.' },
-  { id: 2, name: 'Tokyo', message: 'Tokyo is the capital of Japan.' }
-]
 
 class ProgramTracker extends React.Component {
   state = {
     program: testProgram,
-    cities: [...testCities],
-    activeCity: -1,
     activeWorkout: -1
   }
+
 
   render() {
     return (
@@ -255,7 +252,7 @@ class ProgramTracker extends React.Component {
       let active = Number(this.state.activeWorkout) === Number(wo.id)
       console.log(`wo.id ${wo.id} active - ${active}`)
       if (active){
-        return <WorkoutTracker key={wo.id} workout={wo} update={this.updateWorkout}/>
+        return <WorkoutTracker key={wo.id} workout={wo} update={this.updateWorkout} addDate={this.addDate} />
       }
     })
   }
@@ -266,8 +263,67 @@ class ProgramTracker extends React.Component {
   }
 
   updateWorkout = update => {
-    
     console.log({update})
+  }
+
+  addDate = ({setId, workoutId}) => {
+    console.log(`adding date set id: ${setId}`)
+    console.log(`workout id: ${workoutId}`)
+
+    let workouts = this.state.program.workouts
+    let woIndex = this.getWorkoutIndex(this.state.program.workouts, workoutId)
+    let workout = workouts[woIndex]
+    let setIndex = this.getSetIndex(workout, setId)
+
+    // add date to workout.dates
+    let dates = this.getDatesFromWorkout(workoutId)
+    let friendlyDate = getReadableDate()
+    let dateId = generateNewId(dates)
+    dates.push({id: dateId, date: friendlyDate})
+    workout.dates = dates
+
+    // add date to workout.set[id].exercies... dates (dates array for ea ex)
+    let updatedExercises = workout.sets[setIndex].exercises.map( ex => {
+      ex.dates.push({ date: dateId, weight: '', actualReps: '' })
+      return ex
+    })
+    console.log(`updatedExercises: ${JSON.stringify(updatedExercises)}`)
+    workout.sets[setIndex].exercises = updatedExercises
+    workouts[woIndex] = workout
+
+    // now, put all the updates into state
+    this.setState( prevState => {
+      let program = prevState.program
+      program.workouts = workouts
+      return { program }
+    })
+  }
+
+  getDatesFromWorkout = workoutId => {
+    let workout = this.getWorkoutById(workoutId)
+    let dates = [...workout.dates]
+    return dates
+  }
+
+  getWorkoutById = id => {
+    let workouts = this.state.program.workouts
+    let index = workouts.findIndex( wo => Number(wo.id) === Number(id))
+    return workouts[index]
+  }
+
+  getWorkoutIndex = (workouts, workoutId) => {
+    let index = workouts.findIndex( set => Number(set.id) === Number(workoutId))
+    return index
+  }
+
+  getSetIndex = (workout, setId) => {
+    let index = workout.sets.findIndex( set => Number(set.id) === Number(setId))
+    return index
+  }
+
+  getSetById = (workout, setId) => {
+    let index = workout.sets.findIndex( set => Number(set.id) === Number(setId))
+    return workout.sets[index]
   }
 
 }

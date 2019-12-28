@@ -2,6 +2,8 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import WorkoutTable from '../tables/WorkoutTable'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { setBlock } from '../../styles/program'
 import {
   pointer,
@@ -13,7 +15,6 @@ import {
 import { Row, Column } from '../../styles/table'
 
 const WorkoutTracker = props => {
-
   const handleCellChange = event => {
     let { id, value, name } = event.target
     // create the update object
@@ -24,7 +25,7 @@ const WorkoutTracker = props => {
     }
     console.log(`id: ${id}, name: ${name}, value: ${value}`)
     // call update callback
-     props.update( update )
+    props.update(update)
   }
 
   const handleRowClick = event => {
@@ -32,8 +33,13 @@ const WorkoutTracker = props => {
     console.log(id)
   }
 
-  const addDate = () => {
-    alert('add date!!')
+  const addDate = event => {
+    const setId = event.currentTarget.id
+    const update = {
+      setId: setId,
+      workoutId: props.workout.id
+    }
+    props.addDate(update)
   }
 
   const renderSets = workout => {
@@ -46,14 +52,22 @@ const WorkoutTracker = props => {
           rows: [...set.exercises]
         }
         return (
-          <div key={set.id} css={[Row,setBlock]}>
+          <div key={set.id} css={[Row, setBlock]}>
             <WorkoutTable
               disabled={true}
               data={data}
               onClick={handleRowClick}
               onCellChange={handleCellChange}
             />
-          <div css={[Column,pointer]} onClick={addDate}>+</div>
+            <div css={[Column, pointer]}>
+              <FontAwesomeIcon
+                alt={'add date'}
+                id={set.id}
+                style={{ marginLeft: '10px', float: 'right' }}
+                icon={faPlus}
+                onClick={addDate}
+              />
+            </div>
           </div>
         )
       })
@@ -66,15 +80,11 @@ const WorkoutTracker = props => {
     <React.Fragment>
       <div css={detailCard}>
         <div css={container}>
-          <div css={row}>
-             {props.workout.name}
-          </div>
-          <div css={row}>
-                {props.workout.description}
-          </div>
+          <div css={row}>{props.workout.name}</div>
+          <div css={row}>{props.workout.description}</div>
         </div>
 
-        <div css={stripe} style={{paddingTop:'5px', paddingBottom:'5px'}} />
+        <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
 
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
