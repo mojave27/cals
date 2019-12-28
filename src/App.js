@@ -33,7 +33,7 @@ class App extends Component {
                 <div
                   style={{
                     backgroundColor: `${activeTheme.color5.hex}`,
-                    height: '200vh',
+                    height: '300vh',
                     maxWidth: '80%',
                     margin: '20px auto'
                   }}

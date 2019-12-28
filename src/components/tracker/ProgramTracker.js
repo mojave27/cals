@@ -114,31 +114,36 @@ const testProgram = {
               id: 0,
               reps: 'max',
               name: 'chins',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             },
             {
               id: 8,
               reps: 'max',
               name: 'glute bridge',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             },
             {
               id: 9,
               reps: 'max',
               name: 'inv row',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             },
             {
               id: 10,
               reps: 'max',
               name: 'leg curl',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [],
             },
             {
               id: 11,
               reps: 'max',
               name: 'bb curl',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [],
             }
           ]
         },
@@ -149,31 +154,36 @@ const testProgram = {
               id: 0,
               reps: '6-8-10',
               name: 'chins',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             },
             {
               id: 8,
               reps: 'myo reps',
               name: 'glute bridge',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             },
             {
               id: 9,
               reps: 'myo reps',
               name: 'inv row',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             },
             {
               id: 10,
               reps: 'myo reps',
               name: 'leg curl',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [],
             },
             {
               id: 11,
               reps: 'bb curl',
               name: 'bb curl',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [],
             }
           ]
         },
@@ -184,7 +194,8 @@ const testProgram = {
               id: 15,
               reps: '3x20',
               name: 'calves',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [],
             }
           ]
         },
@@ -194,7 +205,8 @@ const testProgram = {
               id: 0,
               reps: 'max',
               name: 'chins',
-              type: 'compound'
+              type: 'compound',
+              dates: [],
             }
           ],
           id: 341
@@ -214,12 +226,12 @@ class ProgramTracker extends React.Component {
 
   render() {
     return (
-      <div css={cardNoHover} id={testProgram.id}>
+      <div css={cardNoHover} id={this.state.program.id}>
         <span css={closeButton} onClick={this.handleClose}>
           &times;
         </span>
-        <div css={cardTitle}>{testProgram.name}</div>
-        <div css={cardInfo}>{testProgram.description}</div>
+        <div css={cardTitle}>{this.state.program.name}</div>
+        <div css={cardInfo}>{this.state.program.description}</div>
 
         {/* Tab links */}
         <div css={tab}>{this.renderTabs()}</div>
@@ -250,7 +262,6 @@ class ProgramTracker extends React.Component {
   renderWorkout = () => {
     return this.state.program.workouts.map(wo => {
       let active = Number(this.state.activeWorkout) === Number(wo.id)
-      console.log(`wo.id ${wo.id} active - ${active}`)
       if (active){
         return <WorkoutTracker key={wo.id} workout={wo} update={this.updateWorkout} addDate={this.addDate} />
       }
@@ -287,7 +298,6 @@ class ProgramTracker extends React.Component {
       ex.dates.push({ date: dateId, weight: '', actualReps: '' })
       return ex
     })
-    console.log(`updatedExercises: ${JSON.stringify(updatedExercises)}`)
     workout.sets[setIndex].exercises = updatedExercises
     workouts[woIndex] = workout
 

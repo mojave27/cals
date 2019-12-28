@@ -2,15 +2,15 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { isUndefined } from 'lodash'
-import { table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
+import { setHeader, table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
 
 class Table extends React.Component {
   state = {}
 
   render() {
     return (
-      <div style={{ overflowX: 'auto' }}>
-        <table css={table}>
+      <div style={{ overflow: 'scroll', maxWidth:'700px' }}>
+        <table css={table} style={{overflow:'scroll'}}>
           <tbody id={this.props.setId}>
             {this.renderRows(this.props.data)}
           </tbody>
@@ -49,8 +49,8 @@ class Table extends React.Component {
     return (
       <tr key={Math.random()}>
         {headers.map((header, index) => (
-          <th
-            style={{ width: `${columnWidths[index]}` }}
+          <th css={setHeader}
+            style={{ minWidth: `${columnWidths[index]}` }}
             key={`header-${Math.random()}`}
           >
             {header}

@@ -38,6 +38,12 @@ export let workoutCell = {
   borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`
 }
 
+export let setHeader = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+}
+
 export let dayLeftCell = {
   borderLeft: `3px solid ${activeTheme.color3.rgba(.75)}`,
   borderRight: `1px solid ${activeTheme.color3.rgba(.75)}`

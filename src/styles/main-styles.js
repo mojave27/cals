@@ -40,7 +40,7 @@ export let cardNoHover = css({
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
   transition: '0.3s',
   textAlign: 'center',
-  color: `${activeTheme.color4_text.hex}`,
+  color: `${activeTheme.color4_text.hex}`
 })
 
 export let section = css({
@@ -85,7 +85,7 @@ export let cardTitle = css({
     content: '""' /* This is necessary for the pseudo element to work. */,
     display: 'block' /* This will put the pseudo element on its own line. */,
     margin: '0 auto' /* This will center the border. */,
-    width: '50%',
+    // width: '50%',
     paddingTop: '5px',
     borderBottom: `1px solid ${activeTheme.color5.rgba(0.75)}`
     // borderBottom: '1px solid rgb(3,166,150,0.75)'
@@ -101,7 +101,7 @@ export let detailCard = css({
   width: '100%',
   borderRadius: '2px',
   margin: '0 auto',
-  maxWidth: '600px'
+  // maxWidth: '600px'
 })
 
 export let container = css({
