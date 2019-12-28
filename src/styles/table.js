@@ -37,3 +37,25 @@ export let tableInput = {
 export let workoutCell = {
   borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`
 }
+
+export let dayLeftCell = {
+  borderLeft: `3px solid ${activeTheme.color3.rgba(.75)}`,
+  borderRight: `1px solid ${activeTheme.color3.rgba(.75)}`
+}
+
+export let dayRightCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`,
+  borderRight: `3px solid ${activeTheme.color3.rgba(.75)}`
+}
+
+export let Row = {
+  display: 'table',
+  borderSpacing: '10px', /*Optional*/
+}
+
+export let Column = {
+  display: 'table-cell',
+  verticalAlign: 'middle',
+  width: '10px',
+  // backgroundColor: 
+}

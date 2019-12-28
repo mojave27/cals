@@ -117,7 +117,8 @@ export let viewContainer = css({
 
 export let stripe = css({
   backgroundColor: activeTheme.color4.hex,
-  height: '10px'
+  border: `1px solid ${activeTheme.color3.hex}`,
+  height: '15px'
 })
 
 export let promo = css({
@@ -241,6 +242,10 @@ export let col75 = css({
   width: '75%',
   marginTop: '6px'
 })
+
+export let pointer = {
+  cursor: 'pointer'
+}
 
 /* Clear floats after the columns */
 export let row = css({

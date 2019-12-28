@@ -255,7 +255,7 @@ class ProgramTracker extends React.Component {
       let active = Number(this.state.activeWorkout) === Number(wo.id)
       console.log(`wo.id ${wo.id} active - ${active}`)
       if (active){
-        return <WorkoutTracker key={wo.id} workout={wo} />
+        return <WorkoutTracker key={wo.id} workout={wo} update={this.updateWorkout}/>
       }
     })
   }
@@ -265,10 +265,11 @@ class ProgramTracker extends React.Component {
     this.setState({ activeWorkout: id })
   }
 
-  openCity = event => {
-    let id = event.target.id
-    this.setState({ activeCity: id })
+  updateWorkout = update => {
+    
+    console.log({update})
   }
+
 }
 
 export default ProgramTracker

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { table, tableInput, workoutCell } from '../../styles/table'
+import { table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
 import { isUndefined } from 'lodash'
 
 class Table extends React.Component {
@@ -36,7 +36,7 @@ class Table extends React.Component {
 
   renderHeaders = () => {
     let headers = ['exercise', 'target reps']
-    let columnWidths = ['125px', '75px', '100px', '100px']
+    let columnWidths = ['125px', '100px', '100px', '100px']
     let count = !isUndefined(this.props.data.dates)
       ? this.props.data.dates.length
       : 0
@@ -61,7 +61,6 @@ class Table extends React.Component {
   }
 
   renderRow = (row, data) => {
-    console.log(`renderRow-row: ${JSON.stringify(row)}`)
     let tds = []
     tds.push(<td key={Math.random()}>{row.name}</td>)
     tds.push(
@@ -72,11 +71,10 @@ class Table extends React.Component {
 
     // for each date, add columns for weight and actual-reps
     let count = data.dates ? data.dates.length : 0
-    console.log(`count ${count}`)
     for (let i = 0; i < count; i++) {
       let valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].weight : ''
       tds.push(
-        <td key={Math.random()} css={workoutCell}>
+        <td key={Math.random()} css={dayLeftCell}>
           <Input
             id={row.id}
             name={'weight'}
@@ -88,12 +86,11 @@ class Table extends React.Component {
       )
       valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].actualReps : ''
       tds.push(
-        <td key={Math.random()} css={workoutCell}>
+        <td key={Math.random()} css={dayRightCell}>
           <Input
             id={row.id}
             name={'actual reps'}
             data={valueData}
-            // value={row.dates[i].actualReps}
             onChange={this.props.onCellChange}
           />
         </td>
@@ -108,7 +105,6 @@ const Input = props => {
   return (
     <input
       id={props.id}
-      // data-setid={props.data.setId}
       name={props.name}
       type='text'
       value={props.data ? props.data : ''}
