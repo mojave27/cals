@@ -35,10 +35,10 @@ const Tracker = props => {
 
   const handleProgramSelect = id => {
     console.log(`handleProgramSelect => id ${id}`)
+    toggleShowProgramList()
     retrieveProgramTracker(id).then(response => {
       trackerContext.updateProgram(response.fullProgram)
       setProgram(response.fullProgram)
-      toggleShowProgramList()
     })
   }
 

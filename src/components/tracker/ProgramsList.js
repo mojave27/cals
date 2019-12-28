@@ -16,7 +16,9 @@ const ProgramsList = props => {
   const [program, setProgram] = useState({})
 
   const handleProgramSelect = event => {
-    props.select(event.target.id)
+    let id = event.target.id
+    clearSelectedProgram()
+    props.select(id)
   }
 
   const handleProgramView = async event => {

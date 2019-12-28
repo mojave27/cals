@@ -29,9 +29,9 @@ export let tab = {
 
 /* Style the tab content */
 export const tabContent = {
-  // display: 'none',
   display:'block',
   padding: '6px 12px',
   border: `1px solid ${activeTheme.color2.hex}`,
-  borderTop: 'none'
+  borderTop: 'none',
+  transition: '1.0s'
 }

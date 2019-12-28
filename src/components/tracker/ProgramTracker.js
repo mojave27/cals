@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
+import WorkoutTracker from './WorkoutTracker'
 import {
   cardNoHover,
   cardTitle,
@@ -20,6 +21,7 @@ const testProgram = {
       name: 'Nattie W1',
       description: 'n/a',
       type: 'pull',
+      dates: [{ id: 0, date: 'Fri Dec 27, 2019' }],
       sets: [
         {
           id: 0,
@@ -28,31 +30,22 @@ const testProgram = {
               id: 0,
               reps: 'max',
               name: 'chins',
-              type: 'compound'
+              type: 'compound',
+              dates: [{ date: 0, weight: 'bw', actualReps: '8' }]
             },
             {
               id: 8,
               reps: 'max',
               name: 'glute bridge',
-              type: 'compound'
-            },
-            {
-              id: 9,
-              reps: 'max',
-              name: 'inv row',
-              type: 'compound'
-            },
-            {
-              id: 10,
-              reps: 'max',
-              name: 'leg curl',
-              type: 'isolation'
+              type: 'compound',
+              dates: [{ date: 0, weight: 'bw', actualReps: '8' }]
             },
             {
               id: 11,
               reps: 'max',
               name: 'bb curl',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [{ date: 0, weight: 'bw', actualReps: '8' }]
             }
           ]
         },
@@ -72,22 +65,13 @@ const testProgram = {
               type: 'compound'
             },
             {
-              id: 9,
-              reps: 'myo reps',
-              name: 'inv row',
-              type: 'compound'
-            },
-            {
-              id: 10,
-              reps: 'myo reps',
-              name: 'leg curl',
-              type: 'isolation'
-            },
-            {
               id: 11,
               reps: 'bb curl',
               name: 'bb curl',
-              type: 'isolation'
+              type: 'isolation',
+              dates: [
+                { date: 0, weight: '22,17,12,2', actualReps: '6-8-10-20' }
+              ]
             }
           ]
         }
@@ -213,8 +197,10 @@ const testCities = [
 
 class ProgramTracker extends React.Component {
   state = {
+    program: testProgram,
     cities: [...testCities],
-    activeCity: -1
+    activeCity: -1,
+    activeWorkout: -1
   }
 
   render() {
@@ -226,90 +212,50 @@ class ProgramTracker extends React.Component {
         <div css={cardTitle}>{testProgram.name}</div>
         <div css={cardInfo}>{testProgram.description}</div>
 
-        {/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */}
         {/* Tab links */}
         <div css={tab}>{this.renderTabs()}</div>
         {/* <!-- Tab content --> */}
-        <div>{this.renderCities()}</div>
-
-        {/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */}
-
-        {/* <div css={gridContainer}>
-          {this.renderWorkouts(this.props.program.workouts)}
-          <br />
-        </div>
-        <button css={formButton} onClick={this.editProgram}>
-          Edit
-        </button> */}
+        <div style={{padding:'25px'}}>{this.renderWorkout()}</div>
       </div>
     )
   }
 
   renderTabs = () => {
-    return this.state.cities.map(city => {
-      let active = Number(this.state.activeCity) === Number(city.id)
+    return this.state.program.workouts.map(wo => {
+      let active = Number(this.state.activeWorkout) === Number(wo.id)
       let className = active ? 'active' : 'inactive'
-
       return (
         <button
-          key={city.id}
-          id={city.id}
+          key={wo.id}
+          id={wo.id}
           className={className}
-          name={city.name}
-          onClick={this.openCity}
+          name={wo.name}
+          onClick={this.openWorkout}
         >
-          {city.name}
+          {wo.name}
         </button>
       )
     })
   }
 
-  renderCities = () => {
-    return this.state.cities.map(city => {
-      let active = Number(this.state.activeCity) === Number(city.id)
-      console.log(`active - ${active}`)
-      return (
-        <City
-          active={active}
-          key={city.id}
-          name={city.name}
-          message={city.message}
-        />
-      )
+  renderWorkout = () => {
+    return this.state.program.workouts.map(wo => {
+      let active = Number(this.state.activeWorkout) === Number(wo.id)
+      console.log(`wo.id ${wo.id} active - ${active}`)
+      if (active){
+        return <WorkoutTracker key={wo.id} workout={wo} />
+      }
     })
   }
 
-  openCity = event => {
-    // console.log(event.target.name)
-    // console.log(event.target.id)
+  openWorkout = event => {
     let id = event.target.id
-    this.setState({ activeCity: id })
-    //  1. hide all tabContents
-    //  2. turn off the active class on all tablinks
-    //  3. show the clicked tab's content, add 'active' class to it's tablink.
-
-    // // Declare all variables
-    // var i, tabContent, tablinks;
-
-    // // Get all elements with class="tabcontent" and hide them
-    // tabContent = document.getElementsByClassName("tabContent");
-    // for (i = 0; i < tabContent.length; i++) {
-    //   tabContent[i].style.display = "none";
-    // }
-
-    // // Get all elements with class="tablinks" and remove the class "active"
-    // tablinks = document.getElementsByClassName("tablinks");
-    // for (i = 0; i < tablinks.length; i++) {
-    //   tablinks[i].className = tablinks[i].className.replace(" active", "");
-    // }
-
-    // // Show the current tab, and add an "active" class to the button that opened the tab
-    // document.getElementById(cityName).style.display = "block";
-    // event.currentTarget.className += " active";
+    this.setState({ activeWorkout: id })
   }
 
-  handleClose = () => {
-    // this.props.handleClose()
+  openCity = event => {
+    let id = event.target.id
+    this.setState({ activeCity: id })
   }
 }
 
