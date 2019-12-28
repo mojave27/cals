@@ -1,4 +1,3 @@
-// import { css } from '@emotion/core'
 import { activeTheme } from './main-styles'
 
 /* Style the tab */
@@ -36,24 +35,3 @@ export const tabContent = {
   border: `1px solid ${activeTheme.color2.hex}`,
   borderTop: 'none'
 }
-
-/* Style the buttons that are used to open the tab content */
-// .tab button {
-//   background-color: inherit;
-//   float: left;
-//   border: none;
-//   outline: none;
-//   cursor: pointer;
-//   padding: 14px 16px;
-//   transition: 0.3s;
-// }
-
-/* Change background color of buttons on hover */
-// .tab button:hover {
-//   background-color: #ddd;
-// }
-
-/* Create an active/current tablink class */
-// .tab button.active {
-//   background-color: #ccc;
-// }
