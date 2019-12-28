@@ -16,6 +16,7 @@ import TrackerProvider from './context/TrackerProvider'
 import ProgramProvider from './context/ProgramProvider'
 import SetProvider from './context/SetProvider'
 import WoProvider from './context/WoProvider'
+import ProgramTracker from './components/tracker/ProgramTracker'
 
 import { activeTheme } from './styles/main-styles'
 
@@ -49,6 +50,7 @@ class App extends Component {
                     <WorkoutForm path='/workout-form/:workoutId' />
                     <Sets path='/sets' />
                     <DataConsistency path='/admin/consistency-check' />
+                    <ProgramTracker path='/program-viewer' />
                   </Router>
                 </div>
               </div>

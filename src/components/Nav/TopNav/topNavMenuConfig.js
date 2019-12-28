@@ -33,7 +33,8 @@ export const menuConfig = [
     name: 'admin',
     type: 'dropdown',
     items: [
-      { to: '/admin/consistency-check', text: 'data check' }
+      { to: '/admin/consistency-check', text: 'data check' },
+      { to: '/program-viewer', text: 'program viewer' }
     ]
   }
 ]
