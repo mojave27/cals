@@ -23,7 +23,6 @@ class ProgramOverview extends React.Component {
       <div
         css={cardNoHover}
         id={this.props.program.id}
-        style={{ border: '1px solid lime' }}
       >
         <span css={closeButton} onClick={this.props.handleClose}>
           &times;

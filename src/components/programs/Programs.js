@@ -11,7 +11,7 @@ import ProgramHighlightCard from './ProgramHighlightCard'
 import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
 import { formButton } from '../../styles/main-styles'
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import { gridContainerSingleColumn, gridItem } from '../../styles/gridStyles'
 
 
 const Programs = props => {
@@ -102,7 +102,7 @@ const Programs = props => {
       >
         Add Program
       </button>
-      <div css={gridContainer}>{renderPrograms(programContext.programs)}</div>
+      <div css={gridContainerSingleColumn}>{renderPrograms(programContext.programs)}</div>
     </React.Fragment>
   ) : (
     <ProgramOverview edit={true} handleClose={clearSelectedProgram} program={programContext.program} />

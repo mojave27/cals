@@ -6,7 +6,8 @@ export const gridContainer = css({
   display: 'grid',
   gridTemplateColumns: 'auto auto auto',
   backgroundColor: activeTheme.color4.rgba(.8),
-  padding: '10px'
+  padding: '10px',
+  justifyContent: 'center'
 })
 
 export const gridItem = css({
@@ -25,5 +26,6 @@ export const gridContainerSingleColumn = css({
   display: 'grid',
   gridTemplateColumns: 'auto',
   backgroundColor: activeTheme.color4.rgba(.8),
-  padding: '10px'
+  padding: '10px',
+  justifyContent: 'center'
 })
