@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { setHeader, table, workoutCell } from '../../styles/table'
+import { setHeader, table, setLeadCell } from '../../styles/table'
 
 class SetTable extends React.Component {
   state = {}
@@ -48,9 +48,9 @@ class SetTable extends React.Component {
 
   renderRow = (row, data) => {
     let tds = []
-    tds.push(<td key={Math.random()}>{row.name}</td>)
+    tds.push(<td key={`${row.name}-${row.reps}`} css={setLeadCell}>{row.name}</td>)
     tds.push(
-      <td key={Math.random()} css={workoutCell}>
+      <td key={`${row.reps}-${row.name}`} css={setLeadCell}>
         {row.reps}
       </td>
     )

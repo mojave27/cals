@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { navigate } from '@reach/router'
@@ -70,7 +69,6 @@ const Programs = props => {
       if (!didCancel) {
         // Ignore if we started fetching something else
         programContext.updatePrograms(response)
-        // setPrograms(response)
       }
     }
 
@@ -84,11 +82,6 @@ const Programs = props => {
   const handleAddProgramClick = async () => {
     await navigate(`/program-form`)
   }
-
-  // const saveProgram = program => {
-
-  // }
-
 
   //   TODO: fix this conditional render.
   return props.location.key !== routeKey ? (
@@ -106,7 +99,6 @@ const Programs = props => {
     </React.Fragment>
   ) : (
     <ProgramOverview edit={true} handleClose={clearSelectedProgram} program={programContext.program} />
-    // <ProgramOverview saveProgram={saveProgram} handleClose={clearSelectedProgram} />
   )
 
 }

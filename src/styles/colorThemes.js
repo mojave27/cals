@@ -40,6 +40,44 @@ export const stormTrooper = {
   }
 }
 
+export const faHome1 = {
+  color1: {
+		hex: '#FFFFFF',
+		rgba: alpha => buildRgba(255, 255, 255, alpha)
+	},
+	get color1_text() {
+		return this.color5
+	},
+	color2: {
+		hex: '#46B493',
+		rgba: alpha => buildRgba(70, 180, 147, alpha)
+	},
+	get color2_text() {
+		return this.color5
+	},
+	color3: {
+		hex: '#9BCC5C',
+		rgba: alpha => buildRgba(155, 204, 92, alpha)
+	},
+	get color3_text() {
+		return this.color5
+	},
+	color4: {
+		hex: '#3B9999',
+		rgba: alpha => buildRgba(59, 153, 153, alpha)
+	},
+	get color4_text() {
+		return this.color1
+	},
+	color5: {
+		hex: '#014F37',
+		rgba: alpha => buildRgba(1, 79, 55, alpha)
+	},
+	get color5_text() {
+		return this.color1
+	},
+}
+
 export const woSheet = {
 	color1: {
 		hex: '#FEFFFF',

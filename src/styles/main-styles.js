@@ -1,5 +1,5 @@
 import { css } from '@emotion/core'
-import { book, stormTrooper, woSheet } from './colorThemes'
+import { faHome1, stormTrooper, woSheet } from './colorThemes'
 
 export let activeTheme = woSheet
 

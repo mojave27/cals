@@ -41,7 +41,12 @@ export let workoutCell = {
 export let setHeader = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'nowrap'
+}
+
+export let setLeadCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`,
+  fontWeight: '700'
 }
 
 export let dayLeftCell = {
