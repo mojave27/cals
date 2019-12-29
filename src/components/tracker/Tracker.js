@@ -6,11 +6,7 @@ import ProgramsList from './ProgramsList'
 import TrackerContext from '../../context/TrackerContext'
 import { retrieveProgramTracker } from '../../api/trackerApi'
 import ProgramTracker from './ProgramTracker'
-import {
-  basicButton,
-  cardNoHover,
-  row
-} from '../../styles/main-styles'
+import { basicButton, cardNoHover, row } from '../../styles/main-styles'
 import { isEmpty } from 'lodash'
 
 const Tracker = props => {
@@ -47,24 +43,29 @@ const Tracker = props => {
 
   return (
     <React.Fragment>
-      <Modal showModal={showProgramList} handleClose={toggleShowProgramList}>
+      {showProgramList ? (
         <ProgramsList select={handleProgramSelect} />
-      </Modal>
-      <div css={cardNoHover}>
-        { isEmpty(program) ? (
-          <div css={row}>
-            <input
-              style={{ margin: '5px' }}
-              type='button'
-              value='Select Program'
-              css={[basicButton, { float: 'left' }]}
-              onClick={newWorkout}
+      ) : (
+        <div css={cardNoHover}>
+          {isEmpty(program) ? (
+            <div css={row}>
+              <input
+                style={{ margin: '5px' }}
+                type='button'
+                value='Select Program'
+                css={[basicButton, { float: 'left' }]}
+                onClick={newWorkout}
+              />
+            </div>
+          ) : (
+            <ProgramTracker
+              program={program}
+              update={updateProgramTracker}
+              close={clearProgram}
             />
-          </div>
-        ) : (
-          <ProgramTracker program={program} update={updateProgramTracker} close={clearProgram} />
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </React.Fragment>
   )
 }

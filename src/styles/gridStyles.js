@@ -20,3 +20,10 @@ export const gridItem = css({
     backgroundColor: activeTheme.color2.rgba(.25),
   }
 })
+
+export const gridContainerSingleColumn = css({
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  backgroundColor: activeTheme.color4.rgba(.8),
+  padding: '10px'
+})

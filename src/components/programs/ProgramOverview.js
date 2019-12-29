@@ -20,26 +20,36 @@ class ProgramOverview extends React.Component {
   render() {
     // console.log(JSON.stringify(this.props.program))
     return (
-      <div css={cardNoHover} id={this.props.program.id} style={{border:'1px solid lime'}}>
+      <div
+        css={cardNoHover}
+        id={this.props.program.id}
+        style={{ border: '1px solid lime' }}
+      >
         <span css={closeButton} onClick={this.props.handleClose}>
           &times;
         </span>
-        <div css={cardTitle}>{this.props.program.name}</div>
-        <div css={cardInfo}>{this.props.program.description}</div>
-        <div css={gridContainer}>
-          {this.renderWorkouts(this.props.program.workouts)}
-          <br />
+        <div>
+          <div css={cardTitle}>{this.props.program.name}</div>
+          <div css={cardInfo}>{this.props.program.description}</div>
+          <div css={gridContainer}>
+            {this.renderWorkouts(this.props.program.workouts)}
+            <br />
+          </div>
+          {this.props.edit ? (
+            <button css={formButton} onClick={this.editProgram}>
+              Edit
+            </button>
+          ) : null}
+          {this.props.select ? (
+            <button
+              id={this.props.program.id}
+              css={formButton}
+              onClick={this.props.selectProgram}
+            >
+              Select
+            </button>
+          ) : null}
         </div>
-        {this.props.edit ? (
-          <button css={formButton} onClick={this.editProgram}>
-            Edit
-          </button>
-        ) : null}
-        {this.props.select ? (
-          <button id={this.props.program.id} css={formButton} onClick={this.props.selectProgram}>
-            Select
-          </button>
-        ) : null}
       </div>
     )
   }

@@ -8,7 +8,7 @@ import { retrieveProgramById } from '../../api/programsApi'
 import ProgramHighlightCard from '../programs/ProgramHighlightCard'
 import ProgramOverview from '../programs/ProgramOverview'
 import { isEmpty } from 'lodash'
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import { gridContainerSingleColumn, gridItem } from '../../styles/gridStyles'
 
 
 const ProgramsList = props => {
@@ -81,7 +81,7 @@ const ProgramsList = props => {
   //   TODO: fix this conditional render.
   return isEmpty(program) ? (
     <React.Fragment>
-      <div css={gridContainer}>{renderPrograms(trackerContext.programs)}</div>
+      <div css={gridContainerSingleColumn}>{renderPrograms(trackerContext.programs)}</div>
     </React.Fragment>
   ) : (
     <ProgramOverview select={true} handleClose={clearSelectedProgram} selectProgram={handleProgramSelect} program={program} />

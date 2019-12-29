@@ -334,12 +334,15 @@ export let selectHide = {
 
 /* The Close Button */
 export let closeButton = {
-  color: '#aaaaaa',
+  color: activeTheme.color3.hex,
   float: 'right',
   fontSize: '24px',
   fontWeight: 'bold',
-  padding: '0px 10px',
-  margin: '3px 5px',
+  position: 'relative',
+  top: '-16px',
+  right: '5px',
+  // padding: '0px 10px',
+  // margin: '3px 5px',
   '&:hover': {
     color: activeTheme.color5.hex,
     textDecoration: 'none',
