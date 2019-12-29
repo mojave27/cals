@@ -12,7 +12,7 @@ import {
   formButton
 } from '../../styles/main-styles'
 import { workoutBlock, blockHeader, setBlock } from '../../styles/program'
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import { gridContainer, gridItemNoHover } from '../../styles/gridStyles'
 
 class ProgramOverview extends React.Component {
   state = { sections: {}, expandText: 'Expand', expandAll: false }
@@ -57,7 +57,7 @@ class ProgramOverview extends React.Component {
     if (!isUndefined(workouts)) {
       return workouts.map(wo => {
         return (
-          <div key={`${wo.id}-${Math.random()}`} css={[workoutBlock, gridItem]}>
+          <div key={`${wo.id}`} css={[workoutBlock, gridItemNoHover]}>
             <div css={blockHeader}>{wo.name}</div>
             <div>{this.renderSets(wo.sets)}</div>
           </div>

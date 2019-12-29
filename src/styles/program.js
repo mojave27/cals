@@ -12,12 +12,10 @@ export let blockHeader = css({
 })
 
 export let workoutBlock = css({
-  display: 'inline-grid',
-  // color: activeTheme.color2_text.hex
+  display: 'inline-grid'
 })
 
 export let setBlock = css({
   border: `1px solid ${activeTheme.color2.hex}`,
-  margin: '5px',
-  // color: activeTheme.color2_text.hex
+  margin: '5px'
 })

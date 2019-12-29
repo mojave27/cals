@@ -22,6 +22,16 @@ export const gridItem = css({
   }
 })
 
+
+export const gridItemNoHover = css({
+  backgroundColor: activeTheme.color5.rgba(.8),
+  border: `1px solid ${activeTheme.color3.rgba(.8)}`,
+  borderRadius: '3px',
+  padding: '20px',
+  fontSize: 'inherit',
+  textAlign: 'center'
+})
+
 export const gridContainerSingleColumn = css({
   display: 'grid',
   gridTemplateColumns: 'auto',
