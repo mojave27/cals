@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import WorkoutTracker from './WorkoutTracker'
+import { isUndefined } from 'lodash'
 import {
   cardNoHover,
   cardTitle,
@@ -256,9 +257,13 @@ const testProgram = {
 }
 
 class ProgramTracker extends React.Component {
-  state = {
-    program: testProgram,
-    activeWorkout: -1
+  constructor(props) {
+    super(props)
+    this.state = {
+      // program: testProgram,
+      program: props.program,
+      activeWorkout: -1
+    }
   }
 
   render() {
@@ -332,8 +337,7 @@ class ProgramTracker extends React.Component {
     let dateIndex = exercise.dates.findIndex(
       date => Number(date.id) === Number(update.dateId)
     )
-    if (dateIndex === -1) {
-    }
+
     let date = exercise.dates[dateIndex]
     date[update.name] = update.value
 
@@ -368,7 +372,10 @@ class ProgramTracker extends React.Component {
     // add date to all exercises in workout.sets
     let updatedSets = workout.sets.map(set => {
       let updatedExercises = set.exercises.map(ex => {
-        ex.dates.push({ date: dateId, weight: '', actualReps: '' })
+        if(isUndefined(ex.dates)){
+          ex.dates = []
+        }
+        ex.dates.push({ id: dateId, weight: '', actualReps: '' })
         return ex
       })
       set.exercises = updatedExercises
@@ -387,7 +394,7 @@ class ProgramTracker extends React.Component {
 
   getDatesFromWorkout = workoutId => {
     let workout = this.getWorkoutById(workoutId)
-    let dates = [...workout.dates]
+    let dates = workout.dates ? [...workout.dates] : []
     return dates
   }
 

@@ -41,7 +41,7 @@ class App extends Component {
                 >
                   <Router>
                     <Home path='/' />
-                    <Tracker path='/workout-tracker' />
+                    <Tracker path='/program-tracker' />
                     <Programs path='/programs' />
                     <ProgramForm path='/program-form' />
                     <ProgramForm path='/program-form/:programId' />

@@ -60,7 +60,10 @@ export const getUniqueIds = list => {
 }
 
 export const generateNewId = list => {
+  let newId = 0
   let currentIds = getUniqueIds(list)
-  var newId = Math.max(...currentIds) + 1
+  if (currentIds.length <= 0){return newId}
+
+  newId = Math.max(...currentIds) + 1
   return newId
 }

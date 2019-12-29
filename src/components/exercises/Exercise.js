@@ -72,7 +72,8 @@ class Exercise extends React.Component {
     const exercise = {
       name: this.state.exerciseName,
       reps: this.state.exerciseReps,
-      type: this.state.exerciseType
+      type: this.state.exerciseType,
+      dates: []
     }
     addExercise(exercise).then(response => {
       this.props.done()

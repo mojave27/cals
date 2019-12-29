@@ -6,6 +6,7 @@ export const emptyWorkout = {
     "name": "",
     "description": "",
     "type": "",
+    "dates": [],
     "sets": []
   }
 
