@@ -1,38 +1,25 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import WorkoutTable from '../tables/WorkoutTable'
 import SetTable from '../tables/SetTable'
 import ExerciseTable from '../tables/ExerciseTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { setBlock } from '../../styles/program'
 import {
+  formButton,
   pointer,
   container,
   detailCard,
   row,
   stripe
 } from '../../styles/main-styles'
-import { Row, Column } from '../../styles/table'
+import { Row } from '../../styles/table'
 
 const WorkoutTracker = props => {
-  const handleCellChange = event => {
-    let { id, value, name } = event.target
-    // create the update object
-    let update = {
-      id: id,
-      name: name,
-      value: value
-    }
-    console.log(`id: ${id}, name: ${name}, value: ${value}`)
-    // call update callback
+  const handleCellChange = update => {
+    update.workoutId = props.workout.id
     props.update(update)
-  }
-
-  const handleRowClick = event => {
-    let id = event.currentTarget.id
-    console.log(id)
   }
 
   const addDate = event => {
@@ -54,29 +41,13 @@ const WorkoutTracker = props => {
           rows: [...set.exercises]
         }
         return (
-          <div key={set.id} css={[Row, setBlock]} style={{minWidth:'700px',display:'inline-block'}}>
-            {/* <WorkoutTable */}
-            <SetTable
-              disabled={true}
-              data={data}
-              onClick={handleRowClick}
-              onCellChange={handleCellChange}
-            />
-            <ExerciseTable
-              disabled={true}
-              data={data}
-              onClick={handleRowClick}
-              onCellChange={handleCellChange}
-            />
-            <div css={[Column, pointer]}>
-              <FontAwesomeIcon
-                alt={'add date'}
-                id={set.id}
-                style={{ marginLeft: '10px', float: 'right' }}
-                icon={faPlus}
-                onClick={addDate}
-              />
-            </div>
+          <div
+            key={set.id}
+            css={[Row, setBlock]}
+            style={{ minWidth: '700px', display: 'inline-block' }}
+          >
+            <SetTable data={data} />
+            <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
       })
@@ -94,11 +65,22 @@ const WorkoutTracker = props => {
         </div>
 
         <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
+        <div css={pointer}>
+          <FontAwesomeIcon alt={'add date'} icon={faPlus} onClick={addDate} />
+        </div>
 
         <div css={container}>
           <div style={{ display: 'block', paddingBottom: '10px' }}>
             {renderSets(props.workout)}
           </div>
+        </div>
+        <div css={row}>
+          <input
+            type='submit'
+            value='Save Workout'
+            css={[formButton, { float: 'right' }]}
+            onClick={props.save}
+          />
         </div>
       </div>
     </React.Fragment>

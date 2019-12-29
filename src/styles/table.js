@@ -60,8 +60,9 @@ export let Row = {
 }
 
 export let Column = {
-  display: 'table-cell',
-  verticalAlign: 'middle',
-  width: '10px',
+  // display: 'table-cell',
+  // display: 'inline-block',
+  // verticalAlign: 'middle',
+  // width: '10px',
   // backgroundColor: 
 }

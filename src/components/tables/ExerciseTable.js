@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { isUndefined } from 'lodash'
-import { setHeader, table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
+import { setHeader, table, tableInput, dayLeftCell, dayRightCell } from '../../styles/table'
 
 class Table extends React.Component {
   state = {}
@@ -47,11 +47,11 @@ class Table extends React.Component {
       columnWidths.push('100px')
     }
     return (
-      <tr key={Math.random()}>
+      <tr key={'headerRow'}>
         {headers.map((header, index) => (
           <th css={setHeader}
             style={{ minWidth: `${columnWidths[index]}` }}
-            key={`header-${Math.random()}`}
+            key={`${header}-${index}`}
           >
             {header}
           </th>
@@ -62,36 +62,34 @@ class Table extends React.Component {
 
   renderRow = (row, data) => {
     let tds = []
-    // tds.push(<td key={Math.random()}>{row.name}</td>)
-    // tds.push(
-    //   <td key={Math.random()} css={workoutCell}>
-    //     {row.reps}
-    //   </td>
-    // )
 
     // for each date, add columns for weight and actual-reps
     let count = data.dates ? data.dates.length : 0
     for (let i = 0; i < count; i++) {
       let valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].weight : ''
       tds.push(
-        <td key={Math.random()} css={dayLeftCell}>
+        <td key={`${data.dates[i].id}-weight`} css={dayLeftCell}>
           <Input
             id={row.id}
+            dateId={data.dates[i].id}
             name={'weight'}
-            //TODO: WTF?? why do i need to do this double check on isUndefined?
+            //TODO: why do i need to do this double check on isUndefined?
             data={valueData}
-            onChange={this.props.onCellChange}
+            onChange={this.onCellChange}
           />
         </td>
       )
       valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].actualReps : ''
+      // let date = data.dates[i].id
+      // console.log(`data.dates[i].id: ${date}`)
       tds.push(
-        <td key={Math.random()} css={dayRightCell}>
+        <td key={`${data.dates[i].id}-actualReps`} css={dayRightCell}>
           <Input
             id={row.id}
-            name={'actual reps'}
+            dateId={data.dates[i].id}
+            name={'actualReps'}
             data={valueData}
-            onChange={this.props.onCellChange}
+            onChange={this.onCellChange}
           />
         </td>
       )
@@ -99,12 +97,29 @@ class Table extends React.Component {
     return tds
   }
 
+  onCellChange = event => {
+    let { id, value, name } = event.target
+    let dateid = event.target.dataset.dateid
+
+    // create the update object
+    let update = {
+      dateId: dateid,
+      setId: this.props.data.setId,
+      exerciseId: id,
+      name: name,
+      value: value
+    }
+    this.props.onCellChange(update)
+  }
+
 }
 
 const Input = props => {
   return (
     <input
+      key={`${props.dateId}-${props.name}-${props.id}`}
       id={props.id}
+      data-dateid={props.dateId}
       name={props.name}
       type='text'
       value={props.data ? props.data : ''}

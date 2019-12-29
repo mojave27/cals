@@ -37,8 +37,8 @@ const testProgram = {
               name: 'chins',
               type: 'compound',
               dates: [
-                { date: 0, weight: 'bw', actualReps: '8' },
-                { date: 1, weight: 'bw', actualReps: '6' },
+                { id: 0, weight: 'bw', actualReps: '8' },
+                { id: 1, weight: 'bw', actualReps: '6' }
               ]
             },
             {
@@ -47,8 +47,8 @@ const testProgram = {
               name: 'glute bridge',
               type: 'compound',
               dates: [
-                { date: 0, weight: '90', actualReps: '8' },
-                { date: 1, weight: '90', actualReps: '9' },
+                { id: 0, weight: '90', actualReps: '8' },
+                { id: 1, weight: '90', actualReps: '9' }
               ]
             },
             {
@@ -57,8 +57,8 @@ const testProgram = {
               name: 'bb curl',
               type: 'isolation',
               dates: [
-                { date: 0, weight: '10', actualReps: '8' },
-                { date: 1, weight: '10', actualReps: '8' },
+                { id: 0, weight: '10', actualReps: '8' },
+                { id: 1, weight: '10', actualReps: '8' }
               ]
             }
           ]
@@ -72,8 +72,8 @@ const testProgram = {
               name: 'chins',
               type: 'compound',
               dates: [
-                { date: 0, weight: '15', actualReps: '5,4,3,2,1' },
-                { date: 1, weight: '', actualReps: '' },
+                { id: 0, weight: '15', actualReps: '5,4,3,2,1' },
+                { id: 1, weight: '', actualReps: '' }
               ]
             },
             {
@@ -82,8 +82,8 @@ const testProgram = {
               name: 'glute bridge',
               type: 'compound',
               dates: [
-                { date: 0, weight: '110', actualReps: '9+3+3+2' },
-                { date: 1, weight: '120', actualReps: '8+3+3+1' },
+                { id: 0, weight: '110', actualReps: '9+3+3+2' },
+                { id: 1, weight: '120', actualReps: '8+3+3+1' }
               ]
             },
             {
@@ -92,8 +92,8 @@ const testProgram = {
               name: 'bb curl',
               type: 'isolation',
               dates: [
-                { date: 0, weight: '22,17,12,2', actualReps: '6-8-10-20' },
-                { date: 0, weight: '', actualReps: '' }
+                { id: 0, weight: '22,17,12,2', actualReps: '6-8-10-20' },
+                { id: 1, weight: '', actualReps: '' }
               ]
             }
           ]
@@ -105,7 +105,10 @@ const testProgram = {
       name: 'Nattie W2',
       description: 'n/a',
       type: 'push',
-      dates: [],
+      dates: [
+        { id: 0, date: 'Fri Dec 20, 2019' },
+        { id: 1, date: 'Fri Dec 27, 2019' }
+      ],
       sets: [
         {
           id: 0,
@@ -115,35 +118,50 @@ const testProgram = {
               reps: 'max',
               name: 'chins',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 8,
               reps: 'max',
               name: 'glute bridge',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 9,
               reps: 'max',
               name: 'inv row',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 10,
               reps: 'max',
               name: 'leg curl',
               type: 'isolation',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 11,
               reps: 'max',
               name: 'bb curl',
               type: 'isolation',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             }
           ]
         },
@@ -155,35 +173,50 @@ const testProgram = {
               reps: '6-8-10',
               name: 'chins',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 8,
               reps: 'myo reps',
               name: 'glute bridge',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 9,
               reps: 'myo reps',
               name: 'inv row',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 10,
               reps: 'myo reps',
               name: 'leg curl',
               type: 'isolation',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             },
             {
               id: 11,
               reps: 'bb curl',
               name: 'bb curl',
               type: 'isolation',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             }
           ]
         },
@@ -195,7 +228,10 @@ const testProgram = {
               reps: '3x20',
               name: 'calves',
               type: 'isolation',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             }
           ]
         },
@@ -206,7 +242,10 @@ const testProgram = {
               reps: 'max',
               name: 'chins',
               type: 'compound',
-              dates: [],
+              dates: [
+                { id: 0, weight: '', actualReps: '' },
+                { id: 1, weight: '', actualReps: '' }
+              ]
             }
           ],
           id: 341
@@ -216,13 +255,11 @@ const testProgram = {
   ]
 }
 
-
 class ProgramTracker extends React.Component {
   state = {
     program: testProgram,
     activeWorkout: -1
   }
-
 
   render() {
     return (
@@ -236,7 +273,7 @@ class ProgramTracker extends React.Component {
         {/* Tab links */}
         <div css={tab}>{this.renderTabs()}</div>
         {/* <!-- Tab content --> */}
-        <div style={{padding:'25px'}}>{this.renderWorkout()}</div>
+        <div style={{ padding: '25px' }}>{this.renderWorkout()}</div>
       </div>
     )
   }
@@ -262,8 +299,16 @@ class ProgramTracker extends React.Component {
   renderWorkout = () => {
     return this.state.program.workouts.map(wo => {
       let active = Number(this.state.activeWorkout) === Number(wo.id)
-      if (active){
-        return <WorkoutTracker key={wo.id} workout={wo} update={this.updateWorkout} addDate={this.addDate} />
+      if (active) {
+        return (
+          <WorkoutTracker
+            key={wo.id}
+            workout={wo}
+            update={this.updateWorkout}
+            addDate={this.addDate}
+            save={this.saveWorkout}
+          />
+        )
       }
     })
   }
@@ -274,35 +319,66 @@ class ProgramTracker extends React.Component {
   }
 
   updateWorkout = update => {
-    console.log({update})
+    // {"dateId":"1","setId":0,"exerciseId":"0","name":"weight","value":"bw9"}
+    // find set, and date, then update the exercise.
+    let woIndex = this.getWorkoutIndex(update.workoutId)
+    let workout = this.state.program.workouts[woIndex]
+    let setIndex = this.getSetIndex(workout, update.setId)
+    let set = workout.sets[setIndex]
+    let exIndex = set.exercises.findIndex(
+      ex => Number(ex.id) === Number(update.exerciseId)
+    )
+    let exercise = set.exercises[exIndex]
+    let dateIndex = exercise.dates.findIndex(
+      date => Number(date.id) === Number(update.dateId)
+    )
+    if (dateIndex === -1) {
+    }
+    let date = exercise.dates[dateIndex]
+    date[update.name] = update.value
+
+    this.setState(prevState => {
+      let program = prevState.program
+      program.workouts[woIndex] = workout
+      return { program }
+    })
   }
 
-  addDate = ({setId, workoutId}) => {
+  saveWorkout = () => {
+    // put this.state.program into a request object...
+    // send to api
+  }
+
+  addDate = ({ setId, workoutId }) => {
     console.log(`adding date set id: ${setId}`)
     console.log(`workout id: ${workoutId}`)
 
     let workouts = this.state.program.workouts
-    let woIndex = this.getWorkoutIndex(this.state.program.workouts, workoutId)
+    let woIndex = this.getWorkoutIndex(workoutId)
     let workout = workouts[woIndex]
-    let setIndex = this.getSetIndex(workout, setId)
+    // let setIndex = this.getSetIndex(workout, setId)
 
     // add date to workout.dates
     let dates = this.getDatesFromWorkout(workoutId)
     let friendlyDate = getReadableDate()
     let dateId = generateNewId(dates)
-    dates.push({id: dateId, date: friendlyDate})
+    dates.push({ id: dateId, date: friendlyDate })
     workout.dates = dates
 
-    // add date to workout.set[id].exercies... dates (dates array for ea ex)
-    let updatedExercises = workout.sets[setIndex].exercises.map( ex => {
-      ex.dates.push({ date: dateId, weight: '', actualReps: '' })
-      return ex
+    // add date to all exercises in workout.sets
+    let updatedSets = workout.sets.map(set => {
+      let updatedExercises = set.exercises.map(ex => {
+        ex.dates.push({ date: dateId, weight: '', actualReps: '' })
+        return ex
+      })
+      set.exercises = updatedExercises
+      return set
     })
-    workout.sets[setIndex].exercises = updatedExercises
+    workout.sets = updatedSets
     workouts[woIndex] = workout
 
     // now, put all the updates into state
-    this.setState( prevState => {
+    this.setState(prevState => {
       let program = prevState.program
       program.workouts = workouts
       return { program }
@@ -317,25 +393,25 @@ class ProgramTracker extends React.Component {
 
   getWorkoutById = id => {
     let workouts = this.state.program.workouts
-    let index = workouts.findIndex( wo => Number(wo.id) === Number(id))
+    let index = workouts.findIndex(wo => Number(wo.id) === Number(id))
     return workouts[index]
   }
 
-  getWorkoutIndex = (workouts, workoutId) => {
-    let index = workouts.findIndex( set => Number(set.id) === Number(workoutId))
+  getWorkoutIndex = workoutId => {
+    let workouts = this.state.program.workouts
+    let index = workouts.findIndex(set => Number(set.id) === Number(workoutId))
     return index
   }
 
   getSetIndex = (workout, setId) => {
-    let index = workout.sets.findIndex( set => Number(set.id) === Number(setId))
+    let index = workout.sets.findIndex(set => Number(set.id) === Number(setId))
     return index
   }
 
   getSetById = (workout, setId) => {
-    let index = workout.sets.findIndex( set => Number(set.id) === Number(setId))
+    let index = workout.sets.findIndex(set => Number(set.id) === Number(setId))
     return workout.sets[index]
   }
-
 }
 
 export default ProgramTracker
