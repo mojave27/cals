@@ -24,3 +24,50 @@ export let table = {
     color: activeTheme.color2_text.hex
   }
 }
+
+export let tableInput = {
+  backgroundColor: 'inherit',
+  border: 'none',
+  color: 'inherit',
+  fontSize: '1em',
+  width: '100%',
+  lineHeight: '14px'
+}
+
+export let workoutCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`
+}
+
+export let setHeader = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+}
+
+export let setLeadCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`,
+  fontWeight: '700'
+}
+
+export let dayLeftCell = {
+  borderLeft: `3px solid ${activeTheme.color3.rgba(.75)}`,
+  borderRight: `1px solid ${activeTheme.color3.rgba(.75)}`
+}
+
+export let dayRightCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`,
+  borderRight: `3px solid ${activeTheme.color3.rgba(.75)}`
+}
+
+export let Row = {
+  display: 'table',
+  borderSpacing: '10px', /*Optional*/
+}
+
+export let Column = {
+  // display: 'table-cell',
+  // display: 'inline-block',
+  // verticalAlign: 'middle',
+  // width: '10px',
+  // backgroundColor: 
+}

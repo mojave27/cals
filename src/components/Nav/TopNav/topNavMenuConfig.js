@@ -4,44 +4,24 @@ export const menuConfig = [
     type: 'button',
     link: { to: '/', text: 'home' }
   },
-    {
+  {
     name: 'trackers',
     type: 'dropdown',
-    items: [
-      { to: '/workouts', text: 'workouts' }
-    ]
+    items: [{ to: '/program-tracker', text: 'program' }]
   },
-  // {
-  //   name: 'programs',
-  //   type: 'dropdown',
-  //   items: [
-  //     { to: '/programs', text: 'programs' },
-  //     { to: '/program-form', text: 'add program' }
-  //   ]
-  // },
-  // {
-  //   name: 'workouts',
-  //   type: 'button',
-  //   link: { to: '/workouts', text: 'workouts' }
-  // },
-  // {
-  //   name: 'sets',
-  //   type: 'button',
-  //   link: { to: '/sets', text: 'sets' }
-  // },
-  // {
-  //   name: 'exercises',
-  //   type: 'button',
-  //   link: { to: '/exercises', text: 'exercises' }
-  // },
+  {
+    name: 'progress',
+    type: 'button',
+    link: { to: '/progress', text: 'workout progress' }
+  },
   {
     name: 'manage',
     type: 'dropdown',
     items: [
       { to: '/programs', text: 'programs' },
       { to: '/workouts', text: 'workouts' },
-      { to: '/exercises', text: 'exercises' },
-      { to: '/sets', text: 'sets' }
+      { to: '/sets', text: 'sets' },
+      { to: '/exercises', text: 'exercises' }
     ]
   },
   {
@@ -54,9 +34,8 @@ export const menuConfig = [
     type: 'dropdown',
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
-      // { to: '/workouts', text: 'workouts' },
-      // { to: '/exercises', text: 'exercises' },
-      // { to: '/sets', text: 'sets' }
+      { to: '/program-viewer', text: 'program viewer' },
+      { to: '/admin/test', text: 'test page' }
     ]
   }
-];
+]

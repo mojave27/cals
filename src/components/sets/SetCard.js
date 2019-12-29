@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useEffect, useState } from 'react'
-import { findIndexOfId, retrieveItemById, updateItemById } from '../ArrayUtils'
+import { findIndexOfId } from '../ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
 import { addSet, updateSet } from '../../api/setsApi'
 import { miniCard } from '../../styles/main-styles'

@@ -5,7 +5,7 @@ import { navigate } from '@reach/router'
 import Table from '../tables/SimpleTable'
 import { isUndefined } from 'lodash'
 import {
-  card,
+  cardNoHover,
   cardTitle,
   cardInfo,
   closeButton,
@@ -18,20 +18,37 @@ class ProgramOverview extends React.Component {
   state = { sections: {}, expandText: 'Expand', expandAll: false }
 
   render() {
+    // console.log(JSON.stringify(this.props.program))
     return (
-      <div css={card} id={this.props.program.id}>
+      <div
+        css={cardNoHover}
+        id={this.props.program.id}
+      >
         <span css={closeButton} onClick={this.props.handleClose}>
           &times;
         </span>
-        <div css={cardTitle}>{this.props.program.name}</div>
-        <div css={cardInfo}>{this.props.program.description}</div>
-        <div css={gridContainer}>
-          {this.renderWorkouts(this.props.program.workouts)}
-          <br />
+        <div>
+          <div css={cardTitle}>{this.props.program.name}</div>
+          <div css={cardInfo}>{this.props.program.description}</div>
+          <div css={gridContainer}>
+            {this.renderWorkouts(this.props.program.workouts)}
+            <br />
+          </div>
+          {this.props.edit ? (
+            <button css={formButton} onClick={this.editProgram}>
+              Edit
+            </button>
+          ) : null}
+          {this.props.select ? (
+            <button
+              id={this.props.program.id}
+              css={formButton}
+              onClick={this.props.selectProgram}
+            >
+              Select
+            </button>
+          ) : null}
         </div>
-        <button css={formButton} onClick={this.editProgram}>
-          Edit
-        </button>
       </div>
     )
   }

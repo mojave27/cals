@@ -1,19 +1,27 @@
 import { css } from '@emotion/core'
-import { stormTrooperTheme } from './colorThemes'
+import { faHome1, stormTrooper, woSheet } from './colorThemes'
 
-export let activeTheme = stormTrooperTheme
+export let activeTheme = woSheet
+
+export let basics = css({
+  borderTop: `1px solid ${activeTheme.color2.hex}`,
+  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  borderRadius: '2px',
+  backgroundColor: activeTheme.color5.hex,
+  color: activeTheme.color5_text.hex
+})
 
 export let card = css({
   border: `1px solid ${activeTheme.color4.hex}`,
   borderRadius: '2px',
-  backgroundColor: activeTheme.color2.hex,
+  backgroundColor: activeTheme.color4.hex,
   // margin: '5px 10px',
   padding: '20px',
   // padding: '10px 5px',
   boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
   transition: '0.3s',
   textAlign: 'center',
-  color: `${activeTheme.color2_text.hex}`,
+  color: `${activeTheme.color4_text.hex}`,
   '&:hover': {
     boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
     border: `1px solid ${activeTheme.color5.hex}`,
@@ -22,6 +30,25 @@ export let card = css({
     // backgroundColor: `#E4E4E6`
     transition: '0.3s',
   }
+})
+
+export let cardNoHover = css({
+  border: `1px solid ${activeTheme.color4.hex}`,
+  borderRadius: '2px',
+  backgroundColor: activeTheme.color4.hex,
+  padding: '20px',
+  boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+  transition: '0.3s',
+  textAlign: 'center',
+  color: `${activeTheme.color4_text.hex}`
+})
+
+export let section = css({
+  borderTop: `1px solid ${activeTheme.color2.hex}`,
+  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  backgroundColor: activeTheme.color4.hex,
+  textAlign: 'left',
+  padding: '5px 10px'
 })
 
 export let miniCard = css({
@@ -58,7 +85,7 @@ export let cardTitle = css({
     content: '""' /* This is necessary for the pseudo element to work. */,
     display: 'block' /* This will put the pseudo element on its own line. */,
     margin: '0 auto' /* This will center the border. */,
-    width: '50%',
+    // width: '50%',
     paddingTop: '5px',
     borderBottom: `1px solid ${activeTheme.color5.rgba(0.75)}`
     // borderBottom: '1px solid rgb(3,166,150,0.75)'
@@ -70,11 +97,11 @@ export let cardInfo = css({
 })
 
 export let detailCard = css({
-  border: `1px solid ${activeTheme.color2.hex}` /* Dotted border */,
-  width: '80%',
-  borderRadius: '2px' /* Rounded border */,
-  margin: '0 auto' /* Center the coupon */,
-  maxWidth: '600px'
+  border: `1px solid ${activeTheme.color2.hex}`,
+  width: '100%',
+  borderRadius: '2px',
+  margin: '0 auto',
+  // maxWidth: '600px'
 })
 
 export let container = css({
@@ -82,8 +109,6 @@ export let container = css({
   color: activeTheme.color5_text.hex,
   backgroundColor: activeTheme.color5.hex,
   borderRadius: '2px',
-  // borderTop: `1px solid ${activeTheme.color2.hex}`,
-  // borderBottom: `1px solid ${activeTheme.color2.hex}`
 })
 
 export let viewContainer = css({
@@ -92,7 +117,8 @@ export let viewContainer = css({
 
 export let stripe = css({
   backgroundColor: activeTheme.color4.hex,
-  height: '10px'
+  border: `1px solid ${activeTheme.color3.hex}`,
+  height: '15px'
 })
 
 export let promo = css({
@@ -170,12 +196,12 @@ export let basicButton = css({
   fontSize: 'inherit',
   backgroundColor: activeTheme.color4.hex,
   color: activeTheme.color4_text.hex,
-  border: `1px solid ${activeTheme.color2.hex}`,
+  border: `1px solid ${activeTheme.color3.hex}`,
   borderRadius: '2px',
   cursor: 'pointer',
   '&:hover': {
     backgroundColor: activeTheme.color3.hex,
-    color: '#fff'
+    color: activeTheme.color3_text.hex,
   }
 })
 
@@ -216,6 +242,10 @@ export let col75 = css({
   width: '75%',
   marginTop: '6px'
 })
+
+export let pointer = {
+  cursor: 'pointer'
+}
 
 /* Clear floats after the columns */
 export let row = css({
@@ -304,12 +334,15 @@ export let selectHide = {
 
 /* The Close Button */
 export let closeButton = {
-  color: '#aaaaaa',
+  color: activeTheme.color3.hex,
   float: 'right',
   fontSize: '24px',
   fontWeight: 'bold',
-  padding: '0px 10px',
-  margin: '3px 5px',
+  position: 'relative',
+  top: '-16px',
+  right: '5px',
+  // padding: '0px 10px',
+  // margin: '3px 5px',
   '&:hover': {
     color: activeTheme.color5.hex,
     textDecoration: 'none',
