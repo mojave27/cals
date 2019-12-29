@@ -268,7 +268,8 @@ class ProgramTracker extends React.Component {
 
   render() {
     return (
-      <div css={cardNoHover} id={this.state.program.id}>
+      // <div css={cardNoHover} id={this.state.program.id}>
+      <div id={this.state.program.id}>
         <span css={closeButton} onClick={this.handleClose}>
           &times;
         </span>
@@ -390,6 +391,10 @@ class ProgramTracker extends React.Component {
       program.workouts = workouts
       return { program }
     })
+  }
+
+  handleClose = () => {
+    this.props.close()
   }
 
   getDatesFromWorkout = workoutId => {

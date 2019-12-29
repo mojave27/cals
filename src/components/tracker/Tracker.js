@@ -36,6 +36,10 @@ const Tracker = props => {
     })
   }
 
+  const clearProgram = () => {
+    setProgram({})
+  }
+
   const updateProgramTracker = update => {
     console.log(`updateProgramTracker - ${JSON.stringify(update)}`)
     // update state with the changes.
@@ -58,7 +62,7 @@ const Tracker = props => {
             />
           </div>
         ) : (
-          <ProgramTracker program={program} update={updateProgramTracker} />
+          <ProgramTracker program={program} update={updateProgramTracker} close={clearProgram} />
         )}
       </div>
     </React.Fragment>
