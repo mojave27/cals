@@ -47,12 +47,13 @@ const testProgram = {
   ]
 }
 
+// TODO: pass in the program id, retrieve the program from componentDidMount, and set to set
 class ProgramTracker extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      program: testProgram,
-      // program: props.program,
+      // program: testProgram,
+      program: props.program,
       activeWorkout: -1
     }
   }
