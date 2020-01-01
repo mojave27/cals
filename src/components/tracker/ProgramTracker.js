@@ -2,6 +2,8 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import WorkoutTracker from './WorkoutTracker'
+import { addProgram, updateProgram } from '../../api/programsApi'
+import { updateWorkout as updateWo } from '../../api/workoutsApi'
 import { isUndefined } from 'lodash'
 import {
   cardNoHover,
@@ -312,7 +314,7 @@ class ProgramTracker extends React.Component {
             workout={wo}
             update={this.updateWorkout}
             addDate={this.addDate}
-            save={this.saveWorkout}
+            save={this.save}
           />
         )
       }
@@ -339,8 +341,14 @@ class ProgramTracker extends React.Component {
       date => Number(date.id) === Number(update.dateId)
     )
 
+    // if(dateIndex === -1){
+    //   exercise.dates.push({})
+    // }
+
     let date = exercise.dates[dateIndex]
     date[update.name] = update.value
+
+    updateWo(workout)
 
     this.setState(prevState => {
       let program = prevState.program
@@ -349,9 +357,14 @@ class ProgramTracker extends React.Component {
     })
   }
 
-  saveWorkout = () => {
-    // put this.state.program into a request object...
+  save = () => {
+    let program = this.state.program
     // send to api
+    if (program.id) {
+      updateProgram(program)
+    } else {
+      addProgram(this.state.program)
+    }
   }
 
   addDate = ({ setId, workoutId }) => {
@@ -373,7 +386,7 @@ class ProgramTracker extends React.Component {
     // add date to all exercises in workout.sets
     let updatedSets = workout.sets.map(set => {
       let updatedExercises = set.exercises.map(ex => {
-        if(isUndefined(ex.dates)){
+        if (isUndefined(ex.dates)) {
           ex.dates = []
         }
         ex.dates.push({ id: dateId, weight: '', actualReps: '' })
