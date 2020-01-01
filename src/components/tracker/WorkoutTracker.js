@@ -6,6 +6,7 @@ import ExerciseTable from '../tables/ExerciseTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { setBlock } from '../../styles/program'
+import { topRight } from '../../styles/buttonStyles'
 import {
   formButton,
   pointer,
@@ -22,20 +23,15 @@ const WorkoutTracker = props => {
     props.update(update)
   }
 
-  const addDate = event => {
-    const setId = event.currentTarget.id
-    const update = {
-      setId: setId,
-      workoutId: props.workout.id
-    }
-    props.addDate(update)
+  const addDate = () => {
+    props.addDate(props.workout.id)
   }
 
   const renderSets = workout => {
     if (workout.sets && workout.sets.length > 0) {
       return workout.sets.map(set => {
         let data = {
-          dates: workout.dates,
+          days: workout.days,
           setId: set.id,
           headers: ['name', 'reps', 'weight', 'actual reps'],
           rows: [...set.exercises]
@@ -60,6 +56,7 @@ const WorkoutTracker = props => {
     <React.Fragment>
       <div css={detailCard}>
         <div css={container}>
+          <div onClick={props.done} css={topRight}>&times;</div>
           <div css={row}>{props.workout.name}</div>
           <div css={row}>{props.workout.description}</div>
         </div>
@@ -77,7 +74,7 @@ const WorkoutTracker = props => {
         <div css={row}>
           <input
             type='submit'
-            value='Save Workout'
+            value='Save'
             css={[formButton, { float: 'right' }]}
             onClick={props.save}
           />

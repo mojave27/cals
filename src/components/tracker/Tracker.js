@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
-import Modal from '../Modal'
 import ProgramsList from './ProgramsList'
 import TrackerContext from '../../context/TrackerContext'
 import { retrieveProgramTracker } from '../../api/trackerApi'
@@ -37,7 +36,7 @@ const Tracker = props => {
   }
 
   const saveProgram = () => {
-    
+
   }
 
   const updateProgramTracker = update => {
