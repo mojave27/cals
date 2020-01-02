@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { isUndefined } from 'lodash'
+import { get, isUndefined } from 'lodash'
 import { setHeader, table, tableInput, dayLeftCell, dayRightCell } from '../../styles/table'
 
 class Table extends React.Component {
@@ -37,8 +37,8 @@ class Table extends React.Component {
   renderHeaders = () => {
     let headers = []
     let columnWidths = ['100px', '100px']
-    let count = !isUndefined(this.props.data.dates)
-      ? this.props.data.dates.length
+    let count = !isUndefined(this.props.data.days)
+      ? this.props.data.days.length
       : 0
     for (let i = 0; i < count; i++) {
       headers.push('weight')
@@ -60,18 +60,25 @@ class Table extends React.Component {
     )
   }
 
+  // the row arg is an exercise: {id: 0, name:'jammer', type:'isolation', reps:'max'}
   renderRow = (row, data) => {
+    let setId = data.setId
+    let exerciseId = row.id
     let tds = []
 
-    // for each date, add columns for weight and actual-reps
-    let count = data.dates ? data.dates.length : 0
+    // for each day, add columns for weight and actual-reps
+    let count = data.days ? data.days.length : 0
     for (let i = 0; i < count; i++) {
-      let valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].weight : ''
+      // WEIGHT CELL
+      let day = data.days[i]
+      let set = day.sets.find( set => Number(set.id) === Number(setId))
+      let row = set.exercises.find( ex => Number(ex.id) === Number(exerciseId))
+      let valueData = get(row, 'weight', '')
       tds.push(
-        <td key={`${data.dates[i].id}-weight`} css={dayLeftCell}>
+        <td key={`${data.days[i].id}-weight`} css={dayLeftCell}>
           <Input
             id={row.id}
-            dateId={data.dates[i].id}
+            dayId={data.days[i].id}
             name={'weight'}
             //TODO: why do i need to do this double check on isUndefined?
             data={valueData}
@@ -79,14 +86,13 @@ class Table extends React.Component {
           />
         </td>
       )
-      valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].actualReps : ''
-      // let date = data.dates[i].id
-      // console.log(`data.dates[i].id: ${date}`)
+      // REPS CELL
+      valueData = get(row, 'actualReps', '')
       tds.push(
-        <td key={`${data.dates[i].id}-actualReps`} css={dayRightCell}>
+        <td key={`${data.days[i].id}-actualReps`} css={dayRightCell}>
           <Input
             id={row.id}
-            dateId={data.dates[i].id}
+            dayId={data.days[i].id}
             name={'actualReps'}
             data={valueData}
             onChange={this.onCellChange}
@@ -99,11 +105,11 @@ class Table extends React.Component {
 
   onCellChange = event => {
     let { id, value, name } = event.target
-    let dateid = event.target.dataset.dateid
+    let dayid = event.target.dataset.dayid
 
-    // create the update object
+    // create the upday object
     let update = {
-      dateId: dateid,
+      dayId: dayid,
       setId: this.props.data.setId,
       exerciseId: id,
       name: name,
@@ -117,9 +123,9 @@ class Table extends React.Component {
 const Input = props => {
   return (
     <input
-      key={`${props.dateId}-${props.name}-${props.id}`}
+      key={`${props.dayId}-${props.name}-${props.id}`}
       id={props.id}
-      data-dateid={props.dateId}
+      data-dayid={props.dayId}
       name={props.name}
       type='text'
       value={props.data ? props.data : ''}
