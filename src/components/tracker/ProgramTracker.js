@@ -3,12 +3,9 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import WorkoutTracker from './WorkoutTracker'
 import { addProgram, updateProgram } from '../../api/programsApi'
-import { updateWorkout as updateWo } from '../../api/workoutsApi'
-import { isUndefined } from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import {
-  cardNoHover,
   cardTitle,
   cardInfo,
   closeButton
@@ -77,7 +74,6 @@ class ProgramTracker extends React.Component {
   }
 
   renderTabs = () => {
-    // return this.state.program.workouts.map(wo => {
     let tabs = this.state.program.workouts.map(wo => {
       let active = Number(this.state.activeWorkout) === Number(wo.id)
       let className = active ? 'active' : 'inactive'

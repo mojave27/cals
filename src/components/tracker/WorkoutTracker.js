@@ -62,13 +62,11 @@ const WorkoutTracker = props => {
         </div>
 
         <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
-        <div css={pointer}>
-          <FontAwesomeIcon alt={'add date'} icon={faPlus} onClick={addDate} />
-        </div>
 
-        <div css={container}>
-          <div style={{ display: 'block', paddingBottom: '10px' }}>
+        <div css={container} style={{margin:'20px 25px', display:'inline-block'}}>
+          <div style={{ display: 'block', padding: '10px 0px' }}>
             {renderSets(props.workout)}
+            <FontAwesomeIcon alt={'add date'} icon={faPlus} onClick={addDate} style={{ position:'relative', top:'-15', right:'-5' }}/>
           </div>
         </div>
         <div css={row}>
