@@ -80,6 +80,7 @@ class ProgramTracker extends React.Component {
             done={this.closeWorkout}
             save={this.save}
             update={this.updateWorkout}
+            updateSet={this.updateSet}
           />
         )
       }
@@ -97,6 +98,13 @@ class ProgramTracker extends React.Component {
 
   closeWorkout = () => {
     this.setState({ activeWorkout: -1})
+  }
+
+  updateSet = async update => {
+    let workout = this.getWorkoutById(update.workoutId)
+    let index = workout.sets.findIndex(set => Number(set.id) === Number(update.set.setId))
+    workout.sets[index] = update.set
+    console.log(JSON.stringify(workout))
   }
 
   //TODO: can remove the 'index' step, and move it to the getWorkout... function.  

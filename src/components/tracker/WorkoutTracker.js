@@ -1,11 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useState } from 'react'
 import SetTable from '../tables/SetTable'
+import SetEditor from './SetEditor'
+import Modal from '../Modal'
 import ExerciseTable from '../tables/ExerciseTable'
 import { setBlock } from '../../styles/program'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
+import { isEmpty } from 'lodash'
 import {
   formButton,
   container,
@@ -17,6 +20,18 @@ import {
 import { Row } from '../../styles/table'
 
 const WorkoutTracker = props => {
+  const [showModal, setShowModal] = useState(false)
+  const [activeSet, setActiveSet] = useState({})
+
+  const toggleModal = () => {
+    setShowModal(!showModal)
+  }
+
+  const done = async () => {
+    await setActiveSet({})
+    toggleModal()
+  }
+
   const handleCellChange = update => {
     update.workoutId = props.workout.id
     props.update(update)
@@ -26,9 +41,31 @@ const WorkoutTracker = props => {
     props.addDate(props.workout.id)
   }
 
-  const editSet = event => {
+  const addSet = event => {
+    // let setId = event.target.parentNode.id
+    console.log(`add set to workout: ${props.workout.id}`)
+  }
+
+  const editSet = async event => {
     let setId = event.target.parentNode.id
-    console.log(`setId: ${setId}`)
+    let set = props.workout.sets.find(set => Number(set.id) === Number(setId))
+    await setActiveSet(set)
+    toggleModal()
+  }
+
+  const updateSet = update => {
+    console.log(`update for set: ${JSON.stringify(update)}`)
+    setActiveSet(update)
+  }
+
+  // const saveSet = setId => {
+  const saveSet = () => {
+    let update = {
+      workoutId: props.workout.id,
+      set: activeSet
+    }
+    props.updateSet(update)
+    toggleModal()
   }
 
   const renderSets = workout => {
@@ -54,19 +91,18 @@ const WorkoutTracker = props => {
 
   return (
     <React.Fragment>
-      <div className={'detailCard'} css={detailCard}>
-        <div className={'container'} css={container}>
-          <div onClick={props.done} css={topRight}>
-            &times;
-          </div>
-          <div css={row}>{props.workout.name}</div>
-          <div css={row}>{props.workout.description}</div>
-        </div>
-
-        <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
-
+      <Modal showModal={!isEmpty(activeSet)} handleClose={toggleModal}>
+        <SetEditor
+          set={activeSet}
+          updateSet={updateSet}
+          saveSet={saveSet}
+          done={done}
+        />
+      </Modal>
+      <div css={detailCard}>
+        <DisplayHeader done={props.done} workout={props.workout} />
+        <Stripe />
         <div
-          data-class={'container'}
           css={container}
           style={{
             margin: '20px 25px',
@@ -74,12 +110,18 @@ const WorkoutTracker = props => {
             maxWidth: '90%'
           }}
         >
-          <div css={row}>
+          <div css={row} style={{ padding: '5px' }}>
             <input
               type='submit'
               value='Add Day'
-              css={[basicButtonSmall, { float: 'right' }]}
+              css={[basicButtonSmall, { float: 'left' }]}
               onClick={addDate}
+            />
+            <input
+              type='submit'
+              value='Add Set'
+              css={[basicButtonSmall, { float: 'left' }]}
+              onClick={addSet}
             />
           </div>
           <div style={{ display: 'block', padding: '10px 0px' }}>
@@ -100,3 +142,21 @@ const WorkoutTracker = props => {
 }
 
 export default WorkoutTracker
+
+const Stripe = () => {
+  return (
+    <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
+  )
+}
+
+const DisplayHeader = props => {
+  return (
+    <div className={'container'} css={container}>
+      <div onClick={props.done} css={topRight}>
+        &times;
+      </div>
+      <div css={row}>{props.workout.name}</div>
+      <div css={row}>{props.workout.description}</div>
+    </div>
+  )
+}

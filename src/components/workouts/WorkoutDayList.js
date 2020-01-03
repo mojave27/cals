@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useState, useEffect } from 'react'
-import { retrieve as retrieveWorkoutDays } from '../../api/workoutDaysApi'
+import { retrieve as retrieveWorkoutDays } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import BlockHeader from '../BlockHeader'
 
