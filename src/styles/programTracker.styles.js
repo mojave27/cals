@@ -7,9 +7,9 @@ export let tab = {
   backgroundColor: activeTheme.color4.hex,
   color: activeTheme.color4_text.hex,
   '& button': {
-    fontSize:'.9em',
+    fontSize: '.9em',
     backgroundColor: 'inherit',
-    color:'inherit',
+    color: 'inherit',
     float: 'left',
     border: 'none',
     outline: 'none',
@@ -29,9 +29,16 @@ export let tab = {
 
 /* Style the tab content */
 export const tabContent = {
-  display:'block',
+  display: 'block',
   padding: '6px 12px',
   border: `1px solid ${activeTheme.color2.hex}`,
   borderTop: 'none',
   transition: '1.0s'
+}
+
+export const trackerSet = {
+  maxWidth: '99%',
+  overflow: 'hidden',
+  display: 'inline-block',
+  whiteSpace: 'nowrap'
 }

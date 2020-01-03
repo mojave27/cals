@@ -14,35 +14,6 @@ import { tab } from '../../styles/programTracker.styles'
 import { getReadableDate } from '../DateUtils'
 import { generateNewId } from '../ArrayUtils'
 
-//TODO: change to use this.props.program...
-
-const testProgram = {
-  name: 'Natties Test',
-  description: 'this will be the nattie program',
-  id: '1',
-  workouts: [
-    {
-      name: 'W1',
-      description: 'n/a',
-      id: 0,
-      sets: [
-        {
-          id: 10,
-          exercises: [{ id: 3, name: 'jammer', type: 'isolation', reps: '' }]
-        }
-      ],
-      days: [
-        {
-          id: 0,
-          date: '1/1/20',
-          sets: [
-            { id: 10, exercises: [{ id: 3, weight: '10', actualReps: '12' }] }
-          ]
-        }
-      ]
-    }
-  ]
-}
 
 // TODO: pass in the program id, retrieve the program from componentDidMount, and set to set
 class ProgramTracker extends React.Component {

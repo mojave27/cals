@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import { retrievePrograms } from '../../api/programsApi'
 import TrackerContext from '../../context/TrackerContext'
-import { retrieveProgramById } from '../../api/programsApi'
+// import { retrieveProgramById } from '../../api/programsApi'
 import ProgramHighlightCard from '../programs/ProgramHighlightCard'
 import ProgramOverview from '../programs/ProgramOverview'
 import { isEmpty } from 'lodash'
@@ -16,35 +16,38 @@ const ProgramsList = props => {
   const [program, setProgram] = useState({})
 
   const handleProgramSelect = event => {
-    let id = event.target.id
+    let id = event.currentTarget.id
     clearSelectedProgram()
     props.select(id)
   }
 
-  const handleProgramView = async event => {
-    let id = event.currentTarget.id
-    await retrieve(id)
-  }
+  // const handleProgramView = async event => {
+  //   let id = event.currentTarget.id
+  //   await retrieve(id)
+  // }
 
   const clearSelectedProgram = () => {
     setProgram({})
   }
 
-  const retrieve = programId => {
-    async function fetchProgram(programId) {
-      const response = await retrieveProgramById(programId)
-      setProgram(response.fullProgram)
-    }
-    fetchProgram(programId)
-  }
+  // const retrieve = programId => {
+  //   async function fetchProgram(programId) {
+  //     const response = await retrieveProgramById(programId)
+  //     setProgram(response.fullProgram)
+  //   }
+  //   fetchProgram(programId)
+  // }
 
+  //TODO: add fa icon for previewing and for selecting
+  //      also allows select via just clicking the card
   const ProgramRow = program => {
     let index = program.id
     return (
       <ProgramHighlightCard
         key={index}
         program={program}
-        onClick={handleProgramView}
+        onClick={handleProgramSelect}
+        // onClick={handleProgramView}
       />
     )
   }

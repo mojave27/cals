@@ -7,10 +7,10 @@ import Home from './components/Home/Home'
 import Tracker from './components/tracker/Tracker'
 import Programs from './components/programs/Programs'
 import ProgramForm from './components/programs/ProgramForm'
-import Exercises from './components/exercises/Exercises'
-import Workouts from './components/workouts/Workouts'
-import WorkoutForm from './components/workouts/WorkoutForm'
-import Sets from './components/sets/Sets'
+// import Exercises from './components/exercises/Exercises'
+// import Workouts from './components/workouts/Workouts'
+// import WorkoutForm from './components/workouts/WorkoutForm'
+// import Sets from './components/sets/Sets'
 import DataConsistency from './components/Admin/DataConsistency'
 import Test from './components/Admin/Test'
 import TrackerProvider from './context/TrackerProvider'
@@ -45,11 +45,11 @@ class App extends Component {
                     <Programs path='/programs' />
                     <ProgramForm path='/program-form' />
                     <ProgramForm path='/program-form/:programId' />
-                    <Exercises path='/exercises' />
+                    {/* <Exercises path='/exercises' />
                     <Workouts path='/workouts' />
                     <WorkoutForm path='/workout-form' />
                     <WorkoutForm path='/workout-form/:workoutId' />
-                    <Sets path='/sets' />
+                    <Sets path='/sets' /> */}
                     <DataConsistency path='/admin/consistency-check' />
                     <Test path='/admin/test' />
                     <ProgramTracker path='/program-viewer' />

@@ -3,17 +3,16 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import SetTable from '../tables/SetTable'
 import ExerciseTable from '../tables/ExerciseTable'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { setBlock } from '../../styles/program'
+import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
 import {
   formButton,
-  pointer,
   container,
   detailCard,
   row,
-  stripe
+  stripe,
+  basicButtonSmall
 } from '../../styles/main-styles'
 import { Row } from '../../styles/table'
 
@@ -27,6 +26,11 @@ const WorkoutTracker = props => {
     props.addDate(props.workout.id)
   }
 
+  const editSet = event => {
+    let setId = event.target.parentNode.id
+    console.log(`setId: ${setId}`)
+  }
+
   const renderSets = workout => {
     if (workout.sets && workout.sets.length > 0) {
       return workout.sets.map(set => {
@@ -37,12 +41,8 @@ const WorkoutTracker = props => {
           rows: [...set.exercises]
         }
         return (
-          <div
-            key={set.id}
-            css={[Row, setBlock]}
-            style={{ minWidth: '700px', display: 'inline-block' }}
-          >
-            <SetTable data={data} />
+          <div key={set.id} css={[Row, setBlock, trackerSet]}>
+            <SetTable data={data} editSet={editSet} />
             <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
@@ -54,19 +54,36 @@ const WorkoutTracker = props => {
 
   return (
     <React.Fragment>
-      <div css={detailCard}>
-        <div css={container}>
-          <div onClick={props.done} css={topRight}>&times;</div>
+      <div className={'detailCard'} css={detailCard}>
+        <div className={'container'} css={container}>
+          <div onClick={props.done} css={topRight}>
+            &times;
+          </div>
           <div css={row}>{props.workout.name}</div>
           <div css={row}>{props.workout.description}</div>
         </div>
 
         <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
 
-        <div css={container} style={{margin:'20px 25px', display:'inline-block'}}>
+        <div
+          data-class={'container'}
+          css={container}
+          style={{
+            margin: '20px 25px',
+            display: 'inline-block',
+            maxWidth: '90%'
+          }}
+        >
+          <div css={row}>
+            <input
+              type='submit'
+              value='Add Day'
+              css={[basicButtonSmall, { float: 'right' }]}
+              onClick={addDate}
+            />
+          </div>
           <div style={{ display: 'block', padding: '10px 0px' }}>
             {renderSets(props.workout)}
-            <FontAwesomeIcon alt={'add date'} icon={faPlus} onClick={addDate} style={{ position:'relative', top:'-15', right:'-5' }}/>
           </div>
         </div>
         <div css={row}>

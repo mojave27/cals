@@ -1,5 +1,5 @@
 import { css } from '@emotion/core'
-import { faHome1, stormTrooper, woSheet } from './colorThemes'
+import { woSheet } from './colorThemes'
 
 export let activeTheme = woSheet
 
@@ -85,10 +85,8 @@ export let cardTitle = css({
     content: '""' /* This is necessary for the pseudo element to work. */,
     display: 'block' /* This will put the pseudo element on its own line. */,
     margin: '0 auto' /* This will center the border. */,
-    // width: '50%',
     paddingTop: '5px',
     borderBottom: `1px solid ${activeTheme.color5.rgba(0.75)}`
-    // borderBottom: '1px solid rgb(3,166,150,0.75)'
   }
 })
 
@@ -101,7 +99,7 @@ export let detailCard = css({
   width: '100%',
   borderRadius: '2px',
   margin: '0 auto',
-  // maxWidth: '600px'
+  overflow:'scroll'
 })
 
 export let container = css({
@@ -205,6 +203,20 @@ export let basicButton = css({
   }
 })
 
+export let basicButtonSmall = css({
+  padding: '1px 5px',
+  fontSize: '.9em',
+  backgroundColor: activeTheme.color4.hex,
+  color: activeTheme.color4_text.hex,
+  border: `1px solid ${activeTheme.color3.hex}`,
+  borderRadius: '2px',
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: activeTheme.color3.hex,
+    color: activeTheme.color3_text.hex,
+  }
+})
+
 export let formButton = css({
   fontSize: 'inherit',
   backgroundColor: activeTheme.color5.hex,
@@ -256,14 +268,6 @@ export let row = css({
   }
 })
 
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-// export let @media screen and (max-width: 600px) = css({
-//   .col-25, .col-75, input[type=submit] {
-//     width: 100%;
-//     marginTop: 0;
-//   }
-// })
-
 /*the container must be positioned relative:*/
 export let customSelect = {
   border: `1px solid ${activeTheme.color2.hex}`,
@@ -275,7 +279,6 @@ export let customSelect = {
 }
 
 export let selectSelected = {
-  // backgroundColor: 'DodgerBlue',
   backgroundColor: activeTheme.color5.hex,
   color: '#ffffff',
   padding: '8px 16px',
@@ -291,7 +294,6 @@ export let selectSelected = {
     borderColor: '#fff transparent transparent transparent'
   },
   /*point the arrow upwards when the select box is open (active):*/
-  // '& .select-arrow-active:after': {
   '&:after': {
     borderColor: 'transparent transparent #fff transparent',
     top: '7px'
@@ -303,7 +305,6 @@ export let selectArrowActive = {}
 /*style items (options):*/
 export let selectItems = {
   position: 'absolute',
-  // backgroundColor: 'DodgerBlue',
   backgroundColor: activeTheme.color5.hex,
   top: '100%',
   left: '0',
@@ -341,8 +342,6 @@ export let closeButton = {
   position: 'relative',
   top: '-16px',
   right: '5px',
-  // padding: '0px 10px',
-  // margin: '3px 5px',
   '&:hover': {
     color: activeTheme.color5.hex,
     textDecoration: 'none',

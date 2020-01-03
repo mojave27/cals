@@ -61,9 +61,9 @@ class Table extends React.Component {
   }
 
   // the row arg is an exercise: {id: 0, name:'jammer', type:'isolation', reps:'max'}
-  renderRow = (row, data) => {
+  renderRow = (exercise, data) => {
     let setId = data.setId
-    let exerciseId = row.id
+    let exerciseId = exercise.id
     let tds = []
 
     // for each day, add columns for weight and actual-reps
