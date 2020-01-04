@@ -66,11 +66,16 @@ const SetEditor = props => {
       </div>
     )
   }
+  const done = () => {
+    console.log('done - calling props.done')
+    props.done()
+  }
 
   const renderExerciseList = () => {
     return (
       <React.Fragment>
-        <div onClick={props.done}>close</div>
+        {/* <div onClick={props.done}>close</div> */}
+        <div onClick={done}>close</div>
         <div css={row}>{renderAllExercises(allExercises)}</div>
         <div css={row}>
           <input
@@ -131,7 +136,7 @@ const SetEditor = props => {
 
   const getSetId = () => {
     if (isUndefined(props.set)){
-      
+
     }
     let set = props.set
     return isUndefined(props.set.id) ? ' ' : props.set.id

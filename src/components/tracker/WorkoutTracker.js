@@ -91,7 +91,7 @@ const WorkoutTracker = props => {
 
   return (
     <React.Fragment>
-      <Modal showModal={!isEmpty(activeSet)} handleClose={toggleModal}>
+      <Modal showModal={!isEmpty(activeSet)} handleClose={done}>
         <SetEditor
           set={activeSet}
           updateSet={updateSet}
