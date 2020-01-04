@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
+import Spinner from '../Spinner'
 import TrackerContext from '../../context/TrackerContext'
 import SetTable from '../tables/SetTable'
 import SetEditor from './SetEditor'
@@ -19,19 +20,25 @@ import {
   basicButtonSmall
 } from '../../styles/main-styles'
 import { Row } from '../../styles/table'
+import { isUndefined } from 'lodash'
 
 const WorkoutTracker = props => {
   let context = useContext(TrackerContext)
-  // const [showModal, setShowModal] = useState(false)
+  const [showSpinner, setShowSpinner] = useState(false)
   const [activeSet, setActiveSet] = useState({})
 
-  const toggleModal = () => {
-    // setShowModal(!showModal)
+  const toggleSpinner = show => {
+    if (isUndefined(show)){ 
+      console.log(`toggling showSpinner from ${showSpinner} to ${!showSpinner}`)
+      setShowSpinner(!showSpinner)
+    }else{
+      console.log(`toggling showSpinner from ${showSpinner} to ${show}`)
+      setShowSpinner(show)
+    }
   }
 
   const done = async () => {
     await setActiveSet({})
-    // toggleModal()
   }
 
   const handleCellChange = update => {
@@ -49,10 +56,13 @@ const WorkoutTracker = props => {
   }
 
   const editSet = async event => {
+    toggleSpinner(true)
     let setId = event.target.parentNode.id
-    let set = context.activeWorkout.sets.find(set => Number(set.id) === Number(setId))
+    let set = context.activeWorkout.sets.find(
+      set => Number(set.id) === Number(setId)
+    )
     await setActiveSet(set)
-    toggleModal()
+    toggleSpinner(false)
   }
 
   const updateSet = update => {
@@ -67,7 +77,6 @@ const WorkoutTracker = props => {
       set: activeSet
     }
     await props.updateSet(update)
-    // toggleModal()
     done()
   }
 
@@ -94,6 +103,9 @@ const WorkoutTracker = props => {
 
   return (
     <React.Fragment>
+      <Modal showModal={showSpinner} handleClose={toggleSpinner}>
+        <Spinner show={showSpinner} />
+      </Modal>
       <Modal showModal={!isEmpty(activeSet)} handleClose={done}>
         <SetEditor
           set={activeSet}
@@ -133,7 +145,7 @@ const WorkoutTracker = props => {
         </div>
         <div css={row}>
           <input
-            alt='Save All Program Changes'
+            title='Save All Program Changes'
             type='submit'
             value='Save'
             css={[formButton, { float: 'right' }]}
