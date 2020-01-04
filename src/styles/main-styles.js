@@ -353,3 +353,10 @@ export let closeButton = {
     cursor: 'pointer'
   }
 }
+
+/* The Close Button */
+export let editIcon = {
+  cursor:'pointer', 
+  margin:'5px',
+  float: 'left'
+}
