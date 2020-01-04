@@ -130,10 +130,10 @@ const SetEditor = props => {
   }
 
   const getSetId = () => {
-    if (isUndefined(props.set)){
+    // if (isUndefined(props.set)){
 
-    }
-    let set = props.set
+    // }
+    // let set = props.set
     return isUndefined(props.set.id) ? ' ' : props.set.id
   }
 
@@ -171,15 +171,18 @@ const SetEditor = props => {
   }
 
   const addExercisesToSet = async () => {
-    let tempSelectedExercises = [...selectedExercises]
-    let modifiedSelectedExercises = tempSelectedExercises.map(exercise => {
+    // exercises from the db don't have a reps property.
+    // so we add the reps prop with an empty value here.
+    let tempExercises = [...selectedExercises]
+    let modifiedExercises = tempExercises.map(exercise => {
       exercise.reps = ''
       return exercise
     })
 
+    // add the newly selected exercises to the existing ones.
     let exercisesForSet = [
       ...props.set.exercises,
-      ...modifiedSelectedExercises
+      ...modifiedExercises
     ]
 
     let update = {

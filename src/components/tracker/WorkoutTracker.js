@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import TrackerContext from '../../context/TrackerContext'
 import SetTable from '../tables/SetTable'
 import SetEditor from './SetEditor'
 import Modal from '../Modal'
@@ -20,6 +21,7 @@ import {
 import { Row } from '../../styles/table'
 
 const WorkoutTracker = props => {
+  let context = useContext(TrackerContext)
   const [showModal, setShowModal] = useState(false)
   const [activeSet, setActiveSet] = useState({})
 
@@ -33,22 +35,22 @@ const WorkoutTracker = props => {
   }
 
   const handleCellChange = update => {
-    update.workoutId = props.workout.id
+    update.workoutId = context.activeWorkout.id
     props.update(update)
   }
 
   const addDate = () => {
-    props.addDate(props.workout.id)
+    props.addDate(context.activeWorkout.id)
   }
 
   const addSet = event => {
     // let setId = event.target.parentNode.id
-    console.log(`add set to workout: ${props.workout.id}`)
+    console.log(`add set to workout: ${context.activeWorkout.id}`)
   }
 
   const editSet = async event => {
     let setId = event.target.parentNode.id
-    let set = props.workout.sets.find(set => Number(set.id) === Number(setId))
+    let set = context.activeWorkout.sets.find(set => Number(set.id) === Number(setId))
     await setActiveSet(set)
     toggleModal()
   }
@@ -59,12 +61,12 @@ const WorkoutTracker = props => {
   }
 
   // const saveSet = setId => {
-  const saveSet = () => {
+  const saveSet = async () => {
     let update = {
-      workoutId: props.workout.id,
+      workoutId: context.activeWorkout.id,
       set: activeSet
     }
-    props.updateSet(update)
+    await props.updateSet(update)
     toggleModal()
   }
 
@@ -100,7 +102,7 @@ const WorkoutTracker = props => {
         />
       </Modal>
       <div css={detailCard}>
-        <DisplayHeader done={props.done} workout={props.workout} />
+        <DisplayHeader done={props.done} workout={context.activeWorkout} />
         <Stripe />
         <div
           css={container}
@@ -125,7 +127,7 @@ const WorkoutTracker = props => {
             />
           </div>
           <div style={{ display: 'block', padding: '10px 0px' }}>
-            {renderSets(props.workout)}
+            {renderSets(context.activeWorkout)}
           </div>
         </div>
         <div css={row}>

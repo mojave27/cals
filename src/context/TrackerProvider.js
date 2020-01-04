@@ -3,9 +3,11 @@ import TrackerContext from './TrackerContext'
 
 class TrackerProvider extends React.Component {
     state = {
+        activeWorkout: {},
         program: {},
         programs: []
     }
+    
 
     render() {
         return (
@@ -22,17 +24,30 @@ class TrackerProvider extends React.Component {
                     program.workout.push(workout)
                     this.setState({program})
                 },
-                updateWorkoutsForPrograms: workouts => {
+                updateWorkoutsForProgram: workouts => {
                     const program = Object.assign({}, this.state.program)
                     program.workouts = workouts
+                    // console.log(`***************************************`)
+                    // console.log(`program.workouts from context provider:`)
+                    // console.log(JSON.stringify(program.workouts))
                     this.setState({program})
                 },
+
                 programs: this.state.programs,
                 updatePrograms: programs => {
                     this.setState({ programs })
                 },
                 clearPrograms: () => {
                     this.setState({ programs: [] })
+                },
+
+                activeWorkout: this.state.activeWorkout,
+                setActiveWorkout: id => {
+                    let workout = this.state.program.workouts.find( wo => Number(wo.id) === Number(id))
+                    this.setState({activeWorkout: workout})
+                },
+                clearActiveWorkout: () => {
+                    this.setState({ activeWorkout: {} })
                 }
             }}>
                 {this.props.children}

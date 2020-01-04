@@ -10,11 +10,11 @@ import { tab } from '../../styles/programTracker.styles'
 import { getReadableDate } from '../DateUtils'
 import { generateNewId } from '../ArrayUtils'
 import TrackerContext from '../../context/TrackerContext'
+import { difference } from 'lodash'
 
 const ProgramTracker = props => {
   let context = useContext(TrackerContext)
   let [activeWorkout, setActiveWorkout] = useState(-1)
-
 
   const renderTabs = () => {
     let tabs = context.program.workouts.map(wo => {
@@ -42,12 +42,18 @@ const ProgramTracker = props => {
 
   const renderWorkout = () => {
     return context.program.workouts.map(wo => {
-      let active = Number(activeWorkout) === Number(wo.id)
+      // can probably get rid of this check once context is working in workoutTracker.  
+      // workoout tracker will just render the activeWorkout from context.
+      // will just need to check if there is an activeWorkout or not.  if so, render; if not, don't.
+      let active = Number(context.activeWorkout.id) === Number(wo.id)
+      console.log(`active wo id: ${context.activeWorkout.id}`)
+      console.log(`wo id: ${wo.id}`)
+      console.log(`active: ${active}`)
       if (active) {
         return (
           <WorkoutTracker
             key={wo.id}
-            workout={wo}
+            // workout={wo}
             addDate={addDay}
             done={closeWorkout}
             save={save}
@@ -65,30 +71,62 @@ const ProgramTracker = props => {
 
   const openWorkout = event => {
     let id = event.target.id
-    setActiveWorkout(id)
+    context.setActiveWorkout(id)
   }
 
   const closeWorkout = () => {
-    setActiveWorkout(-1)
+    context.clearActiveWorkout()
   }
 
+  //FIXME: currently this logic only allows addition of a single exercise
+  //       we need to allow addition or deletion of one or many.
   const updateSet = async update => {
-    console.log('#####################')
-    console.log(`update: ${JSON.stringify(update)}`)
+    // console.log('#####################')
+    // console.log(`update: ${JSON.stringify(update)}`)
 
-    // let workout = getWorkoutById(update.workoutId)
-    // let index = workout.sets.findIndex(
-    //   set => Number(set.id) === Number(update.set.setId)
-    // )
-    // workout.sets[index] = update.set
-    // console.log('%%%%%%%%%%%%%%%%%%%%%')
-    // console.log(JSON.stringify(workout))
+    let { index, workout } = getWorkoutById(update.workoutId)
+    let setIndex = workout.sets.findIndex(
+      set => Number(set.id) === Number(update.set.setId)
+    )
 
-    // let workouts = context.program.workouts
-    // let targetWorkout = workouts.find( wo => Number(wo.id) === Number(workout.id))
-    // console.log('$$$$$$$$$$$$$$$$$$$$$')
-    // console.log(JSON.stringify(targetWorkout))
+    if (setIndex < 0) { throw new Error(`setIndex invalid: ${setIndex}`)}
+    // update the set w/in the workout.days.sets
+      // get the id of the new exercise
+      let updateIds = getIdsFromList(update.set.exercises)
+      let currIds = getIdsFromList(workout.sets[setIndex].exercises)
+      let newExerciseId = difference(updateIds, currIds);
 
+      let days = workout.days.map(day => {
+          let sets = day.sets.map(set => {
+              if (Number(set.id) === Number(update.set.setId)){
+                  set.exercises.push({
+                    id: newExerciseId[0],
+                    weight:'', 
+                    actualReps:''
+                  })
+              }
+              return set
+          })
+          day.sets = sets
+          return day
+      })
+
+      workout.days = days
+            
+      // update the set in workout.sets
+      workout.sets[setIndex] = update.set
+    console.log('%%%%%%%%%%%%%%%%%%%%%')
+    console.log(JSON.stringify(workout))
+
+    let workouts = context.program.workouts
+    workouts[index] = workout
+    await context.updateWorkoutsForProgram(workouts)
+    console.log('updated workout with new exercise(s)')
+  }
+
+  const getIdsFromList = list => {
+    let ids = list.map( item => item.id)
+    return ids
   }
 
   //TODO: can remove the 'index' step, and move it to the getWorkout... function.
@@ -163,7 +201,7 @@ const ProgramTracker = props => {
   }
 
   const getDaysFromWorkout = workoutId => {
-    let workout = getWorkoutById(workoutId)
+    let { index, workout } = getWorkoutById(workoutId)
     let days = workout.days ? [...workout.days] : []
     return days
   }
@@ -171,7 +209,11 @@ const ProgramTracker = props => {
   const getWorkoutById = id => {
     let workouts = context.program.workouts
     let index = workouts.findIndex(wo => Number(wo.id) === Number(id))
-    return workouts[index]
+    let workoutWithIndex = {
+      index: index,
+      workout: workouts[index]
+    }
+    return workoutWithIndex
   }
 
   const getWorkoutIndex = workoutId => {
