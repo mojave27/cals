@@ -114,7 +114,7 @@ export let viewContainer = css({
 })
 
 export let stripe = css({
-  backgroundColor: activeTheme.color4.hex,
+  backgroundColor: activeTheme.color3.hex,
   border: `1px solid ${activeTheme.color3.hex}`,
   height: '15px'
 })

@@ -10,6 +10,7 @@ import ExerciseTable from '../tables/ExerciseTable'
 import { setBlock } from '../../styles/program'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
+import { headerContainer, headerText, headerControl } from '../../styles/gridStyles'
 import { isEmpty } from 'lodash'
 import {
   formButton,
@@ -125,11 +126,11 @@ const WorkoutTracker = props => {
             maxWidth: '90%'
           }}
         >
-          <div css={row} style={{ padding: '5px' }}>
+          <div css={row} style={{ padding:'5px', marginTop:'5px' }}>
             <input
               type='submit'
               value='Add Day'
-              css={[basicButtonSmall, { float: 'left' }]}
+              css={[basicButtonSmall, { float:'left', marginRight:'5px' }]}
               onClick={addDate}
             />
             <input
@@ -139,7 +140,8 @@ const WorkoutTracker = props => {
               onClick={addSet}
             />
           </div>
-          <div style={{ display: 'block', padding: '10px 0px' }}>
+          {/* <div style={{ display: 'block', padding: '10px 0px' }}> */}
+          <div style={{ display: 'block' }}>
             {renderSets(context.activeWorkout)}
           </div>
         </div>
@@ -167,12 +169,12 @@ const Stripe = () => {
 
 const DisplayHeader = props => {
   return (
-    <div className={'container'} css={container}>
-      <div onClick={props.done} css={topRight}>
+    <div css={container}>
+      <div onClick={props.done} css={topRight} >
         &times;
       </div>
-      <div css={row}>{props.workout.name}</div>
-      <div css={row}>{props.workout.description}</div>
+      <div css={row} >{props.workout.name}</div>
+      <div css={row} >{props.workout.description}</div>
     </div>
   )
 }
