@@ -66,16 +66,11 @@ const SetEditor = props => {
       </div>
     )
   }
-  const done = () => {
-    console.log('done - calling props.done')
-    props.done()
-  }
 
   const renderExerciseList = () => {
     return (
       <React.Fragment>
-        {/* <div onClick={props.done}>close</div> */}
-        <div onClick={done}>close</div>
+        <div onClick={props.done}>close</div>
         <div css={row}>{renderAllExercises(allExercises)}</div>
         <div css={row}>
           <input
