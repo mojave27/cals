@@ -1,30 +1,83 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import Spinner from '../Spinner'
+import TrackerContext from '../../context/TrackerContext'
 import SetTable from '../tables/SetTable'
+import SetEditor from './SetEditor'
+import Modal from '../Modal'
 import ExerciseTable from '../tables/ExerciseTable'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { setBlock } from '../../styles/program'
+import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
+import { isEmpty } from 'lodash'
 import {
   formButton,
-  pointer,
   container,
   detailCard,
   row,
-  stripe
+  stripe,
+  basicButtonSmall
 } from '../../styles/main-styles'
 import { Row } from '../../styles/table'
+import { isUndefined } from 'lodash'
 
 const WorkoutTracker = props => {
+  let context = useContext(TrackerContext)
+  const [showSpinner, setShowSpinner] = useState(false)
+  const [activeSet, setActiveSet] = useState({})
+
+  const toggleSpinner = show => {
+    if (isUndefined(show)){ 
+      console.log(`toggling showSpinner from ${showSpinner} to ${!showSpinner}`)
+      setShowSpinner(!showSpinner)
+    }else{
+      console.log(`toggling showSpinner from ${showSpinner} to ${show}`)
+      setShowSpinner(show)
+    }
+  }
+
+  const done = async () => {
+    await setActiveSet({})
+  }
+
   const handleCellChange = update => {
-    update.workoutId = props.workout.id
+    update.workoutId = context.activeWorkout.id
     props.update(update)
   }
 
   const addDate = () => {
-    props.addDate(props.workout.id)
+    props.addDate(context.activeWorkout.id)
+  }
+
+  const addSet = event => {
+    // let setId = event.target.parentNode.id
+    console.log(`add set to workout: ${context.activeWorkout.id}`)
+  }
+
+  const editSet = async event => {
+    toggleSpinner(true)
+    let setId = event.target.parentNode.id
+    let set = context.activeWorkout.sets.find(
+      set => Number(set.id) === Number(setId)
+    )
+    await setActiveSet(set)
+    toggleSpinner(false)
+  }
+
+  const updateSet = update => {
+    // console.log(`update for set: ${JSON.stringify(update)}`)
+    setActiveSet(update)
+  }
+
+  // const saveSet = setId => {
+  const saveSet = async () => {
+    let update = {
+      workoutId: context.activeWorkout.id,
+      set: activeSet
+    }
+    await props.updateSet(update)
+    done()
   }
 
   const renderSets = workout => {
@@ -37,12 +90,8 @@ const WorkoutTracker = props => {
           rows: [...set.exercises]
         }
         return (
-          <div
-            key={set.id}
-            css={[Row, setBlock]}
-            style={{ minWidth: '700px', display: 'inline-block' }}
-          >
-            <SetTable data={data} />
+          <div key={set.id} css={[Row, setBlock, trackerSet]}>
+            <SetTable data={data} editSet={editSet} />
             <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
@@ -54,23 +103,49 @@ const WorkoutTracker = props => {
 
   return (
     <React.Fragment>
+      <Modal showModal={showSpinner} handleClose={toggleSpinner}>
+        <Spinner show={showSpinner} />
+      </Modal>
+      <Modal showModal={!isEmpty(activeSet)} handleClose={done}>
+        <SetEditor
+          set={activeSet}
+          updateSet={updateSet}
+          saveSet={saveSet}
+          done={done}
+        />
+      </Modal>
       <div css={detailCard}>
-        <div css={container}>
-          <div onClick={props.done} css={topRight}>&times;</div>
-          <div css={row}>{props.workout.name}</div>
-          <div css={row}>{props.workout.description}</div>
-        </div>
-
-        <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
-
-        <div css={container} style={{margin:'20px 25px', display:'inline-block'}}>
+        <DisplayHeader done={props.done} workout={context.activeWorkout} />
+        <Stripe />
+        <div
+          css={container}
+          style={{
+            margin: '20px 25px',
+            display: 'inline-block',
+            maxWidth: '90%'
+          }}
+        >
+          <div css={row} style={{ padding: '5px' }}>
+            <input
+              type='submit'
+              value='Add Day'
+              css={[basicButtonSmall, { float: 'left' }]}
+              onClick={addDate}
+            />
+            <input
+              type='submit'
+              value='Add Set'
+              css={[basicButtonSmall, { float: 'left' }]}
+              onClick={addSet}
+            />
+          </div>
           <div style={{ display: 'block', padding: '10px 0px' }}>
-            {renderSets(props.workout)}
-            <FontAwesomeIcon alt={'add date'} icon={faPlus} onClick={addDate} style={{ position:'relative', top:'-15', right:'-5' }}/>
+            {renderSets(context.activeWorkout)}
           </div>
         </div>
         <div css={row}>
           <input
+            title='Save All Program Changes'
             type='submit'
             value='Save'
             css={[formButton, { float: 'right' }]}
@@ -83,3 +158,21 @@ const WorkoutTracker = props => {
 }
 
 export default WorkoutTracker
+
+const Stripe = () => {
+  return (
+    <div css={stripe} style={{ paddingTop: '5px', paddingBottom: '5px' }} />
+  )
+}
+
+const DisplayHeader = props => {
+  return (
+    <div className={'container'} css={container}>
+      <div onClick={props.done} css={topRight}>
+        &times;
+      </div>
+      <div css={row}>{props.workout.name}</div>
+      <div css={row}>{props.workout.description}</div>
+    </div>
+  )
+}

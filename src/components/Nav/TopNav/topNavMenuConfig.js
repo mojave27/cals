@@ -14,16 +14,16 @@ export const menuConfig = [
     type: 'button',
     link: { to: '/progress', text: 'workout progress' }
   },
-  {
-    name: 'manage',
-    type: 'dropdown',
-    items: [
-      { to: '/programs', text: 'programs' },
-      { to: '/workouts', text: 'workouts' },
-      { to: '/sets', text: 'sets' },
-      { to: '/exercises', text: 'exercises' }
-    ]
-  },
+  // {
+  //   name: 'manage',
+  //   type: 'dropdown',
+  //   items: [
+  //     { to: '/programs', text: 'programs' },
+  //     { to: '/workouts', text: 'workouts' },
+  //     { to: '/sets', text: 'sets' },
+  //     { to: '/exercises', text: 'exercises' }
+  //   ]
+  // },
   {
     name: 'calcs',
     type: 'dropdown',

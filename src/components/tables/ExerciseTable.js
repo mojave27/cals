@@ -61,9 +61,13 @@ class Table extends React.Component {
   }
 
   // the row arg is an exercise: {id: 0, name:'jammer', type:'isolation', reps:'max'}
-  renderRow = (row, data) => {
+  renderRow = (exercise, data) => {
     let setId = data.setId
-    let exerciseId = row.id
+    if (isUndefined(setId)) {
+      console.log(`SET ID IS UNDEFINED`)
+      return (<React.Fragment><td></td><td></td></React.Fragment>)
+    }
+    let exerciseId = exercise.id
     let tds = []
 
     // for each day, add columns for weight and actual-reps
@@ -72,6 +76,8 @@ class Table extends React.Component {
       // WEIGHT CELL
       let day = data.days[i]
       let set = day.sets.find( set => Number(set.id) === Number(setId))
+      if( isUndefined(set)) { throw new Error('set is undefined.')}
+
       let row = set.exercises.find( ex => Number(ex.id) === Number(exerciseId))
       let valueData = get(row, 'weight', '')
       tds.push(

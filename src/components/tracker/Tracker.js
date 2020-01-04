@@ -9,39 +9,29 @@ import { basicButton, cardNoHover, row } from '../../styles/main-styles'
 import { isEmpty } from 'lodash'
 
 const Tracker = props => {
-  let trackerContext = useContext(TrackerContext)
+  let context = useContext(TrackerContext)
   const [showProgramList, setShowProgramList] = useState(false)
-  const [program, setProgram] = useState({})
 
   const toggleShowProgramList = () => {
     setShowProgramList(!showProgramList)
   }
 
   const newWorkout = () => {
-    trackerContext.clearProgram()
+    context.clearProgram()
     toggleShowProgramList()
   }
 
   const handleProgramSelect = id => {
-    console.log(`handleProgramSelect => id ${id}`)
+    // console.log(`handleProgramSelect => id ${id}`)
     toggleShowProgramList()
     retrieveProgramTracker(id).then(response => {
       // trackerContext.updateProgram(response.fullProgram)
-      setProgram(response.fullProgram)
+      context.updateProgram(response.fullProgram)
     })
   }
 
   const clearProgram = () => {
-    setProgram({})
-  }
-
-  const saveProgram = () => {
-
-  }
-
-  const updateProgramTracker = update => {
-    console.log(`updateProgramTracker - ${JSON.stringify(update)}`)
-    // update state with the changes.
+    context.updateProgram({})
   }
 
   return (
@@ -50,7 +40,7 @@ const Tracker = props => {
         <ProgramsList select={handleProgramSelect} />
       ) : (
         <div css={cardNoHover}>
-          {isEmpty(program) ? (
+          {isEmpty(context.program) ? (
             <div css={row}>
               <input
                 style={{ margin: '5px' }}
@@ -61,11 +51,7 @@ const Tracker = props => {
               />
             </div>
           ) : (
-            <ProgramTracker
-              program={program}
-              update={updateProgramTracker}
-              close={clearProgram}
-            />
+            <ProgramTracker close={clearProgram} />
           )}
         </div>
       )}
