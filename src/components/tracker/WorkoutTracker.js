@@ -22,16 +22,16 @@ import { Row } from '../../styles/table'
 
 const WorkoutTracker = props => {
   let context = useContext(TrackerContext)
-  const [showModal, setShowModal] = useState(false)
+  // const [showModal, setShowModal] = useState(false)
   const [activeSet, setActiveSet] = useState({})
 
   const toggleModal = () => {
-    setShowModal(!showModal)
+    // setShowModal(!showModal)
   }
 
   const done = async () => {
     await setActiveSet({})
-    toggleModal()
+    // toggleModal()
   }
 
   const handleCellChange = update => {
@@ -56,7 +56,7 @@ const WorkoutTracker = props => {
   }
 
   const updateSet = update => {
-    console.log(`update for set: ${JSON.stringify(update)}`)
+    // console.log(`update for set: ${JSON.stringify(update)}`)
     setActiveSet(update)
   }
 
@@ -67,7 +67,8 @@ const WorkoutTracker = props => {
       set: activeSet
     }
     await props.updateSet(update)
-    toggleModal()
+    // toggleModal()
+    done()
   }
 
   const renderSets = workout => {
@@ -132,6 +133,7 @@ const WorkoutTracker = props => {
         </div>
         <div css={row}>
           <input
+            alt='Save All Program Changes'
             type='submit'
             value='Save'
             css={[formButton, { float: 'right' }]}

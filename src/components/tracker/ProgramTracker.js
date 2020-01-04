@@ -46,9 +46,9 @@ const ProgramTracker = props => {
       // workoout tracker will just render the activeWorkout from context.
       // will just need to check if there is an activeWorkout or not.  if so, render; if not, don't.
       let active = Number(context.activeWorkout.id) === Number(wo.id)
-      console.log(`active wo id: ${context.activeWorkout.id}`)
-      console.log(`wo id: ${wo.id}`)
-      console.log(`active: ${active}`)
+      // console.log(`active wo id: ${context.activeWorkout.id}`)
+      // console.log(`wo id: ${wo.id}`)
+      // console.log(`active: ${active}`)
       if (active) {
         return (
           <WorkoutTracker

@@ -75,7 +75,6 @@ class Table extends React.Component {
     for (let i = 0; i < count; i++) {
       // WEIGHT CELL
       let day = data.days[i]
-      console.log(`looking for set with id: ${setId}`)
       let set = day.sets.find( set => Number(set.id) === Number(setId))
       if( isUndefined(set)) { throw new Error('set is undefined.')}
 
