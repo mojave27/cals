@@ -3,7 +3,6 @@ import { jsx } from '@emotion/core'
 import React, { useEffect, useState } from 'react'
 import { findIndexOfId } from '../ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
-import { addSet, updateSet } from '../../api/setsApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'
 import BlockHeader from '../BlockHeader'
@@ -157,7 +156,7 @@ const SetEditor = props => {
     )
     exercisesForSet[index].reps = value
     let update = {
-      setId: props.set.id,
+      id: props.set.id,
       exercises: exercisesForSet
     }
     props.updateSet(update)
@@ -186,7 +185,8 @@ const SetEditor = props => {
     ]
 
     let update = {
-      setId: props.set.id,
+      // setId: props.set.id,
+      id: props.set.id,
       exercises: exercisesForSet
     }
 
@@ -216,7 +216,7 @@ const SetEditor = props => {
 
   const saveSet = async () => {
     if (props.saveSet) {
-      props.saveSet(props.set.setId)
+      props.saveSet(props.set.id)
     }
   }
 

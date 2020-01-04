@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import WorkoutTracker from './WorkoutTracker'
 import { addProgram, updateProgram } from '../../api/programsApi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,15 +10,15 @@ import { tab } from '../../styles/programTracker.styles'
 import { getReadableDate } from '../DateUtils'
 import { generateNewId } from '../ArrayUtils'
 import TrackerContext from '../../context/TrackerContext'
-import { difference } from 'lodash'
+import { difference, get } from 'lodash'
 
 const ProgramTracker = props => {
   let context = useContext(TrackerContext)
-  let [activeWorkout, setActiveWorkout] = useState(-1)
 
   const renderTabs = () => {
     let tabs = context.program.workouts.map(wo => {
-      let active = Number(activeWorkout) === Number(wo.id)
+      let activeWorkoutId = get(context.program, 'activeWorkout.id', -1)
+      let active = Number(activeWorkoutId) === Number(wo.id)
       let className = active ? 'active' : 'inactive'
       return (
         <button
@@ -86,7 +86,7 @@ const ProgramTracker = props => {
 
     let { index, workout } = getWorkoutById(update.workoutId)
     let setIndex = workout.sets.findIndex(
-      set => Number(set.id) === Number(update.set.setId)
+      set => Number(set.id) === Number(update.set.id)
     )
 
     if (setIndex < 0) { throw new Error(`setIndex invalid: ${setIndex}`)}
@@ -98,7 +98,7 @@ const ProgramTracker = props => {
 
       let days = workout.days.map(day => {
           let sets = day.sets.map(set => {
-              if (Number(set.id) === Number(update.set.setId)){
+              if (Number(set.id) === Number(update.set.id)){
                   set.exercises.push({
                     id: newExerciseId[0],
                     weight:'', 
@@ -115,8 +115,8 @@ const ProgramTracker = props => {
             
       // update the set in workout.sets
       workout.sets[setIndex] = update.set
-    console.log('%%%%%%%%%%%%%%%%%%%%%')
-    console.log(JSON.stringify(workout))
+    // console.log('%%%%%%%%%%%%%%%%%%%%%')
+    // console.log(JSON.stringify(workout))
 
     let workouts = context.program.workouts
     workouts[index] = workout
