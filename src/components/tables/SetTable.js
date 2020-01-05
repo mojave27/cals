@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import { setHeader, table, setLeadCell } from '../../styles/table'
 import { editIcon } from '../../styles/main-styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faCopy, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 const SetTable = props => {
 
@@ -48,7 +48,8 @@ const SetTable = props => {
 
     return (
       <div style={{ overflow: 'scroll', maxWidth:'300px', display:'inline-block' }}>
-        <FontAwesomeIcon id={props.data.setId} alt={'edit set'} icon={faEdit} onClick={props.editSet} css={editIcon} />
+        <FontAwesomeIcon id={props.data.setId} title={'edit set'} alt={'edit set'} icon={faEdit} onClick={props.editSet} css={editIcon} />
+        <FontAwesomeIcon id={props.data.setId} title={'copy set'} alt={'copy set'} icon={faCopy} onClick={props.copySet} css={editIcon} />
         <table css={table} style={{overflow:'scroll'}}>
           <tbody id={props.data.setId}>
             {renderRows(props.data)}
