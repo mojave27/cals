@@ -132,11 +132,9 @@ const WorkoutTracker = props => {
   }
 
   const updateSet = update => {
-    // console.log(`update for set: ${JSON.stringify(update)}`)
     setActiveSet(update)
   }
 
-  // const saveSet = setId => {
   const saveSet = async () => {
     let update = {
       workoutId: context.activeWorkout.id,
@@ -147,7 +145,6 @@ const WorkoutTracker = props => {
   }
 
   const renderSets = workout => {
-    // console.log(JSON.stringify(workout))
     if (workout.sets && workout.sets.length > 0) {
       return workout.sets.map(set => {
         let data = {

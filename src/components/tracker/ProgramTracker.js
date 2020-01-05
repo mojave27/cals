@@ -42,13 +42,10 @@ const ProgramTracker = props => {
 
   const renderWorkout = () => {
     return context.program.workouts.map(wo => {
-      // can probably get rid of this check once context is working in workoutTracker.  
+      // can probably get rid of this check once context is working in workoutTracker.
       // workoout tracker will just render the activeWorkout from context.
       // will just need to check if there is an activeWorkout or not.  if so, render; if not, don't.
       let active = Number(context.activeWorkout.id) === Number(wo.id)
-      // console.log(`active wo id: ${context.activeWorkout.id}`)
-      // console.log(`wo id: ${wo.id}`)
-      // console.log(`active: ${active}`)
       if (active) {
         return (
           <WorkoutTracker
@@ -78,47 +75,42 @@ const ProgramTracker = props => {
     context.clearActiveWorkout()
   }
 
-  //FIXME: currently this logic only allows addition of a single exercise
-  //       we need to allow addition or deletion of one or many.
   const updateSet = async update => {
-    // console.log('#####################')
-    // console.log(`update: ${JSON.stringify(update)}`)
-
     let { index, workout } = getWorkoutById(update.workoutId)
     let setIndex = workout.sets.findIndex(
       set => Number(set.id) === Number(update.set.id)
     )
 
-    if (setIndex < 0) { throw new Error(`setIndex invalid: ${setIndex}`)}
+    if (setIndex < 0) {
+      throw new Error(`setIndex invalid: ${setIndex}`)
+    }
     // update the set w/in the workout.days.sets
-      // get the id of the new exercise
-      let updateIds = getIdsFromList(update.set.exercises)
-      let currIds = getIdsFromList(workout.sets[setIndex].exercises)
-      let newExerciseIds = difference(updateIds, currIds);
+    // get the id of the new exercise
+    let updateIds = getIdsFromList(update.set.exercises)
+    let currIds = getIdsFromList(workout.sets[setIndex].exercises)
+    let newExerciseIds = difference(updateIds, currIds)
 
-      let days = workout.days.map(day => {
-          let sets = day.sets.map(set => {
-              if (Number(set.id) === Number(update.set.id)){
-                for(let i = 0; i < newExerciseIds.length; i++){
-                  set.exercises.push({
-                    id: newExerciseIds[i],
-                    weight:'', 
-                    actualReps:''
-                  })
-                }
-              }
-              return set
-          })
-          day.sets = sets
-          return day
+    let days = workout.days.map(day => {
+      let sets = day.sets.map(set => {
+        if (Number(set.id) === Number(update.set.id)) {
+          for (let i = 0; i < newExerciseIds.length; i++) {
+            set.exercises.push({
+              id: newExerciseIds[i],
+              weight: '',
+              actualReps: ''
+            })
+          }
+        }
+        return set
       })
+      day.sets = sets
+      return day
+    })
 
-      workout.days = days
-            
-      // update the set in workout.sets
-      workout.sets[setIndex] = update.set
-    // console.log('%%%%%%%%%%%%%%%%%%%%%')
-    // console.log(JSON.stringify(workout))
+    workout.days = days
+
+    // update the set in workout.sets
+    workout.sets[setIndex] = update.set
 
     let workouts = context.program.workouts
     workouts[index] = workout
@@ -127,7 +119,7 @@ const ProgramTracker = props => {
   }
 
   const getIdsFromList = list => {
-    let ids = list.map( item => item.id)
+    let ids = list.map(item => item.id)
     return ids
   }
 
@@ -167,10 +159,7 @@ const ProgramTracker = props => {
     }
   }
 
-  // newDay = {"id": 0, "date": "1/1/20", "sets":[ {"id":0, "exercises":[{"id":3, "weight":"10", "actualReps":"12"}]} ]}
   const addDay = workoutId => {
-    console.log(`workout id: ${workoutId}`)
-
     let workouts = context.program.workouts
     let woIndex = getWorkoutIndex(workoutId)
     let workout = workouts[woIndex]
@@ -225,7 +214,6 @@ const ProgramTracker = props => {
   }
 
   return (
-    // <div css={cardNoHover} id={state.program.id}>
     <div id={context.program.id}>
       <span css={closeButton} onClick={handleClose}>
         &times;
@@ -233,7 +221,7 @@ const ProgramTracker = props => {
       <div css={cardTitle}>{context.program.name}</div>
       <div css={cardInfo}>{context.program.description}</div>
 
-      {/* Tab links */}
+      {/* Tabs */}
       <div css={tab}>{renderTabs()}</div>
       {/* <!-- Tab content --> */}
       <div style={{ padding: '25px' }}>{renderWorkout()}</div>

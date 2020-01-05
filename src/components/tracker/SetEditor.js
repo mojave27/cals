@@ -129,10 +129,6 @@ const SetEditor = props => {
   }
 
   const getSetId = () => {
-    // if (isUndefined(props.set)){
-
-    // }
-    // let set = props.set
     return isUndefined(props.set.id) ? ' ' : props.set.id
   }
 
@@ -185,7 +181,6 @@ const SetEditor = props => {
     ]
 
     let update = {
-      // setId: props.set.id,
       id: props.set.id,
       exercises: exercisesForSet
     }
@@ -201,13 +196,12 @@ const SetEditor = props => {
 
   const deleteExercise = event => {
     let id = event.currentTarget.id
-    console.log(`would delete exercise with id ${id}`)
     let exercises = props.set.exercises
     let index = findIndexOfId(id, exercises)
     if (index > -1) {
       exercises.splice(index, 1)
       let update = {
-        setId: props.set.id,
+        id: props.set.id,
         exercises: exercises
       }
       props.updateSet(update)
