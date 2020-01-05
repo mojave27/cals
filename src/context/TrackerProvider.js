@@ -46,6 +46,9 @@ class TrackerProvider extends React.Component {
                     let workout = this.state.program.workouts.find( wo => Number(wo.id) === Number(id))
                     this.setState({activeWorkout: workout})
                 },
+                updateActiveWorkout: workout => {
+                    this.setState({activeWorkout: workout})
+                },
                 clearActiveWorkout: () => {
                     this.setState({ activeWorkout: {} })
                 }

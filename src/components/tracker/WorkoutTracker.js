@@ -51,9 +51,42 @@ const WorkoutTracker = props => {
     props.addDate(context.activeWorkout.id)
   }
 
-  const addSet = event => {
-    // let setId = event.target.parentNode.id
+  const addSet = () => {
     console.log(`add set to workout: ${context.activeWorkout.id}`)
+
+    let workout = context.activeWorkout
+
+    // select existing?
+
+    // create from scratch
+    let ids = getIdsFromList(workout.sets)
+    ids.sort()
+    let newId = ids[ids.length - 1] + 1
+    console.log(`new id is ${newId}`)
+    let set = {
+      id: newId,
+      exercises: []
+    }
+
+    // add set to workout
+    workout.sets.push(set)
+
+    // add set to each day in workout
+    let days = workout.days.map( day => {
+      day.sets.push(set)
+      return day
+    })
+
+    workout.days = days
+
+    // update activeWorkout
+    context.updateActiveWorkout(workout)
+
+  }
+
+  const getIdsFromList = list => {
+    let ids = list.map( item => item.id)
+    return ids
   }
 
   const editSet = async event => {
@@ -82,6 +115,7 @@ const WorkoutTracker = props => {
   }
 
   const renderSets = workout => {
+    // console.log(JSON.stringify(workout))
     if (workout.sets && workout.sets.length > 0) {
       return workout.sets.map(set => {
         let data = {
