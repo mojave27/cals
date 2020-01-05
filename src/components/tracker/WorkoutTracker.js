@@ -10,8 +10,7 @@ import ExerciseTable from '../tables/ExerciseTable'
 import { setBlock } from '../../styles/program'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
-import { headerContainer, headerText, headerControl } from '../../styles/gridStyles'
-import { isEmpty } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import {
   formButton,
   container,
@@ -89,6 +88,39 @@ const WorkoutTracker = props => {
     return ids
   }
 
+  const copySet = async event => {
+    toggleSpinner(true)
+    let setId = event.target.parentNode.id
+    console.log(`copy set with id ${setId} to workout: ${context.activeWorkout.id}`)
+
+    // --------------------------------------------------------
+    let workout = context.activeWorkout
+    let ids = getIdsFromList(workout.sets)
+    ids.sort()
+    let newId = ids[ids.length - 1] + 1
+    console.log(`new id is ${newId}`)
+    let originalSet = context.activeWorkout.sets.find(set => Number(set.id) === Number(setId))
+    let setCopy = cloneDeep(originalSet)
+    setCopy.id = newId
+
+    // add set to workout
+    workout.sets.push(setCopy)
+
+    // add set to each day in workout
+    let days = workout.days.map( day => {
+      day.sets.push(setCopy)
+      return day
+    })
+
+    workout.days = days
+
+    // update activeWorkout
+    context.updateActiveWorkout(workout)
+    // --------------------------------------------------------
+
+    toggleSpinner(false)
+  }
+
   const editSet = async event => {
     toggleSpinner(true)
     let setId = event.target.parentNode.id
@@ -126,7 +158,7 @@ const WorkoutTracker = props => {
         }
         return (
           <div key={set.id} css={[Row, setBlock, trackerSet]}>
-            <SetTable data={data} editSet={editSet} />
+            <SetTable data={data} copySet={copySet} editSet={editSet} />
             <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
