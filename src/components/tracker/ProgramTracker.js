@@ -94,16 +94,18 @@ const ProgramTracker = props => {
       // get the id of the new exercise
       let updateIds = getIdsFromList(update.set.exercises)
       let currIds = getIdsFromList(workout.sets[setIndex].exercises)
-      let newExerciseId = difference(updateIds, currIds);
+      let newExerciseIds = difference(updateIds, currIds);
 
       let days = workout.days.map(day => {
           let sets = day.sets.map(set => {
               if (Number(set.id) === Number(update.set.id)){
+                for(let i = 0; i < newExerciseIds.length; i++){
                   set.exercises.push({
-                    id: newExerciseId[0],
+                    id: newExerciseIds[i],
                     weight:'', 
                     actualReps:''
                   })
+                }
               }
               return set
           })
