@@ -21,22 +21,9 @@ const ProgramsList = props => {
     props.select(id)
   }
 
-  // const handleProgramView = async event => {
-  //   let id = event.currentTarget.id
-  //   await retrieve(id)
-  // }
-
   const clearSelectedProgram = () => {
     setProgram({})
   }
-
-  // const retrieve = programId => {
-  //   async function fetchProgram(programId) {
-  //     const response = await retrieveProgramById(programId)
-  //     setProgram(response.fullProgram)
-  //   }
-  //   fetchProgram(programId)
-  // }
 
   //TODO: add fa icon for previewing and for selecting
   //      also allows select via just clicking the card
@@ -47,7 +34,6 @@ const ProgramsList = props => {
         key={index}
         program={program}
         onClick={handleProgramSelect}
-        // onClick={handleProgramView}
       />
     )
   }

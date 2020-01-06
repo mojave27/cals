@@ -10,7 +10,15 @@ import { tab } from '../../styles/programTracker.styles'
 import { getReadableDate } from '../DateUtils'
 import { generateNewId } from '../ArrayUtils'
 import TrackerContext from '../../context/TrackerContext'
-import { difference, get } from 'lodash'
+import { difference, get, isEmpty } from 'lodash'
+
+const emptyWorkout = {
+  id: -1,
+  name: '',
+  description: '',
+  sets: [],
+  days: []
+}
 
 const ProgramTracker = props => {
   let context = useContext(TrackerContext)
@@ -41,29 +49,28 @@ const ProgramTracker = props => {
   }
 
   const renderWorkout = () => {
-    return context.program.workouts.map(wo => {
-      // can probably get rid of this check once context is working in workoutTracker.
-      // workoout tracker will just render the activeWorkout from context.
-      // will just need to check if there is an activeWorkout or not.  if so, render; if not, don't.
-      let active = Number(context.activeWorkout.id) === Number(wo.id)
-      if (active) {
-        return (
-          <WorkoutTracker
-            key={wo.id}
-            // workout={wo}
-            addDate={addDay}
-            done={closeWorkout}
-            save={save}
-            update={updateWorkout}
-            updateSet={updateSet}
-          />
-        )
-      }
-    })
+    if (!isEmpty(context.activeWorkout)) {
+      return (
+        <WorkoutTracker
+          addDate={addDay}
+          done={closeWorkout}
+          save={save}
+          update={updateWorkout}
+          updateSet={updateSet}
+        />
+      )
+    }
   }
 
   const addTab = () => {
     console.log('add tab')
+    // collect 'name' and 'description' from user
+
+    // get new id for workout
+
+    // add id to emptyWorkout
+
+    // add workout to program.workouts
   }
 
   const openWorkout = event => {
@@ -115,7 +122,7 @@ const ProgramTracker = props => {
     let workouts = context.program.workouts
     workouts[index] = workout
     await context.updateWorkoutsForProgram(workouts)
-    console.log('updated workout with new exercise(s)')
+    // console.log('updated workout with new exercise(s)')
   }
 
   const getIdsFromList = list => {
