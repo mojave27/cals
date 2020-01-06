@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import WorkoutTracker from './WorkoutTracker'
+import WorkoutAddForm from './WorkoutAddForm'
 import { addProgram, updateProgram } from '../../api/programsApi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -10,10 +11,12 @@ import { tab } from '../../styles/programTracker.styles'
 import { getReadableDate } from '../DateUtils'
 import { generateNewId } from '../ArrayUtils'
 import TrackerContext from '../../context/TrackerContext'
-import { difference, get } from 'lodash'
+import { difference, get, isEmpty } from 'lodash'
+
 
 const ProgramTracker = props => {
   let context = useContext(TrackerContext)
+  let [showAddWorkout, setShowAddWorkout] = useState(false)
 
   const renderTabs = () => {
     let tabs = context.program.workouts.map(wo => {
@@ -41,34 +44,41 @@ const ProgramTracker = props => {
   }
 
   const renderWorkout = () => {
-    return context.program.workouts.map(wo => {
-      // can probably get rid of this check once context is working in workoutTracker.
-      // workoout tracker will just render the activeWorkout from context.
-      // will just need to check if there is an activeWorkout or not.  if so, render; if not, don't.
-      let active = Number(context.activeWorkout.id) === Number(wo.id)
-      if (active) {
-        return (
-          <WorkoutTracker
-            key={wo.id}
-            // workout={wo}
-            addDate={addDay}
-            done={closeWorkout}
-            save={save}
-            update={updateWorkout}
-            updateSet={updateSet}
-          />
-        )
-      }
-    })
+    if (!isEmpty(context.activeWorkout)) {
+      return (
+        <WorkoutTracker
+          addDate={addDay}
+          done={closeWorkout}
+          save={save}
+          update={updateWorkout}
+          updateSet={updateSet}
+        />
+      )
+    }
   }
 
-  const addTab = () => {
+  const addTab = async () => {
     console.log('add tab')
+    let id = generateNewId(context.program.workouts)
+    let newWorkout = {
+      id: id,
+      name: '',
+      description: '',
+      sets: [],
+      days: []
+    }
+    await context.updateNewWorkout(newWorkout)
+    setShowAddWorkout(true)
   }
 
   const openWorkout = event => {
     let id = event.target.id
     context.setActiveWorkout(id)
+  }
+
+  const done = async () => {
+    await context.clearActiveWorkout()
+    await setShowAddWorkout(false)
   }
 
   const closeWorkout = () => {
@@ -115,12 +125,18 @@ const ProgramTracker = props => {
     let workouts = context.program.workouts
     workouts[index] = workout
     await context.updateWorkoutsForProgram(workouts)
-    console.log('updated workout with new exercise(s)')
+    // console.log('updated workout with new exercise(s)')
   }
 
   const getIdsFromList = list => {
     let ids = list.map(item => item.id)
     return ids
+  }
+
+  const saveNewWorkout = async () => {
+    // let workout = context.newWorkout
+    await context.addWorkout(context.newWorkout)
+    await save()
   }
 
   //TODO: can remove the 'index' step, and move it to the getWorkout... function.
@@ -214,18 +230,21 @@ const ProgramTracker = props => {
   }
 
   return (
-    <div id={context.program.id}>
-      <span css={closeButton} onClick={handleClose}>
-        &times;
-      </span>
-      <div css={cardTitle}>{context.program.name}</div>
-      <div css={cardInfo}>{context.program.description}</div>
+    <React.Fragment>
+      {showAddWorkout ? <WorkoutAddForm saveWorkout={saveNewWorkout} done={done} />
+      : <div id={context.program.id}>
+        <span css={closeButton} onClick={handleClose}>
+          &times;
+        </span>
+        <div css={cardTitle}>{context.program.name}</div>
+        <div css={cardInfo}>{context.program.description}</div>
 
-      {/* Tabs */}
-      <div css={tab}>{renderTabs()}</div>
-      {/* <!-- Tab content --> */}
-      <div style={{ padding: '25px' }}>{renderWorkout()}</div>
-    </div>
+        {/* Tabs */}
+        <div css={tab}>{renderTabs()}</div>
+        {/* <!-- Tab content --> */}
+        <div style={{ padding: '25px' }}>{renderWorkout()}</div>
+      </div>}
+    </React.Fragment>
   )
 }
 
