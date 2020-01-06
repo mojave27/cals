@@ -1,9 +1,18 @@
 import React from 'react'
 import TrackerContext from './TrackerContext'
 
+const emptyWorkout = {
+    id: null,
+    name: '',
+    description: '',
+    sets: [],
+    days: []
+}
+
 class TrackerProvider extends React.Component {
     state = {
         activeWorkout: {},
+        newWorkout: {},
         program: {},
         programs: []
     }
@@ -21,7 +30,7 @@ class TrackerProvider extends React.Component {
                 },
                 addWorkout: workout => {
                     const program = Object.assign({}, this.state.program)
-                    program.workout.push(workout)
+                    program.workouts.push(workout)
                     this.setState({program})
                 },
                 updateWorkoutsForProgram: workouts => {
@@ -51,6 +60,17 @@ class TrackerProvider extends React.Component {
                 },
                 clearActiveWorkout: () => {
                     this.setState({ activeWorkout: {} })
+                },
+
+                newWorkout: this.state.newWorkout,
+                setNewWorkout: () => {
+                    this.setState({newWorkout: emptyWorkout})
+                },
+                updateNewWorkout: workout => {
+                    this.setState({newWorkout: workout})
+                },
+                clearNewWorkout: () => {
+                    this.setState({ newWorkout: {} })
                 }
             }}>
                 {this.props.children}

@@ -7,6 +7,7 @@ import SetTable from '../tables/SetTable'
 import SetEditor from './SetEditor'
 import Modal from '../Modal'
 import ExerciseTable from '../tables/ExerciseTable'
+import { generateNewId } from '../ArrayUtils'
 import { setBlock } from '../../styles/program'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
@@ -38,7 +39,9 @@ const WorkoutTracker = props => {
   }
 
   const done = async () => {
+    toggleSpinner(true)
     await setActiveSet({})
+    toggleSpinner(false)
   }
 
   const handleCellChange = update => {
@@ -58,9 +61,10 @@ const WorkoutTracker = props => {
     // select existing?
 
     // create from scratch
-    let ids = getIdsFromList(workout.sets)
-    ids.sort()
-    let newId = ids[ids.length - 1] + 1
+    // let ids = getIdsFromList(workout.sets)
+    // ids.sort()
+    // let newId = ids[ids.length - 1] + 1
+    let newId = generateNewId(workout.sets)
     console.log(`new id is ${newId}`)
     let set = {
       id: newId,

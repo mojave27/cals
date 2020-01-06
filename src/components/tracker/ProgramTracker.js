@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import WorkoutTracker from './WorkoutTracker'
+import WorkoutAddForm from './WorkoutAddForm'
 import { addProgram, updateProgram } from '../../api/programsApi'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -12,16 +13,10 @@ import { generateNewId } from '../ArrayUtils'
 import TrackerContext from '../../context/TrackerContext'
 import { difference, get, isEmpty } from 'lodash'
 
-const emptyWorkout = {
-  id: -1,
-  name: '',
-  description: '',
-  sets: [],
-  days: []
-}
 
 const ProgramTracker = props => {
   let context = useContext(TrackerContext)
+  let [showAddWorkout, setShowAddWorkout] = useState(false)
 
   const renderTabs = () => {
     let tabs = context.program.workouts.map(wo => {
@@ -62,20 +57,28 @@ const ProgramTracker = props => {
     }
   }
 
-  const addTab = () => {
+  const addTab = async () => {
     console.log('add tab')
-    // collect 'name' and 'description' from user
-
-    // get new id for workout
-
-    // add id to emptyWorkout
-
-    // add workout to program.workouts
+    let id = generateNewId(context.program.workouts)
+    let newWorkout = {
+      id: id,
+      name: '',
+      description: '',
+      sets: [],
+      days: []
+    }
+    await context.updateNewWorkout(newWorkout)
+    setShowAddWorkout(true)
   }
 
   const openWorkout = event => {
     let id = event.target.id
     context.setActiveWorkout(id)
+  }
+
+  const done = async () => {
+    await context.clearActiveWorkout()
+    await setShowAddWorkout(false)
   }
 
   const closeWorkout = () => {
@@ -128,6 +131,12 @@ const ProgramTracker = props => {
   const getIdsFromList = list => {
     let ids = list.map(item => item.id)
     return ids
+  }
+
+  const saveNewWorkout = async () => {
+    // let workout = context.newWorkout
+    await context.addWorkout(context.newWorkout)
+    await save()
   }
 
   //TODO: can remove the 'index' step, and move it to the getWorkout... function.
@@ -221,18 +230,21 @@ const ProgramTracker = props => {
   }
 
   return (
-    <div id={context.program.id}>
-      <span css={closeButton} onClick={handleClose}>
-        &times;
-      </span>
-      <div css={cardTitle}>{context.program.name}</div>
-      <div css={cardInfo}>{context.program.description}</div>
+    <React.Fragment>
+      {showAddWorkout ? <WorkoutAddForm saveWorkout={saveNewWorkout} done={done} />
+      : <div id={context.program.id}>
+        <span css={closeButton} onClick={handleClose}>
+          &times;
+        </span>
+        <div css={cardTitle}>{context.program.name}</div>
+        <div css={cardInfo}>{context.program.description}</div>
 
-      {/* Tabs */}
-      <div css={tab}>{renderTabs()}</div>
-      {/* <!-- Tab content --> */}
-      <div style={{ padding: '25px' }}>{renderWorkout()}</div>
-    </div>
+        {/* Tabs */}
+        <div css={tab}>{renderTabs()}</div>
+        {/* <!-- Tab content --> */}
+        <div style={{ padding: '25px' }}>{renderWorkout()}</div>
+      </div>}
+    </React.Fragment>
   )
 }
 
