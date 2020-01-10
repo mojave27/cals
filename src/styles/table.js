@@ -1,4 +1,3 @@
-// import { css } from '@emotion/core'
 import { activeTheme } from './main-styles'
 
 export let table = {
@@ -47,6 +46,10 @@ export let setHeader = {
 export let setLeadCell = {
   borderLeft: `1px solid ${activeTheme.color3.rgba(.75)}`,
   fontWeight: '700'
+}
+
+export const dateHeader = {
+  borderLeft: `2px solid ${activeTheme.color3.hex}`,
 }
 
 export let dayLeftCell = {

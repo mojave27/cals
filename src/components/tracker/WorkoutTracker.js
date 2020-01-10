@@ -157,7 +157,7 @@ const WorkoutTracker = props => {
         return (
           <div key={set.id} css={[Row, setBlock, trackerSet]}>
             <SetTable data={data} copySet={copySet} editSet={editSet} />
-            <ExerciseTable data={data} onCellChange={handleCellChange} />
+              <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
       })
