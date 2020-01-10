@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import React from 'react'
 import { setHeader, table, setLeadCell } from '../../styles/table'
 import { editIcon } from '../../styles/main-styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,6 +25,15 @@ const SetTable = props => {
 
   const renderHeaders = () => {
     return (
+      <React.Fragment>
+      <tr key={Math.random()}>
+          <th css={setHeader} style={{ minWidth:'125px' }} >
+            {''}
+          </th>
+          <th css={setHeader} style={{ minWidth:'100px' }} >
+            {''}
+          </th>
+      </tr>
       <tr key={Math.random()}>
           <th css={setHeader} style={{ minWidth:'125px' }} >
             {'exercise'}
@@ -32,6 +42,7 @@ const SetTable = props => {
             {'target reps'}
           </th>
       </tr>
+      </React.Fragment>
     )
   }
 

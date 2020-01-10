@@ -11,7 +11,8 @@ import { generateNewId } from '../ArrayUtils'
 import { setBlock } from '../../styles/program'
 import { cloneDeep, isEmpty, isUndefined } from 'lodash'
 
-import { gridItem, gridContainerSingleColumn } from '../../styles/gridStyles'
+
+import { gridContainerOneColumn } from '../../styles/gridStyles'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
 import {
@@ -161,7 +162,7 @@ const WorkoutTracker = props => {
         return (
           <div key={set.id} css={[Row, setBlock, trackerSet]}>
             <SetTable data={data} copySet={copySet} editSet={editSet} />
-            <ExerciseTable data={data} onCellChange={handleCellChange} />
+              <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
       })
@@ -210,7 +211,7 @@ const WorkoutTracker = props => {
           </div>
           {/* make this div a gridContainer, and each set a grid item */}
           {/* <div style={{ display: 'block' }}> */}
-          <div css={gridContainerSingleColumn} >
+          <div css={gridContainerOneColumn} style={{paddingBottom:'10px'}}>
             {renderSets(context.activeWorkout)}
           </div>
         </div>

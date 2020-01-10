@@ -2,16 +2,30 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { get, isUndefined } from 'lodash'
-import { setHeader, table, tableInput, dayLeftCell, dayRightCell } from '../../styles/table'
+import {
+  dateHeader,
+  setHeader,
+  table,
+  tableInput,
+  dayLeftCell,
+  dayRightCell
+} from '../../styles/table'
+import { activeTheme } from '../../styles/main-styles'
 
 class Table extends React.Component {
   state = {}
 
   render() {
     return (
-      <div style={{ overflow: 'scroll', maxWidth:'500px', display:'inline-block' }}>
-        <table css={table} style={{overflow:'scroll'}}>
-          <tbody id={this.props.setId}>
+      <div
+        style={{
+          overflow: 'scroll',
+          maxWidth: '500px',
+          display: 'inline-block'
+        }}
+      >
+        <table css={table} style={{ overflowX: 'scroll' }}>
+          <tbody id={this.props.setId} >
             {this.renderRows(this.props.data)}
           </tbody>
         </table>
@@ -35,28 +49,51 @@ class Table extends React.Component {
   }
 
   renderHeaders = () => {
+    let days = get(this.props, 'data.days', undefined)
+    let dateHeaders = []
     let headers = []
     let columnWidths = ['100px', '100px']
-    let count = !isUndefined(this.props.data.days)
-      ? this.props.data.days.length
-      : 0
+    // let count = !isUndefined(this.props.data.days)
+    let count = !isUndefined(days) ? days.length : 0
+
     for (let i = 0; i < count; i++) {
+      dateHeaders.push(days[i].date)
       headers.push('weight')
       headers.push('actual reps')
       columnWidths.push('100px')
       columnWidths.push('100px')
     }
     return (
-      <tr key={'headerRow'}>
-        {headers.map((header, index) => (
-          <th css={setHeader}
-            style={{ minWidth: `${columnWidths[index]}` }}
-            key={`${header}-${index}`}
-          >
-            {header}
-          </th>
-        ))}
-      </tr>
+      <React.Fragment>
+        <tr key={'headerRow'}>
+          {dateHeaders.map((date, index) => (
+            <th
+              key={`dateHeader-${index}`}
+              css={[dateHeader, setHeader]}
+              colSpan={2}
+              style={{ textAlign: 'center' }}
+            >
+              {date}
+            </th>
+          ))}
+        </tr>
+        <tr key={'headerRow'}>
+          {/* lots of styling logic here - see if it can be extracted to a style file. */}
+          {headers.map((header, index) => {
+            let borderStyle = `2px solid ${activeTheme.color3.hex}`
+            let border =
+              header === 'weight'
+                ? { borderLeft: `${borderStyle}` }
+                : { borderRight: `${borderStyle}` }
+            let styles = { minWidth: `${columnWidths[index]}`, ...border }
+            return (
+              <th css={setHeader} style={styles} key={`${header}-${index}`}>
+                {header}
+              </th>
+            )
+          })}
+        </tr>
+      </React.Fragment>
     )
   }
 
@@ -65,7 +102,12 @@ class Table extends React.Component {
     let setId = data.setId
     if (isUndefined(setId)) {
       console.log(`SET ID IS UNDEFINED`)
-      return (<React.Fragment><td></td><td></td></React.Fragment>)
+      return (
+        <React.Fragment>
+          <td></td>
+          <td></td>
+        </React.Fragment>
+      )
     }
     let exerciseId = exercise.id
     let tds = []
@@ -75,10 +117,12 @@ class Table extends React.Component {
     for (let i = 0; i < count; i++) {
       // WEIGHT CELL
       let day = data.days[i]
-      let set = day.sets.find( set => Number(set.id) === Number(setId))
-      if( isUndefined(set)) { throw new Error('set is undefined.')}
+      let set = day.sets.find(set => Number(set.id) === Number(setId))
+      if (isUndefined(set)) {
+        throw new Error('set is undefined.')
+      }
 
-      let row = set.exercises.find( ex => Number(ex.id) === Number(exerciseId))
+      let row = set.exercises.find(ex => Number(ex.id) === Number(exerciseId))
       let valueData = get(row, 'weight', '')
       tds.push(
         <td key={`${data.days[i].id}-weight`} css={dayLeftCell}>
@@ -123,7 +167,6 @@ class Table extends React.Component {
     }
     this.props.onCellChange(update)
   }
-
 }
 
 const Input = props => {

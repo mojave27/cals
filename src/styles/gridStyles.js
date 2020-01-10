@@ -40,3 +40,11 @@ export const gridContainerSingleColumn = css({
   padding: '10px',
   justifyContent: 'center'
 })
+
+// using this in WorkoutTracker, don't want color that we
+// get from gridContainerSingleColumn
+export const gridContainerOneColumn = css({
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  justifyContent: 'center'
+})
