@@ -39,3 +39,11 @@ export const gridContainerSingleColumn = css({
   padding: '10px',
   justifyContent: 'center'
 })
+
+export const gridContainerOneColumn = css({
+  display: 'grid',
+  gridTemplateColumns: 'auto',
+  // backgroundColor: activeTheme.color4.rgba(.8),
+  // padding: '10px',
+  justifyContent: 'center'
+})
