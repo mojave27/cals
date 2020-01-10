@@ -10,7 +10,13 @@ import { isEmpty } from 'lodash'
 
 const Tracker = props => {
   let context = useContext(TrackerContext)
+  const [routeKey, setRouteKey] = useState(0)
   const [showProgramList, setShowProgramList] = useState(false)
+
+  const forceUpdate = routeKey => {
+    clearProgram()
+    setRouteKey(routeKey)
+  }
 
   const toggleShowProgramList = () => {
     setShowProgramList(!showProgramList)
@@ -22,10 +28,8 @@ const Tracker = props => {
   }
 
   const handleProgramSelect = id => {
-    // console.log(`handleProgramSelect => id ${id}`)
     toggleShowProgramList()
     retrieveProgramTracker(id).then(response => {
-      // trackerContext.updateProgram(response.fullProgram)
       context.updateProgram(response.fullProgram)
     })
   }
@@ -34,7 +38,9 @@ const Tracker = props => {
     context.updateProgram({})
   }
 
-  return (
+  return props.location.key !== routeKey 
+  ? ( forceUpdate(props.location.key))
+  :(
     <React.Fragment>
       {showProgramList ? (
         <ProgramsList select={handleProgramSelect} />

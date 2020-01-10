@@ -1,71 +1,45 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
-import SetCard from '../sets/SetCard'
-import { findIndexOfId, retrieveItemById, updateItemById } from '../ArrayUtils'
-import { addWorkout, updateWorkout } from '../../api/workoutsApi'
-import Table from '../tables/SimpleTable'
+import TrackerContext from '../../context/TrackerContext'
+import { topRight } from '../../styles/buttonStyles'
+import { col25, col75, container, detailCard, formButton, formInput, row, stripe } from '../../styles/main-styles'
 import { setBlock } from '../../styles/program'
-import WoContext from '../../context/WoContext'
-import SetContext from '../../context/SetContext'
-import {
-  detailCard,
-  container,
-  formButton,
-  formInput,
-  row,
-  col25,
-  col75,
-  stripe
-} from '../../styles/main-styles'
+import SetCard from '../sets/SetCard'
+import Table from '../tables/SimpleTable'
 
-const WorkoutForm = props => {
-  let woContext = useContext(WoContext)
-  let setContext = useContext(SetContext)
+const WorkoutAddForm = props => {
+  let context = useContext(TrackerContext)
   const [showSetDialog, setShowSetDialog] = useState(false)
 
   const toggleSetDialog = () => {
-    console.log('toggling set dialog')
     setShowSetDialog(!showSetDialog)
   }
 
   const showSetCard = () => {
-    console.log('showing set card')
-    setContext.clearSet()
+    // context.clearSet()
     toggleSetDialog()
   }
 
   const saveWorkout = async () => {
-    let response = {}
-    if (woContext.workout.id) {
-      console.log(`updating existing workout with id ${woContext.workout.id}`)
-      response = await updateWorkout(woContext.workout)
-    } else {
-      console.log(`adding new workout ${JSON.stringify(woContext.workout)}`)
-      response = await addWorkout(woContext.workout)
-      console.log(`  response from workout add: ${JSON.stringify(response)}`)
-    }
-    // update context because addWorkout will have added an id
-    woContext.updateWorkout(response)
-
     if (props.saveWorkout) {
       console.log('calling props.saveWorkout')
-      props.saveWorkout(response)
+      props.saveWorkout()
     }
   }
 
   const handleTextChange = event => {
     let { id, value } = event.target
-    let updatedWorkout = { ...woContext.workout }
+    let updatedWorkout = { ...context.newWorkout }
     updatedWorkout[id] = value
-    woContext.updateWorkout(updatedWorkout)
+    context.updateNewWorkout(updatedWorkout)
   }
 
   const addSetToWorkout = set => {
     // add/update set in workout context
-    let updatedWorkout = { ...woContext.workout }
+    let updatedWorkout = { ...context.newWorkout }
     updatedWorkout.sets.push(set)
-    woContext.updateWorkout(updatedWorkout)
+    context.updateNewWorkout(updatedWorkout)
     setShowSetDialog(false)
   }
 
@@ -75,56 +49,56 @@ const WorkoutForm = props => {
   }
 
   // lots of changes going on here...
-  const handleSetChange = update => {
-    // get set with matching id
-    let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
+  // const handleSetChange = update => {
+  //   // get set with matching id
+  //   let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
 
-    // find exercise with matching id
-    let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
+  //   // find exercise with matching id
+  //   let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
 
-    // update the appropriate value (based on name field - which will be either 'name' or 'reps')
-    //   set that value to update.value
-    targetExercise[update.name] = update.value
+  //   // update the appropriate value (based on name field - which will be either 'name' or 'reps')
+  //   //   set that value to update.value
+  //   targetExercise[update.name] = update.value
 
-    // update set
-    let updatedExerciseList = updateItemById(
-      targetExercise,
-      update.id,
-      set.exercises
-    )
-    set.exercises = updatedExerciseList
+  //   // update set
+  //   let updatedExerciseList = updateItemById(
+  //     targetExercise,
+  //     update.id,
+  //     set.exercises
+  //   )
+  //   set.exercises = updatedExerciseList
 
-    let updatedSetList = updateItemById(
-      set,
-      update.setId,
-      woContext.workout.sets
-    )
+  //   let updatedSetList = updateItemById(
+  //     set,
+  //     update.setId,
+  //     woContext.workout.sets
+  //   )
 
-    //update context
-    woContext.updateSetsForWorkout(updatedSetList)
-  }
+  //   //update context
+  //   woContext.updateSetsForWorkout(updatedSetList)
+  // }
 
-  const deleteExercise = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
-  }
+  // const deleteExercise = event => {
+  //   console.log(event.target.id)
+  //   console.log(event.target.value)
+  // }
 
-  const deleteSet = event => {
-    let id = event.currentTarget.id
-    console.log(id)
-    let sets = woContext.workout.sets
-    // throw up confirmation modal
-    // find set in woContext.workout.sets
-    let index = findIndexOfId(id, sets)
-    if (index > -1) {
-      // delete the set
-      sets.splice(index, 1)
-      woContext.updateSetsForWorkout(sets)
-      updateWorkout(woContext.workout)
-    }else{
-      console.log(`set with id ${id} not found in woContext.workout.sets`)
-    }
-  }
+  // const deleteSet = event => {
+  //   let id = event.currentTarget.id
+  //   console.log(id)
+  //   let sets = woContext.workout.sets
+  //   // throw up confirmation modal
+  //   // find set in woContext.workout.sets
+  //   let index = findIndexOfId(id, sets)
+  //   if (index > -1) {
+  //     // delete the set
+  //     sets.splice(index, 1)
+  //     woContext.updateSetsForWorkout(sets)
+  //     updateWorkout(woContext.workout)
+  //   }else{
+  //     console.log(`set with id ${id} not found in woContext.workout.sets`)
+  //   }
+  // }
 
   const renderSets = sets => {
     if (sets && sets.length > 0) {
@@ -140,10 +114,10 @@ const WorkoutForm = props => {
             <Table
               disabled={false}
               data={data}
-              handleSetChange={handleSetChange}
+              // handleSetChange={handleSetChange}
               onClick={handleRowClick}
-              deleteRow={deleteExercise}
-              deleteItem={deleteSet}
+              // deleteRow={deleteExercise}
+              // deleteItem={deleteSet}
             />
           </div>
         )
@@ -155,6 +129,9 @@ const WorkoutForm = props => {
 
   return (
     <React.Fragment>
+      <div onClick={props.done} css={topRight} >
+        &times;
+      </div>
       <div css={detailCard}>
         <div css={container}>
           <div css={row}>
@@ -167,7 +144,7 @@ const WorkoutForm = props => {
                 type='text'
                 id='name'
                 name='name'
-                value={woContext.workout.name ? woContext.workout.name : ''}
+                value={context.newWorkout.name ? context.newWorkout.name : ''}
                 placeholder='workout name..'
                 onChange={handleTextChange}
               />
@@ -183,7 +160,7 @@ const WorkoutForm = props => {
                 type='text'
                 id='description'
                 name='description'
-                value={woContext.workout.description ? woContext.workout.description : ' '}
+                value={context.newWorkout.description ? context.newWorkout.description : ' '}
                 placeholder='workout description..'
                 onChange={handleTextChange}
               />
@@ -197,7 +174,7 @@ const WorkoutForm = props => {
           <div style={{ display: 'block', paddingBottom: '10px' }}>
             <div style={{ paddingBottom: '10px' }}>Sets</div>
 
-            {renderSets(woContext.workout.sets)}
+            {renderSets(context.newWorkout.sets)}
 
             <input
               type='button'
@@ -224,4 +201,4 @@ const WorkoutForm = props => {
   )
 }
 
-export default WorkoutForm
+export default WorkoutAddForm

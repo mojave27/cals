@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useEffect, useState } from 'react'
-import { findIndexOfId } from '../ArrayUtils'
+import { compareByName, findIndexOfId } from '../ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'
@@ -92,6 +92,7 @@ const SetEditor = props => {
   }
 
   const renderAllExercises = exercises => {
+    // exercises.sort(m)
     return exercises.map(exercise => {
       let index = exercise.id
       return (
