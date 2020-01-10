@@ -1,26 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
-// import SetCard from '../sets/SetCard'
-import Table from '../tables/SimpleTable'
-import { setBlock } from '../../styles/program'
 import TrackerContext from '../../context/TrackerContext'
-// import SetContext from '../../context/SetContext'
 import { topRight } from '../../styles/buttonStyles'
-import {
-  detailCard,
-  container,
-  formButton,
-  formInput,
-  row,
-  col25,
-  col75,
-  stripe
-} from '../../styles/main-styles'
+import { col25, col75, container, detailCard, formButton, formInput, row, stripe } from '../../styles/main-styles'
+import { setBlock } from '../../styles/program'
+import SetCard from '../sets/SetCard'
+import Table from '../tables/SimpleTable'
 
-const WorkoutForm = props => {
-  // let woContext = useContext(WoContext)
-  // let setContext = useContext(SetContext)
+const WorkoutAddForm = props => {
   let context = useContext(TrackerContext)
   const [showSetDialog, setShowSetDialog] = useState(false)
 
@@ -28,10 +16,10 @@ const WorkoutForm = props => {
     setShowSetDialog(!showSetDialog)
   }
 
-  // const showSetCard = () => {
-  //   setContext.clearSet()
-  //   toggleSetDialog()
-  // }
+  const showSetCard = () => {
+    // context.clearSet()
+    toggleSetDialog()
+  }
 
   const saveWorkout = async () => {
     if (props.saveWorkout) {
@@ -47,13 +35,13 @@ const WorkoutForm = props => {
     context.updateNewWorkout(updatedWorkout)
   }
 
-  // const addSetToWorkout = set => {
-  //   // add/update set in workout context
-  //   let updatedWorkout = { ...woContext.workout }
-  //   updatedWorkout.sets.push(set)
-  //   woContext.updateWorkout(updatedWorkout)
-  //   setShowSetDialog(false)
-  // }
+  const addSetToWorkout = set => {
+    // add/update set in workout context
+    let updatedWorkout = { ...context.newWorkout }
+    updatedWorkout.sets.push(set)
+    context.updateNewWorkout(updatedWorkout)
+    setShowSetDialog(false)
+  }
 
   const handleRowClick = event => {
     let id = event.currentTarget.id
@@ -193,7 +181,7 @@ const WorkoutForm = props => {
               value='Add Set'
               css={formButton}
               // onClick={toggleSetDialog}
-              // onClick={showSetCard}
+              onClick={showSetCard}
               style={{ display: 'block' }}
             />
             <input
@@ -203,9 +191,9 @@ const WorkoutForm = props => {
               onClick={saveWorkout}
               style={{ display: 'block' }}
             />
-            {/* {showSetDialog ? (
+            {showSetDialog ? (
               <SetCard saveSet={addSetToWorkout} done={toggleSetDialog} />
-            ) : null} */}
+            ) : null}
           </div>
         </div>
       </div>
@@ -213,4 +201,4 @@ const WorkoutForm = props => {
   )
 }
 
-export default WorkoutForm
+export default WorkoutAddForm

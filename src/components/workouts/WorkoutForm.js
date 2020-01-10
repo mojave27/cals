@@ -25,10 +25,12 @@ const WorkoutForm = props => {
   const [showSetDialog, setShowSetDialog] = useState(false)
 
   const toggleSetDialog = () => {
+    console.log('toggling set dialog')
     setShowSetDialog(!showSetDialog)
   }
 
   const showSetCard = () => {
+    console.log('showing set card')
     setContext.clearSet()
     toggleSetDialog()
   }
