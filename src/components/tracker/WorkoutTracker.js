@@ -9,9 +9,11 @@ import Modal from '../Modal'
 import ExerciseTable from '../tables/ExerciseTable'
 import { generateNewId } from '../ArrayUtils'
 import { setBlock } from '../../styles/program'
+import { cloneDeep, isEmpty, isUndefined } from 'lodash'
+
+import { gridItem, gridContainerSingleColumn } from '../../styles/gridStyles'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
-import { cloneDeep, isEmpty } from 'lodash'
 import {
   formButton,
   container,
@@ -21,7 +23,6 @@ import {
   basicButtonSmall
 } from '../../styles/main-styles'
 import { Row } from '../../styles/table'
-import { isUndefined } from 'lodash'
 
 const WorkoutTracker = props => {
   let context = useContext(TrackerContext)
@@ -207,8 +208,9 @@ const WorkoutTracker = props => {
               onClick={addSet}
             />
           </div>
-          {/* <div style={{ display: 'block', padding: '10px 0px' }}> */}
-          <div style={{ display: 'block' }}>
+          {/* make this div a gridContainer, and each set a grid item */}
+          {/* <div style={{ display: 'block' }}> */}
+          <div css={gridContainerSingleColumn} >
             {renderSets(context.activeWorkout)}
           </div>
         </div>

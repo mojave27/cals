@@ -32,6 +32,7 @@ export const gridItemNoHover = css({
   textAlign: 'center'
 })
 
+// should we really have the colors and padding in here?
 export const gridContainerSingleColumn = css({
   display: 'grid',
   gridTemplateColumns: 'auto',
