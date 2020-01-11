@@ -1,3 +1,46 @@
+
+export const stormTrooperInverse = {
+  color5: {
+    hex: '#EBF0F2',
+    rgba: alpha => buildRgba(235, 240, 242, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  },
+  color4: {
+    hex: '#D2D7D9',
+    rgba: alpha => buildRgba(210, 215, 217, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color3: {
+    hex: '#9FA4A6',
+    rgba: alpha => buildRgba(159, 164, 166, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#262626',
+    rgba: alpha => buildRgba(38, 38, 38, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color1: {
+    hex: '#0D0D0D',
+    rgba: alpha => buildRgba(13, 13, 13, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color5_highlight: {
+    hex: '#0D0D0D',
+    rgba: alpha => buildRgba(13, 13, 13, alpha)
+  }
+}
+
 export const stormTrooper = {
   color1: {
     hex: '#EBF0F2',

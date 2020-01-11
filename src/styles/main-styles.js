@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
-import { woSheet } from './colorThemes'
+import { stormTrooper, stormTrooperInverse, woSheet } from './colorThemes'
 
-export let activeTheme = woSheet
+export let activeTheme = stormTrooperInverse
 
 export let basics = css({
   borderTop: `1px solid ${activeTheme.color2.hex}`,
