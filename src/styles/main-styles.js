@@ -27,7 +27,6 @@ export let card = css({
     border: `1px solid ${activeTheme.color5.hex}`,
     backgroundColor: activeTheme.color1.hex,
     color: activeTheme.color1_text.hex,
-    // backgroundColor: `#E4E4E6`
     transition: '0.3s',
   }
 })
@@ -169,9 +168,10 @@ export let programForm = css({
 export let formInput = css({
   fontSize: '1.0em',
   width: '100%',
-  padding: '12px',
-  border: `1px solid #ccc`,
-  borderRadius: '2px',
+  padding: '8px',
+  border: `1px solid #aeaeae`,
+  borderRadius: '3px',
+  boxShadow: `inset 0 2px 2px #e9e9e9`,
   resize: 'vertical'
 })
 
@@ -243,10 +243,34 @@ export let formContainer = css({
   padding: '20px'
 })
 
+export let col10 = css({
+  float: 'left',
+  marginTop: '6px',
+  width: '10%'
+})
+
+export let col20 = css({
+  float: 'left',
+  marginTop: '6px',
+  width: '20%'
+})
+
 export let col25 = css({
   float: 'left',
-  width: '25%',
+  marginTop: '6px',
+  width: '25%'
+})
+
+export let col50 = css({
+  float: 'left',
+  width: '50%',
   marginTop: '6px'
+})
+
+export let col70 = css({
+  float: 'left',
+  marginTop: '6px',
+  width: '70%'
 })
 
 export let col75 = css({
