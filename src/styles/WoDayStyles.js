@@ -4,7 +4,7 @@ import { activeTheme } from './main-styles'
 export const gridContainer = css({
   display: 'grid',
   gridTemplateAreas: `
-    'goals goals goals goals goals date'
+    'date goals goals goals goals goals'
     'mestats mestats mestats mestats mestats mestats'
     `,
   padding: '10px'
@@ -20,7 +20,7 @@ export const meStatsContainer = css({
   flexDirection: 'row',
   justifyContent: 'space-around',
   alignItems: 'center',
-  backgroundColor: activeTheme.color2.hex,
+  // backgroundColor: activeTheme.color4.hex,
   height: '40px'
 })
 
@@ -47,7 +47,7 @@ export let sliderContainer = {
   height: '30px',
   borderRadius: '3px',
   width: '30%',
-  backgroundColor: '#eee'
+  // backgroundColor: '#eee'
 }
 
 /* The slider itself */
@@ -56,7 +56,7 @@ export let slider = {
   appearance: 'none',
   width: '200px' /* Full-width */,
   height: '15px' /* Specified height */,
-  background: activeTheme.color4.hex /* Grey background */,
+  background: activeTheme.color2.hex /* Grey background */,
   outline: 'none' /* Remove outline */,
   opacity: '0.7' /* Set transparency (for mouse-over effects on hover) */,
   webkitTransition: '.2s' /* 0.2 seconds transition on hover */,
@@ -69,7 +69,7 @@ export let slider = {
     appearance: 'none',
     width: '25px' /* Set a specific slider handle width */,
     height: '25px' /* Slider handle height */,
-    background: activeTheme.color2.hex /* Green background */,
+    background: activeTheme.color5.hex /* Green background */,
     border: activeTheme.color3.hex,
     borderRadius: '15px',
     cursor: 'pointer' /* Cursor on hover */

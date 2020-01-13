@@ -45,7 +45,7 @@ const MeStats = props => {
 
   return (
         <div css={meStatsContainer}>
-          <div style={{ borderRadius:'3px',width:'30%', backgroundColor:'#eee' }}>
+          <div style={{ borderRadius:'3px',width:'30%' }}>
             <TextInput
               label={'Weight'}
               name={'weight'}

@@ -16,10 +16,7 @@ import {
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
 import {
-  gridContainer,
-  gridDate,
-  gridGoals,
-  gridMeStats
+  meStatsContainer
 } from '../../styles/WoDayStyles'
 
 const Test = props => {
@@ -37,42 +34,31 @@ const Test = props => {
       <div css={detailCard}>
         <div css={cardNoHover}>
           {/* --- row 1: Details --------------------------------------- */}
-          {/* <div css={row} style={{ border: '1px solid cyan' }}> */}
-          <div css={row} style={{border:'1px solid #eee'}}>
-            <div css={gridContainer}>
-              <div css={gridGoals}>
-                <TextInput
-                  label={'Goals'}
-                  name={'goals'}
-                  id={'woday-goals'}
-                  placeholder={'enter goals here'}
-                  onChange={handleTextChange}
-                />
-              </div>
-              <div css={gridDate} style={{ lineHeight: '28px' }}>
-                <label
-                  style={{
-                    display: 'inline-block',
-                    fontWeight: '700'
-                  }}
-                >
-                  Date
-                </label>
-                <div
-                  style={{
-                    textAlign: 'left',
-                    marginBottom: '15px',
-                    float: 'right'
-                  }}
-                >
-                  <DatePicker
-                    selected={startDate}
-                    onChange={date => setStartDate(date)}
-                  />
-                </div>
-              </div>
+          <div css={row} style={{ border: '1px solid #eee' }}>
+            <div css={meStatsContainer} style={{/*border:'1px solid #FFD883',*/ margin:'5px',padding:'20px'}}>
+              <label
+                style={{
+                  display: 'inline-block',
+                  fontWeight: '700'
+                }}
+              >
+                Date
+              </label>
+              <DatePicker
+                selected={startDate}
+                onChange={date => setStartDate(date)}
+              />
+              <TextInput
+                label={'Goals'}
+                name={'goals'}
+                id={'woday-goals'}
+                placeholder={'enter goals here'}
+                onChange={handleTextChange}
+              />
+            </div>
+          {/* --- row 1b: MeStats --------------------------------------- */}
+            <div css={row} style={{/*border:'1px solid #FFD883',*/ margin:'5px'}}>
               <div
-                css={gridMeStats}
                 style={{
                   padding: '5px',
                   marginBottom: '10px'
