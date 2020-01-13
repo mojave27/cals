@@ -304,7 +304,8 @@ export let customSelect = {
 
 export let selectSelected = {
   backgroundColor: activeTheme.color5.hex,
-  color: '#ffffff',
+  color: activeTheme.color5_text.hex,
+  // color: '#ffffff',
   padding: '8px 16px',
   /*style the arrow inside the select element:*/
   '& after': {
@@ -330,16 +331,17 @@ export let selectArrowActive = {}
 export let selectItems = {
   position: 'absolute',
   backgroundColor: activeTheme.color5.hex,
+  color: activeTheme.color5_text.hex,
   top: '100%',
   left: '0',
   right: '0',
   zIndex: '99',
   /*style the items (options), including the selected item:*/
   '& div,.selectSelected': {
-    color: '#ffffff',
+    color: activeTheme.color5_text.hex,
     padding: '8px 16px',
     border: '1px solid transparent',
-    borderColor: 'transparent transparent rgba(0, 0, 0, 0.1) transparent',
+    borderColor: `transparent transparent ${activeTheme.color5.rgba(0.1)} transparent`,
     cursor: 'pointer',
     userSelect: 'none'
   },

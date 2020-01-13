@@ -1,13 +1,15 @@
 import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import { get } from 'lodash'
+import PropTypes from 'prop-types'
 import {
   customSelect,
   selectItems,
   selectHide,
   selectSelected,
   sameAsSelected
-} from '../../styles/main-styles'
+} from './Select.styles'
 
 class Select extends React.Component {
   state = {
@@ -16,8 +18,9 @@ class Select extends React.Component {
   }
 
   render() {
+    let jssClass = get(this, 'props.jssClass', null)
     return (
-      <div css={customSelect} style={{ width: '200px' }} onClick={this.handleSelectClick}>
+      <div css={[customSelect, jssClass]} style={{ width: '200px' }} onClick={this.handleSelectClick}>
         <select onChange={this.handleSelectOption}>
           {this.renderOptions()}
         </select>
@@ -72,6 +75,16 @@ class Select extends React.Component {
       })
   }
 
+}
+
+
+Select.propTypes = {
+  options: PropTypes.array,
+  onSelect: PropTypes.func
+}
+
+Select.defaultProps = {
+  name: ''
 }
 
 export default Select

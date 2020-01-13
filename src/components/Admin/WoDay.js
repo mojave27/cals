@@ -2,19 +2,25 @@
 import { jsx } from '@emotion/core'
 import { useState } from 'react'
 import TextInput from '../inputs/TextInput'
+import MeStats from './MeStats'
 import DatePicker from 'react-datepicker'
+import BasicTable from '../tables/BasicTable'
+import { table } from '../../styles/table'
 
 import {
   cardNoHover,
-  col10,
-  col20,
-  col70,
   detailCard,
   formContainer,
   row
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
+import {
+  gridContainer,
+  gridDate,
+  gridGoals,
+  gridMeStats
+} from '../../styles/WoDayStyles'
 
 const Test = props => {
   let [startDate, setStartDate] = useState(new Date())
@@ -30,56 +36,53 @@ const Test = props => {
       </div>
       <div css={detailCard}>
         <div css={cardNoHover}>
-          <div css={row}>
-            <div css={col10} style={{ lineHeight: '28px' }}>
-              <label
+          {/* --- row 1: Details --------------------------------------- */}
+          {/* <div css={row} style={{ border: '1px solid cyan' }}> */}
+          <div css={row} style={{border:'1px solid #eee'}}>
+            <div css={gridContainer}>
+              <div css={gridGoals}>
+                <TextInput
+                  label={'Goals'}
+                  name={'goals'}
+                  id={'woday-goals'}
+                  placeholder={'enter goals here'}
+                  onChange={handleTextChange}
+                />
+              </div>
+              <div css={gridDate} style={{ lineHeight: '28px' }}>
+                <label
+                  style={{
+                    display: 'inline-block',
+                    fontWeight: '700'
+                  }}
+                >
+                  Date
+                </label>
+                <div
+                  style={{
+                    textAlign: 'left',
+                    marginBottom: '15px',
+                    float: 'right'
+                  }}
+                >
+                  <DatePicker
+                    selected={startDate}
+                    onChange={date => setStartDate(date)}
+                  />
+                </div>
+              </div>
+              <div
+                css={gridMeStats}
                 style={{
-                  display: 'inline-block',
-                  float: 'right',
-                  paddingRight: '30px',
-                  fontWeight: '700'
+                  padding: '5px',
+                  marginBottom: '10px'
                 }}
               >
-                Date
-              </label>
-            </div>
-            <div
-              css={col20}
-              style={{ textAlign: 'left', marginBottom: '15px' }}
-            >
-              <DatePicker
-                selected={startDate}
-                onChange={date => setStartDate(date)}
-              />
-            </div>
-            <div css={col70}>
-              <TextInput
-                label={'Goals'}
-                name={'goals'}
-                id={'woday-goals'}
-                placeholder={'enter goals here'}
-                onChange={handleTextChange}
-              />
-            </div>
-            <div
-              css={col70}
-              style={{
-                padding: '5px',
-                height: '100px',
-                textAlign: 'left',
-                marginBottom: '15px',
-                border: '1px solid #eee'
-              }}
-            >
-              weight,
-              <br />
-              energy,
-              <br />
-              sleep,
-              <br />
-              mood
+                <MeStats />
+              </div>
             </div>
           </div>
+          {/* --- row 2: Cardio --------------------------------------- */}
           <div
             css={row}
             style={{
@@ -89,8 +92,10 @@ const Test = props => {
               border: '1px solid #eee'
             }}
           >
-            cardio section
+            <h3>Cardio</h3>
+            <BasicTable jssClass={table} />
           </div>
+          {/* --- row 3: Weights --------------------------------------- */}
           <div
             css={row}
             style={{
@@ -100,7 +105,7 @@ const Test = props => {
               border: '1px solid #eee'
             }}
           >
-            weights section
+            <h3>Weights</h3>
           </div>
         </div>
       </div>

@@ -6,15 +6,15 @@ import { formInput } from '../../styles/main-styles'
 
 const styles = {
   label: {
-    textAlign: 'right',
+    textAlign: 'left',
     paddingRight: '30px',
-    width: '25%',
     display: 'inline-block',
     fontWeight: '700'
   },
   input: {
     width: '75%',
-    display: 'inline-block'
+    display: 'inline-block',
+    lineHeight:'23px',
   }
 }
 
@@ -33,6 +33,7 @@ const TextInput = props => {
           value={props.value}
           placeholder='enter value..'
           onChange={props.onChange}
+          style={{padding:'6px'}}
         />
       </div>
     </React.Fragment>
