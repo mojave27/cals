@@ -9,7 +9,9 @@ const styles = {
     textAlign: 'left',
     paddingRight: '30px',
     display: 'inline-block',
-    fontWeight: '700'
+    fontWeight: '700',
+    float:'left',
+    padding:'5px 10px' 
   },
   input: {
     width: '75%',

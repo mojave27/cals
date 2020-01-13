@@ -15,9 +15,7 @@ import {
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-import {
-  meStatsContainer
-} from '../../styles/WoDayStyles'
+import { meStatsContainer } from '../../styles/WoDayStyles'
 
 const Test = props => {
   let [startDate, setStartDate] = useState(new Date())
@@ -35,26 +33,38 @@ const Test = props => {
         <div css={cardNoHover}>
           {/* --- row 1: Details --------------------------------------- */}
           <div css={row} style={{ border: '1px solid #eee' }}>
-            <div css={meStatsContainer} style={{/*border:'1px solid #FFD883',*/ margin:'5px',padding:'20px'}}>
-              <label style={{ display: 'inline-block', fontWeight: '700' }} >
-                Date
-              </label>
-              <DatePicker
-                selected={startDate}
-                onChange={date => setStartDate(date)}
-              />
-          <div style={{ borderRadius:'3px',width:'30%' }}>
-              <TextInput
-                label={'Goals'}
-                name={'goals'}
-                id={'woday-goals'}
-                placeholder={'enter goals here'}
-                onChange={handleTextChange}
-              />
+            <div
+              css={meStatsContainer}
+              style={{
+                /*border:'1px solid #FFD883',*/ margin: '5px',
+                padding: '20px',
+                justifyContent:'left'
+              }}
+            >
+              <div style={{width:'25%'}}>
+                <label style={{ display: 'inline-block', fontWeight: '700', padding:'5px 10px', float:'left' }}>
+                  Date
+                </label>
+                <DatePicker
+                  selected={startDate}
+                  onChange={date => setStartDate(date)}
+                />
+              </div>
+              <div style={{ borderRadius: '3px', width: '50%' }}>
+                <TextInput
+                  label={'Goals'}
+                  name={'goals'}
+                  id={'woday-goals'}
+                  placeholder={'enter goals here'}
+                  onChange={handleTextChange}
+                />
+              </div>
             </div>
-            </div>
-          {/* --- row 1b: MeStats --------------------------------------- */}
-            <div css={row} style={{/*border:'1px solid #FFD883',*/ margin:'5px'}}>
+            {/* --- row 1b: MeStats --------------------------------------- */}
+            <div
+              css={row}
+              style={{ /*border:'1px solid #FFD883',*/ margin: '5px' }}
+            >
               <div
                 style={{
                   padding: '5px',
