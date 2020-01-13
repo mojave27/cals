@@ -11,6 +11,21 @@ export const gridContainer = css({
   padding: '10px'
 })
 
+export const section = {
+  minHeight: '150px',
+  marginTop: '15px',
+  padding: '15px',
+  width: '100%',
+  border: '1px solid #eee'
+}
+
+export const sectionHeader = {
+  display: 'block',
+  fontSize: '1.17em',
+  marginBlockEnd: '.5em',
+  fontWeight: 'bold'
+}
+
 export const gridGoals = css({ 
   gridArea: 'goals', 
   padding: '7px 0px 15px 0px',

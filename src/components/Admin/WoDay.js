@@ -21,7 +21,9 @@ import {
   gridEnergy,
   gridGoals,
   gridSleep,
-  gridWeight
+  gridWeight,
+  section,
+  sectionHeader
 } from '../../styles/WoDayStyles'
 
 const sampleData = {
@@ -78,7 +80,7 @@ const WoDay = props => {
       </div>
       <div css={detailCard}>
         <div css={cardNoHover}>
-          {/* --- row 1: Details --------------------------------------- */}
+          {/* --- section 1: Details --------------------------------------- */}
           <div css={row} style={{ border: '1px solid #eee' }}>
             <div css={gridContainer} style={{ margin: '5px', padding: '10px' }}>
               <div css={gridDate}>
@@ -100,7 +102,7 @@ const WoDay = props => {
                   onChange={handleTextChange}
                 />
               </div>
-              {/* --- row 1b: MeStats --------------------------------------- */}
+              {/* --- MyStats --------------------------------------- */}
               <div css={gridWeight}>
                 <TextInput
                   label={'Weight'}
@@ -131,17 +133,9 @@ const WoDay = props => {
               </div>
             </div>
           </div>
-          {/* --- row 2: Cardio --------------------------------------- */}
-          <div
-            css={row}
-            style={{
-              height: '150px',
-              marginTop: '10px',
-              width: '100%',
-              border: '1px solid #eee'
-            }}
-          >
-            <h3>Cardio</h3>
+          {/* --- section 2: Cardio --------------------------------------- */}
+          <div css={[row, section]} >
+            <div css={sectionHeader}>Cardio</div>
             <BasicTable
               jssClass={table}
               id={0}
@@ -149,17 +143,9 @@ const WoDay = props => {
               data={sampleData}
             />
           </div>
-          {/* --- row 3: Weights --------------------------------------- */}
-          <div
-            css={row}
-            style={{
-              height: '300px',
-              marginTop: '10px',
-              width: '100%',
-              border: '1px solid #eee'
-            }}
-          >
-            <h3>Weights</h3>
+          {/* --- section 3: Weights --------------------------------------- */}
+          <div css={[row, section]} >
+            <div css={sectionHeader}>Weights</div>
           </div>
         </div>
       </div>
