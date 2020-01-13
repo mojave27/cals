@@ -4,14 +4,23 @@ import { activeTheme } from './main-styles'
 export const gridContainer = css({
   display: 'grid',
   gridTemplateAreas: `
-    'date goals goals goals goals goals'
-    'mestats mestats mestats mestats mestats mestats'
+    'date date date'
+    'goals goals goals'
+    'weight energy sleep'
     `,
   padding: '10px'
 })
 
-export const gridGoals = css({ gridArea: 'goals' })
-export const gridDate = css({ gridArea: 'date' })
+export const gridGoals = css({ 
+  gridArea: 'goals', 
+  padding: '7px 0px 15px 0px',
+  textAlign: 'left'
+})
+export const gridDate = css({ 
+  gridArea: 'date', 
+  padding: '7px 0px 15px 0px',
+  textAlign: 'left'
+})
 export const gridMeStats = css({ gridArea: 'mestats' })
 
 // meStats styles ---------------------------------------- //
@@ -20,25 +29,23 @@ export const meStatsContainer = css({
   flexDirection: 'row',
   justifyContent: 'space-around',
   alignItems: 'center',
-  // backgroundColor: activeTheme.color4.hex,
   height: '40px'
 })
 
-export const meWeight = css({
+export const gridWeight = css({
   gridArea: 'weight',
-  border: '1px solid lime'
+  textAlign: 'left'
+  // border: '1px solid lime'
 })
-export const meEnergy = css({
+export const gridEnergy = css({
+  paddingTop: '5px',
   gridArea: 'energy',
-  border: '1px solid pink'
+  // border: '1px solid pink'
 })
-export const meSleep = css({
+export const gridSleep = css({
+  paddingTop: '5px',
   gridArea: 'sleep',
-  border: '1px solid yellow'
-})
-export const meMood = css({
-  gridArea: 'mood',
-  border: '1px solid cyan'
+  // border: '1px solid yellow'
 })
 
 // range slider styles ---------------------------------- //
@@ -46,7 +53,7 @@ export let sliderContainer = {
   paddingTop: '5px',
   height: '30px',
   borderRadius: '3px',
-  width: '30%',
+  width: '30%'
   // backgroundColor: '#eee'
 }
 

@@ -6,12 +6,13 @@ import { formInput } from '../../styles/main-styles'
 
 const styles = {
   label: {
-    textAlign: 'left',
+    textAlign: 'right',
     paddingRight: '30px',
     display: 'inline-block',
     fontWeight: '700',
     float:'left',
-    padding:'5px 10px' 
+    padding:'5px 10px',
+    width:'75px'
   },
   input: {
     width: '75%',

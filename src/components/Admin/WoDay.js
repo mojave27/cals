@@ -2,11 +2,11 @@
 import { jsx } from '@emotion/core'
 import { useState } from 'react'
 import TextInput from '../inputs/TextInput'
-import MeStats from './MeStats'
-import DatePicker from 'react-datepicker'
 import BasicTable from '../tables/BasicTable'
-import { table } from '../../styles/table'
+import RangeSlider from '../inputs/RangeSlider'
+import DateInput from '../inputs/DateInput'
 
+import { table } from '../../styles/table'
 import {
   cardNoHover,
   detailCard,
@@ -15,13 +15,41 @@ import {
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-import { meStatsContainer } from '../../styles/WoDayStyles'
+import {
+  gridContainer,
+  gridDate,
+  gridEnergy,
+  gridGoals,
+  gridSleep,
+  gridWeight
+} from '../../styles/WoDayStyles'
 
 const Test = props => {
   let [startDate, setStartDate] = useState(new Date())
+  let [energyRange, setEnergyRange] = useState(50)
+  let [sleepRange, setSleepRange] = useState(50)
+  let [weight, setWeight] = useState('')
   const handleTextChange = event => {
     console.log(event.target.id)
     console.log(event.target.value)
+  }
+  // TODO: These should call up (props.handleTextChange) and state should be maintained by parent
+  const handleSliderChange = event => {
+    let id = event.target.id
+    let value = event.target.value
+    switch (id) {
+      case 'energyRange':
+        console.log('energyRange update.')
+        setEnergyRange(value)
+        break
+      case 'sleepRange':
+        setSleepRange(value)
+        break
+      case 'moodRange':
+        break
+      default:
+        console.log('Sorry, no match for ' + id)
+    }
   }
 
   return (
@@ -33,24 +61,18 @@ const Test = props => {
         <div css={cardNoHover}>
           {/* --- row 1: Details --------------------------------------- */}
           <div css={row} style={{ border: '1px solid #eee' }}>
-            <div
-              css={meStatsContainer}
-              style={{
-                /*border:'1px solid #FFD883',*/ margin: '5px',
-                padding: '20px',
-                justifyContent:'left'
-              }}
-            >
-              <div style={{width:'25%'}}>
-                <label style={{ display: 'inline-block', fontWeight: '700', padding:'5px 10px', float:'left' }}>
-                  Date
-                </label>
-                <DatePicker
-                  selected={startDate}
-                  onChange={date => setStartDate(date)}
+            <div css={gridContainer} style={{ margin: '5px', padding: '10px' }}>
+              <div css={gridDate}>
+                <DateInput
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                  label={'Date'}
                 />
               </div>
-              <div style={{ borderRadius: '3px', width: '50%' }}>
+              <div
+                css={gridGoals}
+                style={{ borderRadius: '3px', width: '50%' }}
+              >
                 <TextInput
                   label={'Goals'}
                   name={'goals'}
@@ -59,19 +81,34 @@ const Test = props => {
                   onChange={handleTextChange}
                 />
               </div>
-            </div>
-            {/* --- row 1b: MeStats --------------------------------------- */}
-            <div
-              css={row}
-              style={{ /*border:'1px solid #FFD883',*/ margin: '5px' }}
-            >
-              <div
-                style={{
-                  padding: '5px',
-                  marginBottom: '10px'
-                }}
-              >
-                <MeStats />
+              {/* --- row 1b: MeStats --------------------------------------- */}
+              <div css={gridWeight}>
+                <TextInput
+                  label={'Weight'}
+                  name={'weight'}
+                  id={'weight'}
+                  value={weight}
+                  placeholder={'enter weight'}
+                  onChange={handleTextChange}
+                />
+              </div>
+              <div css={gridEnergy}>
+                <RangeSlider
+                  label={'Energy'}
+                  jssClass={{ float: 'left' }}
+                  id='energyRange'
+                  value={energyRange}
+                  onChange={handleSliderChange}
+                />
+              </div>
+              <div css={gridSleep}>
+                <RangeSlider
+                  label={'Sleep'}
+                  jssClass={{ float: 'left' }}
+                  id='sleepRange'
+                  value={sleepRange}
+                  onChange={handleSliderChange}
+                />
               </div>
             </div>
           </div>

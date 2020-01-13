@@ -19,7 +19,7 @@ const RangeSliderInput = props => {
                   <label
               style={{
                 float: 'left',
-                display: 'inline-block',
+                display: 'inline',
                 fontWeight: '700',
                 width: '20%'
               }}
