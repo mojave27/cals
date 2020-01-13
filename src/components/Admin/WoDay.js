@@ -24,11 +24,32 @@ import {
   gridWeight
 } from '../../styles/WoDayStyles'
 
-const Test = props => {
+const sampleData = {
+  headers: ['type', 'duration', 'distance', 'heart rate'],
+  rows: [
+    {
+      id: 0,
+      type: 'steady state jog',
+      duration: '30 min',
+      distance: '',
+      heartRate: '120 bpm'
+    },
+    {
+      id: 1,
+      type: 'HIIT',
+      duration: '20 min',
+      distance: '',
+      heartRate: '150 bpm'
+    }
+  ]
+}
+
+const WoDay = props => {
   let [startDate, setStartDate] = useState(new Date())
   let [energyRange, setEnergyRange] = useState(50)
   let [sleepRange, setSleepRange] = useState(50)
   let [weight, setWeight] = useState('')
+  let [data, setData] = useState(sampleData)
   const handleTextChange = event => {
     console.log(event.target.id)
     console.log(event.target.value)
@@ -36,7 +57,7 @@ const Test = props => {
   // TODO: These should call up (props.handleTextChange) and state should be maintained by parent
   const handleSliderChange = event => {
     let id = event.target.id
-    let value = event.target.value
+    let value = Number(event.target.value)
     switch (id) {
       case 'energyRange':
         console.log('energyRange update.')
@@ -44,8 +65,6 @@ const Test = props => {
         break
       case 'sleepRange':
         setSleepRange(value)
-        break
-      case 'moodRange':
         break
       default:
         console.log('Sorry, no match for ' + id)
@@ -123,7 +142,12 @@ const Test = props => {
             }}
           >
             <h3>Cardio</h3>
-            <BasicTable jssClass={table} />
+            <BasicTable
+              jssClass={table}
+              id={0}
+              deleteRow={event => console.log(event)}
+              data={sampleData}
+            />
           </div>
           {/* --- row 3: Weights --------------------------------------- */}
           <div
@@ -143,4 +167,4 @@ const Test = props => {
   )
 }
 
-export default Test
+export default WoDay

@@ -1,47 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-// import { table } from '../../styles/table'
 import { camelCase, get } from 'lodash'
 
-// SAMPLE DATA OBJECT
-const sampleData = {
-  headers: ['type', 'duration', 'distance', 'heart rate'],
-  rows: [
-    {
-      id: 0,
-      type: 'steady state jog',
-      duration: '30 min',
-      distance: '',
-      heartRate: '120 bpm'
-    },
-    {
-      id: 1,
-      type: 'HIIT',
-      duration: '20 min',
-      distance: '',
-      heartRate: '150 bpm'
-    }
-  ]
-}
-
-// const sampleData = {
-//   headers: ['monkeys', 'bananas', 'chickens'],
-//   rows: [
-//     {
-//       id: 0,
-//       monkeys: 'monkeys here',
-//       bananas: 'bananas here',
-//       chickens: 'chickens here'
-//     },
-//     {
-//       id: 1,
-//       monkeys: '2nd row a',
-//       bananas: '2nd row b',
-//       chickens: '2nd row c'
-//     }
-//   ]
-// }
 
 class BasicTable extends React.Component {
   state = {}
@@ -72,13 +33,16 @@ class BasicTable extends React.Component {
   }
 
   renderHeaders = headers => {
-    if (!this.props.disabled) {
-      headers.splice(0, 0, '')
-    }
+    /* this code was eliminated due to a bug.  
+     * every re-render would result in a new 
+     * blank column in the table */
+    // if (!this.props.disabled) {
+    //   headers.splice(0, 0, '')
+    // }
     return (
       <tr key={headers.toString()}>
-        {headers.map(header => (
-          <th key={header}>{header}</th>
+        {headers.map( (header,index) => (
+          <th key={`${header}-${index}`}>{header}</th>
         ))}
       </tr>
     )
@@ -93,7 +57,7 @@ class BasicTable extends React.Component {
       tds.push(
         <td style={{ borderLeft: '1px solid #eee' }} key={`${row.id}-delete`}>
           <input
-            id={row.id}
+            id={`${row.id}-${j}`}
             type='button'
             value='delete'
             onClick={this.props.deleteRow}
@@ -113,7 +77,7 @@ class BasicTable extends React.Component {
           key={i}
         >
           <Input
-            id={row.id}
+            id={`${row.id}-${i}`}
             name={headers[i]}
             data={row[camelCase(headers[i])]}
             onChange={this.handleSetChange}
@@ -164,7 +128,7 @@ const Input = props => {
 
 BasicTable.defaultProps = {
   id: 0,
-  data: { ...sampleData },
+  data: { headers: [], rows: []},
   deleteRow: event => {
     console.log({ event })
   }

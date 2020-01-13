@@ -45,7 +45,7 @@ RangeSliderInput.propTypes = {
   name: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.number,
   onChange: PropTypes.func
 }
 

@@ -32,7 +32,7 @@ const DateInput = props => {
 DateInput.propTypes = {
   id: PropTypes.string,
   label: PropTypes.string,
-  startDate: PropTypes.string,
+  startDate: PropTypes.any,
   setStartDate: PropTypes.func
 }
 
