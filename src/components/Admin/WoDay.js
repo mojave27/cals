@@ -36,18 +36,14 @@ const Test = props => {
           {/* --- row 1: Details --------------------------------------- */}
           <div css={row} style={{ border: '1px solid #eee' }}>
             <div css={meStatsContainer} style={{/*border:'1px solid #FFD883',*/ margin:'5px',padding:'20px'}}>
-              <label
-                style={{
-                  display: 'inline-block',
-                  fontWeight: '700'
-                }}
-              >
+              <label style={{ display: 'inline-block', fontWeight: '700' }} >
                 Date
               </label>
               <DatePicker
                 selected={startDate}
                 onChange={date => setStartDate(date)}
               />
+          <div style={{ borderRadius:'3px',width:'30%' }}>
               <TextInput
                 label={'Goals'}
                 name={'goals'}
@@ -55,6 +51,7 @@ const Test = props => {
                 placeholder={'enter goals here'}
                 onChange={handleTextChange}
               />
+            </div>
             </div>
           {/* --- row 1b: MeStats --------------------------------------- */}
             <div css={row} style={{/*border:'1px solid #FFD883',*/ margin:'5px'}}>
