@@ -16,6 +16,16 @@ const RangeSliderInput = props => {
 
   return (
     <React.Fragment>
+                  <label
+              style={{
+                float: 'left',
+                display: 'inline-block',
+                fontWeight: '700',
+                width: '20%'
+              }}
+            >
+              {props.label}
+            </label>
     <input
       type='range'
       min={get(props, 'min', '0')}
