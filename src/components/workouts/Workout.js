@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { woHeader,woInput,woTable } from '../../styles/WoDayStyles'
+import { woHeader, woInput, woTable } from '../../styles/WoDayStyles'
+import { row, basicButtonSmall } from '../../styles/main-styles'
 
 // const sampleWo = {
 //   exercises: [
@@ -63,8 +64,12 @@ const Workout = props => {
         {props.wo.sets.map((set, index) => {
           return (
             <React.Fragment key={`${set}-${index}`}>
-              <th key={`${set}-${index}-weight`} css={woHeader}>{'weight'}</th>
-              <th key={`${set}-${index}-reps`} css={woHeader}>{'reps'}</th>
+              <th key={`${set}-${index}-weight`} css={woHeader}>
+                {'weight'}
+              </th>
+              <th key={`${set}-${index}-reps`} css={woHeader}>
+                {'reps'}
+              </th>
             </React.Fragment>
           )
         })}
@@ -76,7 +81,7 @@ const Workout = props => {
   const renderRows = () => {
     return props.wo.exercises.map(ex => {
       return (
-        <tr key={ex.id} >
+        <tr key={ex.id}>
           <td>{ex.name}</td>
           <td>{ex.targets}</td>
           {props.wo.sets.map(set => {
@@ -110,8 +115,21 @@ const Workout = props => {
     })
   }
 
+  const addSet = () => {
+    props.addSet()
+  }
+
   return (
     <React.Fragment>
+      <div style={{display:'inline-block', margin:'auto'}}>
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Add Set'
+          css={[basicButtonSmall, { float: 'left' }]}
+          onClick={addSet}
+        />
+      </div>
       <table css={woTable}>
         <tbody>
           {renderHeaderRows()}

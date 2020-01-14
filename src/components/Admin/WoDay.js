@@ -5,8 +5,10 @@ import TextInput from '../inputs/TextInput'
 import BasicTable from '../tables/BasicTable'
 import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
-
 import Workout from '../workouts/Workout'
+
+import { generateNewId } from '../ArrayUtils'
+import { cloneDeep } from 'lodash'
 
 // import { table } from '../../styles/table'
 import {
@@ -120,11 +122,30 @@ const WoDay = props => {
     console.log('handleCellChange')
   }
 
+  const addSet = () => {
+    let wo = cloneDeep(woData)
+    // create new set, add each exercise id, and set weights reps to empty
+    let newSet = {
+      id: generateNewId(wo.sets),
+      exercises: wo.exercises.map(ex => {
+        return { 
+          id: ex.id,
+          weight: '',
+          reps: ''
+        }
+      })
+    }
+    wo.sets.push(newSet)
+    setWoData(wo)
+    // save to DB (we want auto-save on everything... maybe)
+  }
+
   return (
-    <div css={formContainer}>
-      <div css={row} style={{ marginBottom: '20px' }}>
+    // <div css={formContainer}>
+    <div>
+      {/* <div css={row} style={{ marginBottom: '20px' }}>
         WoDay Test Page
-      </div>
+      </div> */}
       <div css={detailCard}>
         <div css={cardNoHover}>
           {/* --- section 1: Details --------------------------------------- */}
@@ -194,7 +215,7 @@ const WoDay = props => {
           {/* --- section 3: Weights --------------------------------------- */}
           <div css={[row, section]}>
             <div css={sectionHeader}>Weights</div>
-            <Workout wo={woData} />
+            <Workout wo={woData} addSet={addSet} />
           </div>
         </div>
       </div>
