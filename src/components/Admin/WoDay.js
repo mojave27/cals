@@ -5,14 +5,15 @@ import TextInput from '../inputs/TextInput'
 import BasicTable from '../tables/BasicTable'
 import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
-
 import Workout from '../workouts/Workout'
 
-import { table } from '../../styles/table'
+import { generateNewId } from '../ArrayUtils'
+import { cloneDeep } from 'lodash'
+
+// import { table } from '../../styles/table'
 import {
   cardNoHover,
   detailCard,
-  formContainer,
   row
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -25,10 +26,11 @@ import {
   gridSleep,
   gridWeight,
   section,
-  sectionHeader
+  sectionHeader,
+  woTable
 } from '../../styles/WoDayStyles'
 
-const sampleData = {
+const sampleCardioData = {
   headers: ['type', 'duration', 'distance', 'heart rate'],
   rows: [
     {
@@ -48,16 +50,54 @@ const sampleData = {
   ]
 }
 
+const sampleWoData = {
+  exercises: [
+    { id: 0, name: 'dips', targets: '3x8' },
+    { id: 1, name: 'chins', targets: '3x8' },
+    { id: 2, name: 'squats', targets: '1x20' }
+  ],
+  sets: [
+    {
+      id: 0,
+      exercises: [
+        { id: 0, weight: '45', reps: '8' },
+        { id: 1, weight: '15', reps: '7' },
+        { id: 2, weight: '105', reps: '20' }
+      ]
+    },
+    {
+      id: 1,
+      exercises: [
+        { id: 0, weight: '45', reps: '8' },
+        { id: 1, weight: '15', reps: '6' },
+        { id: 2, weight: '0', reps: '0' }
+      ]
+    }
+  ]
+}
+
 const WoDay = props => {
   let [startDate, setStartDate] = useState(new Date())
   let [energyRange, setEnergyRange] = useState(50)
   let [sleepRange, setSleepRange] = useState(50)
   let [weight, setWeight] = useState('')
-  let [data, setData] = useState(sampleData)
+  let [goals, setGoals] = useState('')
+  let [cardioData, setCardioData] = useState(sampleCardioData)
+  let [woData, setWoData] = useState(sampleWoData)
 
   const handleTextChange = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
+    let id = event.target.id
+    let value = event.target.value
+    switch (id) {
+      case 'weight':
+        setWeight(value)
+        break
+      case 'goals':
+        setGoals(value)
+        break
+      default:
+        console.log('Sorry, no match for ' + id)
+    }
   }
 
   // TODO: These should call up (props.handleTextChange) and state should be maintained by parent
@@ -81,11 +121,30 @@ const WoDay = props => {
     console.log('handleCellChange')
   }
 
+  const addSet = () => {
+    let wo = cloneDeep(woData)
+    // create new set, add each exercise id, and set weights reps to empty
+    let newSet = {
+      id: generateNewId(wo.sets),
+      exercises: wo.exercises.map(ex => {
+        return { 
+          id: ex.id,
+          weight: '',
+          reps: ''
+        }
+      })
+    }
+    wo.sets.push(newSet)
+    setWoData(wo)
+    // save to DB (we want auto-save on everything... maybe)
+  }
+
   return (
-    <div css={formContainer}>
-      <div css={row} style={{ marginBottom: '20px' }}>
+    // <div css={formContainer}>
+    <div>
+      {/* <div css={row} style={{ marginBottom: '20px' }}>
         WoDay Test Page
-      </div>
+      </div> */}
       <div css={detailCard}>
         <div css={cardNoHover}>
           {/* --- section 1: Details --------------------------------------- */}
@@ -105,8 +164,9 @@ const WoDay = props => {
                 <TextInput
                   label={'Goals'}
                   name={'goals'}
-                  id={'woday-goals'}
+                  id={'goals'}
                   placeholder={'enter goals here'}
+                  value={goals}
                   onChange={handleTextChange}
                 />
               </div>
@@ -145,58 +205,17 @@ const WoDay = props => {
           <div css={[row, section]}>
             <div css={sectionHeader}>Cardio</div>
             <BasicTable
-              jssClass={table}
+              jssClass={[woTable]}
               id={0}
               deleteRow={event => console.log(event)}
-              data={sampleData}
+              data={cardioData}
             />
           </div>
           {/* --- section 3: Weights --------------------------------------- */}
-          <div css={[row, section]} style={{margin:'auto'}}>
-            <div css={sectionHeader}>Weights</div> 
-            <Workout />
-            {/* <table style={{border:'1px solid black'}}>
-              <tbody>
-              <tr>
-                <th>{'exercise'}</th>
-                <th>{'set'}</th>
-                <th>{'set'}</th>
-                <th>{'set'}</th>
-              </tr>
-              <tr>
-                <td style={{border: '1px solid #333'}} rowSpan={2}>{'dips'}</td>
-                <td style={{border: '1px solid #333'}}>
-                  <table><tbody>
-                    <tr><td>
-                      <div style={{ width: '45px', display:'inline-block', float:'left' }}>
-                      <label style={{width:'25px'}}>{'weight'}</label>
-                      </div>
-                      <input type='text' placeholder={'enter weight'} style={{backgroundColor: '#eee',marginLeft:'3px',width:'100px', height:'22px',lineHeight:'11px'}}/>
-                    </td></tr>
-                    <tr><td>
-                      <div style={{ width: '45px', display:'inline-block', float:'left' }}>
-                      <label style={{width:'25px'}}>{'reps'}</label>
-                      </div>
-                      <input type='text' placeholder={'enter reps'} style={{marginLeft:'3px',width:'100px', height:'22px',lineHeight:'11px'}}/>
-                      </td></tr>
-                  </tbody></table>
-                </td>
-                <td style={{border: '1px solid #333'}}>
-                  <table><tbody>
-                    <tr><td>weight</td></tr>
-                    <tr><td>reps</td></tr>
-                  </tbody></table>
-                </td>
-                <td style={{border: '1px solid #333'}}>
-                  <table><tbody>
-                    <tr><td>weight</td></tr>
-                    <tr><td>reps</td></tr>
-                  </tbody></table>
-                </td>
-              </tr>
-              </tbody>
-            </table> */}
-            </div>
+          <div css={[row, section]}>
+            <div css={sectionHeader}>Weights</div>
+            <Workout wo={woData} addSet={addSet} />
+          </div>
         </div>
       </div>
     </div>

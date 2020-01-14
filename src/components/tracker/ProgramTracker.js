@@ -208,7 +208,7 @@ const ProgramTracker = props => {
   }
 
   const getDaysFromWorkout = workoutId => {
-    let { index, workout } = getWorkoutById(workoutId)
+    let { workout } = getWorkoutById(workoutId)
     let days = workout.days ? [...workout.days] : []
     return days
   }
