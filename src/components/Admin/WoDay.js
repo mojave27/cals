@@ -14,7 +14,6 @@ import { cloneDeep } from 'lodash'
 import {
   cardNoHover,
   detailCard,
-  formContainer,
   row
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
