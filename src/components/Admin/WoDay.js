@@ -50,9 +50,9 @@ const sampleCardioData = {
 
 const sampleWoData = {
   exercises: [
-    { id: 0, name: 'dips', targetReps: '8' },
-    { id: 1, name: 'chins', targetReps: '8' },
-    { id: 2, name: 'squats', targetReps: '8' }
+    { id: 0, name: 'dips', targets: '3x8' },
+    { id: 1, name: 'chins', targets: '3x8' },
+    { id: 2, name: 'squats', targets: '1x20' }
   ],
   sets: [
     {

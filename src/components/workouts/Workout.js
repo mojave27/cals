@@ -32,7 +32,7 @@ import { woInput, woLabel } from '../../styles/WoDayStyles'
 const Workout = props => {
 
   const renderHeaderRow = () => {
-    let headers = ['exercise', 'target reps']
+    let headers = ['exercise', 'targets']
     props.wo.sets.forEach(set => {
       headers.push('set')
     })
@@ -54,7 +54,7 @@ const Workout = props => {
           {ex.name}
         </td>
         <td>
-          {ex.targetReps}
+          {ex.targets}
         </td>
         {props.wo.sets.map(set => {
           let exercise = set.exercises.find( setEx => Number(setEx.id) === Number(ex.id) )
