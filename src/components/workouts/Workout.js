@@ -3,33 +3,34 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import { woInput, woLabel } from '../../styles/WoDayStyles'
 
-const sampleWo = {
-  exercises: [
-    { id: 0, name: 'dips', targetReps: '8' },
-    { id: 1, name: 'chins', targetReps: '8' },
-    { id: 2, name: 'squats', targetReps: '8' }
-  ],
-  sets: [
-    {
-      id: 0,
-      exercises: [
-        { id: 0, weight: '45', reps: '8' },
-        { id: 1, weight: '15', reps: '7' },
-        { id: 2, weight: '105', reps: '20' }
-      ]
-    },
-    {
-      id: 1,
-      exercises: [
-        { id: 0, weight: '45', reps: '8' },
-        { id: 1, weight: '15', reps: '6' },
-        { id: 2, weight: '0', reps: '0' }
-      ]
-    }
-  ]
-}
+// const sampleWo = {
+//   exercises: [
+//     { id: 0, name: 'dips', targetReps: '8' },
+//     { id: 1, name: 'chins', targetReps: '8' },
+//     { id: 2, name: 'squats', targetReps: '8' }
+//   ],
+//   sets: [
+//     {
+//       id: 0,
+//       exercises: [
+//         { id: 0, weight: '45', reps: '8' },
+//         { id: 1, weight: '15', reps: '7' },
+//         { id: 2, weight: '105', reps: '20' }
+//       ]
+//     },
+//     {
+//       id: 1,
+//       exercises: [
+//         { id: 0, weight: '45', reps: '8' },
+//         { id: 1, weight: '15', reps: '6' },
+//         { id: 2, weight: '0', reps: '0' }
+//       ]
+//     }
+//   ]
+// }
 
 const Workout = props => {
+
   const renderHeaderRow = () => {
     let headers = ['exercise', 'target reps']
     props.wo.sets.forEach(set => {
@@ -37,8 +38,8 @@ const Workout = props => {
     })
     let headerRow = (
       <tr>
-        {headers.map(header => {
-          return <th>{header}</th>
+        {headers.map( (header, index) => {
+          return <th key={`${header}-${index}`}>{header}</th>
         })}
       </tr>
     )
@@ -48,7 +49,7 @@ const Workout = props => {
   const renderRows = () => {
     return props.wo.exercises.map(ex => {
       return (
-        <tr style={{borderBottom:'1px solid red'}}>
+        <tr key={ex.id} style={{borderBottom:'1px solid red'}}>
         <td>
           {ex.name}
         </td>
@@ -58,11 +59,11 @@ const Workout = props => {
         {props.wo.sets.map(set => {
           let exercise = set.exercises.find( setEx => Number(setEx.id) === Number(ex.id) )
           return(
-            <td >
+            <td key={set.id} >
               <table style={{border:'none'}}>
                 <tbody>
                   <tr>
-                    <td style={{border:'none'}}>
+                    <td style={{border:'none', borderBottom:'1px dotted #333'}}>
                       <div css={woLabel}>
                         <label>{'weight'}</label>
                       </div>
@@ -109,8 +110,8 @@ const Workout = props => {
   )
 }
 
-Workout.defaultProps = {
-  wo: sampleWo
-}
+// Workout.defaultProps = {
+//   wo: sampleWo
+// }
 
 export default Workout

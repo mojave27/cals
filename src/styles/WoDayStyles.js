@@ -20,19 +20,20 @@ export const section = {
   '& table': {
     backgroundColor: activeTheme.color4.hex,
     border:`1px solid ${activeTheme.color1.hex}`,
-    color: activeTheme.color4_text.hex
+    color: activeTheme.color4_text.hex,
+    margin:'auto'
   },
   '& th': {
     borderBottom:`1px solid ${activeTheme.color3.hex}`,
-  },
-  '& tr': {
-    borderBottom:`1px solid ${activeTheme.color3.hex}`,
-    // borderTop:`1px solid ${activeTheme.color3.hex}`,
+    borderLeft:`1px solid ${activeTheme.color3.hex}`,
+    padding:'0px 5px'
   },
   '& td': {
     backgroundColor: activeTheme.color4.hex,
     borderLeft:`1px solid ${activeTheme.color3.hex}`,
-    color: activeTheme.color4_text.hex
+    borderBottom:`1px solid ${activeTheme.color3.hex}`,
+    color: activeTheme.color4_text.hex,
+    padding:'0px 5px'
   }
 }
 

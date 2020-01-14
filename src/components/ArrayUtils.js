@@ -70,6 +70,6 @@ export const generateNewId = list => {
 
 export const compareByName = (a, b) => {
   if (a.name < b.name) return -1
-  if (a.name == b.name) return 0
+  if (a.name === b.name) return 0
   if (a.name > b.name) return 1
 }

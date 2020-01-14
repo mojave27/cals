@@ -28,7 +28,7 @@ import {
   sectionHeader
 } from '../../styles/WoDayStyles'
 
-const sampleData = {
+const sampleCardioData = {
   headers: ['type', 'duration', 'distance', 'heart rate'],
   rows: [
     {
@@ -48,16 +48,54 @@ const sampleData = {
   ]
 }
 
+const sampleWoData = {
+  exercises: [
+    { id: 0, name: 'dips', targetReps: '8' },
+    { id: 1, name: 'chins', targetReps: '8' },
+    { id: 2, name: 'squats', targetReps: '8' }
+  ],
+  sets: [
+    {
+      id: 0,
+      exercises: [
+        { id: 0, weight: '45', reps: '8' },
+        { id: 1, weight: '15', reps: '7' },
+        { id: 2, weight: '105', reps: '20' }
+      ]
+    },
+    {
+      id: 1,
+      exercises: [
+        { id: 0, weight: '45', reps: '8' },
+        { id: 1, weight: '15', reps: '6' },
+        { id: 2, weight: '0', reps: '0' }
+      ]
+    }
+  ]
+}
+
 const WoDay = props => {
   let [startDate, setStartDate] = useState(new Date())
   let [energyRange, setEnergyRange] = useState(50)
   let [sleepRange, setSleepRange] = useState(50)
   let [weight, setWeight] = useState('')
-  let [data, setData] = useState(sampleData)
+  let [goals, setGoals] = useState('')
+  let [cardioData, setCardioData] = useState(sampleCardioData)
+  let [woData, setWoData] = useState(sampleWoData)
 
   const handleTextChange = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
+    let id = event.target.id
+    let value = event.target.value
+    switch (id) {
+      case 'weight':
+        setWeight(value)
+        break
+      case 'goals':
+        setGoals(value)
+        break
+      default:
+        console.log('Sorry, no match for ' + id)
+    }
   }
 
   // TODO: These should call up (props.handleTextChange) and state should be maintained by parent
@@ -105,8 +143,9 @@ const WoDay = props => {
                 <TextInput
                   label={'Goals'}
                   name={'goals'}
-                  id={'woday-goals'}
+                  id={'goals'}
                   placeholder={'enter goals here'}
+                  value={goals}
                   onChange={handleTextChange}
                 />
               </div>
@@ -148,13 +187,13 @@ const WoDay = props => {
               jssClass={table}
               id={0}
               deleteRow={event => console.log(event)}
-              data={sampleData}
+              data={cardioData}
             />
           </div>
           {/* --- section 3: Weights --------------------------------------- */}
           <div css={[row, section]}>
             <div css={sectionHeader}>Weights</div>
-            <Workout />
+            <Workout wo={woData} />
           </div>
         </div>
       </div>
