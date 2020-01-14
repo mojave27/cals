@@ -3,15 +3,15 @@ import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
 import Spinner from '../Spinner'
 import TrackerContext from '../../context/TrackerContext'
-import SetTable from '../tables/SetTable'
 import SetEditor from './SetEditor'
 import Modal from '../Modal'
+import SetTable from '../tables/SetTable'
 import ExerciseTable from '../tables/ExerciseTable'
 import { generateNewId } from '../ArrayUtils'
-import { setBlock } from '../../styles/program'
 import { cloneDeep, isEmpty, isUndefined } from 'lodash'
 
 
+import { setBlock } from '../../styles/program'
 import { gridContainerOneColumn } from '../../styles/gridStyles'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
@@ -162,7 +162,7 @@ const WorkoutTracker = props => {
         return (
           <div key={set.id} css={[Row, setBlock, trackerSet]}>
             <SetTable data={data} copySet={copySet} editSet={editSet} />
-              <ExerciseTable data={data} onCellChange={handleCellChange} />
+            <ExerciseTable data={data} onCellChange={handleCellChange} />
           </div>
         )
       })

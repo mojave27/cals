@@ -1,39 +1,105 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { detailCard, container, stripe } from '../../styles/main-styles'
+// import { detailCard, container, stripe } from '../../styles/main-styles'
 import SetCard from '../sets/SetCard'
 
 const Workout = props => {
 
-  const renderSets = (sets) => {
-    return sets.map( set => {
-      return (<SetCard key={set.id} set={set} />)
-    })
-  }
-
   return (
     <React.Fragment>
-      <div css={detailCard}>
-        <div css={container}>
-          <h3>{props.workout.name}</h3>
-        </div>
-        <div css={stripe} />
-
-        <div css={stripe} />
-        <div css={container} style={{ backgroundColor: 'white' }}>
-          <h3>
-            <b>{props.workout.description}</b>
-          </h3>
-        </div>
-        <div css={container}></div>
-
-        <div css={container}>
-          <div style={{ display: 'block', paddingBottom: '10px' }}>
-            <div style={{ paddingBottom: '10px' }}>{renderSets(props.workout.sets)}</div>
-          </div>
-        </div>
-      </div>
+      <table style={{ border: '1px solid black' }}>
+        <tbody>
+          <tr>
+            <th>{'exercise'}</th>
+            <th>{'set'}</th>
+            <th>{'set'}</th>
+            <th>{'set'}</th>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #333' }} rowSpan={2}>
+              {'dips'}
+            </td>
+            <td style={{ border: '1px solid #333' }}>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div
+                        style={{
+                          width: '45px',
+                          display: 'inline-block',
+                          float: 'left'
+                        }}
+                      >
+                        <label style={{ width: '25px' }}>{'weight'}</label>
+                      </div>
+                      <input
+                        type='text'
+                        placeholder={'enter weight'}
+                        style={{
+                          backgroundColor: '#eee',
+                          marginLeft: '3px',
+                          width: '100px',
+                          height: '22px',
+                          lineHeight: '11px'
+                        }}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div
+                        style={{
+                          width: '45px',
+                          display: 'inline-block',
+                          float: 'left'
+                        }}
+                      >
+                        <label style={{ width: '25px' }}>{'reps'}</label>
+                      </div>
+                      <input
+                        type='text'
+                        placeholder={'enter reps'}
+                        style={{
+                          marginLeft: '3px',
+                          width: '100px',
+                          height: '22px',
+                          lineHeight: '11px'
+                        }}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td style={{ border: '1px solid #333' }}>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>weight</td>
+                  </tr>
+                  <tr>
+                    <td>reps</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td style={{ border: '1px solid #333' }}>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>weight</td>
+                  </tr>
+                  <tr>
+                    <td>reps</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </React.Fragment>
   )
 }

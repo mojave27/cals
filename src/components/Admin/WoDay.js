@@ -6,6 +6,8 @@ import BasicTable from '../tables/BasicTable'
 import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
 
+import Workout from '../workouts/Workout'
+
 import { table } from '../../styles/table'
 import {
   cardNoHover,
@@ -52,10 +54,12 @@ const WoDay = props => {
   let [sleepRange, setSleepRange] = useState(50)
   let [weight, setWeight] = useState('')
   let [data, setData] = useState(sampleData)
+
   const handleTextChange = event => {
     console.log(event.target.id)
     console.log(event.target.value)
   }
+
   // TODO: These should call up (props.handleTextChange) and state should be maintained by parent
   const handleSliderChange = event => {
     let id = event.target.id
@@ -71,6 +75,10 @@ const WoDay = props => {
       default:
         console.log('Sorry, no match for ' + id)
     }
+  }
+
+  const handleCellChange = event => {
+    console.log('handleCellChange')
   }
 
   return (
@@ -134,7 +142,7 @@ const WoDay = props => {
             </div>
           </div>
           {/* --- section 2: Cardio --------------------------------------- */}
-          <div css={[row, section]} >
+          <div css={[row, section]}>
             <div css={sectionHeader}>Cardio</div>
             <BasicTable
               jssClass={table}
@@ -144,9 +152,51 @@ const WoDay = props => {
             />
           </div>
           {/* --- section 3: Weights --------------------------------------- */}
-          <div css={[row, section]} >
-            <div css={sectionHeader}>Weights</div>
-          </div>
+          <div css={[row, section]} style={{margin:'auto'}}>
+            <div css={sectionHeader}>Weights</div> 
+            <Workout />
+            {/* <table style={{border:'1px solid black'}}>
+              <tbody>
+              <tr>
+                <th>{'exercise'}</th>
+                <th>{'set'}</th>
+                <th>{'set'}</th>
+                <th>{'set'}</th>
+              </tr>
+              <tr>
+                <td style={{border: '1px solid #333'}} rowSpan={2}>{'dips'}</td>
+                <td style={{border: '1px solid #333'}}>
+                  <table><tbody>
+                    <tr><td>
+                      <div style={{ width: '45px', display:'inline-block', float:'left' }}>
+                      <label style={{width:'25px'}}>{'weight'}</label>
+                      </div>
+                      <input type='text' placeholder={'enter weight'} style={{backgroundColor: '#eee',marginLeft:'3px',width:'100px', height:'22px',lineHeight:'11px'}}/>
+                    </td></tr>
+                    <tr><td>
+                      <div style={{ width: '45px', display:'inline-block', float:'left' }}>
+                      <label style={{width:'25px'}}>{'reps'}</label>
+                      </div>
+                      <input type='text' placeholder={'enter reps'} style={{marginLeft:'3px',width:'100px', height:'22px',lineHeight:'11px'}}/>
+                      </td></tr>
+                  </tbody></table>
+                </td>
+                <td style={{border: '1px solid #333'}}>
+                  <table><tbody>
+                    <tr><td>weight</td></tr>
+                    <tr><td>reps</td></tr>
+                  </tbody></table>
+                </td>
+                <td style={{border: '1px solid #333'}}>
+                  <table><tbody>
+                    <tr><td>weight</td></tr>
+                    <tr><td>reps</td></tr>
+                  </tbody></table>
+                </td>
+              </tr>
+              </tbody>
+            </table> */}
+            </div>
         </div>
       </div>
     </div>
