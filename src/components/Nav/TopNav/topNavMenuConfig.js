@@ -35,7 +35,8 @@ export const menuConfig = [
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
       { to: '/program-viewer', text: 'program viewer' },
-      { to: '/admin/test', text: 'test page' }
+      { to: '/admin/test', text: 'test page' },
+      { to: '/admin/test/woday', text: 'woday test page' }
     ]
   }
 ]

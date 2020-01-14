@@ -22,8 +22,8 @@ export const stormTrooperInverse = {
     return this.color5
   },
   color2: {
-    hex: '#262626',
-    rgba: alpha => buildRgba(38, 38, 38, alpha)
+    hex: '#555555',
+    rgba: alpha => buildRgba(85, 85, 85, alpha)
   },
   get color2_text() {
     return this.color5

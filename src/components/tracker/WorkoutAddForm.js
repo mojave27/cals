@@ -17,7 +17,6 @@ const WorkoutAddForm = props => {
   }
 
   const showSetCard = () => {
-    // context.clearSet()
     toggleSetDialog()
   }
 
