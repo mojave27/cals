@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-// import { detailCard, container, stripe } from '../../styles/main-styles'
+import { woInput, woLabel } from '../../styles/WoDayStyles'
 
 const sampleWo = {
   exercises: [
@@ -48,65 +48,42 @@ const Workout = props => {
   const renderRows = () => {
     return props.wo.exercises.map(ex => {
       return (
-        <tr>
-        <td style={{ border: '1px solid #333' }} >
+        <tr style={{borderBottom:'1px solid red'}}>
+        <td>
           {ex.name}
         </td>
-        <td style={{ border: '1px solid #333' }} >
+        <td>
           {ex.targetReps}
         </td>
         {props.wo.sets.map(set => {
           let exercise = set.exercises.find( setEx => Number(setEx.id) === Number(ex.id) )
           return(
-            <td style={{ border: '1px solid #333' }}>
-              <table>
+            <td >
+              <table style={{border:'none'}}>
                 <tbody>
                   <tr>
-                    <td>
-                      <div
-                        style={{
-                          width: '45px',
-                          display: 'inline-block',
-                          float: 'left'
-                        }}
-                      >
-                        <label style={{ width: '25px' }}>{'weight'}</label>
+                    <td style={{border:'none'}}>
+                      <div css={woLabel}>
+                        <label>{'weight'}</label>
                       </div>
                       <input
                         type='text'
                         placeholder={'enter weight'}
                         value={exercise.weight}
-                        style={{
-                          backgroundColor: '#eee',
-                          marginLeft: '3px',
-                          width: '100px',
-                          height: '22px',
-                          lineHeight: '11px'
-                        }}
+                        css={woInput}
                       />
                     </td>
                   </tr>
                   <tr>
-                    <td>
-                      <div
-                        style={{
-                          width: '45px',
-                          display: 'inline-block',
-                          float: 'left'
-                        }}
-                      >
-                        <label style={{ width: '25px' }}>{'reps'}</label>
+                    <td style={{border:'none'}}>
+                      <div css={woLabel}>
+                        <label>{'reps'}</label>
                       </div>
                       <input
                         type='text'
                         placeholder={'enter reps'}
                         value={exercise.reps}
-                        style={{
-                          marginLeft: '3px',
-                          width: '100px',
-                          height: '22px',
-                          lineHeight: '11px'
-                        }}
+                        css={woInput}
                       />
                     </td>
                   </tr>
@@ -122,7 +99,7 @@ const Workout = props => {
 
   return (
     <React.Fragment>
-      <table style={{ border: '1px solid black' }}>
+      <table>
         <tbody>
           {renderHeaderRow()}
           {renderRows()}

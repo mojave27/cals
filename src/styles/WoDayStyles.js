@@ -16,7 +16,24 @@ export const section = {
   marginTop: '15px',
   padding: '15px',
   width: '100%',
-  border: '1px solid #eee'
+  border: '1px solid #eee',
+  '& table': {
+    backgroundColor: activeTheme.color4.hex,
+    border:`1px solid ${activeTheme.color1.hex}`,
+    color: activeTheme.color4_text.hex
+  },
+  '& th': {
+    borderBottom:`1px solid ${activeTheme.color3.hex}`,
+  },
+  '& tr': {
+    borderBottom:`1px solid ${activeTheme.color3.hex}`,
+    // borderTop:`1px solid ${activeTheme.color3.hex}`,
+  },
+  '& td': {
+    backgroundColor: activeTheme.color4.hex,
+    borderLeft:`1px solid ${activeTheme.color3.hex}`,
+    color: activeTheme.color4_text.hex
+  }
 }
 
 export const sectionHeader = {
@@ -26,13 +43,13 @@ export const sectionHeader = {
   fontWeight: 'bold'
 }
 
-export const gridGoals = css({ 
-  gridArea: 'goals', 
+export const gridGoals = css({
+  gridArea: 'goals',
   padding: '7px 0px 15px 0px',
   textAlign: 'left'
 })
-export const gridDate = css({ 
-  gridArea: 'date', 
+export const gridDate = css({
+  gridArea: 'date',
   padding: '7px 0px 15px 0px',
   textAlign: 'left'
 })
@@ -54,12 +71,12 @@ export const gridWeight = css({
 })
 export const gridEnergy = css({
   paddingTop: '5px',
-  gridArea: 'energy',
+  gridArea: 'energy'
   // border: '1px solid pink'
 })
 export const gridSleep = css({
   paddingTop: '5px',
-  gridArea: 'sleep',
+  gridArea: 'sleep'
   // border: '1px solid yellow'
 })
 
@@ -107,3 +124,17 @@ export let slider = {
 // cardio styles ---------------------------------------- //
 
 // weights styles ---------------------------------------- //
+export let woLabel = {
+  width: '45px',
+  display: 'inline-block',
+  float: 'left'
+}
+
+export let woInput = {
+  backgroundColor: activeTheme.color2.hex,
+  color: activeTheme.color2_text.hex,
+  marginLeft: '3px',
+  width: '100px',
+  height: '22px',
+  lineHeight: '11px'
+}
