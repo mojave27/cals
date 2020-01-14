@@ -16,25 +16,7 @@ export const section = {
   marginTop: '15px',
   padding: '15px',
   width: '100%',
-  border: '1px solid #eee',
-  '& table': {
-    backgroundColor: activeTheme.color4.hex,
-    border:`1px solid ${activeTheme.color1.hex}`,
-    color: activeTheme.color4_text.hex,
-    margin:'auto'
-  },
-  '& th': {
-    borderBottom:`1px solid ${activeTheme.color3.hex}`,
-    borderLeft:`1px solid ${activeTheme.color3.hex}`,
-    padding:'0px 5px'
-  },
-  '& td': {
-    backgroundColor: activeTheme.color4.hex,
-    borderLeft:`1px solid ${activeTheme.color3.hex}`,
-    borderBottom:`1px solid ${activeTheme.color3.hex}`,
-    color: activeTheme.color4_text.hex,
-    padding:'0px 5px'
-  }
+  border: '1px solid #eee'
 }
 
 export const sectionHeader = {
@@ -125,6 +107,10 @@ export let slider = {
 // cardio styles ---------------------------------------- //
 
 // weights styles ---------------------------------------- //
+export let woHeader = {
+  backgroundColor: activeTheme.color3.hex,
+  color: activeTheme.color3_text.hex
+}
 export let woLabel = {
   width: '45px',
   display: 'inline-block',
@@ -132,10 +118,79 @@ export let woLabel = {
 }
 
 export let woInput = {
-  backgroundColor: activeTheme.color2.hex,
-  color: activeTheme.color2_text.hex,
-  marginLeft: '3px',
-  width: '100px',
+  width: '50px',
   height: '22px',
-  lineHeight: '11px'
+  paddingTop: '2px',
+  paddingRight: '10px'
+}
+
+export let woTable = {
+  margin: 'auto',
+  // borderCollapse: 'collapse',
+  // borderSpacing: '0',
+  border: `1px solid ${activeTheme.color5.hex}`,
+  '& th': {
+    backgroundColor: activeTheme.color5.hex,
+    color: activeTheme.color5_text.hex
+  },
+  '& th, td': {
+    // textAlign: 'left',
+    padding: '3px 8px'
+  },
+
+  '& tr:nth-of-type(odd)': {
+    backgroundColor: activeTheme.color1.hex,
+    color: activeTheme.color1_text.hex
+  },
+  '& tr:nth-of-type(even)': {
+    backgroundColor: activeTheme.color2.hex,
+    color: activeTheme.color2_text.hex
+  },
+  '& input': {
+    borderRadius: '0px',
+    border: 'none',
+    backgroundColor: 'inherit',
+    color: 'inherit',
+    fontSize: '1em',
+    paddingTop: '2px',
+    lineHeight: '14px'
+  }
+}
+
+export let tableInput = {
+  backgroundColor: 'inherit',
+  border: 'none',
+  color: 'inherit',
+  fontSize: '1em',
+  width: '100%',
+  lineHeight: '14px'
+}
+
+export let workoutCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(0.75)}`
+}
+
+export let setHeader = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap'
+}
+
+export let setLeadCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(0.75)}`,
+  fontWeight: '700'
+}
+
+export const dateHeader = {
+  borderLeft: `2px solid ${activeTheme.color3.hex}`
+}
+
+export let dayLeftCell = {
+  borderLeft: `3px solid ${activeTheme.color3.rgba(0.75)}`,
+  borderRight: `1px solid ${activeTheme.color3.rgba(0.75)}`
+}
+
+export let dayRightCell = {
+  borderLeft: `1px solid ${activeTheme.color3.rgba(0.75)}`,
+  borderRight: `3px solid ${activeTheme.color3.rgba(0.75)}`
 }

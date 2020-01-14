@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { woInput, woLabel } from '../../styles/WoDayStyles'
+import { woHeader,woInput,woTable } from '../../styles/WoDayStyles'
 
 // const sampleWo = {
 //   exercises: [
@@ -30,71 +30,81 @@ import { woInput, woLabel } from '../../styles/WoDayStyles'
 // }
 
 const Workout = props => {
-
   // TODO: how to handle a workout with no exercises or sets defined yet?
+  const COL_1_TITLE = 'exercise'
+  const COL_2_TITLE = 'targets'
 
-  const renderHeaderRow = () => {
-    let headers = ['exercise', 'targets']
+  const renderHeaderRows = () => {
+    let headers = [COL_1_TITLE, COL_2_TITLE]
     props.wo.sets.forEach(set => {
       headers.push('set')
     })
-    let headerRow = (
-      <tr>
-        {headers.map( (header, index) => {
-          return <th key={`${header}-${index}`}>{header}</th>
+    let firstHeaderRow = (
+      <tr key={'firstHeaderRow'}>
+        {headers.map((header, index) => {
+          if (header === COL_1_TITLE || header === COL_2_TITLE) {
+            return (
+              <th rowSpan={2} key={`${header}-${index}`} css={woHeader}>
+                {header}
+              </th>
+            )
+          } else {
+            return (
+              <th colSpan={2} key={`${header}-${index}`} css={woHeader}>
+                {header}
+              </th>
+            )
+          }
         })}
       </tr>
     )
-    return headerRow
+    let secondHeaderRow = (
+      <tr key={'secondHeaderRow'}>
+        {props.wo.sets.map((set, index) => {
+          return (
+            <React.Fragment key={`${set}-${index}`}>
+              <th key={`${set}-${index}-weight`} css={woHeader}>{'weight'}</th>
+              <th key={`${set}-${index}-reps`} css={woHeader}>{'reps'}</th>
+            </React.Fragment>
+          )
+        })}
+      </tr>
+    )
+    return [firstHeaderRow, secondHeaderRow]
   }
 
   const renderRows = () => {
     return props.wo.exercises.map(ex => {
       return (
-        <tr key={ex.id} style={{borderBottom:'1px solid red'}}>
-        <td>
-          {ex.name}
-        </td>
-        <td>
-          {ex.targets}
-        </td>
-        {props.wo.sets.map(set => {
-          let exercise = set.exercises.find( setEx => Number(setEx.id) === Number(ex.id) )
-          return(
-            <td key={set.id} >
-              <table style={{border:'none'}}>
-                <tbody>
-                  <tr>
-                    <td style={{border:'none', borderBottom:'1px dotted #333'}}>
-                      <div css={woLabel}>
-                        <label>{'weight'}</label>
-                      </div>
-                      <input
-                        type='text'
-                        placeholder={'enter weight'}
-                        value={exercise.weight}
-                        css={woInput}
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style={{border:'none'}}>
-                      <div css={woLabel}>
-                        <label>{'reps'}</label>
-                      </div>
-                      <input
-                        type='text'
-                        placeholder={'enter reps'}
-                        value={exercise.reps}
-                        css={woInput}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          )
-        })}
+        <tr key={ex.id} >
+          <td>{ex.name}</td>
+          <td>{ex.targets}</td>
+          {props.wo.sets.map(set => {
+            let exercise = set.exercises.find(
+              setEx => Number(setEx.id) === Number(ex.id)
+            )
+            return (
+              <React.Fragment key={`${set.id}`}>
+                <td>
+                  <input
+                    type='text'
+                    placeholder={'enter weight'}
+                    value={exercise.weight}
+                    css={woInput}
+                  />
+                </td>
+
+                <td>
+                  <input
+                    type='text'
+                    placeholder={'enter reps'}
+                    value={exercise.reps}
+                    css={woInput}
+                  />
+                </td>
+              </React.Fragment>
+            )
+          })}
         </tr>
       )
     })
@@ -102,9 +112,9 @@ const Workout = props => {
 
   return (
     <React.Fragment>
-      <table>
+      <table css={woTable}>
         <tbody>
-          {renderHeaderRow()}
+          {renderHeaderRows()}
           {renderRows()}
         </tbody>
       </table>

@@ -8,7 +8,7 @@ import DateInput from '../inputs/DateInput'
 
 import Workout from '../workouts/Workout'
 
-import { table } from '../../styles/table'
+// import { table } from '../../styles/table'
 import {
   cardNoHover,
   detailCard,
@@ -25,7 +25,8 @@ import {
   gridSleep,
   gridWeight,
   section,
-  sectionHeader
+  sectionHeader,
+  woTable
 } from '../../styles/WoDayStyles'
 
 const sampleCardioData = {
@@ -184,7 +185,7 @@ const WoDay = props => {
           <div css={[row, section]}>
             <div css={sectionHeader}>Cardio</div>
             <BasicTable
-              jssClass={[table]}
+              jssClass={[woTable]}
               id={0}
               deleteRow={event => console.log(event)}
               data={cardioData}
