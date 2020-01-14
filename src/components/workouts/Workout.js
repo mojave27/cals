@@ -31,6 +31,8 @@ import { woInput, woLabel } from '../../styles/WoDayStyles'
 
 const Workout = props => {
 
+  // TODO: how to handle a workout with no exercises or sets defined yet?
+
   const renderHeaderRow = () => {
     let headers = ['exercise', 'targets']
     props.wo.sets.forEach(set => {

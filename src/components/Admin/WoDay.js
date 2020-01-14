@@ -184,7 +184,7 @@ const WoDay = props => {
           <div css={[row, section]}>
             <div css={sectionHeader}>Cardio</div>
             <BasicTable
-              jssClass={table}
+              jssClass={[table]}
               id={0}
               deleteRow={event => console.log(event)}
               data={cardioData}
