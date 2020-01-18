@@ -83,6 +83,8 @@ const WoDay = props => {
   let [weight, setWeight] = useState('')
   let [goals, setGoals] = useState('')
   let [cardioData, setCardioData] = useState(sampleCardioData)
+
+  // change this to retrieve from api
   let [woData, setWoData] = useState(sampleWoData)
 
   const handleTextChange = event => {
