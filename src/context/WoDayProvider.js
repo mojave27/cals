@@ -1,15 +1,21 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
 import { findIndexOfId, updateItemById } from '../components/ArrayUtils'
+import { cloneDeep } from 'lodash'
 
 export const emptyWoDay = {
     id:-1,
-    date:'',
+    date: {
+        "day": "01",
+        "month": "01",
+        "year":"2020"
+    },
     goals:'',
     weight:'',
     energy: 50,
     sleep: 50,
     cardio:{
+        "headers": ["type", "duration", "distance", "heart rate"],
         'exercises': []
     },
     wo: {
@@ -29,6 +35,9 @@ class WoDayProvider extends React.Component {
         return (
             <WoDayContext.Provider value={{
                 woday: this.state.woday,
+                copyWoDay: () => {
+                    return cloneDeep(this.state.woday)
+                },
                 updateWoDay: woday => {
                     this.setState({ woday })
                 },

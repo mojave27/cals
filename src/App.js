@@ -18,6 +18,7 @@ import WoProvider from './context/WoProvider'
 import ProgramTracker from './components/tracker/ProgramTracker'
 
 import { activeTheme } from './styles/main-styles'
+import WoDayProvider from './context/WoDayProvider'
 
 class App extends Component {
   render() {
@@ -37,18 +38,20 @@ class App extends Component {
                     margin: '20px auto'
                   }}
                 >
-                  <Router>
-                    <Home path='/' />
-                    <Tracker path='/program-tracker' />
-                    <Programs path='/programs' />
-                    <ProgramForm path='/program-form' />
-                    <ProgramForm path='/program-form/:programId' />
-                    <Exercises path='/exercises' />
-                    <DataConsistency path='/admin/consistency-check' />
-                    <Test path='/admin/test' />
-                    <WoDay path='/admin/test/woday' />
-                    <ProgramTracker path='/program-viewer' />
-                  </Router>
+                  <WoDayProvider>
+                    <Router>
+                      <Home path='/' />
+                      <Tracker path='/program-tracker' />
+                      <Programs path='/programs' />
+                      <ProgramForm path='/program-form' />
+                      <ProgramForm path='/program-form/:programId' />
+                      <Exercises path='/exercises' />
+                      <DataConsistency path='/admin/consistency-check' />
+                      <Test path='/admin/test' />
+                      <WoDay path='/admin/test/woday' />
+                      <ProgramTracker path='/program-viewer' />
+                    </Router>
+                  </WoDayProvider>
                 </div>
               </div>
             </SetProvider>
