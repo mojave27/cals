@@ -223,6 +223,7 @@ const WoDay = props => {
                   placeholder={'enter goals here'}
                   value={context.woday.goals}
                   onChange={handleTextChange}
+                  styles={{width:'300px'}}
                 />
               </div>
               {/* --- MyStats --------------------------------------- */}
@@ -234,6 +235,7 @@ const WoDay = props => {
                   value={context.woday.weight}
                   placeholder={'enter weight'}
                   onChange={handleTextChange}
+                  styles={{width:'100px'}}
                 />
               </div>
               <div css={gridEnergy}>

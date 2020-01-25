@@ -15,9 +15,8 @@ const styles = {
     width:'75px'
   },
   input: {
-    width: '75%',
     display: 'inline-block',
-    lineHeight:'23px',
+    lineHeight:'23px'
   }
 }
 
@@ -36,7 +35,7 @@ const TextInput = props => {
           value={props.value}
           placeholder='enter value..'
           onChange={props.onChange}
-          style={{padding:'6px'}}
+          style={{padding:'6px', ...props.styles}}
         />
       </div>
     </React.Fragment>
