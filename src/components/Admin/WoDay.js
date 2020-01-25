@@ -241,6 +241,8 @@ const WoDay = props => {
               <div css={gridEnergy}>
                 <RangeSlider
                   label={'Energy'}
+                  min={0}
+                  max={10}
                   jssClass={{ float: 'left' }}
                   id='energyRange'
                   value={context.woday.energy}
@@ -250,6 +252,8 @@ const WoDay = props => {
               <div css={gridSleep}>
                 <RangeSlider
                   label={'Sleep'}
+                  min={0}
+                  max={10}
                   jssClass={{ float: 'left' }}
                   id='sleepRange'
                   value={context.woday.sleep}
