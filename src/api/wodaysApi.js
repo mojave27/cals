@@ -34,48 +34,48 @@ export const retrieveWoDayById = id => {
     })
 }
 
-export const addWorkout = workout => {
-  console.log(`calling POST /workouts with ${workout}`)
-  // let data = {...workout}
-  return axios
-    .post(URL, workout, config)
-    .then(response => {
-      const data = parseResponse(response)
-      return data
-    })
-    .catch(error => {
-      console.log(`workouts api - addWorkout error: ${error}`)
-      return {}
-    })
-}
+// export const addWorkout = workout => {
+//   console.log(`calling POST /workouts with ${workout}`)
+//   // let data = {...workout}
+//   return axios
+//     .post(URL, workout, config)
+//     .then(response => {
+//       const data = parseResponse(response)
+//       return data
+//     })
+//     .catch(error => {
+//       console.log(`workouts api - addWorkout error: ${error}`)
+//       return {}
+//     })
+// }
 
-export const updateWorkout = workout => {
-  let url = `${URL}/${workout.id}`
+export const updateWoDay = woday => {
+  let url = `${URL}/${woday.id}`
   console.log(`calling PUT ${url}`)
   return axios
-    .put(url, workout, config)
+    .put(url, woday, config)
     .then(response => {
       const data = parseResponse(response)
       return data
     })
     .catch(error => {
-      console.log(`workouts api - addWorkout error: ${error}`)
+      console.log(`woday api - addWoDay error: ${error}`)
       return {}
     })
 }
 
-export const deleteWorkout = id => {
-  const url = `${URL}/${id}`
-  return axios
-    .delete(url, config)
-    .then(response => {
-      return parseResponse(response)
-    })
-    .catch(error => {
-      console.log(`workouts api - deleteWorkout error: ${error}`)
-      return {}
-    })
-}
+// export const deleteWorkout = id => {
+//   const url = `${URL}/${id}`
+//   return axios
+//     .delete(url, config)
+//     .then(response => {
+//       return parseResponse(response)
+//     })
+//     .catch(error => {
+//       console.log(`workouts api - deleteWorkout error: ${error}`)
+//       return {}
+//     })
+// }
 
 const parseResponse = response => {
   return response.data

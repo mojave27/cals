@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
-import { retrieveWoDayById } from '../../api/wodaysApi'
+import { retrieveWoDayById, updateWoDay } from '../../api/wodaysApi'
 import WoDayContext from '../../context/WoDayContext'
 import TextInput from '../inputs/TextInput'
 import BasicTable from '../tables/BasicTable'
@@ -9,14 +9,14 @@ import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
 import Workout from '../workouts/Workout'
 
-import { generateNewId } from '../ArrayUtils'
-import { cloneDeep } from 'lodash'
+import { findIndexOfId, generateNewId } from '../ArrayUtils'
 
 // import { table } from '../../styles/table'
 import {
   cardNoHover,
   detailCard,
-  row
+  row,
+  basicButton
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
@@ -35,6 +35,7 @@ import {
 
 const WoDay = props => {
   let context = useContext(WoDayContext)
+  let [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     let didCancel = false
@@ -44,7 +45,6 @@ const WoDay = props => {
       if (!didCancel) {
         console.log({response})
         context.updateWoDay(response)
-        // setExercises(response)
       }
     }
 
@@ -53,6 +53,13 @@ const WoDay = props => {
       didCancel = true
     }
   }, [])
+
+  const saveWoDay = async () => {
+    await setIsSaving(true)
+    updateWoDay(context.woday).then( response => {
+      setIsSaving(false)
+    })
+  }
 
   const handleTextChange = event => {
     let id = event.target.id
@@ -67,6 +74,29 @@ const WoDay = props => {
       default:
         console.log('Sorry, no match for ' + id)
     }
+  }
+
+  const handleSetChange = event => {
+    let exerciseId = event.target.parentNode.parentNode.id
+    let setId = event.target.dataset.setid
+    let name = event.target.name
+    let value = event.target.value
+
+    let woday = context.copyWoDay()
+    let wo = woday.wo
+
+    // find set
+    let setIndex = findIndexOfId(setId, wo.sets)
+    let set = wo.sets[setIndex]
+
+    // find exercise
+    let exIndex = findIndexOfId(exerciseId, set.exercises)
+    let ex = set.exercises[exIndex]
+
+    // update weight or reps
+    ex[name] = value
+
+    context.updateWoDay(woday)
   }
 
   const setWeight = weight => {
@@ -174,6 +204,13 @@ const WoDay = props => {
                   setStartDate={setDate}
                   label={'Date'}
                 />
+              <input
+                style={{ margin: '5px', float: 'right' }}
+                type='button'
+                value='Save'
+                css={[basicButton, { float: 'right' }]}
+                onClick={saveWoDay}
+              />
               </div>
               <div
                 css={gridGoals}
@@ -233,7 +270,7 @@ const WoDay = props => {
           {/* --- section 3: Weights --------------------------------------- */}
           <div css={[row, section]}>
             <div css={sectionHeader}>Weights</div>
-            <Workout wo={context.woday.wo} addSet={addSet} />
+            <Workout wo={context.woday.wo} addSet={addSet} onChange={handleSetChange} />
           </div>
         </div>
       </div>
