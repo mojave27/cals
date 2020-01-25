@@ -40,7 +40,7 @@ class BasicTable extends React.Component {
     //   headers.splice(0, 0, '')
     // }
     return (
-      <tr key={headers.toString()}>
+      <tr key={headers}>
         {headers.map( (header,index) => (
           <th key={`${header}-${index}`}>{header}</th>
         ))}

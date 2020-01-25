@@ -1,20 +1,22 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { retrieveWoDayById, updateWoDay } from '../../api/wodaysApi'
+import WoDayContext from '../../context/WoDayContext'
 import TextInput from '../inputs/TextInput'
 import BasicTable from '../tables/BasicTable'
 import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
 import Workout from '../workouts/Workout'
 
-import { generateNewId } from '../ArrayUtils'
-import { cloneDeep } from 'lodash'
+import { findIndexOfId, generateNewId } from '../ArrayUtils'
 
 // import { table } from '../../styles/table'
 import {
   cardNoHover,
   detailCard,
-  row
+  row,
+  basicButton
 } from '../../styles/main-styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
@@ -30,60 +32,34 @@ import {
   woTable
 } from '../../styles/WoDayStyles'
 
-const sampleCardioData = {
-  headers: ['type', 'duration', 'distance', 'heart rate'],
-  rows: [
-    {
-      id: 0,
-      type: 'steady state jog',
-      duration: '30 min',
-      distance: '',
-      heartRate: '120 bpm'
-    },
-    {
-      id: 1,
-      type: 'HIIT',
-      duration: '20 min',
-      distance: '',
-      heartRate: '150 bpm'
-    }
-  ]
-}
-
-const sampleWoData = {
-  exercises: [
-    { id: 0, name: 'dips', targets: '3x8' },
-    { id: 1, name: 'chins', targets: '3x8' },
-    { id: 2, name: 'squats', targets: '1x20' }
-  ],
-  sets: [
-    {
-      id: 0,
-      exercises: [
-        { id: 0, weight: '45', reps: '8' },
-        { id: 1, weight: '15', reps: '7' },
-        { id: 2, weight: '105', reps: '20' }
-      ]
-    },
-    {
-      id: 1,
-      exercises: [
-        { id: 0, weight: '45', reps: '8' },
-        { id: 1, weight: '15', reps: '6' },
-        { id: 2, weight: '0', reps: '0' }
-      ]
-    }
-  ]
-}
 
 const WoDay = props => {
-  let [startDate, setStartDate] = useState(new Date())
-  let [energyRange, setEnergyRange] = useState(50)
-  let [sleepRange, setSleepRange] = useState(50)
-  let [weight, setWeight] = useState('')
-  let [goals, setGoals] = useState('')
-  let [cardioData, setCardioData] = useState(sampleCardioData)
-  let [woData, setWoData] = useState(sampleWoData)
+  let context = useContext(WoDayContext)
+  let [isSaving, setIsSaving] = useState(false)
+
+  useEffect(() => {
+    let didCancel = false
+    async function fetchWoDay() {
+      // change this to retrieveWoDays.  for now we just get the one woday by id.
+      const response = await retrieveWoDayById(0)
+      if (!didCancel) {
+        console.log({response})
+        context.updateWoDay(response)
+      }
+    }
+
+    fetchWoDay()
+    return () => {
+      didCancel = true
+    }
+  }, [])
+
+  const saveWoDay = async () => {
+    await setIsSaving(true)
+    updateWoDay(context.woday).then( response => {
+      setIsSaving(false)
+    })
+  }
 
   const handleTextChange = event => {
     let id = event.target.id
@@ -100,7 +76,70 @@ const WoDay = props => {
     }
   }
 
-  // TODO: These should call up (props.handleTextChange) and state should be maintained by parent
+  const handleSetChange = event => {
+    let exerciseId = event.target.parentNode.parentNode.id
+    let setId = event.target.dataset.setid
+    let name = event.target.name
+    let value = event.target.value
+
+    let woday = context.copyWoDay()
+    let wo = woday.wo
+
+    // find set
+    let setIndex = findIndexOfId(setId, wo.sets)
+    let set = wo.sets[setIndex]
+
+    // find exercise
+    let exIndex = findIndexOfId(exerciseId, set.exercises)
+    let ex = set.exercises[exIndex]
+
+    // update weight or reps
+    ex[name] = value
+
+    context.updateWoDay(woday)
+  }
+
+  const setWeight = weight => {
+    let woday = context.copyWoDay()
+    woday.weight = weight
+    context.updateWoDay(woday)
+  }
+
+  const setGoals = goals => {
+    let woday = context.copyWoDay()
+    woday.goals = goals
+    context.updateWoDay(woday)
+  }
+
+  const setEnergyRange = value => {
+    let woday = context.copyWoDay()
+    woday.energy = value
+    context.updateWoDay(woday)
+  }
+
+  const setSleepRange = value => {
+    let woday = context.copyWoDay()
+    woday.sleep = value
+    context.updateWoDay(woday)
+  }
+
+  const setDate = async jsDate => {
+    let woday = context.copyWoDay()
+    woday.date = {
+      day: jsDate.getDate(),
+      month: jsDate.getMonth(),
+      year: jsDate.getFullYear()
+    }
+    await context.updateWoDay(woday)
+  }
+
+  const getStartDate = () => {
+    let date = context.woday.date
+    let startDate = new Date(date.year, date.month, date.day)
+    console.log(startDate)
+    return startDate
+  }
+
   const handleSliderChange = event => {
     let id = event.target.id
     let value = Number(event.target.value)
@@ -117,12 +156,10 @@ const WoDay = props => {
     }
   }
 
-  const handleCellChange = event => {
-    console.log('handleCellChange')
-  }
-
   const addSet = () => {
-    let wo = cloneDeep(woData)
+    let woday = context.copyWoDay()
+    let wo = woday.wo
+
     // create new set, add each exercise id, and set weights reps to empty
     let newSet = {
       id: generateNewId(wo.sets),
@@ -135,8 +172,17 @@ const WoDay = props => {
       })
     }
     wo.sets.push(newSet)
-    setWoData(wo)
+
+    context.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
+  }
+
+  const convertCardioForTable = () => {
+    let data = {
+      headers: context.woday.cardio.headers,
+      rows: context.woday.cardio.exercises
+    }
+    return data
   }
 
   return (
@@ -152,10 +198,19 @@ const WoDay = props => {
             <div css={gridContainer} style={{ margin: '5px', padding: '10px' }}>
               <div css={gridDate}>
                 <DateInput
-                  startDate={startDate}
-                  setStartDate={setStartDate}
+                  // startDate={startDate}
+                  // startDate={new Date(context.woday.date)}
+                  startDate={getStartDate()}
+                  setStartDate={setDate}
                   label={'Date'}
                 />
+              <input
+                style={{ margin: '5px', float: 'right' }}
+                type='button'
+                value='Save'
+                css={[basicButton, { float: 'right' }]}
+                onClick={saveWoDay}
+              />
               </div>
               <div
                 css={gridGoals}
@@ -166,8 +221,9 @@ const WoDay = props => {
                   name={'goals'}
                   id={'goals'}
                   placeholder={'enter goals here'}
-                  value={goals}
+                  value={context.woday.goals}
                   onChange={handleTextChange}
+                  styles={{width:'300px'}}
                 />
               </div>
               {/* --- MyStats --------------------------------------- */}
@@ -176,26 +232,31 @@ const WoDay = props => {
                   label={'Weight'}
                   name={'weight'}
                   id={'weight'}
-                  value={weight}
+                  value={context.woday.weight}
                   placeholder={'enter weight'}
                   onChange={handleTextChange}
+                  styles={{width:'100px'}}
                 />
               </div>
               <div css={gridEnergy}>
                 <RangeSlider
                   label={'Energy'}
+                  min={0}
+                  max={10}
                   jssClass={{ float: 'left' }}
                   id='energyRange'
-                  value={energyRange}
+                  value={context.woday.energy}
                   onChange={handleSliderChange}
                 />
               </div>
               <div css={gridSleep}>
                 <RangeSlider
                   label={'Sleep'}
+                  min={0}
+                  max={10}
                   jssClass={{ float: 'left' }}
                   id='sleepRange'
-                  value={sleepRange}
+                  value={context.woday.sleep}
                   onChange={handleSliderChange}
                 />
               </div>
@@ -208,13 +269,14 @@ const WoDay = props => {
               jssClass={[woTable]}
               id={0}
               deleteRow={event => console.log(event)}
-              data={cardioData}
+              // data={context.woday.cardio}
+              data={convertCardioForTable()}
             />
           </div>
           {/* --- section 3: Weights --------------------------------------- */}
           <div css={[row, section]}>
             <div css={sectionHeader}>Weights</div>
-            <Workout wo={woData} addSet={addSet} />
+            <Workout wo={context.woday.wo} addSet={addSet} onChange={handleSetChange} />
           </div>
         </div>
       </div>

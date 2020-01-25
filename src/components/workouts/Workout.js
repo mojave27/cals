@@ -81,7 +81,7 @@ const Workout = props => {
   const renderRows = () => {
     return props.wo.exercises.map(ex => {
       return (
-        <tr key={ex.id}>
+        <tr key={ex.id} id={ex.id}>
           <td>{ex.name}</td>
           <td>{ex.targets}</td>
           {props.wo.sets.map(set => {
@@ -92,19 +92,25 @@ const Workout = props => {
               <React.Fragment key={`${set.id}`}>
                 <td>
                   <input
+                    data-setid={set.id}
+                    name={'weight'}
                     type='text'
                     placeholder={'enter weight'}
                     value={exercise.weight}
                     css={woInput}
+                    onChange={props.onChange}
                   />
                 </td>
 
                 <td>
                   <input
+                    data-setid={set.id}
+                    name={'reps'}
                     type='text'
                     placeholder={'enter reps'}
                     value={exercise.reps}
                     css={woInput}
+                    onChange={props.onChange}
                   />
                 </td>
               </React.Fragment>
