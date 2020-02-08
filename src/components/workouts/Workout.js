@@ -6,9 +6,9 @@ import { row, basicButtonSmall } from '../../styles/main-styles'
 
 // const sampleWo = {
 //   exercises: [
-//     { id: 0, name: 'dips', targetReps: '8' },
-//     { id: 1, name: 'chins', targetReps: '8' },
-//     { id: 2, name: 'squats', targetReps: '8' }
+//     { id: 0, name: 'dips', targets: '3x8' },
+//     { id: 1, name: 'chins', targets: '10x3' },
+//     { id: 2, name: 'squats', targets: '3x8' }
 //   ],
 //   sets: [
 //     {
@@ -82,8 +82,25 @@ const Workout = props => {
     return props.wo.exercises.map(ex => {
       return (
         <tr key={ex.id} id={ex.id}>
-          <td>{ex.name}</td>
-          <td>{ex.targets}</td>
+          {/* make this editable */}
+          <td>
+            <input
+              name={'name'}
+              type='text'
+              value={ex.name}
+              css={[woInput,{width:'75px'}]}
+              onChange={props.onLeadCellChange}
+            />
+          </td>
+          <td>
+            <input
+              name={'targets'}
+              type='text'
+              value={ex.targets}
+              css={[woInput,{width:'75px'}]}
+              onChange={props.onLeadCellChange}
+            />
+          </td>
           {props.wo.sets.map(set => {
             let exercise = set.exercises.find(
               setEx => Number(setEx.id) === Number(ex.id)
@@ -125,15 +142,26 @@ const Workout = props => {
     props.addSet()
   }
 
+  const addExercise = () => {
+    props.addExercise()
+  }
+
   return (
     <React.Fragment>
-      <div style={{display:'inline-block', margin:'auto'}}>
+      <div style={{ display: 'inline-block', margin: 'auto' }}>
         <input
           style={{ margin: '5px' }}
           type='button'
           value='Add Set'
           css={[basicButtonSmall, { float: 'left' }]}
           onClick={addSet}
+        />
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Add Exercise'
+          css={[basicButtonSmall, { float: 'left' }]}
+          onClick={addExercise}
         />
       </div>
       <table css={woTable}>

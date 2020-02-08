@@ -4,7 +4,7 @@ import React from 'react'
 import { camelCase, get } from 'lodash'
 
 
-class BasicTable extends React.Component {
+class CardioTable extends React.Component {
   state = {}
 
   render() {
@@ -18,11 +18,13 @@ class BasicTable extends React.Component {
 
   //TODO: can this be cleaned up and refactored
   renderRows = data => {
+    // console.log(JSON.stringify(data))
     let headerRow = this.renderHeaders(data.headers)
     let rows = data.rows.map((row, index) => {
-      let id = typeof row.id === 'undefined' ? index : row.id
+      // let id = typeof row.id === 'undefined' ? index : row.id
+      let id = get(row, 'id', index)
       return (
-        <tr id={id} data-setid={data.setId} key={index}>
+        <tr id={id} key={index}>
           {this.renderRow(row, data.headers)}
         </tr>
       )
@@ -48,6 +50,7 @@ class BasicTable extends React.Component {
     let j = 0
     if (!this.props.disabled) {
       j = 1
+      // add the delete button
       tds.push(
         <td style={{ borderLeft: '1px solid #eee' }} key={`${row.id}-delete`}>
           <input
@@ -74,7 +77,7 @@ class BasicTable extends React.Component {
             id={`${row.id}-${i}`}
             name={headers[i]}
             data={row[camelCase(headers[i])]}
-            onChange={this.handleSetChange}
+            onChange={this.handleCellChange}
             disabled={this.props.disabled}
           />
         </td>
@@ -84,18 +87,24 @@ class BasicTable extends React.Component {
   }
 
   // todo: need to give the exercise id
-  handleSetChange = event => {
+  handleCellChange = event => {
     // get setId from tr (parentNode/td > parentNode/tr)
-    let setId = event.target.parentNode.parentNode.dataset['setid']
+    let rowId = event.target.parentNode.parentNode.id
     let id = event.target.id
     let name = event.target.name
     let value = event.target.value
-    this.props.handleSetChange({
-      setId: setId,
-      id: id,
-      name: name,
-      value: value
-    })
+
+    console.log(`rowId: ${rowId}`)
+    console.log(`id: ${id}`)
+    console.log(`name: ${name}`)
+    console.log(`value: ${value}`)
+
+    // this.props.onChange({
+    //   setId: setId,
+    //   id: id,
+    //   name: name,
+    //   value: value
+    // })
   }
 }
 
@@ -120,7 +129,7 @@ const Input = props => {
   )
 }
 
-BasicTable.defaultProps = {
+CardioTable.defaultProps = {
   id: 0,
   data: { headers: [], rows: []},
   deleteRow: event => {
@@ -128,4 +137,4 @@ BasicTable.defaultProps = {
   }
 }
 
-export default BasicTable
+export default CardioTable
