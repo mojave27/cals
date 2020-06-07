@@ -31,7 +31,7 @@ import {
   sectionHeader,
   woTable
 } from '../../styles/WoDayStyles'
-import { updateExpression } from '@babel/types'
+// import { updateExpression } from '@babel/types'
 
 const WoDay = props => {
   let context = useContext(WoDayContext)
