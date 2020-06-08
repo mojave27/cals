@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { woHeader, woInput, woTable } from '../../styles/WoDayStyles'
-import { row, basicButtonSmall } from '../../styles/main-styles'
+import { basicButtonSmall } from '../../styles/main-styles'
 
 // const sampleWo = {
 //   exercises: [

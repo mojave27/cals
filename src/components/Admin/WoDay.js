@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { retrieveWoDayById, updateWoDay } from '../../api/wodaysApi'
 import WoDayContext from '../../context/WoDayContext'
 import TextInput from '../inputs/TextInput'
@@ -11,7 +11,6 @@ import Workout from '../workouts/Workout'
 
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
 
-// import { table } from '../../styles/table'
 import {
   cardNoHover,
   detailCard,
@@ -31,11 +30,9 @@ import {
   sectionHeader,
   woTable
 } from '../../styles/WoDayStyles'
-// import { updateExpression } from '@babel/types'
 
 const WoDay = props => {
   let context = useContext(WoDayContext)
-  let [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     let didCancel = false
@@ -52,13 +49,10 @@ const WoDay = props => {
     return () => {
       didCancel = true
     }
-  }, [])
+  })
 
   const saveWoDay = async () => {
-    await setIsSaving(true)
-    updateWoDay(context.woday).then(response => {
-      setIsSaving(false)
-    })
+    await updateWoDay(context.woday);
   }
 
   const handleTextChange = event => {
