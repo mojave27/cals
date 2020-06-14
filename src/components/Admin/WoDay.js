@@ -49,10 +49,10 @@ const WoDay = props => {
     return () => {
       didCancel = true
     }
-  })
+  },[])
 
   const saveWoDay = async () => {
-    await updateWoDay(context.woday);
+    await updateWoDay(context.woday)
   }
 
   const handleTextChange = event => {
@@ -89,7 +89,9 @@ const WoDay = props => {
     let name = event.target.name
     let value = event.target.value
 
-    console.log(`exId: ${exerciseId}, setId: ${setId}, name: ${name}, value: ${value}`)
+    console.log(
+      `exId: ${exerciseId}, setId: ${setId}, name: ${name}, value: ${value}`
+    )
 
     let woday = context.copyWoDay()
     let wo = woday.wo
@@ -184,8 +186,8 @@ const WoDay = props => {
   }
 
   const addExerciseToSets = (sets, exId) => {
-    return sets.map( set => {
-      let ex = { id: exId, weight: '', reps: ''}
+    return sets.map(set => {
+      let ex = { id: exId, weight: '', reps: '' }
       set.exercises.push(ex)
       return set
     })
