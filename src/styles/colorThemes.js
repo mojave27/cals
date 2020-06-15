@@ -1,5 +1,6 @@
 
 export const siberianWinter = {
+    name: 'siberianWinter',
 	color1: {
 		hex: '#FFFBFF',
 		rgba: alpha => buildRgba(255, 251, 255, alpha)
@@ -38,6 +39,7 @@ export const siberianWinter = {
 }
 
 export const stormTrooperInverse = {
+  name: 'stormTrooperInverse',
   color5: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -80,6 +82,7 @@ export const stormTrooperInverse = {
 }
 
 export const stormTrooper = {
+  name: 'stormTrooper',
   color1: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -160,6 +163,7 @@ export const faHome1 = {
 }
 
 export const woSheet = {
+    name: 'woSheet',
 	color1: {
 		hex: '#FEFFFF',
 		rgba: alpha => buildRgba(254, 255, 255, alpha)
