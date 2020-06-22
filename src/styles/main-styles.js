@@ -1,18 +1,19 @@
 import { css } from '@emotion/core'
-import { 
-  stormTrooper, 
-  stormTrooperInverse, 
-  woSheet, 
-  siberianWinter } from './colorThemes'
+import {
+  stormTrooper,
+  stormTrooperInverse,
+  woSheet,
+  siberianWinter
+} from './colorThemes'
 
 export let themes = {
-  'stormTrooper': stormTrooper,
-  'stormTrooperInverse': stormTrooperInverse,
-  'woSheet': woSheet,
-  'siberianWinter': siberianWinter
+  stormTrooper: stormTrooper,
+  stormTrooperInverse: stormTrooperInverse,
+  woSheet: woSheet,
+  siberianWinter: siberianWinter
 }
 
-export let changeTheme = (themeName) => {
+export let changeTheme = themeName => {
   this.activeTheme = themes[themeName]
 }
 
@@ -45,7 +46,7 @@ export let card = css({
     border: `1px solid ${activeTheme.color5.hex}`,
     backgroundColor: activeTheme.color1.hex,
     color: activeTheme.color1_text.hex,
-    transition: '0.3s',
+    transition: '0.3s'
   }
 })
 
@@ -80,7 +81,7 @@ export let miniCard = css({
   transition: '0.3s',
   textAlign: 'center',
   '&:hover': {
-    boxShadow: `0 8px 16px 0 ${activeTheme.color5.rgba(.2)}`,
+    boxShadow: `0 8px 16px 0 ${activeTheme.color5.rgba(0.2)}`,
     border: `1px solid ${activeTheme.color5.hex}`,
     backgroundColor: activeTheme.color1.hex,
     color: activeTheme.color1_text.hex
@@ -116,14 +117,14 @@ export let detailCard = css({
   width: '100%',
   borderRadius: '2px',
   margin: '0 auto',
-  overflow:'scroll'
+  overflow: 'scroll'
 })
 
 export let container = css({
   padding: '2px 16px',
   color: activeTheme.color5_text.hex,
   backgroundColor: activeTheme.color5.hex,
-  borderRadius: '2px',
+  borderRadius: '2px'
 })
 
 export let viewContainer = css({
@@ -207,6 +208,22 @@ export let label = css({
   // display: 'inline-block'
 })
 
+export let basicButtonFx = colors => {
+  return css({
+    padding: '6px 20px',
+    fontSize: 'inherit',
+    backgroundColor: colors.color4.hex,
+    color: colors.color4_text.hex,
+    border: `1px solid ${colors.color3.hex}`,
+    borderRadius: '2px',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: colors.color3.hex,
+      color: colors.color3_text.hex
+    }
+  })
+}
+
 export let basicButton = css({
   padding: '6px 20px',
   fontSize: 'inherit',
@@ -217,7 +234,7 @@ export let basicButton = css({
   cursor: 'pointer',
   '&:hover': {
     backgroundColor: activeTheme.color3.hex,
-    color: activeTheme.color3_text.hex,
+    color: activeTheme.color3_text.hex
   }
 })
 
@@ -231,7 +248,7 @@ export let basicButtonSmall = css({
   cursor: 'pointer',
   '&:hover': {
     backgroundColor: activeTheme.color3.hex,
-    color: activeTheme.color3_text.hex,
+    color: activeTheme.color3_text.hex
   }
 })
 
@@ -359,7 +376,9 @@ export let selectItems = {
     color: activeTheme.color5_text.hex,
     padding: '8px 16px',
     border: '1px solid transparent',
-    borderColor: `transparent transparent ${activeTheme.color5.rgba(0.1)} transparent`,
+    borderColor: `transparent transparent ${activeTheme.color5.rgba(
+      0.1
+    )} transparent`,
     cursor: 'pointer',
     userSelect: 'none'
   },
@@ -400,7 +419,7 @@ export let closeButton = {
 
 /* The Close Button */
 export let editIcon = {
-  cursor:'pointer', 
-  margin:'5px',
+  cursor: 'pointer',
+  margin: '5px',
   float: 'left'
 }

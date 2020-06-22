@@ -8,31 +8,20 @@ import CardioTable from '../tables/CardioTable'
 import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
 import Workout from '../workouts/Workout'
+import ThemeContext from '../../context/ThemeContext'
 
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
 
-import {
-  cardNoHover,
-  detailCard,
-  row,
-  basicButton
-} from '../../styles/main-styles'
+import {styles} from '../../styles/MainStyles'
+import { woDayStyles } from '../../styles/WoDayStyles'
+
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-import {
-  gridContainer,
-  gridDate,
-  gridEnergy,
-  gridGoals,
-  gridSleep,
-  gridWeight,
-  section,
-  sectionHeader,
-  woTable
-} from '../../styles/WoDayStyles'
+
 
 const WoDay = props => {
   let context = useContext(WoDayContext)
+  let themeContext = useContext(ThemeContext)
 
   useEffect(() => {
     let didCancel = false
@@ -50,6 +39,24 @@ const WoDay = props => {
       didCancel = true
     }
   },[])
+
+  let { 
+    cardNoHover,
+    detailCard,
+    row,
+    basicButton 
+  } = styles(themeContext.theme)
+
+  let { 
+  gridContainer,
+  gridDate,
+  gridEnergy,
+  gridGoals,
+  gridSleep,
+  gridWeight,
+  section,
+  sectionHeader,
+  woTable } = woDayStyles(themeContext.theme)
 
   const saveWoDay = async () => {
     await updateWoDay(context.woday)
@@ -253,6 +260,7 @@ const WoDay = props => {
                   style={{ margin: '5px', float: 'right' }}
                   type='button'
                   value='Save'
+                  // css={[basicButton, { float: 'right' }]}
                   css={[basicButton, { float: 'right' }]}
                   onClick={saveWoDay}
                 />
@@ -292,6 +300,7 @@ const WoDay = props => {
                   id='energyRange'
                   value={context.woday.energy}
                   onChange={handleSliderChange}
+                  theme={context.theme}
                 />
               </div>
               <div css={gridSleep}>
@@ -303,6 +312,7 @@ const WoDay = props => {
                   id='sleepRange'
                   value={context.woday.sleep}
                   onChange={handleSliderChange}
+                  theme={context.theme}
                 />
               </div>
             </div>

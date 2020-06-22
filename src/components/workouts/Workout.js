@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
-import { woHeader, woInput, woTable } from '../../styles/WoDayStyles'
-import { basicButtonSmall } from '../../styles/main-styles'
+import React, { useContext } from 'react'
+import { woDayStyles } from '../../styles/WoDayStyles'
+import { styles } from '../../styles/MainStyles'
+import ThemeContext from '../../context/ThemeContext'
 
 // const sampleWo = {
 //   exercises: [
@@ -31,6 +32,10 @@ import { basicButtonSmall } from '../../styles/main-styles'
 // }
 
 const Workout = props => {
+  let context = useContext(ThemeContext)
+  let { woHeader, woInput, woTable } = woDayStyles(context.theme)
+  let { basicButtonSmall } = styles(context.theme)
+
   // TODO: how to handle a workout with no exercises or sets defined yet?
   const COL_1_TITLE = 'exercise'
   const COL_2_TITLE = 'targets'

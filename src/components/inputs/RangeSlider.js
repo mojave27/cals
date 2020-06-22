@@ -1,11 +1,15 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
-import { slider } from '../../styles/WoDayStyles'
+import { woDayStyles } from '../../styles/WoDayStyles'
+import ThemeContext from '../../context/ThemeContext'
 
 const RangeSliderInput = props => {
+  let context = useContext(ThemeContext)
+
+  let { slider } = woDayStyles(context.theme)
 
   const getCss = () => {
     let returnCss = [slider]
