@@ -1,9 +1,20 @@
 import { css } from '@emotion/core'
 import { 
-  // stormTrooper, 
-  // stormTrooperInverse, 
-  // woSheet, 
+  stormTrooper, 
+  stormTrooperInverse, 
+  woSheet, 
   siberianWinter } from './colorThemes'
+
+export let themes = {
+  'stormTrooper': stormTrooper,
+  'stormTrooperInverse': stormTrooperInverse,
+  'woSheet': woSheet,
+  'siberianWinter': siberianWinter
+}
+
+export let changeTheme = (themeName) => {
+  this.activeTheme = themes[themeName]
+}
 
 export let activeTheme = siberianWinter
 // export let activeTheme = stormTrooperInverse

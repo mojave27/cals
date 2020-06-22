@@ -1,14 +1,16 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { retrieveDataConsistencyReport as retrieve } from '../../api/adminApi'
 import { isEmpty } from 'lodash'
+import ThemeContext from '../../context/ThemeContext'
 
-import { formContainer, row, activeTheme } from '../../styles/main-styles'
+import { formContainer, row } from '../../styles/main-styles'
 
 
 const DataConsistency = props => {
   const [reportData, setReportData] = useState({})
+  let context = useContext(ThemeContext)
 
   useEffect(() => {
 
@@ -54,7 +56,7 @@ const DataConsistency = props => {
          : renderItemReport('programs')
          }
       </div>
-      <div css={row} style={{marginTop: '30px', borderTop: `1px solid ${activeTheme.color2.hex}`}}>
+      <div css={row} style={{marginTop: '30px', borderTop: `1px solid ${context.theme.color2.hex}`}}>
         <h3>Sets</h3>
         {isEmpty(reportData)
          ? null
