@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useContext } from 'react'
 import { get, isUndefined } from 'lodash'
+import ThemeContext from '../../context/ThemeContext'
 import {
   dateHeader,
   setHeader,
@@ -10,36 +11,18 @@ import {
   dayLeftCell,
   dayRightCell
 } from '../../styles/table'
-import { activeTheme } from '../../styles/main-styles'
+// import { activeTheme } from '../../styles/main-styles'
 
-class Table extends React.Component {
-  state = {}
+const Table = props => {
+  let context = useContext(ThemeContext)
 
-  render() {
-    return (
-      <div
-        style={{
-          overflow: 'scroll',
-          maxWidth: '500px',
-          display: 'inline-block'
-        }}
-      >
-        <table css={table} style={{ overflowX: 'scroll' }}>
-          <tbody id={this.props.setId} >
-            {this.renderRows(this.props.data)}
-          </tbody>
-        </table>
-      </div>
-    )
-  }
-
-  renderRows = data => {
-    let headerRow = this.renderHeaders()
+  const renderRows = data => {
+    let headerRow = renderHeaders()
     let rows = data.rows.map((row, index) => {
       let id = typeof row.id === 'undefined' ? index : row.id
       return (
         <tr id={id} data-setid={data.setId} key={index}>
-          {this.renderRow(row, data)}
+          {renderRow(row, data)}
         </tr>
       )
     })
@@ -48,12 +31,12 @@ class Table extends React.Component {
     return allRows
   }
 
-  renderHeaders = () => {
-    let days = get(this.props, 'data.days', undefined)
+  const renderHeaders = () => {
+    let days = get(props, 'data.days', undefined)
     let dateHeaders = []
     let headers = []
     let columnWidths = ['100px', '100px']
-    // let count = !isUndefined(this.props.data.days)
+    // let count = !isUndefined(props.data.days)
     let count = !isUndefined(days) ? days.length : 0
 
     for (let i = 0; i < count; i++) {
@@ -80,7 +63,7 @@ class Table extends React.Component {
         <tr key={'headerRow'}>
           {/* lots of styling logic here - see if it can be extracted to a style file. */}
           {headers.map((header, index) => {
-            let borderStyle = `2px solid ${activeTheme.color3.hex}`
+            let borderStyle = `2px solid ${context.theme.color3.hex}`
             let border =
               header === 'weight'
                 ? { borderLeft: `${borderStyle}` }
@@ -98,7 +81,7 @@ class Table extends React.Component {
   }
 
   // the row arg is an exercise: {id: 0, name:'jammer', type:'isolation', reps:'max'}
-  renderRow = (exercise, data) => {
+  const renderRow = (exercise, data) => {
     let setId = data.setId
     if (isUndefined(setId)) {
       console.log(`SET ID IS UNDEFINED`)
@@ -132,7 +115,7 @@ class Table extends React.Component {
             name={'weight'}
             //TODO: why do i need to do this double check on isUndefined?
             data={valueData}
-            onChange={this.onCellChange}
+            onChange={onCellChange}
           />
         </td>
       )
@@ -145,7 +128,7 @@ class Table extends React.Component {
             dayId={data.days[i].id}
             name={'actualReps'}
             data={valueData}
-            onChange={this.onCellChange}
+            onChange={onCellChange}
           />
         </td>
       )
@@ -153,20 +136,34 @@ class Table extends React.Component {
     return tds
   }
 
-  onCellChange = event => {
+  const onCellChange = event => {
     let { id, value, name } = event.target
     let dayid = event.target.dataset.dayid
 
     // create the upday object
     let update = {
       dayId: dayid,
-      setId: this.props.data.setId,
+      setId: props.data.setId,
       exerciseId: id,
       name: name,
       value: value
     }
-    this.props.onCellChange(update)
+    props.onCellChange(update)
   }
+
+  return (
+    <div
+      style={{
+        overflow: 'scroll',
+        maxWidth: '500px',
+        display: 'inline-block'
+      }}
+    >
+      <table css={table} style={{ overflowX: 'scroll' }}>
+        <tbody id={props.setId}>{renderRows(props.data)}</tbody>
+      </table>
+    </div>
+  )
 }
 
 const Input = props => {
