@@ -151,9 +151,20 @@ const Workout = props => {
     props.addExercise()
   }
 
+  const chooseWorkout = () => {
+    props.chooseWorkout()
+  }
+
   return (
     <React.Fragment>
       <div style={{ display: 'inline-block', margin: 'auto' }}>
+      <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Choose Workout'
+          css={[basicButtonSmall, { float: 'left' }]}
+          onClick={chooseWorkout}
+        />
         <input
           style={{ margin: '5px' }}
           type='button'

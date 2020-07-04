@@ -1,8 +1,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { blockHeader } from '../styles/program'
+import { styles } from '../styles/ProgramStyles'
+import ThemeContext from '../context/ThemeContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { useContext } from 'react'
 
 // Expects props:
 //   item = {
@@ -12,6 +14,8 @@ import { faCheck, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 //   deleteItem(),
 //   editItem()
 const BlockHeader = props => {
+  let context = useContext(ThemeContext)
+  let { blockHeader } = styles(context.theme)
   const renderIcons = ({ editItem, deleteItem, selectItem, ...props }) => {
     let id = props.item.id
     let icons = []

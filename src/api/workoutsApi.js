@@ -3,6 +3,23 @@ import { config } from '../config/axiosConfig'
 
 const URL = 'workouts'
 
+export const retrieveWorkoutTemplates = () => {
+  // console.log('calling GET /workout-templates')
+  return axios
+    .get('workout-templates', config)
+    .then(function(response) {
+      const data = parseResponse(response)
+      console.log('data...............')
+      console.log(data)
+      return data
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(`[ui - retrieve workout-templates] api error: ${error}`)
+      return []
+    })
+}
+
 export const retrieve = () => {
   // console.log('calling GET /workouts')
   return axios

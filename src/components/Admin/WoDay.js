@@ -1,7 +1,9 @@
+import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { retrieveWoDayById, updateWoDay } from '../../api/wodaysApi'
+import Modal from '../Modal'
 import WoDayContext from '../../context/WoDayContext'
 import TextInput from '../inputs/TextInput'
 import CardioTable from '../tables/CardioTable'
@@ -10,16 +12,18 @@ import DateInput from '../inputs/DateInput'
 import Workout from '../workouts/Workout'
 import ThemeContext from '../../context/ThemeContext'
 
+import WorkoutChooser from '../workouts/WorkoutChooser'
+
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
 
-import {styles} from '../../styles/MainStyles'
+import { styles } from '../../styles/MainStyles'
 import { woDayStyles } from '../../styles/WoDayStyles'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
 
-
 const WoDay = props => {
+  let [showModal, setShowModal] = useState(false)
   let context = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
 
@@ -38,25 +42,30 @@ const WoDay = props => {
     return () => {
       didCancel = true
     }
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  let { 
-    cardNoHover,
-    detailCard,
-    row,
-    basicButton 
-  } = styles(themeContext.theme)
+  let { cardNoHover, detailCard, row, basicButton } = styles(themeContext.theme)
 
-  let { 
-  gridContainer,
-  gridDate,
-  gridEnergy,
-  gridGoals,
-  gridSleep,
-  gridWeight,
-  section,
-  sectionHeader,
-  woTable } = woDayStyles(themeContext.theme)
+  let {
+    gridContainer,
+    gridDate,
+    gridEnergy,
+    gridGoals,
+    gridSleep,
+    gridWeight,
+    section,
+    sectionHeader,
+    woTable
+  } = woDayStyles(themeContext.theme)
+
+  const toggleModal = () => {
+    setShowModal(!showModal)
+  }
+  
+  const done = () => {
+    setShowModal(false)
+  }
 
   const saveWoDay = async () => {
     await updateWoDay(context.woday)
@@ -208,6 +217,12 @@ const WoDay = props => {
     }
   }
 
+  const chooseWorkout = () => {
+    // user chooses workout - place new workout into context.woday.wo
+    // alert('choose a workout')
+    toggleModal()
+  }
+
   const addSet = () => {
     let woday = context.copyWoDay()
     let wo = woday.wo
@@ -239,109 +254,118 @@ const WoDay = props => {
 
   return (
     // <div css={formContainer}>
-    <div>
-      {/* <div css={row} style={{ marginBottom: '20px' }}>
+    <React.Fragment>
+      <Modal showModal={showModal} handleClose={toggleModal}>
+        <WorkoutChooser done={done} />
+      </Modal>
+      <div>
+        {/* <div css={row} style={{ marginBottom: '20px' }}>
         WoDay Test Page
       </div> */}
-      <div css={detailCard}>
-        <div css={cardNoHover}>
-          {/* --- section 1: Details --------------------------------------- */}
-          <div css={row} style={{ border: '1px solid #eee' }}>
-            <div css={gridContainer} style={{ margin: '5px', padding: '10px' }}>
-              <div css={gridDate}>
-                <DateInput
-                  // startDate={startDate}
-                  // startDate={new Date(context.woday.date)}
-                  startDate={getStartDate()}
-                  setStartDate={setDate}
-                  label={'Date'}
-                />
-                <input
-                  style={{ margin: '5px', float: 'right' }}
-                  type='button'
-                  value='Save'
-                  // css={[basicButton, { float: 'right' }]}
-                  css={[basicButton, { float: 'right' }]}
-                  onClick={saveWoDay}
-                />
-              </div>
+        <div css={detailCard}>
+          <div css={cardNoHover}>
+            {/* --- section 1: Details --------------------------------------- */}
+            <div css={row} style={{ border: '1px solid #eee' }}>
               <div
-                css={gridGoals}
-                style={{ borderRadius: '3px', width: '50%' }}
+                css={gridContainer}
+                style={{ margin: '5px', padding: '10px' }}
               >
-                <TextInput
-                  label={'Goals'}
-                  name={'goals'}
-                  id={'goals'}
-                  placeholder={'enter goals here'}
-                  value={context.woday.goals}
-                  onChange={handleTextChange}
-                  styles={{ width: '300px' }}
-                />
-              </div>
-              {/* --- MyStats --------------------------------------- */}
-              <div css={gridWeight}>
-                <TextInput
-                  label={'Weight'}
-                  name={'weight'}
-                  id={'weight'}
-                  value={context.woday.weight}
-                  placeholder={'enter weight'}
-                  onChange={handleTextChange}
-                  styles={{ width: '100px' }}
-                />
-              </div>
-              <div css={gridEnergy}>
-                <RangeSlider
-                  label={'Energy'}
-                  min={0}
-                  max={10}
-                  jssClass={{ float: 'left' }}
-                  id='energyRange'
-                  value={context.woday.energy}
-                  onChange={handleSliderChange}
-                  theme={context.theme}
-                />
-              </div>
-              <div css={gridSleep}>
-                <RangeSlider
-                  label={'Sleep'}
-                  min={0}
-                  max={10}
-                  jssClass={{ float: 'left' }}
-                  id='sleepRange'
-                  value={context.woday.sleep}
-                  onChange={handleSliderChange}
-                  theme={context.theme}
-                />
+                <div css={gridDate}>
+                  <DateInput
+                    // startDate={startDate}
+                    // startDate={new Date(context.woday.date)}
+                    startDate={getStartDate()}
+                    setStartDate={setDate}
+                    label={'Date'}
+                  />
+                  <input
+                    style={{ margin: '5px', float: 'right' }}
+                    type='button'
+                    value='Save'
+                    // css={[basicButton, { float: 'right' }]}
+                    css={[basicButton, { float: 'right' }]}
+                    onClick={saveWoDay}
+                  />
+                </div>
+                <div
+                  css={gridGoals}
+                  style={{ borderRadius: '3px', width: '50%' }}
+                >
+                  <TextInput
+                    label={'Goals'}
+                    name={'goals'}
+                    id={'goals'}
+                    placeholder={'enter goals here'}
+                    value={context.woday.goals}
+                    onChange={handleTextChange}
+                    styles={{ width: '300px' }}
+                  />
+                </div>
+                {/* --- MyStats --------------------------------------- */}
+                <div css={gridWeight}>
+                  <TextInput
+                    label={'Weight'}
+                    name={'weight'}
+                    id={'weight'}
+                    value={context.woday.weight}
+                    placeholder={'enter weight'}
+                    onChange={handleTextChange}
+                    styles={{ width: '100px' }}
+                  />
+                </div>
+                <div css={gridEnergy}>
+                  <RangeSlider
+                    label={'Energy'}
+                    min={0}
+                    max={10}
+                    jssClass={{ float: 'left' }}
+                    id='energyRange'
+                    value={context.woday.energy}
+                    onChange={handleSliderChange}
+                    theme={context.theme}
+                  />
+                </div>
+                <div css={gridSleep}>
+                  <RangeSlider
+                    label={'Sleep'}
+                    min={0}
+                    max={10}
+                    jssClass={{ float: 'left' }}
+                    id='sleepRange'
+                    value={context.woday.sleep}
+                    onChange={handleSliderChange}
+                    theme={context.theme}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          {/* --- section 2: Cardio --------------------------------------- */}
-          <div css={[row, section]}>
-            <div css={sectionHeader}>Cardio</div>
-            <CardioTable
-              jssClass={[woTable]}
-              id={0}
-              deleteRow={event => console.log(event)}
-              // data={context.woday.cardio}
-              data={convertCardioForTable()}
-            />
-          </div>
-          {/* --- section 3: Weights --------------------------------------- */}
-          <div css={[row, section]}>
-            <div css={sectionHeader}>Weights</div>
-            <Workout
-              wo={context.woday.wo}
-              addExercise={addExercise}
-              addSet={addSet}
-              onChange={handleSetChange}
-              onLeadCellChange={handleLeadCellChange}
-            />
+            {/* --- section 2: Cardio --------------------------------------- */}
+            <div css={[row, section]}>
+              <div css={sectionHeader}>Cardio</div>
+              <CardioTable
+                jssClass={[woTable]}
+                id={0}
+                deleteRow={event => console.log(event)}
+                // data={context.woday.cardio}
+                data={convertCardioForTable()}
+              />
+            </div>
+            {/* --- section 3: Weights --------------------------------------- */}
+            <div css={[row, section]}>
+              <div css={sectionHeader}>Weights</div>
+              <Workout
+                wo={context.woday.wo}
+                addExercise={addExercise}
+                addSet={addSet}
+                chooseWorkout={chooseWorkout}
+                onChange={handleSetChange}
+                onLeadCellChange={handleLeadCellChange}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 

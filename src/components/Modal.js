@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
-import { modal, modalContent, close } from '../styles/modal'
+import React, { useContext } from 'react'
+import ThemeContext from '../context/ThemeContext'
+import { styles } from '../styles/ModalStyles'
 
 const Modal = props => {
+  let context = useContext(ThemeContext)
+  let { modal, modalContent, close } = styles(context.theme)
   return props.showModal ? (
     <React.Fragment>
       <div id='myModal' css={modal}>

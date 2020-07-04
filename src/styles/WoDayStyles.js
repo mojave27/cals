@@ -55,12 +55,10 @@ export const woDayStyles = theme => {
   const gridEnergy = css({
     paddingTop: '5px',
     gridArea: 'energy'
-    // border: '1px solid pink'
   })
   const gridSleep = css({
     paddingTop: '5px',
     gridArea: 'sleep'
-    // border: '1px solid yellow'
   })
 
   // range slider styles ---------------------------------- //
@@ -69,7 +67,6 @@ export const woDayStyles = theme => {
     height: '30px',
     borderRadius: '3px',
     width: '30%'
-    // backgroundColor: '#eee'
   }
 
   /* The slider itself */

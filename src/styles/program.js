@@ -1,6 +1,7 @@
 import { css } from '@emotion/core'
 import { activeTheme } from './main-styles'
 
+
 export let blockHeader = css({
   backgroundColor: activeTheme.color5.hex,
   color: activeTheme.color5_text.hex,

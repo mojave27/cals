@@ -404,7 +404,11 @@ export let styles = theme => {
   }
 
   return {
+    active,
     basics,
+    basicButton,
+    basicButtonFx,
+    basicButtonSmall,
     card,
     cardNoHover,
     cardTitle,
