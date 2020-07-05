@@ -5,40 +5,14 @@ import { woDayStyles } from '../../styles/WoDayStyles'
 import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
 
-// const sampleWo = {
-//   exercises: [
-//     { id: 0, name: 'dips', targets: '3x8' },
-//     { id: 1, name: 'chins', targets: '10x3' },
-//     { id: 2, name: 'squats', targets: '3x8' }
-//   ],
-//   sets: [
-//     {
-//       id: 0,
-//       exercises: [
-//         { id: 0, weight: '45', reps: '8' },
-//         { id: 1, weight: '15', reps: '7' },
-//         { id: 2, weight: '105', reps: '20' }
-//       ]
-//     },
-//     {
-//       id: 1,
-//       exercises: [
-//         { id: 0, weight: '45', reps: '8' },
-//         { id: 1, weight: '15', reps: '6' },
-//         { id: 2, weight: '0', reps: '0' }
-//       ]
-//     }
-//   ]
-// }
-
 const Workout = props => {
   let context = useContext(ThemeContext)
   let { woHeader, woInput, woTable } = woDayStyles(context.theme)
   let { basicButtonSmall } = styles(context.theme)
 
-  // TODO: how to handle a workout with no exercises or sets defined yet?
   const COL_1_TITLE = 'exercise'
-  const COL_2_TITLE = 'targets'
+  const COL_2_TITLE = 'reps'
+  // const COL_2_TITLE = 'targets'
 
   const renderHeaderRows = () => {
     let headers = [COL_1_TITLE, COL_2_TITLE]
@@ -84,62 +58,68 @@ const Workout = props => {
   }
 
   const renderRows = () => {
-    return props.wo.exercises.map(ex => {
-      return (
-        <tr key={ex.id} id={ex.id}>
-          {/* make this editable */}
-          <td>
-            <input
-              name={'name'}
-              type='text'
-              value={ex.name}
-              css={[woInput,{width:'75px'}]}
-              onChange={props.onLeadCellChange}
-            />
-          </td>
-          <td>
-            <input
-              name={'targets'}
-              type='text'
-              value={ex.targets}
-              css={[woInput,{width:'75px'}]}
-              onChange={props.onLeadCellChange}
-            />
-          </td>
-          {props.wo.sets.map(set => {
-            let exercise = set.exercises.find(
-              setEx => Number(setEx.id) === Number(ex.id)
-            )
-            return (
-              <React.Fragment key={`${set.id}`}>
-                <td>
-                  <input
-                    data-setid={set.id}
-                    name={'weight'}
-                    type='text'
-                    placeholder={'enter weight'}
-                    value={exercise.weight}
-                    css={woInput}
-                    onChange={props.onChange}
-                  />
-                </td>
+    // console.log(JSON.stringify(props.wo))
+    return props.wo.exerciseGroups.map((exGroup, index) => {
+      return exGroup.exercises.map(ex => {
+        return (
+          <tr key={ex.id} id={ex.id} style={{ border: '1px solid yellow' }}>
+            <td>
+              <input
+                name={'name'}
+                data-exgroupid={exGroup.id}
+                type='text'
+                value={ex.name}
+                css={[woInput, { width: '75px' }]}
+                onChange={props.onLeadCellChange}
+              />
+            </td>
+            <td>
+              <input
+                name={'reps'}
+                data-exgroupid={exGroup.id}
+                type='text'
+                value={ex.reps}
+                css={[woInput, { width: '75px' }]}
+                onChange={props.onLeadCellChange}
+              />
+            </td>
+            {props.wo.sets.map(set => {
+              let exercise = set.exerciseGroups[index].exercises.find(
+                setEx => Number(setEx.id) === Number(ex.id)
+              )
+              return (
+                <React.Fragment key={`${set.id}`}>
+                  <td>
+                    <input
+                      data-setid={set.id}
+                      data-exgroupid={exGroup.id}
+                      name={'weight'}
+                      type='text'
+                      placeholder={'enter weight'}
+                      value={exercise.weight}
+                      css={woInput}
+                      onChange={props.onChange}
+                    />
+                  </td>
 
-                <td>
-                  <input
-                    data-setid={set.id}
-                    name={'reps'}
-                    type='text'
-                    placeholder={'enter reps'}
-                    value={exercise.reps}
-                    css={woInput}
-                    onChange={props.onChange}
-                  />
-                </td>
-              </React.Fragment>
-            )
-          })}
-        </tr>
-      )
+                  <td>
+                    <input
+                      data-setid={set.id}
+                      data-exgroupid={exGroup.id}
+                      name={'reps'}
+                      type='text'
+                      placeholder={'enter reps'}
+                      value={exercise.reps}
+                      css={woInput}
+                      onChange={props.onChange}
+                    />
+                  </td>
+                </React.Fragment>
+              )
+            })}
+          </tr>
+        )
+      })
     })
   }
 
@@ -151,19 +131,19 @@ const Workout = props => {
     props.addExercise()
   }
 
-  const chooseWorkout = () => {
-    props.chooseWorkout()
+  const showWorkoutChooser = () => {
+    props.showWorkoutChooser()
   }
 
   return (
     <React.Fragment>
       <div style={{ display: 'inline-block', margin: 'auto' }}>
-      <input
+        <input
           style={{ margin: '5px' }}
           type='button'
           value='Choose Workout'
           css={[basicButtonSmall, { float: 'left' }]}
-          onClick={chooseWorkout}
+          onClick={showWorkoutChooser}
         />
         <input
           style={{ margin: '5px' }}
@@ -189,9 +169,5 @@ const Workout = props => {
     </React.Fragment>
   )
 }
-
-// Workout.defaultProps = {
-//   wo: sampleWo
-// }
 
 export default Workout

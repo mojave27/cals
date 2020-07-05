@@ -20,8 +20,7 @@ export const menuConfig = [
     type: 'dropdown',
     items: [
       // { to: '/programs', text: 'programs' },
-      // { to: '/workouts', text: 'workouts' },
-      // { to: '/sets', text: 'sets' },
+      { to: '/manage/workouts', text: 'workouts' },
       { to: '/exercises', text: 'exercises' }
     ]
   },

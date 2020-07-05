@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core'
 import React, { useContext, useState, useEffect } from 'react'
 import { emptyWorkout } from '../../context/WoProvider'
 import WoContext from '../../context/WoContext'
+import ThemeContext from '../../context/ThemeContext'
 import {
   retrieve as retrieveWorkouts,
   deleteWorkout as deleteWorkoutApi
@@ -13,13 +14,17 @@ import WorkoutForm from './WorkoutForm'
 import BlockHeader from '../BlockHeader'
 import { findIndexOfId } from '../ArrayUtils'
 
-import { workoutBlock, setBlock } from '../../styles/program'
-import { formButton } from '../../styles/main-styles'
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import { styles as programStyles } from '../../styles/ProgramStyles'
+import { styles } from '../../styles/MainStyles'
+import { styles as gridStyles } from '../../styles/GridStyles2'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
+  let themeContext = useContext(ThemeContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  let { formButton } = styles(themeContext.theme)
+  let { gridContainer, gridItem } = gridStyles(themeContext.theme)
+  let { workoutBlock, setBlock } = programStyles(themeContext.theme)
 
   useEffect(() => {
     fetchMyAPI()
@@ -28,6 +33,7 @@ const Workouts = props => {
 
   const fetchMyAPI = async () => {
     const response = await retrieveWorkouts()
+    console.log({response})
     woContext.updateWorkouts(response)
   }
 
@@ -68,6 +74,7 @@ const Workouts = props => {
   const renderWorkouts = workouts => {
     console.log('rendering workouts...')
     return workouts.map(wo => {
+      console.log({wo})
       return (
         <div
           key={wo.id}
@@ -80,20 +87,20 @@ const Workouts = props => {
             deleteItem={deleteWorkout}
             editItem={editWorkout}
           />
-          <div>{renderSets(wo.sets)}</div>
+          <div>{renderExerciseGroups(wo.exerciseGroups)}</div>
         </div>
       )
     })
   }
 
-  const renderSets = sets => {
-    return sets.map(set => {
+  const renderExerciseGroups = exerciseGroups => {
+    return exerciseGroups.map(exGroup => {
       let data = {
         headers: ['name', 'reps'],
-        rows: [...set.exercises]
+        rows: [...exGroup.exercises]
       }
       return (
-        <div key={set.id} css={setBlock}>
+        <div key={exGroup.id} css={setBlock}>
           <Table data={data} disabled={true} />
         </div>
       )

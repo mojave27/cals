@@ -59,7 +59,7 @@ const BlockHeader = props => {
   }
 
   return (
-    <div css={blockHeader}>
+    <div css={blockHeader} onClick={props.onClick} style={{maxHeight: '25px'}}>
       {props.item.name ? props.item.name : ''}
       {renderIcons(props)}
     </div>

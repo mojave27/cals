@@ -4,7 +4,7 @@ import { themes } from '../styles/main-styles'
 
 class ThemeProvider extends React.Component {
     state = {
-        activeTheme: themes.stormTrooper
+        activeTheme: themes.woSheet
     }
     
 

@@ -6,31 +6,6 @@ import ThemeContext from '../../context/ThemeContext'
 import { styles } from '../../styles/TableStyles'
 import BlockHeader from '../BlockHeader'
 
-// SAMPLE DATA OBJECT
-// const sampleData = {
-//   setId: 999,
-//   headers: ['name', 'reps'],
-//   rows: [
-//     {
-//       id: 0,
-//       reps: 'max',
-//       name: 'chins',
-//       type: 'compound'
-//     },
-//     {
-//       id: 8,
-//       reps: 'max',
-//       name: 'glute bridge',
-//       type: 'compound'
-//     },
-//     {
-//       id: 9,
-//       reps: 'max',
-//       name: 'inv row',
-//       type: 'compound'
-//     }]
-// }
-
 //TODO: update table to use context instead of passing the props/data all around it.
 
 const Table = props => {

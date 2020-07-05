@@ -19,7 +19,6 @@ export const retrieve = () => {
 }
 
 export const retrieveWoDayById = id => {
-  console.log(`calling GET /wodays/${id}`)
   let url = `${URL}/${id}`
   return axios
     .get(url, config)

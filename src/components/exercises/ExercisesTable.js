@@ -1,14 +1,19 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
-import { table } from '../../styles/table'
-import { formButton } from '../../styles/main-styles'
+import React, { useContext } from 'react'
 import { useTable, useSortBy, useRowSelect } from 'react-table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons'
 // import { findIndexOfId } from '../ArrayUtils'
+import ThemeContext from '../../context/ThemeContext'
+import { styles } from '../../styles/MainStyles'
+import { styles as tableStyles } from '../../styles/TableStyles'
 
 const ExerciseTable = ({ columns, data, deleteExercises }) => {
+  let themeContext = useContext(ThemeContext)
+  let { formButton } = styles(themeContext.theme)
+  let { table } = tableStyles(themeContext.theme)
+
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,

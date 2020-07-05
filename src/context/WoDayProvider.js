@@ -19,8 +19,8 @@ export const emptyWoDay = {
         'exercises': []
     },
     wo: {
-        exercises: [],
-        sets: []
+        exerciseGroups: [ { id:0, exercises: []} ],
+        sets: [ {id:0, exerciseGroups: [ { id:0, exercises: []}] } ],
     }
 }
 

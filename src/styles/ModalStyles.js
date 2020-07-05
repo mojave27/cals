@@ -2,8 +2,6 @@ import { css } from '@emotion/core'
 
 export let styles = theme => {
 
-  console.log({theme})
-
   let modal = css({
     // display: 'none' /* Hidden by default */,
     position: 'fixed' /* Stay in place */,

@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { deleteExerciseById, retrieve } from '../../api/exercisesApi'
-import { formButton } from '../../styles/main-styles'
 import Modal from '../Modal'
 import Exercise from './Exercise'
 import ExercisesTable from './ExercisesTable'
 import { dynamicSort } from '../ArrayUtils'
 
+import ThemeContext from '../../context/ThemeContext'
+import { styles } from '../../styles/MainStyles'
+
 const Exercises = props => {
   const [exercises, setExercises] = useState([])
   // const [selectedExerciseIds, setSelectedExerciseIds] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const themeContext = useContext(ThemeContext)
+  let { formButton } = styles(themeContext.theme)
 
   const columns = React.useMemo(
     () => [

@@ -18,6 +18,8 @@ import WoProvider from '../context/WoProvider'
 import ProgramTracker from './tracker/ProgramTracker'
 import WoDayProvider from '../context/WoDayProvider'
 import ThemeContext from '../context/ThemeContext'
+import WorkoutForm from './workouts/WorkoutForm'
+import Workouts from './workouts/Workouts'
 
 const ThemedContent = () => {
   let context = useContext(ThemeContext)
@@ -49,6 +51,8 @@ const ThemedContent = () => {
                     <ProgramForm path='/program-form' />
                     <ProgramForm path='/program-form/:programId' />
                     <Exercises path='/exercises' />
+                    <WorkoutForm path='/manage/workoutsform' />
+                    <Workouts path='/manage/workouts' />
                     <DataConsistency path='/admin/consistency-check' />
                     <Test path='/admin/test' />
                     <Themer path='/admin/themer' />

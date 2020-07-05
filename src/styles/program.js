@@ -13,7 +13,7 @@ export let blockHeader = css({
 })
 
 export let workoutBlock = css({
-  display: 'inline-grid'
+  // display: 'inline-grid'
 })
 
 export let setBlock = css({

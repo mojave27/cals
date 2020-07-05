@@ -1,7 +1,6 @@
 import { css } from '@emotion/core'
 
 export let styles = theme => {
-  console.log(`using theme: ${JSON.stringify(theme)}`)
   let blockHeader = css({
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
@@ -13,7 +12,7 @@ export let styles = theme => {
   })
 
   let workoutBlock = css({
-    display: 'inline-grid'
+    // display: 'inline-grid'
   })
 
   let setBlock = css({

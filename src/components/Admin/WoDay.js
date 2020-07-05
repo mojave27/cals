@@ -3,6 +3,7 @@ import React from 'react'
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
 import { retrieveWoDayById, updateWoDay } from '../../api/wodaysApi'
+import { retrieveWorkoutById } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WoDayContext from '../../context/WoDayContext'
 import TextInput from '../inputs/TextInput'
@@ -11,6 +12,7 @@ import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
 import Workout from '../workouts/Workout'
 import ThemeContext from '../../context/ThemeContext'
+import { cloneDeep } from 'lodash'
 
 import WorkoutChooser from '../workouts/WorkoutChooser'
 
@@ -24,7 +26,7 @@ import '../../styles/datePicker.css'
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
-  let context = useContext(WoDayContext)
+  let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const WoDay = props => {
       const response = await retrieveWoDayById(0)
       if (!didCancel) {
         // console.log({ response })
-        context.updateWoDay(response)
+        woDayContext.updateWoDay(response)
       }
     }
 
@@ -59,6 +61,11 @@ const WoDay = props => {
     woTable
   } = woDayStyles(themeContext.theme)
 
+  const retrieveWorkout = async workoutId => {
+    let workout = await retrieveWorkoutById(workoutId)
+    return workout
+  }
+
   const toggleModal = () => {
     setShowModal(!showModal)
   }
@@ -68,7 +75,7 @@ const WoDay = props => {
   }
 
   const saveWoDay = async () => {
-    await updateWoDay(context.woday)
+    await updateWoDay(woDayContext.woday)
   }
 
   const handleTextChange = event => {
@@ -90,26 +97,29 @@ const WoDay = props => {
     let value = event.target.value
     let name = event.target.name
     let exerciseId = event.target.parentNode.parentNode.id
-
-    let woday = context.copyWoDay()
-    let exIndex = findIndexOfId(exerciseId, woday.wo.exercises)
-    let ex = woday.wo.exercises[exIndex]
+    let exGroupId = event.target.dataset.exgroupid
+    
+    console.log(`value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}`)
+    
+    let woday = woDayContext.copyWoDay()
+    console.log({woday})
+    let exGroupIndex = findIndexOfId(exGroupId, woday.wo.exerciseGroups)
+    let exIndex = findIndexOfId(exerciseId, woday.wo.exerciseGroups[exGroupIndex].exercises)
+    let ex = woday.wo.exerciseGroups[exGroupIndex].exercises[exIndex]
 
     ex[name] = value
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const handleSetChange = event => {
     let exerciseId = event.target.parentNode.parentNode.id
     let setId = event.target.dataset.setid
+    let exGroupId = event.target.dataset.exgroupid
     let name = event.target.name
     let value = event.target.value
+    console.log(`value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}, setId: ${setId}`)
 
-    console.log(
-      `exId: ${exerciseId}, setId: ${setId}, name: ${name}, value: ${value}`
-    )
-
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     let wo = woday.wo
 
     // find set
@@ -118,9 +128,10 @@ const WoDay = props => {
     console.log(set)
 
     // find exercise
-    let exIndex = findIndexOfId(exerciseId, set.exercises)
+    let exGroupIndex = findIndexOfId(exGroupId, set.exerciseGroups)
+    let exIndex = findIndexOfId(exerciseId, set.exerciseGroups[exGroupIndex].exercises)
     console.log(`exIndex: ${exIndex}`)
-    let ex = set.exercises[exIndex]
+    let ex = set.exerciseGroups[exGroupIndex].exercises[exIndex]
     console.log(ex)
 
     // update weight or reps
@@ -129,47 +140,46 @@ const WoDay = props => {
     // console.log(woday)
     // console.log(context.woday)
 
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const setWeight = weight => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     woday.weight = weight
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const setGoals = goals => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     woday.goals = goals
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const setEnergyRange = value => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     woday.energy = value
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const setSleepRange = value => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     woday.sleep = value
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const setDate = async jsDate => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     woday.date = {
       day: jsDate.getDate(),
       month: jsDate.getMonth(),
       year: jsDate.getFullYear()
     }
-    await context.updateWoDay(woday)
+    await woDayContext.updateWoDay(woday)
   }
 
   const getStartDate = () => {
-    let date = context.woday.date
+    let date = woDayContext.woday.date
     let startDate = new Date(date.year, date.month, date.day)
-    console.log(startDate)
     return startDate
   }
 
@@ -190,7 +200,7 @@ const WoDay = props => {
   }
 
   const addExercise = () => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
 
     let newExercise = generateNewExercise(woday.wo.exercises)
     woday.wo.exercises.push(newExercise)
@@ -198,7 +208,7 @@ const WoDay = props => {
     let updatedSets = addExerciseToSets(woday.wo.sets, newExercise.id)
     woday.wo.sets = updatedSets
 
-    context.updateWoDay(woday)
+    woDayContext.updateWoDay(woday)
   }
 
   const addExerciseToSets = (sets, exId) => {
@@ -217,37 +227,82 @@ const WoDay = props => {
     }
   }
 
-  const chooseWorkout = () => {
-    // user chooses workout - place new workout into context.woday.wo
-    // alert('choose a workout')
+  const chooseWorkout = async workoutId => {
+    let updatedWoDay = woDayContext.copyWoDay()
+    let workoutTemplate = await retrieveWorkout(workoutId)
+    console.log({workoutTemplate})
+    let workout = convertTemplateToActiveWorkout(workoutTemplate)
+    console.log({workout})
+    updatedWoDay.wo = workout
+    console.log(updatedWoDay)
+    woDayContext.updateWoDay(updatedWoDay)
+    toggleModal()
+  }
+
+  const convertTemplateToActiveWorkout = woTemplate => {
+    let newExGroups = woTemplate.exerciseGroups.map(exGroup => {
+      let newExercises = exGroup.exercises.map(exercise => {
+        let newExercise = cloneDeep(exercise)
+        delete newExercise.type
+        newExercise.weight = 0
+        newExercise.reps = 0
+        return newExercise
+      })
+      let newExGroup = {}
+      newExGroup.id = exGroup.id
+      newExGroup.exercises = newExercises
+      return newExGroup
+    })
+    
+    let sets = [{
+      id: 0,
+      exerciseGroups: newExGroups
+    }]
+    let workout = cloneDeep(woTemplate)
+    workout.sets = sets
+    return workout
+  }
+
+  const showWorkoutChooser = () => {
     toggleModal()
   }
 
   const addSet = () => {
-    let woday = context.copyWoDay()
+    let woday = woDayContext.copyWoDay()
     let wo = woday.wo
 
-    // create new set, add each exercise id, and set weights reps to empty
+    console.log('woday before')
+    console.log({woday})
+
+    // create new set and exercise groups, add each exercise id, and set weights reps to empty
     let newSet = {
       id: generateNewId(wo.sets),
-      exercises: wo.exercises.map(ex => {
-        return {
-          id: ex.id,
-          weight: '',
-          reps: ''
-        }
+      exerciseGroups: wo.exerciseGroups.map(exGroup => {
+        let newExGroup = {}
+        newExGroup.id = exGroup.id
+        newExGroup.exercises = exGroup.exercises.map(ex => {
+          return {
+            id: ex.id,
+            weight: '',
+            reps: ''
+          }
+        })
+        return newExGroup
       })
     }
     wo.sets.push(newSet)
 
-    context.updateWoDay(woday)
+    console.log('woday after')
+    console.log({woday})
+
+    woDayContext.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
   }
 
   const convertCardioForTable = () => {
     let data = {
-      headers: context.woday.cardio.headers,
-      rows: context.woday.cardio.exercises
+      headers: woDayContext.woday.cardio.headers,
+      rows: woDayContext.woday.cardio.exercises
     }
     return data
   }
@@ -256,7 +311,7 @@ const WoDay = props => {
     // <div css={formContainer}>
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
-        <WorkoutChooser done={done} />
+        <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
         {/* <div css={row} style={{ marginBottom: '20px' }}>
@@ -296,7 +351,7 @@ const WoDay = props => {
                     name={'goals'}
                     id={'goals'}
                     placeholder={'enter goals here'}
-                    value={context.woday.goals}
+                    value={woDayContext.woday.goals}
                     onChange={handleTextChange}
                     styles={{ width: '300px' }}
                   />
@@ -307,7 +362,7 @@ const WoDay = props => {
                     label={'Weight'}
                     name={'weight'}
                     id={'weight'}
-                    value={context.woday.weight}
+                    value={woDayContext.woday.weight}
                     placeholder={'enter weight'}
                     onChange={handleTextChange}
                     styles={{ width: '100px' }}
@@ -320,9 +375,9 @@ const WoDay = props => {
                     max={10}
                     jssClass={{ float: 'left' }}
                     id='energyRange'
-                    value={context.woday.energy}
+                    value={woDayContext.woday.energy}
                     onChange={handleSliderChange}
-                    theme={context.theme}
+                    theme={woDayContext.theme}
                   />
                 </div>
                 <div css={gridSleep}>
@@ -332,9 +387,9 @@ const WoDay = props => {
                     max={10}
                     jssClass={{ float: 'left' }}
                     id='sleepRange'
-                    value={context.woday.sleep}
+                    value={woDayContext.woday.sleep}
                     onChange={handleSliderChange}
-                    theme={context.theme}
+                    theme={woDayContext.theme}
                   />
                 </div>
               </div>
@@ -354,10 +409,10 @@ const WoDay = props => {
             <div css={[row, section]}>
               <div css={sectionHeader}>Weights</div>
               <Workout
-                wo={context.woday.wo}
+                wo={woDayContext.woday.wo}
                 addExercise={addExercise}
                 addSet={addSet}
-                chooseWorkout={chooseWorkout}
+                showWorkoutChooser={showWorkoutChooser}
                 onChange={handleSetChange}
                 onLeadCellChange={handleLeadCellChange}
               />

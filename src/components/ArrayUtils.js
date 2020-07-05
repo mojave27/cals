@@ -13,6 +13,17 @@ export let dynamicSort = (property, ignoreCase) => {
   }
 }
 
+export let sortByStringProperty = (arrayOfObjects, stringProperty, ignoreCase) => {
+  ignoreCase = typeof ignoreCase === 'undefined' ? false : ignoreCase
+
+  if (ignoreCase){
+    return arrayOfObjects.sort((a, b) => a[stringProperty].localeCompare(b[stringProperty]))
+  } else {
+    let prop = stringProperty
+    return arrayOfObjects.sort((a, b) => (a[prop] > b[prop]) - (a[prop] < b[prop]) )
+  }
+}
+
 export let findIndexOfId = (id, list) => {
   // console.log(`[ArrayUtils] id: ${id}`)
   // console.log(`[ArrayUtils] list: ${JSON.stringify(list)}`)
@@ -53,18 +64,31 @@ export const getUniqueIds = list => {
   // what if list isn't a list?  
   // what if length is 0?
   let ids = Array.from(list, item => item.id)
-  ids.sort()
+  let cleanedIds = removeInvalidValuesFromList(ids)
+  cleanedIds.sort()
+
   // ensure unique by converting to Set and back to array :)
-  let uniqueIds = Array.from(new Set(ids))
+  let uniqueIds = Array.from(new Set(cleanedIds))
   return uniqueIds
+}
+
+export const removeInvalidValuesFromList = list => {
+  let cleanedList = []
+  list.forEach(item => {
+    if (typeof item !== 'undefined' || !isNaN(item)) cleanedList.push(item)
+  })
+  return cleanedList
 }
 
 export const generateNewId = list => {
   let newId = 0
   let currentIds = getUniqueIds(list)
-  if (currentIds.length <= 0){return newId}
+  if (currentIds.length <= 0){
+    return newId
+  }
 
   newId = Math.max(...currentIds) + 1
+
   return newId
 }
 

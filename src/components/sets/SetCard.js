@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useEffect, useState } from 'react'
-import { findIndexOfId } from '../ArrayUtils'
+import { findIndexOfId, sortByStringProperty } from '../ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
-import { addSet, updateSet } from '../../api/setsApi'
+import { updateSet } from '../../api/setsApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'
 import SetContext from '../../context/SetContext'
@@ -19,6 +19,8 @@ import {
   selectedMiniCard
 } from '../../styles/main-styles'
 
+// TODO: disconnect this from SetContext and just have it manage the set(s) locally, and save/update
+//       to the parent component via props
 const SetCard = props => {
   let setContext = useContext(SetContext)
   const [allExercises, setAllExercises] = useState([])
@@ -27,13 +29,18 @@ const SetCard = props => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await retrieve()
-      setAllExercises(response)
+      let exercises = await retrieve()
+      setAllExercises(sortByName(exercises))
     }
 
     fetchData()
     return () => {}
   }, [])
+
+  const sortByName = exercises => {
+    let ignoreCase = true
+    return sortByStringProperty(exercises, 'name', ignoreCase)
+  }
 
   const renderSet = () => {
     return (
@@ -96,12 +103,11 @@ const SetCard = props => {
 
   const renderAllExercises = exercises => {
     return exercises.map(exercise => {
-      let index = exercise.id
       return (
         <div
-          id={index}
+          id={exercise.id}
           css={getClasses(exercise.id)}
-          key={index}
+          key={exercise.id}
           onClick={selectExercise}
         >
           name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
@@ -139,6 +145,10 @@ const SetCard = props => {
     let index = selectedExercises.findIndex(exercise => {
       return Number(exercise.id) === Number(id)
     })
+
+    // (-1 = not found, 0 = found)
+    if (index === 0 ) console.log(`${JSON.stringify(selectedExercises[index])}`)
+
     if (index === -1) {
       return miniCard
     } else {
@@ -159,8 +169,10 @@ const SetCard = props => {
 
   const selectExercise = event => {
     let id = event.target.id
+    console.log(`id from selectExercise: ${id}`)
     let updatedSelectedExercises = [...selectedExercises]
-    updatedSelectedExercises.push(allExercises[id])
+    let allExercisesId = findIndexOfId(id, allExercises) 
+    updatedSelectedExercises.push(allExercises[allExercisesId])
     setSelectedExercises(updatedSelectedExercises)
   }
 
@@ -198,18 +210,18 @@ const SetCard = props => {
   }
 
   const saveSet = async () => {
-    let response = {}
-    if (setContext.set.id) {
-      console.log(`saving changes to existing set ${setContext.set.id}`)
-      response = await updateSet(setContext.set)
-    } else {
-      console.log(`adding new set ${JSON.stringify(setContext.set)}`)
-      response = await addSet(setContext.set)
-    }
+    // let response = {}
+    // if (setContext.set.id) {
+    //   console.log(`saving changes to existing set ${setContext.set.id}`)
+    //   response = await updateSet(setContext.set)
+    // } else {
+    //   console.log(`adding new set ${JSON.stringify(setContext.set)}`)
+    //   response = await addSet(setContext.set)
+    // }
 
     if (props.saveSet) {
-      console.log(`calling props.saveSet with ${JSON.stringify(response)}`)
-      props.saveSet(response)
+      console.log(`calling props.saveSet with ${JSON.stringify(setContext.set)}`)
+      props.saveSet(setContext.set)
     }
   }
 
