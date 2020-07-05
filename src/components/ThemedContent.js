@@ -20,6 +20,7 @@ import WoDayProvider from '../context/WoDayProvider'
 import ThemeContext from '../context/ThemeContext'
 import WorkoutForm from './workouts/WorkoutForm'
 import Workouts from './workouts/Workouts'
+import WoDayTracker from './tracker/WoDayTracker'
 
 const ThemedContent = () => {
   let context = useContext(ThemeContext)
@@ -58,6 +59,7 @@ const ThemedContent = () => {
                     <Themer path='/admin/themer' />
                     <WoDay path='/admin/test/woday' />
                     <ProgramTracker path='/program-viewer' />
+                    <WoDayTracker path='/tracker/woday' />
                   </Router>
                 </WoDayProvider>
               </div>

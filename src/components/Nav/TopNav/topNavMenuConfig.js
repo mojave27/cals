@@ -8,7 +8,10 @@ export const menuConfig = [
   {
     name: 'trackers',
     type: 'dropdown',
-    items: [{ to: '/program-tracker', text: 'program' }]
+    items: [
+      { to: '/program-tracker', text: 'program' },
+      { to: '/tracker/woday', text: 'woday' }
+    ]
   },
   {
     name: 'progress',

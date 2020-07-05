@@ -30,19 +30,22 @@ const WoDay = props => {
   let themeContext = useContext(ThemeContext)
 
   useEffect(() => {
-    let didCancel = false
-    async function fetchWoDay() {
-      // change this to retrieveWoDays.  for now we just get the one woday by id.
-      const response = await retrieveWoDayById(0)
-      if (!didCancel) {
-        // console.log({ response })
-        woDayContext.updateWoDay(response)
+    console.log(`is new?: ${props.location.state.new}`)
+    if (props.location.state.new) {
+      woDayContext.setEmptyWoDay()
+    } else {
+      let didCancel = false
+      async function fetchWoDay() {
+        const response = await retrieveWoDayById(0)
+        if (!didCancel) {
+          woDayContext.updateWoDay(response)
+        }
       }
-    }
 
-    fetchWoDay()
-    return () => {
-      didCancel = true
+      fetchWoDay()
+      return () => {
+        didCancel = true
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -69,7 +72,7 @@ const WoDay = props => {
   const toggleModal = () => {
     setShowModal(!showModal)
   }
-  
+
   const done = () => {
     setShowModal(false)
   }
@@ -98,13 +101,18 @@ const WoDay = props => {
     let name = event.target.name
     let exerciseId = event.target.parentNode.parentNode.id
     let exGroupId = event.target.dataset.exgroupid
-    
-    console.log(`value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}`)
-    
+
+    console.log(
+      `value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}`
+    )
+
     let woday = woDayContext.copyWoDay()
-    console.log({woday})
+    console.log({ woday })
     let exGroupIndex = findIndexOfId(exGroupId, woday.wo.exerciseGroups)
-    let exIndex = findIndexOfId(exerciseId, woday.wo.exerciseGroups[exGroupIndex].exercises)
+    let exIndex = findIndexOfId(
+      exerciseId,
+      woday.wo.exerciseGroups[exGroupIndex].exercises
+    )
     let ex = woday.wo.exerciseGroups[exGroupIndex].exercises[exIndex]
 
     ex[name] = value
@@ -117,7 +125,9 @@ const WoDay = props => {
     let exGroupId = event.target.dataset.exgroupid
     let name = event.target.name
     let value = event.target.value
-    console.log(`value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}, setId: ${setId}`)
+    console.log(
+      `value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}, setId: ${setId}`
+    )
 
     let woday = woDayContext.copyWoDay()
     let wo = woday.wo
@@ -129,7 +139,10 @@ const WoDay = props => {
 
     // find exercise
     let exGroupIndex = findIndexOfId(exGroupId, set.exerciseGroups)
-    let exIndex = findIndexOfId(exerciseId, set.exerciseGroups[exGroupIndex].exercises)
+    let exIndex = findIndexOfId(
+      exerciseId,
+      set.exerciseGroups[exGroupIndex].exercises
+    )
     console.log(`exIndex: ${exIndex}`)
     let ex = set.exerciseGroups[exGroupIndex].exercises[exIndex]
     console.log(ex)
@@ -230,9 +243,9 @@ const WoDay = props => {
   const chooseWorkout = async workoutId => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
-    console.log({workoutTemplate})
+    console.log({ workoutTemplate })
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
-    console.log({workout})
+    console.log({ workout })
     updatedWoDay.wo = workout
     console.log(updatedWoDay)
     woDayContext.updateWoDay(updatedWoDay)
@@ -253,11 +266,13 @@ const WoDay = props => {
       newExGroup.exercises = newExercises
       return newExGroup
     })
-    
-    let sets = [{
-      id: 0,
-      exerciseGroups: newExGroups
-    }]
+
+    let sets = [
+      {
+        id: 0,
+        exerciseGroups: newExGroups
+      }
+    ]
     let workout = cloneDeep(woTemplate)
     workout.sets = sets
     return workout
@@ -272,7 +287,7 @@ const WoDay = props => {
     let wo = woday.wo
 
     console.log('woday before')
-    console.log({woday})
+    console.log({ woday })
 
     // create new set and exercise groups, add each exercise id, and set weights reps to empty
     let newSet = {
@@ -293,7 +308,7 @@ const WoDay = props => {
     wo.sets.push(newSet)
 
     console.log('woday after')
-    console.log({woday})
+    console.log({ woday })
 
     woDayContext.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
