@@ -65,9 +65,12 @@ class WoDayProvider extends React.Component {
   }
 
   saveWoDay = async () => {
-    if(this.isWoDayInList()){
-      await addWoDay(this.state.woday)
-      // this.saveWoDayInWoDaysList(this.state.woday)
+    // if(this.isWoDayInList()){
+    if(this.state.woday.id === -1){
+      let woday = await addWoDay(this.state.woday)
+      let wodays = await fetchWoDays()
+      this.setState({woday, wodays})
+      // this.saveWoDayInWoDaysList(woday)
     } else {
       await updateWoDay(this.state.woday)
     }
@@ -93,7 +96,7 @@ class WoDayProvider extends React.Component {
           },
           setEmptyWoDay: () => {
             let woday = cloneDeep(emptyWoDay)
-            woday.id = generateNewId(this.state.wodays)
+            // woday.id = generateNewId(this.state.wodays)
             this.setState({ woday: woday })
           },
           addSet: set => {
