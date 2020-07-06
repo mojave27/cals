@@ -33,20 +33,19 @@ export const retrieveWoDayById = id => {
     })
 }
 
-// export const addWorkout = workout => {
-//   console.log(`calling POST /workouts with ${workout}`)
-//   // let data = {...workout}
-//   return axios
-//     .post(URL, workout, config)
-//     .then(response => {
-//       const data = parseResponse(response)
-//       return data
-//     })
-//     .catch(error => {
-//       console.log(`workouts api - addWorkout error: ${error}`)
-//       return {}
-//     })
-// }
+export const addWoDay = woday => {
+  console.log(`calling POST /wodays with ${woday}`)
+  return axios
+    .post(URL, woday, config)
+    .then(response => {
+      const data = parseResponse(response)
+      return data
+    })
+    .catch(error => {
+      console.log(`wodays api - addWoDay error: ${error}`)
+      return {}
+    })
+}
 
 export const updateWoDay = woday => {
   let url = `${URL}/${woday.id}`

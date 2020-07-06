@@ -78,7 +78,8 @@ const WoDay = props => {
   }
 
   const saveWoDay = async () => {
-    await updateWoDay(woDayContext.woday)
+    // saves the woday which is held by woDayContext - which should be this one :)
+    await woDayContext.saveWoDay()
   }
 
   const handleTextChange = event => {
@@ -125,17 +126,12 @@ const WoDay = props => {
     let exGroupId = event.target.dataset.exgroupid
     let name = event.target.name
     let value = event.target.value
-    console.log(
-      `value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}, setId: ${setId}`
-    )
-
     let woday = woDayContext.copyWoDay()
     let wo = woday.wo
 
     // find set
     let setIndex = findIndexOfId(setId, wo.sets)
     let set = wo.sets[setIndex]
-    console.log(set)
 
     // find exercise
     let exGroupIndex = findIndexOfId(exGroupId, set.exerciseGroups)
@@ -143,9 +139,7 @@ const WoDay = props => {
       exerciseId,
       set.exerciseGroups[exGroupIndex].exercises
     )
-    console.log(`exIndex: ${exIndex}`)
     let ex = set.exerciseGroups[exGroupIndex].exercises[exIndex]
-    console.log(ex)
 
     // update weight or reps
     ex[name] = value
@@ -306,9 +300,6 @@ const WoDay = props => {
       })
     }
     wo.sets.push(newSet)
-
-    console.log('woday after')
-    console.log({ woday })
 
     woDayContext.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
