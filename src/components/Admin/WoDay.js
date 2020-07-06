@@ -2,7 +2,7 @@ import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
-import { retrieveWoDayById, updateWoDay } from '../../api/wodaysApi'
+import { retrieveWoDayById } from '../../api/wodaysApi'
 import { retrieveWorkoutById } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WoDayContext from '../../context/WoDayContext'
