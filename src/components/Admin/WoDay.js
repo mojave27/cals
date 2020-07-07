@@ -208,45 +208,47 @@ const WoDay = props => {
 
   const addExercise = () => {
     let woday = woDayContext.copyWoDay()
+    
+    let newExGroup = {
+      id: generateNewId(woday.wo.exerciseGroups),
+      exercises:[]
+    }
+    newExGroup.exercises.push(generateNewExercise())
+    woday.wo.exerciseGroups.push(newExGroup)
 
-    let newExercise = generateNewExercise(woday.wo.exercises)
-    woday.wo.exercises.push(newExercise)
-
-    let updatedSets = addExerciseToSets(woday.wo.sets, newExercise.id)
+    let updatedSets = addExerciseToSets(woday.wo.sets, cloneDeep(newExGroup))
     woday.wo.sets = updatedSets
 
     woDayContext.updateWoDay(woday)
   }
 
-  const addExerciseToSets = (sets, exId) => {
+  const addExerciseToSets = (sets, exGroup) => {
     return sets.map(set => {
-      let ex = { id: exId, weight: '', reps: '' }
-      set.exercises.push(ex)
+      set.exerciseGroups.push(exGroup)
       return set
     })
   }
 
-  const generateNewExercise = exercises => {
+  const generateNewExercise = () => {
     return {
-      id: generateNewId(exercises),
+      id: 0,
       name: '',
-      targets: ''
+      reps: 0,
+      weight:0
     }
   }
 
   const chooseWorkout = async workoutId => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
-    console.log({ workoutTemplate })
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
-    console.log({ workout })
     updatedWoDay.wo = workout
-    console.log(updatedWoDay)
     woDayContext.updateWoDay(updatedWoDay)
     toggleModal()
   }
 
   const convertTemplateToActiveWorkout = woTemplate => {
+    console.log(`converting workout template to active workout`)
     let newExGroups = woTemplate.exerciseGroups.map(exGroup => {
       let newExercises = exGroup.exercises.map(exercise => {
         let newExercise = cloneDeep(exercise)

@@ -81,6 +81,7 @@ export const removeInvalidValuesFromList = list => {
 }
 
 export const generateNewId = list => {
+  console.log({list})
   let newId = 0
   let currentIds = getUniqueIds(list)
   if (currentIds.length <= 0){
