@@ -1,31 +1,30 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useContext } from 'react'
 import { camelCase, get } from 'lodash'
+import { woDayStyles } from '../../styles/WoDayStyles'
+import { styles } from '../../styles/MainStyles'
+import ThemeContext from '../../context/ThemeContext'
 
 
-class CardioTable extends React.Component {
-  state = {}
+// class CardioTable extends React.Component {
+  // state = {}
+const CardioTable = props => {
+  let themeContext = useContext(ThemeContext)
+  let { woHeader, woInput, woTable } = woDayStyles(themeContext.theme)
+  let { basicButtonSmall } = styles(themeContext.theme)
 
-  render() {
-    let jssClass = get(this, 'props.jssClass', null)
-    return (
-      <table css={jssClass} style={{ margin: 'auto' }}>
-        <tbody id={this.props.id}>{this.renderRows(this.props.data)}</tbody>
-      </table>
-    )
-  }
 
   //TODO: can this be cleaned up and refactored
-  renderRows = data => {
+  const renderRows = data => {
     // console.log(JSON.stringify(data))
-    let headerRow = this.renderHeaders(data.headers)
+    let headerRow = renderHeaders(data.headers)
     let rows = data.rows.map((row, index) => {
       // let id = typeof row.id === 'undefined' ? index : row.id
       let id = get(row, 'id', index)
       return (
         <tr id={id} key={index}>
-          {this.renderRow(row, data.headers)}
+          {renderRow(row, data.headers)}
         </tr>
       )
     })
@@ -34,7 +33,7 @@ class CardioTable extends React.Component {
     return rows
   }
 
-  renderHeaders = headers => {
+  const renderHeaders = headers => {
     return (
       <tr key={headers}>
         {headers.map( (header,index) => (
@@ -44,11 +43,11 @@ class CardioTable extends React.Component {
     )
   }
 
-  renderRow = (row, headers) => {
-    // TODO: if this.props.disabled = false, then add delete icon (extra <td>)
+  const renderRow = (row, headers) => {
+    // TODO: if props.disabled = false, then add delete icon (extra <td>)
     let tds = []
     let j = 0
-    if (!this.props.disabled) {
+    if (!props.disabled) {
       j = 1
       // add the delete button
       tds.push(
@@ -57,7 +56,7 @@ class CardioTable extends React.Component {
             id={`${row.id}-${j}`}
             type='button'
             value='delete'
-            onClick={this.props.deleteRow}
+            onClick={props.deleteRow}
           />
         </td>
       )
@@ -66,7 +65,7 @@ class CardioTable extends React.Component {
     for (let i = j; i < headers.length; i++) {
       tds.push(
         <td
-          onClick={this.clickPart}
+          // onClick={clickPart}
           style={{
             borderLeft: '1px solid #eee',
             borderBottom: '1px solid #eee'
@@ -77,8 +76,8 @@ class CardioTable extends React.Component {
             id={`${row.id}-${i}`}
             name={headers[i]}
             data={row[camelCase(headers[i])]}
-            onChange={this.handleCellChange}
-            disabled={this.props.disabled}
+            onChange={handleCellChange}
+            disabled={props.disabled}
           />
         </td>
       )
@@ -87,7 +86,7 @@ class CardioTable extends React.Component {
   }
 
   // todo: need to give the exercise id
-  handleCellChange = event => {
+  const handleCellChange = event => {
     // get setId from tr (parentNode/td > parentNode/tr)
     let rowId = event.target.parentNode.parentNode.id
     let id = event.target.id
@@ -99,13 +98,45 @@ class CardioTable extends React.Component {
     console.log(`name: ${name}`)
     console.log(`value: ${value}`)
 
-    // this.props.onChange({
-    //   setId: setId,
-    //   id: id,
-    //   name: name,
-    //   value: value
-    // })
+    props.onChange({
+      id: id,
+      name: name,
+      value: value
+    })
   }
+
+    return (
+      // <table css={jssClass} style={{ margin: 'auto' }}>
+      <React.Fragment>
+      <div style={{ display: 'inline-block', margin: 'auto' }}>
+        {/* <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Choose Workout'
+          css={[basicButtonSmall, { float: 'left' }]}
+          onClick={showWorkoutChooser}
+        /> */}
+        {/* <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Add Set'
+          css={[basicButtonSmall, { float: 'left' }]}
+          onClick={addSet}
+        /> */}
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Add Exercise'
+          css={[basicButtonSmall, { float: 'left' }]}
+          onClick={props.addCardioExercise}
+        />
+      </div>
+      <table css={woTable} style={{ margin: 'auto' }}>
+        <tbody id={props.id}>{renderRows(props.data)}</tbody>
+      </table>
+      </React.Fragment>
+    )
+
 }
 
 const Input = props => {

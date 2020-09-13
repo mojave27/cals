@@ -97,6 +97,23 @@ const WoDay = props => {
     }
   }
 
+  const handleExerciseChange = update => {
+    // {
+    // id: id,  <-- will be row-column (e.g. 1-2)
+    // name: name, <-- will be property name
+    // value: value <-- will be value to change to
+    // }
+    let woday = woDayContext.copyWoDay()
+    let idParts = update.id.split('-')
+    let rowId = idParts[0]
+    let index = findIndexOfId(rowId, woday.cardio.exercises)
+    let exercise = { ...woday.cardio.exercises[index] }
+    console.log({ exercise })
+    console.log({ update })
+
+    // use update object to update exercise
+  }
+
   const handleLeadCellChange = event => {
     let value = event.target.value
     let name = event.target.name
@@ -206,12 +223,25 @@ const WoDay = props => {
     }
   }
 
+  const addCardioExercise = () => {
+    let newCardioExercise = {
+      id: 0,
+      type: '',
+      duration: '',
+      distance: '',
+      heartRate: '? bpm'
+    }
+    let woday = woDayContext.copyWoDay()
+    woday.cardio.exercises.push(newCardioExercise)
+    woDayContext.updateWoDay(woday)
+  }
+
   const addExercise = () => {
     let woday = woDayContext.copyWoDay()
-    
+
     let newExGroup = {
       id: generateNewId(woday.wo.exerciseGroups),
-      exercises:[]
+      exercises: []
     }
     newExGroup.exercises.push(generateNewExercise())
     woday.wo.exerciseGroups.push(newExGroup)
@@ -234,7 +264,7 @@ const WoDay = props => {
       id: 0,
       name: '',
       reps: 0,
-      weight:0
+      weight: 0
     }
   }
 
@@ -286,25 +316,55 @@ const WoDay = props => {
     console.log({ woday })
 
     // create new set and exercise groups, add each exercise id, and set weights reps to empty
-    let newSet = {
-      id: generateNewId(wo.sets),
-      exerciseGroups: wo.exerciseGroups.map(exGroup => {
-        let newExGroup = {}
-        newExGroup.id = exGroup.id
-        newExGroup.exercises = exGroup.exercises.map(ex => {
-          return {
-            id: ex.id,
-            weight: '',
-            reps: ''
-          }
+    // TODO: set the weights to same as previous set, if there was a previous set
+
+    // let newSetId = generateNewId(wo.sets)
+    // if (newSetId > 0) {
+    //   let newSet = copyFromPreviousSet(wo.sets)
+    //   newSet.id = newSetId
+    // } else {
+
+      let newSet = {
+        id: generateNewId(wo.sets),
+        exerciseGroups: wo.exerciseGroups.map(exGroup => {
+          let newExGroup = {}
+          newExGroup.id = exGroup.id
+          newExGroup.exercises = exGroup.exercises.map(ex => {
+            return {
+              id: ex.id,
+              weight: '',
+              reps: ''
+            }
+          })
+          return newExGroup
         })
-        return newExGroup
-      })
-    }
+      }
+    // }
     wo.sets.push(newSet)
 
     woDayContext.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
+  }
+
+  const copyFromPreviousSet = (allSets) => {
+      // get previous set
+      let previousSet = allSets[allSets.length - 1]
+      let newSet = cloneDeep(previousSet)
+      // clear the reps from newSet
+      let newExGroups = newSet.exerciseGroups.map(exGroup => {
+      let newExGroup = {
+        exercises: exGroup.exercises.map(ex => {
+        return {
+          id: ex.id,
+          weight: '',
+          reps: ''
+        }
+      })
+    }
+    return newExGroup
+    })
+    newSet.exerciseGroups = newExGroups
+    return newSet
   }
 
   const convertCardioForTable = () => {
@@ -408,9 +468,11 @@ const WoDay = props => {
               <CardioTable
                 jssClass={[woTable]}
                 id={0}
-                deleteRow={event => console.log(event)}
                 // data={context.woday.cardio}
                 data={convertCardioForTable()}
+                deleteRow={event => console.log(event)}
+                addCardioExercise={addCardioExercise}
+                onChange={handleExerciseChange}
               />
             </div>
             {/* --- section 3: Weights --------------------------------------- */}
