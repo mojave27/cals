@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wologui-dev-143525-authRole",
+      "UnauthRoleArn": "arn:aws:iam::709987962479:role/amplify-wologui-dev-143525-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::709987962479:role/amplify-wologui-dev-143525-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-wologui-dev-143525-deployment",
+      "UnauthRoleName": "amplify-wologui-dev-143525-unauthRole",
+      "StackName": "amplify-wologui-dev-143525",
+      "StackId": "arn:aws:cloudformation:us-east-1:709987962479:stack/amplify-wologui-dev-143525/169985c0-f609-11ea-ab79-0e13b4bbfae7",
+      "AmplifyAppId": "d3s6by8vwujnx0"
+    },
+    "categories": {
+      "auth": {
+        "wologui427ebc43": {}
+      }
+    }
+  }
+}
