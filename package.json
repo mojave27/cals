@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/core": "^3.5.2",
+    "@aws-amplify/ui-react": "^0.2.19",
     "@emotion/core": "^10.0.22",
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
