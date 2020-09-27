@@ -29,6 +29,17 @@ const WorkoutForm = props => {
     setShowExerciseGroupDialog(!showExerciseGroupDialog)
   }
 
+  const editSet = event => {
+    console.log(event.target.id)
+    console.log(event.target.name)
+    let setId = event.target.id
+    let index = findIndexOfId(setId, woContext.workout.exerciseGroups)
+    // console.log(setId)
+    console.log(JSON.stringify(woContext.workout.exerciseGroups[index]))
+    setContext.updateSet(woContext.workout.exerciseGroups[index])
+    toggleSetDialog() 
+  }
+
   const showSetCard = () => {
     console.log('showing set card')
     setContext.clearSet()
@@ -64,11 +75,27 @@ const WorkoutForm = props => {
     woContext.updateWorkout(updatedWorkout)
   }
 
+  // add/update exercise group in workout context
   const addExerciseGroupToWorkout = exGroup => {
-    // add/update exercise group in workout context
+    if (typeof exGroup.id === 'undefined') {
+      addSetToWorkout(exGroup)
+    }else{
+      updateSetInWorkout(exGroup)
+    }
+  }
+
+  const addSetToWorkout = exGroup => {
     exGroup = setExGroupId(exGroup)
     let updatedWorkout = { ...woContext.workout }
     updatedWorkout.exerciseGroups.push(exGroup)
+    woContext.updateWorkout(updatedWorkout)
+    setShowExerciseGroupDialog(false)
+  }
+
+  const updateSetInWorkout = exGroup => {
+    let updatedWorkout = { ...woContext.workout }
+    let index = findIndexOfId(exGroup.id, updatedWorkout.exerciseGroups)
+    updatedWorkout.exerciseGroups[index] = exGroup
     woContext.updateWorkout(updatedWorkout)
     setShowExerciseGroupDialog(false)
   }
@@ -158,6 +185,7 @@ const WorkoutForm = props => {
               onClick={handleRowClick}
               deleteRow={deleteExercise}
               deleteItem={deleteSet}
+              editItem={editSet}
             />
           </div>
         )
@@ -217,7 +245,6 @@ const WorkoutForm = props => {
               type='button'
               value='Add Set'
               css={formButton}
-              // onClick={toggleSetDialog}
               onClick={showSetCard}
               style={{ display: 'block' }}
             />
