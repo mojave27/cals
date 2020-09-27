@@ -29,7 +29,7 @@ export const emptyWoDay = {
   energy: 50,
   sleep: 50,
   cardio: {
-    headers: ['type', 'duration', 'distance', 'heart rate'],
+    headers: ['delete', 'type', 'duration', 'distance', 'heart rate'],
     exercises: []
   },
   wo: {

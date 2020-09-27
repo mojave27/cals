@@ -35,10 +35,10 @@ class App extends Component {
     const user = useUser()
     console.log(user)
     return (
-      user === undefined 
-        ?
-        <Login />
-        :
+      // user === undefined 
+      //   ?
+      //   <Login />
+      //   :
       <ThemeProvider>
         <ThemedContent />
       </ThemeProvider>

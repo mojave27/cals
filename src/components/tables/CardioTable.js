@@ -11,16 +11,15 @@ import ThemeContext from '../../context/ThemeContext'
   // state = {}
 const CardioTable = props => {
   let themeContext = useContext(ThemeContext)
-  let { woHeader, woInput, woTable } = woDayStyles(themeContext.theme)
+  let { woTable } = woDayStyles(themeContext.theme)
   let { basicButtonSmall } = styles(themeContext.theme)
 
 
   //TODO: can this be cleaned up and refactored
   const renderRows = data => {
-    // console.log(JSON.stringify(data))
+    // let headers = updateHeaders(data)
     let headerRow = renderHeaders(data.headers)
     let rows = data.rows.map((row, index) => {
-      // let id = typeof row.id === 'undefined' ? index : row.id
       let id = get(row, 'id', index)
       return (
         <tr id={id} key={index}>
@@ -28,10 +27,18 @@ const CardioTable = props => {
         </tr>
       )
     })
-
     rows.splice(0, 0, headerRow)
     return rows
   }
+
+  // const updateHeaders = data => {
+  //   // console.log({headers})
+  //   if (!props.disabled && data.rows.length > 0) {
+  //     console.log('adding delete to headers')
+  //     data.headers.unshift('delete')
+  //   }
+  //   return data.headers
+  // }
 
   const renderHeaders = headers => {
     return (
@@ -47,7 +54,7 @@ const CardioTable = props => {
     // TODO: if props.disabled = false, then add delete icon (extra <td>)
     let tds = []
     let j = 0
-    if (!props.disabled) {
+    // if (!props.disabled) {
       j = 1
       // add the delete button
       tds.push(
@@ -60,7 +67,7 @@ const CardioTable = props => {
           />
         </td>
       )
-    }
+    // }
 
     for (let i = j; i < headers.length; i++) {
       tds.push(

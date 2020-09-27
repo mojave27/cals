@@ -107,11 +107,9 @@ const WoDay = props => {
     let idParts = update.id.split('-')
     let rowId = idParts[0]
     let index = findIndexOfId(rowId, woday.cardio.exercises)
-    let exercise = { ...woday.cardio.exercises[index] }
-    console.log({ exercise })
-    console.log({ update })
-
-    // use update object to update exercise
+    let exercise = woday.cardio.exercises[index]
+    exercise[update.name] = update.value
+    woDayContext.updateWoDay(woday)
   }
 
   const handleLeadCellChange = event => {
