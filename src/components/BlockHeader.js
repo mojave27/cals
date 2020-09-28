@@ -39,7 +39,7 @@ const BlockHeader = props => {
           id={id}
           style={{ marginLeft: '10px', float: 'right' }}
           icon={faEdit}
-          onClick={editItem}
+          onClick={() => editItem(id)}
         />
       )
     }
@@ -51,7 +51,7 @@ const BlockHeader = props => {
           id={id}
           style={{ marginLeft: '10px', float: 'right' }}
           icon={faTrashAlt}
-          onClick={deleteItem}
+          onClick={() => deleteItem(id)}
         />
       )
     }

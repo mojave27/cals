@@ -1,27 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { navigate, Router } from '@reach/router'
 import TopNav from './Nav/TopNav/TopNav'
-import Home from './Home/Home'
-import Login from './Auth/Login'
-import Tracker from './tracker/Tracker'
-import Programs from './programs/Programs'
-import ProgramForm from './programs/ProgramForm'
-import Exercises from './exercises/Exercises'
-import DataConsistency from './Admin/DataConsistency'
-import Test from './Admin/Test'
-import Themer from './Admin/Themer'
-import WoDay from './Admin/WoDay'
 import TrackerProvider from '../context/TrackerProvider'
 import ProgramProvider from '../context/ProgramProvider'
 import SetProvider from '../context/SetProvider'
 import WoProvider from '../context/WoProvider'
-import ProgramTracker from './tracker/ProgramTracker'
 import WoDayProvider from '../context/WoDayProvider'
 import ThemeContext from '../context/ThemeContext'
-import WorkoutForm from './workouts/WorkoutForm'
-import Workouts from './workouts/Workouts'
-import WoDayTracker from './tracker/WoDayTracker'
+import Routes from './Routes'
 
 const ThemedContent = () => {
   let context = useContext(ThemeContext)
@@ -43,26 +29,7 @@ const ThemedContent = () => {
                 }}
               >
                 <WoDayProvider>
-                  {/* try moving <Router>..</Router> 
-                          to another component, and just 
-                          import that component here. */}
-                  <Router>
-                    <Home path='/' />
-                    <Tracker path='/program-tracker' />
-                    <Programs path='/programs' />
-                    <ProgramForm path='/program-form' />
-                    <ProgramForm path='/program-form/:programId' />
-                    <Exercises path='/exercises' />
-                    <WorkoutForm path='/manage/workoutsform' />
-                    <Workouts path='/manage/workouts' />
-                    <DataConsistency path='/admin/consistency-check' />
-                    <Test path='/admin/test' />
-                    <Themer path='/admin/themer' />
-                    <WoDay path='/admin/test/woday' />
-                    <ProgramTracker path='/program-viewer' />
-                    <WoDayTracker path='/tracker/woday' />
-                    <Login path='/login' />
-                  </Router>
+                  <Routes />
                 </WoDayProvider>
               </div>
             </div>

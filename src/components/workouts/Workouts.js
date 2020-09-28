@@ -8,13 +8,11 @@ import {
   retrieve as retrieveWorkouts,
   deleteWorkout as deleteWorkoutApi
 } from '../../api/workoutsApi'
-import Table from '../tables/SimpleTable'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
-import BlockHeader from '../BlockHeader'
 import { findIndexOfId } from '../ArrayUtils'
+import WorkoutList from './WorkoutList'
 
-import { styles as programStyles } from '../../styles/ProgramStyles'
 import { styles } from '../../styles/MainStyles'
 import { styles as gridStyles } from '../../styles/GridStyles2'
 
@@ -23,18 +21,20 @@ const Workouts = props => {
   let themeContext = useContext(ThemeContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   let { formButton } = styles(themeContext.theme)
-  let { gridContainer, gridItem } = gridStyles(themeContext.theme)
-  let { workoutBlock, setBlock } = programStyles(themeContext.theme)
+  let { gridContainer } = gridStyles(themeContext.theme)
 
   useEffect(() => {
-    fetchMyAPI()
+    fetchWorkouts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const fetchMyAPI = async () => {
+  const fetchWorkouts = async () => {
     const response = await retrieveWorkouts()
-    console.log({response})
     woContext.updateWorkouts(response)
+  }
+
+  const toggleModal = () => {
+    setShowWorkoutModal(!showWorkoutModal)
   }
 
   const addWorkout = () => {
@@ -42,8 +42,9 @@ const Workouts = props => {
     toggleModal()
   }
 
-  const toggleModal = () => {
-    setShowWorkoutModal(!showWorkoutModal)
+  const editWorkout = async id => {
+    await setSelectedWorkoutToContext(id)
+    toggleModal()
   }
 
   const saveWorkout = async workout => {
@@ -51,11 +52,9 @@ const Workouts = props => {
     toggleModal()
   }
 
-  const editWorkout = async event => {
-    console.log({ event })
-    let id = event.currentTarget.id
-    await setSelectedWorkoutToContext(id)
-    toggleModal()
+  const deleteWorkout = async id => {
+    await deleteWorkoutApi(id)
+    fetchWorkouts()
   }
 
   const setSelectedWorkoutToContext = workoutId => {
@@ -63,48 +62,6 @@ const Workouts = props => {
     if (index > -1) {
       woContext.updateWorkout(woContext.workouts[index])
     }
-  }
-
-  const deleteWorkout = async event => {
-    let id = event.currentTarget.id
-    await deleteWorkoutApi(id)
-    fetchMyAPI()
-  }
-
-  const renderWorkouts = workouts => {
-    console.log('rendering workouts...')
-    return workouts.map(wo => {
-      console.log({wo})
-      return (
-        <div
-          key={wo.id}
-          id={wo.id}
-          css={[workoutBlock, gridItem]}
-          style={{ marginLeft: '5px', marginBottom: '10px' }}
-        >
-          <BlockHeader
-            item={wo}
-            deleteItem={deleteWorkout}
-            editItem={editWorkout}
-          />
-          <div>{renderExerciseGroups(wo.exerciseGroups)}</div>
-        </div>
-      )
-    })
-  }
-
-  const renderExerciseGroups = exerciseGroups => {
-    return exerciseGroups.map(exGroup => {
-      let data = {
-        headers: ['name', 'reps'],
-        rows: [...exGroup.exercises]
-      }
-      return (
-        <div key={exGroup.id} css={setBlock}>
-          <Table data={data} disabled={true} />
-        </div>
-      )
-    })
   }
 
   return (
@@ -120,7 +77,13 @@ const Workouts = props => {
         Add Workout
       </button>
       {woContext.workouts.length > 0 ? (
-        <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
+        <div css={gridContainer}>
+          <WorkoutList 
+            workouts={woContext.workouts} 
+            deleteWorkout={deleteWorkout}
+            editWorkout={editWorkout}
+          />
+          </div>
       ) : (
         <div>Workouts</div>
       )}

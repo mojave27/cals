@@ -4,33 +4,7 @@ import React from 'react'
 import { table } from '../../styles/table'
 import BlockHeader from '../BlockHeader'
 
-// SAMPLE DATA OBJECT
-// const sampleData = {
-//   setId: 999,
-//   headers: ['name', 'reps'],
-//   rows: [
-//     {
-//       id: 0,
-//       reps: 'max',
-//       name: 'chins',
-//       type: 'compound'
-//     },
-//     {
-//       id: 8,
-//       reps: 'max',
-//       name: 'glute bridge',
-//       type: 'compound'
-//     },
-//     {
-//       id: 9,
-//       reps: 'max',
-//       name: 'inv row',
-//       type: 'compound'
-//     }]
-// }
-
 //TODO: update this table to use context instead of passing the props/data all around it.
-
 class Table extends React.Component {
   state = { }
 
@@ -58,8 +32,8 @@ class Table extends React.Component {
   //TODO: can this be cleaned up and refactored
   renderRows = data => {
     let blockHeader = this.setupBlockHeader( data.headers.length + 1, data.setId, this.props.deleteItem, this.props.editItem )
-
     let headerRow = this.renderHeaders(data.headers)
+
     let rows = data.rows.map((row, index) => {
       let id = (typeof row.id === 'undefined') ? index : row.id
       return <tr

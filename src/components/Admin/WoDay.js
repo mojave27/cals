@@ -1,6 +1,7 @@
 import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+import { navigate } from '@reach/router'
 import { useContext, useEffect, useState } from 'react'
 import { retrieveWoDayById } from '../../api/wodaysApi'
 import { retrieveWorkoutById } from '../../api/workoutsApi'
@@ -36,7 +37,7 @@ const WoDay = props => {
     } else {
       let didCancel = false
       async function fetchWoDay() {
-        const response = await retrieveWoDayById(0)
+        const response = await retrieveWoDayById(props.location.state.id)
         if (!didCancel) {
           woDayContext.updateWoDay(response)
         }
@@ -75,6 +76,10 @@ const WoDay = props => {
 
   const done = () => {
     setShowModal(false)
+  }
+
+  const home = () => {
+    navigate('/')
   }
 
   const saveWoDay = async () => {
@@ -374,16 +379,19 @@ const WoDay = props => {
   }
 
   return (
-    // <div css={formContainer}>
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
-        {/* <div css={row} style={{ marginBottom: '20px' }}>
-        WoDay Test Page
-      </div> */}
         <div css={detailCard}>
+                  <input
+                    style={{ margin: '5px', float: 'right' }}
+                    type='button'
+                    value='X'
+                    css={[basicButton, { float: 'right' }]}
+                    onClick={home}
+                  />
           <div css={cardNoHover}>
             {/* --- section 1: Details --------------------------------------- */}
             <div css={row} style={{ border: '1px solid #eee' }}>
@@ -393,8 +401,6 @@ const WoDay = props => {
               >
                 <div css={gridDate}>
                   <DateInput
-                    // startDate={startDate}
-                    // startDate={new Date(context.woday.date)}
                     startDate={getStartDate()}
                     setStartDate={setDate}
                     label={'Date'}
@@ -403,7 +409,6 @@ const WoDay = props => {
                     style={{ margin: '5px', float: 'right' }}
                     type='button'
                     value='Save'
-                    // css={[basicButton, { float: 'right' }]}
                     css={[basicButton, { float: 'right' }]}
                     onClick={saveWoDay}
                   />

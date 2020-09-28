@@ -1,70 +1,49 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useContext, useEffect } from 'react'
-import WoContext from '../../context/WoContext'
-import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
+import React, { useContext } from 'react'
+import ThemeContext from '../../context/ThemeContext'
 import Table from '../tables/SimpleTable'
 import BlockHeader from '../BlockHeader'
 
-import { workoutBlock, setBlock } from '../../styles/program'
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import { styles as programStyles } from '../../styles/ProgramStyles'
+import { styles as gridStyles } from '../../styles/GridStyles2'
 
 const WorkoutList = props => {
-  let woContext = useContext(WoContext)
+  let themeContext = useContext(ThemeContext)
+  let { workoutBlock, setBlock } = programStyles(themeContext.theme)
+  let { gridItem } = gridStyles(themeContext.theme)
 
-  useEffect(() => {
-    fetchMyAPI()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const fetchMyAPI = async () => {
-    const response = await retrieveWorkouts()
-    woContext.updateWorkouts(response)
-  }
-
-  const renderWorkouts = workouts => {
-    console.log('rendering workouts...')
-    return workouts.map(wo => {
-      return (
-        <div
-          key={wo.id}
-          id={wo.id}
-          css={[workoutBlock, gridItem]}
-          style={{ marginLeft: '5px', marginBottom: '10px' }}
-        >
-          <BlockHeader
-            item={wo}
-            selectItem={props.selectWorkout}
-          />
-          <div>{renderSets(wo.sets)}</div>
-        </div>
-      )
-    })
-  }
-
-  const renderSets = sets => {
-    return sets.map(set => {
+  const renderExerciseGroups = exerciseGroups => {
+    return exerciseGroups.map( (exGroup, index) => {
       let data = {
         headers: ['name', 'reps'],
-        rows: [...set.exercises]
+        rows: [...exGroup.exercises]
       }
       return (
-        <div key={set.id} css={setBlock}>
+        <div key={`${exGroup.id}-${index}`} css={setBlock}>
           <Table data={data} disabled={true} />
         </div>
       )
     })
   }
 
-  return (
-    <React.Fragment>
-      {woContext.workouts.length > 0 ? (
-        <div css={gridContainer}>{renderWorkouts(woContext.workouts)}</div>
-      ) : (
-        <div>Workouts</div>
-      )}
-    </React.Fragment>
-  )
+  return props.workouts.map(wo => {
+    return (
+      <div
+        key={wo.id}
+        id={wo.id}
+        css={[workoutBlock, gridItem]}
+        style={{ marginLeft: '5px', marginBottom: '10px' }}
+      >
+        <BlockHeader
+          item={wo}
+          deleteItem={props.deleteWorkout}
+          editItem={props.editWorkout}
+        />
+        <div>{renderExerciseGroups(wo.exerciseGroups)}</div>
+      </div>
+    )
+  })
 }
 
 export default WorkoutList

@@ -79,15 +79,10 @@ const CardioTable = props => {
   // todo: need to give the exercise id
   const handleCellChange = event => {
     // get setId from tr (parentNode/td > parentNode/tr)
-    let rowId = event.target.parentNode.parentNode.id
+    // let rowId = event.target.parentNode.parentNode.id
     let id = event.target.id
     let name = event.target.name
     let value = event.target.value
-
-    console.log(`rowId: ${rowId}`)
-    console.log(`id: ${id}`)
-    console.log(`name: ${name}`)
-    console.log(`value: ${value}`)
 
     props.onChange({
       id: id,

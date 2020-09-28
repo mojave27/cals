@@ -50,6 +50,7 @@ const SetCard = props => {
             <div>{`id: ${getSetId()}`} </div>
             <label htmlFor='exercises'>exercises for set</label>
           </div>
+
           <div css={col75}>
             <div css={row}>{renderExercisesForSet(setContext.set.exercises)}</div>
             <div css={row}>
@@ -121,7 +122,7 @@ const SetCard = props => {
       let index = exercise.id
       return (
         <div id={index} css={getClasses(exercise.id)} key={index}>
-          <BlockHeader item={{ id: exercise.id, name: exercise.name }} deleteItem={deleteExercise} />
+          <BlockHeader item={{ id: exercise.id, name: exercise.name }} deleteItem={deleteExercise} editItem={editExercise} />
           name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
           <input
             css={[formInput, { width: '100px' }]}
@@ -209,16 +210,11 @@ const SetCard = props => {
     }
   }
 
-  const saveSet = async () => {
-    // let response = {}
-    // if (setContext.set.id) {
-    //   console.log(`saving changes to existing set ${setContext.set.id}`)
-    //   response = await updateSet(setContext.set)
-    // } else {
-    //   console.log(`adding new set ${JSON.stringify(setContext.set)}`)
-    //   response = await addSet(setContext.set)
-    // }
+  const editExercise = event => {
+    console.log(event.currentTarget.id)
+  }
 
+  const saveSet = async () => {
     if (props.saveSet) {
       console.log(`calling props.saveSet with ${JSON.stringify(setContext.set)}`)
       props.saveSet(setContext.set)

@@ -2,7 +2,12 @@
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
 import SetCard from '../sets/SetCard'
-import { findIndexOfId, retrieveItemById, updateItemById, generateNewId } from '../ArrayUtils'
+import {
+  findIndexOfId,
+  retrieveItemById,
+  updateItemById,
+  generateNewId
+} from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import { setBlock } from '../../styles/program'
@@ -25,39 +30,27 @@ const WorkoutForm = props => {
   const [showExerciseGroupDialog, setShowExerciseGroupDialog] = useState(false)
 
   const toggleSetDialog = () => {
-    console.log('toggling set dialog')
     setShowExerciseGroupDialog(!showExerciseGroupDialog)
   }
 
-  const editSet = event => {
-    console.log(event.target.id)
-    console.log(event.target.name)
-    let setId = event.target.id
-    let index = findIndexOfId(setId, woContext.workout.exerciseGroups)
-    // console.log(setId)
-    console.log(JSON.stringify(woContext.workout.exerciseGroups[index]))
+  const editSet = id => {
+    let index = findIndexOfId(id, woContext.workout.exerciseGroups)
     setContext.updateSet(woContext.workout.exerciseGroups[index])
-    toggleSetDialog() 
+    toggleSetDialog()
   }
 
   const showSetCard = () => {
-    console.log('showing set card')
     setContext.clearSet()
     toggleSetDialog()
   }
 
   const saveWorkout = async () => {
     let response = {}
+    console.log(woContext.workout)
     if (woContext.workout.id) {
-      console.log(`updating existing workout with id ${woContext.workout.id}`)
-      console.log(`======================`)
-      console.log(JSON.stringify(woContext.workout))
-      console.log(`----------------------`)
       response = await updateWorkout(woContext.workout)
     } else {
-      console.log(`adding new workout ${JSON.stringify(woContext.workout)}`)
       response = await addWorkout(woContext.workout)
-      console.log(`  response from workout add: ${JSON.stringify(response)}`)
     }
     // update context because addWorkout will have added an id
     woContext.updateWorkout(response)
@@ -79,7 +72,7 @@ const WorkoutForm = props => {
   const addExerciseGroupToWorkout = exGroup => {
     if (typeof exGroup.id === 'undefined') {
       addSetToWorkout(exGroup)
-    }else{
+    } else {
       updateSetInWorkout(exGroup)
     }
   }
@@ -103,7 +96,7 @@ const WorkoutForm = props => {
   const setExGroupId = exGroup => {
     if (typeof exGroup.id === 'undefined') {
       console.log(`exGroup id is undefined`)
-      let newId = generateNewId(woContext.workout.exerciseGroups)    
+      let newId = generateNewId(woContext.workout.exerciseGroups)
       exGroup.id = newId
     }
     return exGroup
@@ -116,7 +109,7 @@ const WorkoutForm = props => {
 
   // lots of changes going on here...
   const handleSetChange = update => {
-    console.log({update})
+    console.log({ update })
     // get set with matching id
     let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
 
@@ -150,9 +143,7 @@ const WorkoutForm = props => {
     console.log(event.target.value)
   }
 
-  const deleteSet = event => {
-    let id = event.currentTarget.id
-    console.log(`[deteleSet] id: ${id}`)
+  const deleteSet = id => {
     let exGroups = woContext.workout.exerciseGroups
     // throw up confirmation modal
     // find set in woContext.workout.sets
@@ -162,8 +153,10 @@ const WorkoutForm = props => {
       exGroups.splice(index, 1)
       woContext.updateExerciseGroupsForWorkout(exGroups)
       updateWorkout(woContext.workout)
-    }else{
-      console.log(`set with id ${id} not found in woContext.workout.exerciseGroups`)
+    } else {
+      console.log(
+        `set with id ${id} not found in woContext.workout.exerciseGroups`
+      )
     }
   }
 
@@ -198,6 +191,50 @@ const WorkoutForm = props => {
   return (
     <React.Fragment>
       <div css={detailCard}>
+        <WorkoutHeader workout={woContext.workout} onChange={handleTextChange} />
+
+        <div css={stripe} style={{ marginTop: '10px', marginBottom: '5px' }} />
+
+        <div css={container}>
+          <div style={{ display: 'block', paddingBottom: '10px' }}>
+            <div style={{ paddingBottom: '10px' }}>Sets</div>
+
+            {renderSets(woContext.workout.exerciseGroups)}
+
+            <div style={{ marginTop: '25px', marginBottom: '25px' }} />
+            <Button value='Add Set' onClick={showSetCard} />
+            <Button value='Save Workout' onClick={saveWorkout} />
+
+            {showExerciseGroupDialog ? (
+              <SetCard
+                saveSet={addExerciseGroupToWorkout}
+                done={toggleSetDialog}
+              />
+            ) : null}
+
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  )
+}
+
+export default WorkoutForm
+
+const Button = props => {
+  return (
+    <input
+      type='button'
+      value={props.value}
+      css={formButton}
+      onClick={props.onClick}
+      style={{ display: 'block' }}
+    />
+  )
+}
+
+const WorkoutHeader = props => {
+  return (
         <div css={container}>
           <div css={row}>
             <div css={col25}>
@@ -209,9 +246,9 @@ const WorkoutForm = props => {
                 type='text'
                 id='name'
                 name='name'
-                value={woContext.workout.name ? woContext.workout.name : ''}
+                value={props.workout.name ? props.workout.name : ''}
                 placeholder='workout name..'
-                onChange={handleTextChange}
+                onChange={props.onChange}
               />
             </div>
           </div>
@@ -225,44 +262,16 @@ const WorkoutForm = props => {
                 type='text'
                 id='description'
                 name='description'
-                value={woContext.workout.description ? woContext.workout.description : ' '}
+                value={
+                  props.workout.description
+                    ? props.workout.description
+                    : ' '
+                }
                 placeholder='workout description..'
-                onChange={handleTextChange}
+                onChange={props.onChange}
               />
             </div>
           </div>
         </div>
-
-        <div css={stripe} style={{marginTop:'10px', marginBottom:'5px'}} />
-
-        <div css={container}>
-          <div style={{ display: 'block', paddingBottom: '10px' }}>
-            <div style={{ paddingBottom: '10px' }}>Sets</div>
-
-            {renderSets(woContext.workout.exerciseGroups)}
-
-            <input
-              type='button'
-              value='Add Set'
-              css={formButton}
-              onClick={showSetCard}
-              style={{ display: 'block' }}
-            />
-            <input
-              type='button'
-              value='Save Workout'
-              css={formButton}
-              onClick={saveWorkout}
-              style={{ display: 'block' }}
-            />
-            {showExerciseGroupDialog ? (
-              <SetCard saveSet={addExerciseGroupToWorkout} done={toggleSetDialog} />
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </React.Fragment>
   )
 }
-
-export default WorkoutForm
