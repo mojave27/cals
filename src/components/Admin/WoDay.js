@@ -24,6 +24,7 @@ import { woDayStyles } from '../../styles/WoDayStyles'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
+import StopWatch from './StopWatch'
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
@@ -471,12 +472,15 @@ const WoDay = props => {
               <CardioTable
                 jssClass={[woTable]}
                 id={0}
-                // data={context.woday.cardio}
                 data={convertCardioForTable()}
                 deleteRow={event => console.log(event)}
                 addCardioExercise={addCardioExercise}
                 onChange={handleExerciseChange}
               />
+            </div>
+            {/* --- section -: stop watch ------------------------------------ */}
+            <div css={[row, section]}>
+              <StopWatch buttonClass={basicButton} />
             </div>
             {/* --- section 3: Weights --------------------------------------- */}
             <div css={[row, section]}>

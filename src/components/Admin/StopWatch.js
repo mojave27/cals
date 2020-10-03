@@ -1,43 +1,96 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useContext } from 'react'
+import ThemeContext from '../../context/ThemeContext'
+import { styles } from '../../styles/MainStyles'
 
+const StopWatch = props => {
+  let context = useContext(ThemeContext)
+  let { basicButtonSmall } = styles(context.theme)
 
-const StopWatch = () => {
-  useEffect(() => {
+  let timerRef = null
+  let seconds  = '00'
+  let minutes  = '00'
+  let hours    = '00'
+
+  const startTimer = () => {
     timer()
-  })
+  }
+
+  const stopTimer = () => {
+    clearInterval(timerRef)
+  }
+
+  const clearTimer = () => {
+    stopTimer()
+    seconds  = '00'
+    minutes  = '00'
+    hours    = '00'
+    document.getElementById('timer').innerHTML = `${hours}:${minutes}:${seconds}`
+  }
+
+  const updateTime = current => {
+    let updated = (Number(current) + 1).toString()
+    if (updated < 10) updated = `0${updated}`
+    if (updated === '60') updated = '00'
+    return updated
+  }
+
+  const updateHours = (hours, minutes, seconds) => {
+    let updatedHours = hours
+    if (minutes === '59' && seconds === '59') {
+      updatedHours = (Number(hours) + 1).toString()
+    }
+    if (updatedHours < 10 && updatedHours.substring(0, 1) !== '0') {
+      updatedHours = `0${updatedHours}`
+    }
+    return updatedHours
+  }
 
   const timer = () => {
-    let seconds =  "00"
-    let minutes =  "00"
-    let hours =  "00"
-    setInterval(function() {
-      seconds = (Number(seconds) + 1).toString()
-      if (seconds < 10 ) seconds = `0${seconds}`
-
-
-      document.getElementById('timer').innerHTML = `<h3>${hours}:${minutes}:${seconds}</h3>`
-
-      // if (time.seconds === "59") {
-      //   now.seconds = "00"
-
-      //   if (time.minutes === "59") {
-      //     now.minutes = "00"
-      //     now.hours = (Number(time.hours) + 1).toString()
-      //   }else{
-      //     now.minutes = (Number(time.minutes) + 1).toString()
-      //   }
-      // } else {
-      //   now.seconds = (Number(time.seconds) + 1).toString()
-      // }
-      // console.log(JSON.stringify(now))
-
-
+    timerRef = setInterval(function() {
+      hours = updateHours(hours, minutes, seconds)
+      seconds = updateTime(seconds)
+      minutes = seconds === '00' ? updateTime(minutes) : minutes
+      document.getElementById(
+        'timer'
+      ).innerHTML = `${hours}:${minutes}:${seconds}`
     }, 1000)
   }
 
-  // return <div>{`${time.hours}:${time.minutes}:${time.seconds}`}</div>
-  return <div id='timer'><h3>{'00:00:00'}</h3></div>
+  return (
+    <div>
+      <h3 id='timer'>{'00:00:00'}</h3>
+      <Button
+        onClick={startTimer}
+        text={'start'}
+      />
+      <Button
+        onClick={stopTimer}
+        text={'stop'}
+      />
+      <Button
+        onClick={clearTimer}
+        text={'reset'}
+      />
+    </div>
+  )
 }
 
 export default StopWatch
+
+
+const Button = props => {
+  let context = useContext(ThemeContext)
+  let { basicButtonSmall } = styles(context.theme)
+  return (
+    <input
+      style={{ margin: '5px' }}
+      type='button'
+      value={props.text}
+      css={basicButtonSmall}
+      onClick={props.onClick}
+    />
+  )
+}

@@ -25,8 +25,8 @@ export const emptyWoDay = {
   date: currentDate(),
   goals: '',
   weight: '',
-  energy: 50,
-  sleep: 50,
+  energy: 10,
+  sleep: 10,
   cardio: {
     headers: ['delete', 'type', 'duration', 'distance', 'heart rate'],
     exercises: []

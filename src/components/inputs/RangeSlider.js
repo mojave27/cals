@@ -20,27 +20,26 @@ const RangeSliderInput = props => {
 
   return (
     <React.Fragment>
-                  <label
-              style={{
-                float: 'left',
-                display: 'inline',
-                fontWeight: '700',
-                width: '20%'
-              }}
-            >
-              {props.label}
-            </label>
-    <input
-      type='range'
-      min={get(props, 'min', '0')}
-      max={get(props, 'max', '100')}
-      value={props.value}
-      onChange={props.onChange}
-      css={getCss()}
-      // css={slider}
-      id={props.id}
-    />
-    <label>{props.value}</label>
+      <label
+        style={{
+          float: 'left',
+          display: 'inline',
+          fontWeight: '700',
+          width: '20%'
+        }}
+      >
+        {props.label}
+      </label>
+      <input
+        type='range'
+        min={get(props, 'min', '0')}
+        max={get(props, 'max', '10')}
+        value={props.value}
+        onChange={props.onChange}
+        css={getCss()}
+        id={props.id}
+      />
+      <label>{props.value}</label>
     </React.Fragment>
   )
 }
@@ -57,7 +56,7 @@ RangeSliderInput.defaultProps = {
   name: '',
   id: 'RangeSliderInput',
   label: '',
-  value: '50'
+  value: '10'
 }
 
 export default RangeSliderInput
