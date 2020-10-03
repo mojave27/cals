@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core'
 import { Fragment } from 'react'
 import { formContainer, row } from '../../styles/main-styles'
+import StopWatch from './StopWatch'
 
 const Test = props => {
   // const [reportData, setReportData] = useState({})
@@ -22,6 +23,7 @@ const Table = () => {
   }
   return (
     <Fragment>
+      <StopWatch />
       <div style={{ maxWidth: '150px', display: 'inline-block' }}>
         <table style={{ border: '1px solid yellow' }}>
           <tbody>

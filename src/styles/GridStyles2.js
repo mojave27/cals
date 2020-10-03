@@ -7,7 +7,8 @@ let gridContainer = css({
   gridTemplateColumns: 'auto auto auto',
   backgroundColor: theme.color4.rgba(.8),
   padding: '10px',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  borderRadius: '4px'
 })
 
 let gridItem = css({

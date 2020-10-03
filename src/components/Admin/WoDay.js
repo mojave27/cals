@@ -349,26 +349,26 @@ const WoDay = props => {
     // save to DB (we want auto-save on everything... maybe)
   }
 
-  const copyFromPreviousSet = (allSets) => {
-      // get previous set
-      let previousSet = allSets[allSets.length - 1]
-      let newSet = cloneDeep(previousSet)
-      // clear the reps from newSet
-      let newExGroups = newSet.exerciseGroups.map(exGroup => {
-      let newExGroup = {
-        exercises: exGroup.exercises.map(ex => {
-        return {
-          id: ex.id,
-          weight: '',
-          reps: ''
-        }
-      })
-    }
-    return newExGroup
-    })
-    newSet.exerciseGroups = newExGroups
-    return newSet
-  }
+  // const copyFromPreviousSet = (allSets) => {
+  //     // get previous set
+  //     let previousSet = allSets[allSets.length - 1]
+  //     let newSet = cloneDeep(previousSet)
+  //     // clear the reps from newSet
+  //     let newExGroups = newSet.exerciseGroups.map(exGroup => {
+  //     let newExGroup = {
+  //       exercises: exGroup.exercises.map(ex => {
+  //       return {
+  //         id: ex.id,
+  //         weight: '',
+  //         reps: ''
+  //       }
+  //     })
+  //   }
+  //   return newExGroup
+  //   })
+  //   newSet.exerciseGroups = newExGroups
+  //   return newSet
+  // }
 
   const convertCardioForTable = () => {
     let data = {

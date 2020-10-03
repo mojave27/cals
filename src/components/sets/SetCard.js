@@ -148,7 +148,7 @@ const SetCard = props => {
     })
 
     // (-1 = not found, 0 = found)
-    if (index === 0 ) console.log(`${JSON.stringify(selectedExercises[index])}`)
+    // if (index === 0 ) console.log(`${JSON.stringify(selectedExercises[index])}`)
 
     if (index === -1) {
       return miniCard
@@ -198,8 +198,8 @@ const SetCard = props => {
     setShowExerciseList(newShowExerciseList)
   }
 
-  const deleteExercise = event => {
-    let id = event.currentTarget.id
+  const deleteExercise = id => {
+    // let id = event.currentTarget.id
     console.log(`would delete exercise with id ${id}`)
     let exercises = setContext.set.exercises
     let index = findIndexOfId(id, exercises)

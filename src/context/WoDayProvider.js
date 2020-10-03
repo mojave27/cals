@@ -1,7 +1,6 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
 import {
-  generateNewId,
   findIndexOfId,
   updateItemById
 } from '../components/ArrayUtils'

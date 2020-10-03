@@ -56,7 +56,6 @@ const WorkoutForm = props => {
     woContext.updateWorkout(response)
 
     if (props.saveWorkout) {
-      console.log('calling props.saveWorkout')
       props.saveWorkout(response)
     }
   }
@@ -138,9 +137,8 @@ const WorkoutForm = props => {
     woContext.updateExerciseGroupsForWorkout(updatedSetList)
   }
 
-  const deleteExercise = event => {
-    console.log(event.target.id)
-    console.log(event.target.value)
+  const deleteExercise = id => {
+    console.log(id)
   }
 
   const deleteSet = id => {
