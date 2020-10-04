@@ -32,7 +32,7 @@ const WoDay = props => {
   let themeContext = useContext(ThemeContext)
 
   useEffect(() => {
-    console.log(`is new?: ${props.location.state.new}`)
+    // console.log(`is new?: ${props.location.state.new}`)
     if (props.location.state.new) {
       woDayContext.setEmptyWoDay()
     } else {
