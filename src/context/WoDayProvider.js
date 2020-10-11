@@ -23,6 +23,7 @@ const currentDate = () => {
 export const emptyWoDay = {
   id: -1,
   date: currentDate(),
+  duration: '0',
   goals: '',
   weight: '',
   energy: 10,

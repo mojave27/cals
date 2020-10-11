@@ -4,7 +4,7 @@ export const woDayStyles = theme => {
   const gridContainer = css({
     display: 'grid',
     gridTemplateAreas: `
-    'date date date'
+    'date duration save'
     'goals goals goals'
     'weight energy sleep'
     `,
@@ -31,8 +31,18 @@ export const woDayStyles = theme => {
     padding: '7px 0px 15px 0px',
     textAlign: 'left'
   })
+  const gridSave = css({
+    gridarea: 'save',
+    padding: '7px 0px 15px 0px',
+    textalign: 'left'
+  })
   const gridDate = css({
     gridArea: 'date',
+    padding: '7px 0px 15px 0px',
+    textAlign: 'left'
+  })
+  const gridDuration = css({
+    gridArea: 'duration',
     padding: '7px 0px 15px 0px',
     textAlign: 'left'
   })
@@ -198,6 +208,8 @@ export const woDayStyles = theme => {
     dayRightCell,
     gridContainer,
     gridDate,
+    gridDuration,
+    gridSave,
     gridEnergy,
     gridGoals,
     gridMeStats,

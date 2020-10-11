@@ -57,6 +57,8 @@ const WoDay = props => {
   let {
     gridContainer,
     gridDate,
+    gridDuration,
+    gridSave,
     gridEnergy,
     gridGoals,
     gridSleep,
@@ -92,6 +94,9 @@ const WoDay = props => {
     let id = event.target.id
     let value = event.target.value
     switch (id) {
+      case 'duration':
+        setDuration(value)
+        break
       case 'weight':
         setWeight(value)
         break
@@ -174,6 +179,12 @@ const WoDay = props => {
   const setWeight = weight => {
     let woday = woDayContext.copyWoDay()
     woday.weight = weight
+    woDayContext.updateWoDay(woday)
+  }
+
+  const setDuration = duration => {
+    let woday = woDayContext.copyWoDay()
+    woday.duration = duration
     woDayContext.updateWoDay(woday)
   }
 
@@ -406,6 +417,25 @@ const WoDay = props => {
                     setStartDate={setDate}
                     label={'Date'}
                   />
+                </div>
+                <div
+                  css={gridDuration}
+                  style={{ borderRadius: '3px' }}
+                >
+                  <TextInput
+                    label={'Duration'}
+                    name={'duration'}
+                    id={'duration'}
+                    placeholder={'workout duration...'}
+                    value={woDayContext.woday.duration}
+                    onChange={handleTextChange}
+                    styles={{ width: '75px' }}
+                  />
+                </div>
+                <div
+                  css={gridSave}
+                  style={{ borderRadius: '3px' }}
+                >
                   <input
                     style={{ margin: '5px', float: 'right' }}
                     type='button'
