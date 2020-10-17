@@ -3,9 +3,12 @@ import { config } from '../config/axiosConfig'
 
 export let retrieve = () => {
   const url = 'exercises'
+  const baseURL = 'https://wu5g3e1p98.execute-api.us-east-1.amazonaws.com/prod'
+  const awsConfig = { baseURL }
 
   return axios
-    .get(url, config)
+    // .get(url, config)
+    .get(url, awsConfig)
     .then(function(response) {
       const data = parseResponse(response)
       return data

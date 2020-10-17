@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './App.css'
 import ThemedContent from './components/ThemedContent'
 import ThemeProvider from './context/ThemeProvider'
-// import Login from './components/Auth/Login'
 import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
@@ -10,7 +9,7 @@ Amplify.configure(awsconfig);
 
 const useUser = () => {
   Auth.currentAuthenticatedUser({
-            // bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+  // bypassCache: true  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
   }).then(user => {
       if (!user){
           console.log('no user')
@@ -36,10 +35,6 @@ class App extends Component {
     const user = useUser()
     console.log(user)
     return (
-      // user === undefined 
-      //   // ?
-      //   // <Login />
-      //   // :
       <AmplifyAuthenticator>
       <ThemeProvider>
           <AmplifySignOut />
