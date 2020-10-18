@@ -40,7 +40,7 @@ export const retrieveWorkoutById = id => {
   // console.log(`calling GET /workouts/${id}`)
   let url = `${URL}/${id}`
   return axios
-    .get(url, config)
+    .get(url, awsConfig)
     .then(response => {
       const data = parseResponse(response)
       return data
