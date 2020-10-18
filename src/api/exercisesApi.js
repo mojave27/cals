@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
+import { config as awsConfig } from '../config/lambdaConfig'
 
 export let retrieve = () => {
   const url = 'exercises'
-  const baseURL = 'https://wu5g3e1p98.execute-api.us-east-1.amazonaws.com/prod'
-  const awsConfig = { baseURL }
+  // const baseURL = 'https://wu5g3e1p98.execute-api.us-east-1.amazonaws.com/prod'
+  // const awsConfig = { baseURL }
 
   return axios
     // .get(url, config)

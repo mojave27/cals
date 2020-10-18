@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
+import { config as awsConfig } from '../config/lambdaConfig'
 
 const URL = 'workouts'
 
@@ -23,7 +24,7 @@ export const retrieveWorkoutTemplates = () => {
 export const retrieve = () => {
   // console.log('calling GET /workouts')
   return axios
-    .get(URL, config)
+    .get(URL, awsConfig)
     .then(function(response) {
       const data = parseResponse(response)
       return data
