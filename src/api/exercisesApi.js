@@ -1,15 +1,26 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
 import { config as awsConfig } from '../config/lambdaConfig'
+import { Auth } from 'aws-amplify';
 
-export let retrieve = () => {
+const getConfigForAws = async () => {
+  const user = await Auth.currentAuthenticatedUser();
+  const token = user.signInUserSession.idToken.jwtToken;
+  let config = {        
+    headers: {
+      Authorization: token
+    },
+    ...awsConfig
+  }
+  return config
+}
+
+export let retrieve = async () => {
   const url = 'exercises'
-  // const baseURL = 'https://wu5g3e1p98.execute-api.us-east-1.amazonaws.com/prod'
-  // const awsConfig = { baseURL }
-
+  let configWithAuth = await getConfigForAws()
   return axios
     // .get(url, config)
-    .get(url, awsConfig)
+    .get(url, configWithAuth)
     .then(function(response) {
       const data = parseResponse(response)
       return data

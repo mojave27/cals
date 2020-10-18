@@ -1,12 +1,27 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
+import { config as awsConfig } from '../config/lambdaConfig'
+import { Auth } from 'aws-amplify';
 
 const URL = 'wodays'
+const getConfigForAws = async () => {
+  const user = await Auth.currentAuthenticatedUser();
+  const token = user.signInUserSession.idToken.jwtToken;
+  let config = {        
+    headers: {
+      Authorization: token
+    },
+    ...awsConfig
+  }
+  return config
+}
 
-export const retrieve = () => {
+export const retrieve = async () => {
   // console.log('calling GET /wodays')
+  let configWithAuth = await getConfigForAws()
   return axios
-    .get(URL, config)
+    // .get(URL, awsConfig)
+    .get(URL, configWithAuth)
     .then(function(response) {
       const data = parseResponse(response)
       return data
@@ -18,10 +33,11 @@ export const retrieve = () => {
     })
 }
 
-export const retrieveWoDayById = id => {
+export const retrieveWoDayById = async (id) => {
   let url = `${URL}/${id}`
+  let configWithAuth = await getConfigForAws()
   return axios
-    .get(url, config)
+    .get(url, configWithAuth)
     .then(response => {
       const data = parseResponse(response)
       return data
