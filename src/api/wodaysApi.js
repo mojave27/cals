@@ -56,7 +56,6 @@ export const addWoDay = async (woday) => {
     .post(URL, woday, configWithAuth)
     .then(response => {
       const data = parseResponse(response)
-  console.log(`====================================`)
       return data
     })
     .catch(error => {
@@ -66,19 +65,7 @@ export const addWoDay = async (woday) => {
 }
 
 export const updateWoDay = async (woday) => {
-  let url = `${URL}/${woday.id}`
-  console.log(`calling PUT ${url}`)
-  let configWithAuth = await getConfigForAws()
-  return axios
-    .put(url, woday, configWithAuth)
-    .then(response => {
-      const data = parseResponse(response)
-      return data
-    })
-    .catch(error => {
-      console.log(`woday api - addWoDay error: ${error}`)
-      return {}
-    })
+  await addWoDay(woday)
 }
 
 // export const deleteWorkout = id => {
