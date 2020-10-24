@@ -49,12 +49,14 @@ export const retrieveWoDayById = async (id) => {
     })
 }
 
-export const addWoDay = woday => {
+export const addWoDay = async (woday) => {
   console.log(`calling POST /wodays with ${woday}`)
+  let configWithAuth = await getConfigForAws()
   return axios
-    .post(URL, woday, config)
+    .post(URL, woday, configWithAuth)
     .then(response => {
       const data = parseResponse(response)
+  console.log(`====================================`)
       return data
     })
     .catch(error => {
@@ -63,11 +65,12 @@ export const addWoDay = woday => {
     })
 }
 
-export const updateWoDay = woday => {
+export const updateWoDay = async (woday) => {
   let url = `${URL}/${woday.id}`
   console.log(`calling PUT ${url}`)
+  let configWithAuth = await getConfigForAws()
   return axios
-    .put(url, woday, config)
+    .put(url, woday, configWithAuth)
     .then(response => {
       const data = parseResponse(response)
       return data
@@ -92,5 +95,6 @@ export const updateWoDay = woday => {
 // }
 
 const parseResponse = response => {
+  console.log(JSON.stringify(response))
   return response.data
 }

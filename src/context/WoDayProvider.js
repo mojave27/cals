@@ -8,6 +8,7 @@ import { cloneDeep } from 'lodash'
 import {
   addWoDay,
   retrieve as fetchWoDays,
+  retrieveWoDayById,
   updateWoDay
 } from '../api/wodaysApi'
 
@@ -67,7 +68,8 @@ class WoDayProvider extends React.Component {
   saveWoDay = async () => {
     // if(this.isWoDayInList()){
     if(this.state.woday.id === -1){
-      let woday = await addWoDay(this.state.woday)
+      let wodayId = await addWoDay(this.state.woday)
+      let woday = await retrieveWoDayById(wodayId)
       let wodays = await fetchWoDays()
       this.setState({woday, wodays})
       // this.saveWoDayInWoDaysList(woday)
