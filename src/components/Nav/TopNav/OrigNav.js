@@ -6,8 +6,6 @@ import { Link } from '@reach/router'
 import { menuConfig } from './topNavMenuConfig'
 import ThemeContext from '../../../context/ThemeContext'
 
-import Button from '@material-ui/core/Button'
-
 const OrigNav = props => {
   let [display, setDisplay] = useState({})
   let context = useContext(ThemeContext)

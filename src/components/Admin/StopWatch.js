@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
+// eslint-disable-next-line no-unused-vars
 import * as React from 'react'
 import { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import { styles } from '../../styles/MainStyles'
 
 const StopWatch = props => {
-  let context = useContext(ThemeContext)
-  let { basicButtonSmall } = styles(context.theme)
+  // let context = useContext(ThemeContext)
+  // let { basicButtonSmall } = styles(context.theme)
 
   let timerRef = null
   let seconds  = '00'

@@ -30,7 +30,7 @@ const WoDayList = props => {
   }
 
   const renderWoDays = woDays => {
-    let sortedWoDays = [...woDays]
+    // let sortedWoDays = [...woDays]
     return (
       woDays.map( woDay => {
         let date = `${Number(woDay.date.month)+1}-${woDay.date.day}-${woDay.date.year}`

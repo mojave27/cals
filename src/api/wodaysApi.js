@@ -1,19 +1,19 @@
 import axios from 'axios'
-import { config } from '../config/axiosConfig'
-import { config as awsConfig } from '../config/lambdaConfig'
+// import { config } from '../config/axiosConfig'
+import { config } from '../config/lambdaConfig'
 import { Auth } from 'aws-amplify';
 
 const URL = 'wodays'
 const getConfigForAws = async () => {
   const user = await Auth.currentAuthenticatedUser();
   const token = user.signInUserSession.idToken.jwtToken;
-  let config = {        
+  let awsConfig = {        
     headers: {
       Authorization: token
     },
-    ...awsConfig
+    ...config
   }
-  return config
+  return awsConfig
 }
 
 export const retrieve = async () => {
