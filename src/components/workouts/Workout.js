@@ -14,31 +14,28 @@ const Workout = props => {
   const COL_2_TITLE = 'reps'
   // const COL_2_TITLE = 'targets'
 
-  const renderHeaderRows = () => {
+  const renderTableOneHeaderRows = () => {
     let headers = [COL_1_TITLE, COL_2_TITLE]
-    props.wo.sets.forEach(set => {
-      headers.push('set')
-    })
-    let firstHeaderRow = (
+    return (
       <tr key={'firstHeaderRow'}>
         {headers.map((header, index) => {
-          if (header === COL_1_TITLE || header === COL_2_TITLE) {
+            const colWidth = header === COL_2_TITLE ? '15px' : '50px'
             return (
-              <th rowSpan={2} key={`${header}-${index}`} css={woHeader}>
+              <th 
+                key={`${header}-${index}`} 
+                css={woHeader}
+                style={{ maxWidth:colWidth }}
+              > 
                 {header}
               </th>
             )
-          } else {
-            return (
-              <th colSpan={2} key={`${header}-${index}`} css={woHeader}>
-                {header}
-              </th>
-            )
-          }
         })}
       </tr>
     )
-    let secondHeaderRow = (
+  }
+
+  const renderHeaderRows = () => {
+    return (
       <tr key={'secondHeaderRow'}>
         {props.wo.sets.map((set, index) => {
           return (
@@ -54,11 +51,9 @@ const Workout = props => {
         })}
       </tr>
     )
-    return [firstHeaderRow, secondHeaderRow]
   }
 
-  const renderRows = () => {
-    // console.log(JSON.stringify(props.wo))
+  const renderTableOneRows = () => {
     return props.wo.exerciseGroups.map((exGroup, index) => {
       return exGroup.exercises.map(ex => {
         return (
@@ -83,6 +78,17 @@ const Workout = props => {
                 onChange={props.onLeadCellChange}
               />
             </td>
+          </tr>
+        )
+      })
+    })
+  }
+
+  const renderRows = () => {
+    return props.wo.exerciseGroups.map((exGroup, index) => {
+      return exGroup.exercises.map(ex => {
+        return (
+          <tr key={ex.id} id={ex.id} style={{ border: '1px solid yellow' }}>
             {props.wo.sets.map(set => {
               let exercise = set.exerciseGroups[index].exercises.find(
                 setEx => Number(setEx.id) === Number(ex.id)
@@ -160,12 +166,29 @@ const Workout = props => {
           onClick={addExercise}
         />
       </div>
+      <br />
+      <div style={{ display: 'inline-block' }}>
+        <table css={woTable}>
+          <tbody>
+            {renderTableOneHeaderRows()}
+            {renderTableOneRows()}
+          </tbody>
+        </table>
+      </div>
+      <div
+        style={{
+          maxWidth: '400px',
+          display: 'inline-block',
+          overflow: 'scroll'
+        }}
+      >
       <table css={woTable}>
         <tbody>
           {renderHeaderRows()}
           {renderRows()}
         </tbody>
       </table>
+    </div>
     </React.Fragment>
   )
 }
