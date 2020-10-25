@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import { Fragment } from 'react'
 import { formContainer, row } from '../../styles/main-styles'
-import StopWatch from './StopWatch'
+// import StopWatch from './StopWatch'
 
 const Test = props => {
   // const [reportData, setReportData] = useState({})
