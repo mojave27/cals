@@ -30,7 +30,7 @@ const NewNav = () => {
   return (
     <div className={classes.root}>
       <Toolbar variant='dense'>
-        <Button color='inherit' component={RouterLink} to='/'>
+        <Button variant='text' color='inherit' component={RouterLink} to='/'>
           Home
         </Button>
         <TrackerMenu />
