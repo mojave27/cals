@@ -82,6 +82,6 @@ export const updateWoDay = async (woday) => {
 // }
 
 const parseResponse = response => {
-  console.log(JSON.stringify(response))
+  // console.log(JSON.stringify(response))
   return response.data
 }

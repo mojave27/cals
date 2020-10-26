@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import ThemedContent from './components/ThemedContent'
 import ThemeProvider from './context/ThemeProvider'
-import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { AmplifyAuthenticator } from '@aws-amplify/ui-react';
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
@@ -37,7 +37,6 @@ class App extends Component {
     return (
       <AmplifyAuthenticator>
       <ThemeProvider>
-          <AmplifySignOut />
         <ThemedContent />
       </ThemeProvider>
       </AmplifyAuthenticator> 
