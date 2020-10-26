@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -10,9 +10,6 @@ import CalcsMenu from './CalcsMenu'
 import ManageMenu from './ManageMenu'
 import ProgressMenu from './ProgressMenu'
 import TrackerMenu from './TrackerMenu'
-
-// import Button from '@material-ui/core/Button';
-
 import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
