@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import { Fragment } from 'react'
 import { formContainer, row } from '../../styles/main-styles'
-import StopWatch from './StopWatch'
+// import StopWatch from './StopWatch'
 
 const Test = props => {
   // const [reportData, setReportData] = useState({})
@@ -18,21 +18,18 @@ const Test = props => {
 export default Test
 
 const Table = () => {
-  const addTab = () => {
+  // const addTab = () => {
 
-  }
+  // }
   return (
     <Fragment>
-      <StopWatch />
+      {/* <StopWatch /> */}
       <div style={{ maxWidth: '150px', display: 'inline-block' }}>
         <table style={{ border: '1px solid yellow' }}>
           <tbody>
             <tr>
-              <th colSpan='2'></th>
-            </tr>
-            <tr>
-              <th>header</th>
-              <th>header</th>
+              <th rowSpan={2} style={{ border: '1px solid pink'}}>header</th>
+              <th rowSpan={2} style={{ border: '1px solid pink'}}>header</th>
             </tr>
             <tr>
               <td>data</td>
@@ -84,7 +81,7 @@ const Table = () => {
           </tbody>
         </table>
       </div>
-      <div
+      {/* <div
         style={{
           display: 'inline-block',
           marginLeft: '20px',
@@ -117,7 +114,7 @@ const Table = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </Fragment>
   )
 }
