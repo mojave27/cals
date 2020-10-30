@@ -4,6 +4,7 @@ import { config } from '../config/lambdaConfig'
 import { Auth } from 'aws-amplify';
 
 const URL = 'wodays'
+
 const getConfigForAws = async () => {
   const user = await Auth.currentAuthenticatedUser();
   const token = user.signInUserSession.idToken.jwtToken;
@@ -50,11 +51,13 @@ export const retrieveWoDayById = async (id) => {
 }
 
 export const addWoDay = async (woday) => {
-  console.log(`calling POST /wodays with ${woday}`)
+  console.log(`calling POST /wodays with ${JSON.stringify(woday)}`)
+  // let data = { ...woday }
   let configWithAuth = await getConfigForAws()
   return axios
     .post(URL, woday, configWithAuth)
     .then(response => {
+      console.log(JSON.stringify(response))
       const data = parseResponse(response)
       return data
     })
@@ -65,6 +68,7 @@ export const addWoDay = async (woday) => {
 }
 
 export const updateWoDay = async (woday) => {
+  console.log('calling addWoDay from updateWoDay')
   await addWoDay(woday)
 }
 
@@ -82,6 +86,6 @@ export const updateWoDay = async (woday) => {
 // }
 
 const parseResponse = response => {
-  console.log(JSON.stringify(response))
+  // console.log(JSON.stringify(response))
   return response.data
 }

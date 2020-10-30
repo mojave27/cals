@@ -41,7 +41,7 @@ const WoDayList = props => {
             key={`${date}-${woDay.id}`}
             onClick={() => doStuff(woDay.id)}
           >
-            {date} / {woName}
+            {date} / {woName} / {woDay.id} / {woDay.goals}
           </div>
         )
       })
