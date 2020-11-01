@@ -13,6 +13,7 @@ import RangeSlider from '../inputs/RangeSlider'
 import DateInput from '../inputs/DateInput'
 import Workout from '../workouts/Workout'
 import ThemeContext from '../../context/ThemeContext'
+import BasicSpinner from '../spinners/BasicSpinner'
 import { cloneDeep } from 'lodash'
 
 import WorkoutChooser from '../workouts/WorkoutChooser'
@@ -67,6 +68,14 @@ const WoDay = props => {
     sectionHeader,
     woTable
   } = woDayStyles(themeContext.theme)
+
+  const woDayLoaded = () => {
+    if(!props.location.state.new && (props.location.state.id !== woDayContext.woday.id)){
+      return false
+    } else {
+      return true
+    }
+  }
 
   const retrieveWorkout = async workoutId => {
     let workout = await retrieveWorkoutById(workoutId)
@@ -396,6 +405,7 @@ const WoDay = props => {
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
+        {woDayLoaded() ?
         <div css={detailCard}>
                   <input
                     style={{ margin: '5px', float: 'right' }}
@@ -526,6 +536,8 @@ const WoDay = props => {
             </div>
           </div>
         </div>
+        : <BasicSpinner />
+        }
       </div>
     </React.Fragment>
   )

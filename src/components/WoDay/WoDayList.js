@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { retrieve } from '../../api/wodaysApi'
-// import Modal from '../Modal'
-// import { dynamicSort } from '../ArrayUtils'
+import BasicSpinner from '../spinners/BasicSpinner'
 
 import ThemeContext from '../../context/ThemeContext'
 import { styles } from '../../styles/MainStyles'
@@ -51,7 +50,9 @@ const WoDayList = props => {
   return (
     <React.Fragment>
       <div style={{ maxWidth: '500px', margin: '0px auto' }}>
-        {renderWoDays(woDays)} 
+        {woDays.length === 0
+          ? <BasicSpinner />
+          : renderWoDays(woDays)} 
       </div>
     </React.Fragment>
   )
