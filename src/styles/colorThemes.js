@@ -1,6 +1,7 @@
 
 export const siberianWinter = {
-    name: 'siberianWinter',
+  name: 'siberianWinter',
+	palette: { type: "dark" },
 	color1: {
 		hex: '#FFFBFF',
 		rgba: alpha => buildRgba(255, 251, 255, alpha)
@@ -40,6 +41,7 @@ export const siberianWinter = {
 
 export const stormTrooperInverse = {
   name: 'stormTrooperInverse',
+	palette: { type: "dark" },
   color5: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -83,6 +85,7 @@ export const stormTrooperInverse = {
 
 export const stormTrooper = {
   name: 'stormTrooper',
+	palette: { type: "light" },
   color1: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -163,9 +166,11 @@ export const faHome1 = {
 }
 
 export const woSheet = {
-    name: 'woSheet',
+	name: 'woSheet',
+	palette: { type: "dark" },
 	color1: {
 		hex: '#FEFFFF',
+		// hex: '#06FBFB',
 		rgba: alpha => buildRgba(254, 255, 255, alpha)
 	},
 	get color1_text() {
