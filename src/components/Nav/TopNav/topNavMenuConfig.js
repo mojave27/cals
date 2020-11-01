@@ -41,5 +41,9 @@ export const menuConfig = [
       { to: '/admin/themer', text: 'themer' },
       { to: '/admin/test/woday', text: 'woday test page' }
     ]
-  }
+  },
+  {
+    name: 'sign-out',
+    type: 'functionButton'
+  },
 ]

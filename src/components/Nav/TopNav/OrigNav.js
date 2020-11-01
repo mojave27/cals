@@ -6,6 +6,8 @@ import { Link } from '@reach/router'
 import { menuConfig } from './topNavMenuConfig'
 import ThemeContext from '../../../context/ThemeContext'
 
+import { Auth } from 'aws-amplify'
+
 const OrigNav = props => {
   let [display, setDisplay] = useState({})
   let context = useContext(ThemeContext)
@@ -34,6 +36,21 @@ const OrigNav = props => {
       '&:hover': {
         backgroundColor: context.theme.color4.hex
       }
+    },
+    dropFuncBtn: {
+      border: 'none',
+      outline: 'none',
+      paddingRight: '10px',
+      backgroundColor: 'inherit',
+      color: context.theme.color5_text.hex,
+      fontSize: '14px',
+      fontFamily: 'inherit',
+      // minWidth: '160px',
+      margin: '0',
+      '&:hover': {
+        backgroundColor: context.theme.color4.hex
+      },
+      float: 'right'
     },
     dropdownContent: {
       display: 'none',
@@ -84,9 +101,37 @@ const OrigNav = props => {
     if (menuConfig.type === 'button') {
       return renderButton(menuConfig, index)
     }
+    if (menuConfig.type === 'functionButton') {
+      return renderFunctionButton(menuConfig, index)
+    }
     if (menuConfig.type === 'dropdown') {
       return renderDropDownMenu(menuConfig, index)
     }
+  }
+
+  const signOut = async () => {
+    try {
+        await Auth.signOut({ global: true });
+    } catch (error) {
+        console.log('error signing out: ', error);
+    }
+  }
+
+  const renderFunctionButton = (menuConfig, index) => {
+    let menuName = menuConfig.name
+    return (
+      <div key={index} css={styles.dropFuncBtn}>
+          <button
+            onMouseOver={mouseOver}
+            onMouseOut={mouseOut}
+            menu-name={menuName}
+            css={styles.dropbtn}
+            onClick={signOut}
+          >
+            {menuName}
+          </button>
+      </div>
+    )
   }
 
   const renderButton = (menuConfig, index) => {
