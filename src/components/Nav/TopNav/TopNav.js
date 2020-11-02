@@ -9,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar'
 const TopNav = props => {
   return (
       <AppBar position='sticky' elevation={0} style={{marginBottom:'30px'}}>
-        <OrigNav />
+        <OrigNav {...props} />
       </AppBar>
   )
 }

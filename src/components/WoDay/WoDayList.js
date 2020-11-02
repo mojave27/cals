@@ -16,7 +16,7 @@ const WoDayList = props => {
   useEffect(() => {
     async function fetchMyAPI() {
       const response = await retrieve()
-      console.log(response)
+      // console.log(response)
       setWoDays(response)
     }
 

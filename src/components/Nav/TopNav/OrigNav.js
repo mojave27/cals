@@ -8,6 +8,12 @@ import ThemeContext from '../../../context/ThemeContext'
 
 import { Auth } from 'aws-amplify'
 
+// move this to list-utils
+const arraysHaveMatchingElements = (arr1, arr2) => {
+  const found = arr1.some(r=> arr2.indexOf(r) >= 0)
+  return found
+}
+
 const OrigNav = props => {
   let [display, setDisplay] = useState({})
   let context = useContext(ThemeContext)
@@ -97,15 +103,15 @@ const OrigNav = props => {
     setDisplay(newDisplay)
   }
 
-  const renderMenu = (menuConfig, index) => {
+  const renderMenu = (menuConfig, index, props) => {
     if (menuConfig.type === 'button') {
-      return renderButton(menuConfig, index)
+      return renderButton(menuConfig, index, props)
     }
     if (menuConfig.type === 'functionButton') {
-      return renderFunctionButton(menuConfig, index)
+      return renderFunctionButton(menuConfig, index, props)
     }
     if (menuConfig.type === 'dropdown') {
-      return renderDropDownMenu(menuConfig, index)
+      return renderDropDownMenu(menuConfig, index, props)
     }
   }
 
@@ -117,7 +123,7 @@ const OrigNav = props => {
     }
   }
 
-  const renderFunctionButton = (menuConfig, index) => {
+  const renderFunctionButton = (menuConfig, index, props) => {
     let menuName = menuConfig.name
     return (
       <div key={index} css={styles.dropFuncBtn}>
@@ -134,7 +140,7 @@ const OrigNav = props => {
     )
   }
 
-  const renderButton = (menuConfig, index) => {
+  const renderButton = (menuConfig, index, props) => {
     let menuName = menuConfig.name
     return (
       <div key={index} css={styles.dropdown}>
@@ -151,10 +157,22 @@ const OrigNav = props => {
       </div>
     )
   }
+  
+  // move this to an auth module
+  const isAuth = (authRules, user) => {
+    if (!user) return false
+    if (!authRules) return true
+    const userGroups = user.signInUserSession.idToken.payload['cognito:groups']
+    // check if user's groups have any matches to auth.groups
+    const authorized = arraysHaveMatchingElements(authRules.groups, userGroups)
+    return authorized
+  }
 
-  const renderDropDownMenu = (menuConfig, index) => {
+  const renderDropDownMenu = (menuConfig, index, props) => {
     let menuName = menuConfig.name
     return (
+      isAuth(menuConfig.auth, props.user) === true
+        ?
       <div key={index} css={styles.dropdown}>
         <button
           onMouseOver={mouseOver}
@@ -182,6 +200,7 @@ const OrigNav = props => {
           })}
         </div>
       </div>
+      : null
     )
   }
 
@@ -189,7 +208,7 @@ const OrigNav = props => {
     <div>
       <div css={styles.navbar}>
         {menuConfig.map((menu, index) => {
-          return renderMenu(menu, index)
+          return renderMenu(menu, index, props)
         })}
       </div>
     </div>

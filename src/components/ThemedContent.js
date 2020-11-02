@@ -11,10 +11,9 @@ import Routes from './Routes'
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 
-const ThemedContent = () => {
+const ThemedContent = props => {
   let context = useContext(ThemeContext)
   const currentTheme = createMuiTheme(context.theme)
-  console.log(JSON.stringify(currentTheme))
 
   return (
     <MuiThemeProvider theme={currentTheme}>
@@ -23,7 +22,7 @@ const ThemedContent = () => {
           <WoProvider>
             <SetProvider>
               <div style={{ backgroundColor: `${context.theme.color5.hex}` }}>
-                <TopNav />
+                <TopNav {...props} />
                 <CssBaseline />
                 <div
                   style={{
