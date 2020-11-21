@@ -14,10 +14,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    overflow: 'scroll'
+    overflow: 'auto'
   },
   content: {
     border: `2px solid ${theme.color1.hex}`,
+    overflow: 'auto'
+
   },
   close: {
     color: theme.color3.hex,

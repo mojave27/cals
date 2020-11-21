@@ -342,13 +342,15 @@ const WoDay = props => {
     // create new set and exercise groups, add each exercise id, and set weights reps to empty
     // TODO: set the weights to same as previous set, if there was a previous set
 
-    // let newSetId = generateNewId(wo.sets)
-    // if (newSetId > 0) {
-    //   let newSet = copyFromPreviousSet(wo.sets)
-    //   newSet.id = newSetId
-    // } else {
 
-      let newSet = {
+    let newSetId = generateNewId(wo.sets)
+    let newSet = {}
+    if (newSetId > 0) {
+      newSet = copyFromPreviousSet(wo.sets)
+      newSet.id = newSetId
+    } else {
+
+      newSet = {
         id: generateNewId(wo.sets),
         exerciseGroups: wo.exerciseGroups.map(exGroup => {
           let newExGroup = {}
@@ -363,33 +365,35 @@ const WoDay = props => {
           return newExGroup
         })
       }
-    // }
+    }
     wo.sets.push(newSet)
 
     woDayContext.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
   }
 
-  // const copyFromPreviousSet = (allSets) => {
-  //     // get previous set
-  //     let previousSet = allSets[allSets.length - 1]
-  //     let newSet = cloneDeep(previousSet)
-  //     // clear the reps from newSet
-  //     let newExGroups = newSet.exerciseGroups.map(exGroup => {
-  //     let newExGroup = {
-  //       exercises: exGroup.exercises.map(ex => {
-  //       return {
-  //         id: ex.id,
-  //         weight: '',
-  //         reps: ''
-  //       }
-  //     })
-  //   }
-  //   return newExGroup
-  //   })
-  //   newSet.exerciseGroups = newExGroups
-  //   return newSet
-  // }
+  const copyFromPreviousSet = (allSets) => {
+      // get previous set
+      let previousSet = allSets[allSets.length - 1]
+      let newSet = cloneDeep(previousSet)
+      // clear the reps from newSet
+      let newExGroups = newSet.exerciseGroups.map(exGroup => {
+      let newExGroup = {
+        exercises: exGroup.exercises.map(ex => {
+        return {
+          id: ex.id,
+          weight: ex.weight,
+          reps: ''
+        }
+      })
+    }
+    return newExGroup
+    })
+    newSet.exerciseGroups = newExGroups
+    // console.log(previousSet)
+    // console.log(newSet)
+    return newSet
+  }
 
   const convertCardioForTable = () => {
     let data = {
