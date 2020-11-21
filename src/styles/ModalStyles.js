@@ -25,7 +25,8 @@ export let styles = theme => {
     // borderBottom: `1px solid ${theme.color2.hex}`,
     borderRadius: '3px',
     width: '80%',
-    transition: '0.3s'
+    transition: '0.3s',
+    overflow: 'auto' /* Enable scroll if needed */,
   })
 
   /* The Close Button */
