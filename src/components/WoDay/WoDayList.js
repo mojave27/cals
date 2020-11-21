@@ -40,7 +40,6 @@ const WoDayList = props => {
       const sortedWodays = sortWoDays(wodays)
       setWoDays(sortedWodays)
     }
-
     fetchMyAPI()
   }, [])
 
