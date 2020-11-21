@@ -36,13 +36,22 @@ const WoDayList = props => {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      const response = await retrieve()
-      // console.log(response)
-      setWoDays(response)
+      let wodays = await retrieve()
+      const sortedWodays = sortWoDays(wodays)
+      setWoDays(sortedWodays)
     }
 
     fetchMyAPI()
   }, [])
+
+  const sortWoDays = wodays => {
+    wodays.sort(function(a, b){
+      let aDate = new Date(`${a.date.month} ${a.date.day} ${a.date.year}`) 
+      let bDate = new Date(`${b.date.month} ${b.date.day} ${b.date.year}`) 
+      return aDate-bDate
+    });
+    return wodays
+  }
 
   const doStuff = id => {
     console.log(`doing stuff with ${id}`)

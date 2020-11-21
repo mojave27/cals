@@ -25,7 +25,8 @@ const RangeSliderInput = props => {
           float: 'left',
           display: 'inline',
           fontWeight: '700',
-          width: '20%'
+          // width: '15%',
+          marginRight: '5px'
         }}
       >
         {props.label}
