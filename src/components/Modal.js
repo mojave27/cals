@@ -7,17 +7,20 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   paper: {
+    margin: 'auto',
     position: 'absolute',
     width: 1200,
     top: 30,
     left: 30,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.color4.hex,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     overflow: 'auto'
   },
   content: {
     border: `2px solid ${theme.color1.hex}`,
+    backgroundColor: theme.color4.hex,
+    margin: 'auto',
     overflow: 'auto'
 
   },

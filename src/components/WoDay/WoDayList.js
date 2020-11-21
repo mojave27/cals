@@ -15,8 +15,18 @@ import TableRow from '@material-ui/core/TableRow'
 import ThemeContext from '../../context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
+  tableContainer: {
+    paddingTop: '20px',
+    paddingBottom: '20px',
+    border: '1px solid lime'
+  },
   table: {
-    minWidth: 650
+    minWidth: 650,
+    backgroundColor: theme.color5.hex,
+    margin: 'auto',
+  },
+  tableCell: {
+    color: theme.color5_text.hex
   }
 }))
 
@@ -43,14 +53,14 @@ const WoDayList = props => {
   const renderWoDays = woDays => {
     // let sortedWoDays = [...woDays]
     return (
-      // <TableContainer component={Paper}>
+      <div className={classes.tableContainer} >
       <Table className={classes.table} aria-label='simple table' size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell className={classes.tableCell}>Date</TableCell>
+            <TableCell className={classes.tableCell}>Name</TableCell>
             {/* <TableCell>ID</TableCell> */}
-            <TableCell>Goals</TableCell>
+            <TableCell className={classes.tableCell}>Goals</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,24 +74,24 @@ const WoDayList = props => {
                 key={`${date}-${woDay.id}`}
                 onClick={() => doStuff(woDay.id)}
               >
-                <TableCell component='th' scope='row'>
+                <TableCell component='th' scope='row' className={classes.tableCell}>
                   {date}
                 </TableCell>
-                <TableCell>{woName}</TableCell>
+                <TableCell className={classes.tableCell}>{woName}</TableCell>
                 {/* <TableCell>{woDay.id}</TableCell> */}
-                <TableCell>{woDay.goals}</TableCell>
+                <TableCell className={classes.tableCell}>{woDay.goals}</TableCell>
               </TableRow>
             )
           })}
         </TableBody>
       </Table>
-      // </TableContainer>
+      </div>
     )
   }
 
   return (
     <React.Fragment>
-      <div style={{ maxWidth: '500px', margin: '0px auto' }}>
+      <div style={{ maxWidth: '800px', margin: '0px auto' }}>
         {woDays.length === 0 ? <BasicSpinner /> : renderWoDays(woDays)}
       </div>
     </React.Fragment>

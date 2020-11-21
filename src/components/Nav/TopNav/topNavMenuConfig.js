@@ -59,7 +59,8 @@ export const menuConfig = [
     items: [
       // { to: '/programs', text: 'programs' },
       { to: '/manage/workouts', text: 'workouts' },
-      { to: '/exercises', text: 'exercises' }
+      { to: '/exercises', text: 'exercises' },
+      { to: '/prefs/themer', text: 'theme' }
     ]
   },
   {
@@ -77,7 +78,6 @@ export const menuConfig = [
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
       { to: '/admin/test', text: 'test page' },
-      { to: '/admin/themer', text: 'themer' },
       { to: '/admin/test/woday', text: 'woday test page' }
     ]
   },
