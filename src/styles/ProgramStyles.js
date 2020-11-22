@@ -20,5 +20,41 @@ export let styles = theme => {
     margin: '5px'
   })
 
-  return { blockHeader, workoutBlock, setBlock }
+  /* Style the tab */
+  let tab = css({
+    overflow: 'hidden',
+    border: `1px solid ${theme.color3.hex}`,
+    backgroundColor: theme.color5.hex,
+    color: theme.color5_text.hex,
+    '& button': {
+      fontSize: '.9em',
+      backgroundColor: 'inherit',
+      color: 'inherit',
+      float: 'left',
+      border: 'none',
+      outline: 'none',
+      cursor: 'pointer',
+      padding: '14px 16px',
+      transition: '0.3s'
+    },
+    '& button:hover': {
+      backgroundColor: theme.color4.hex,
+      color: theme.color4_text.hex
+    },
+    '& button.active': {
+      backgroundColor: theme.color5.hex,
+      color: theme.color5_text.hex
+    }
+  })
+
+  /* Style the tab content */
+  const tabContent = css({
+    display: 'block',
+    padding: '6px 12px',
+    border: `1px solid ${theme.color2.hex}`,
+    borderTop: 'none',
+    transition: '1.0s'
+  })
+
+  return { blockHeader, workoutBlock, setBlock, tab, tabContent }
 }

@@ -3,10 +3,11 @@ import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { cardTitle, cardInfo, closeButton } from '../../styles/main-styles'
+// import { cardTitle, cardInfo, closeButton } from '../../styles/main-styles'
+import { styles } from '../../styles/MainStyles'
 import { styles as programStyles } from '../../styles/ProgramStyles'
 import { gridStyles } from '../../styles/gridStyles'
-import { tab } from '../../styles/programTracker.styles'
+// import { tab } from '../../styles/programTracker.styles'
 import { generateNewId } from '../ArrayUtils'
 import TrackerContext from '../../context/TrackerContext'
 import ThemeContext from '../../context/ThemeContext'
@@ -20,8 +21,9 @@ const ProgramTracker = props => {
   let context = useContext(TrackerContext)
   // let [showAddWorkout, setShowAddWorkout] = useState(false)
 
+  let { cardTitle, cardInfo, closeButton } = styles(themeContext.theme)
   let { gridItem } = gridStyles(themeContext.theme)
-  const { setBlock, workoutBlock } = programStyles(themeContext.theme)
+  const { setBlock, tab, workoutBlock } = programStyles(themeContext.theme)
 
   const renderTabs = () => {
     let tabs = context.program.workouts.map(wo => {
