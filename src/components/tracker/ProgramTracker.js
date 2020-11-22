@@ -64,6 +64,11 @@ const ProgramTracker = props => {
     })
   }
 
+  const handleWorkoutSelect = (event) => {
+    let id = event.target.id
+    props.workoutSelect(id)
+  }
+
   const renderWorkout = () => {
     if (!isEmpty(context.activeWorkout)) {
       return (
@@ -72,6 +77,7 @@ const ProgramTracker = props => {
         id={context.activeWorkout.id}
         css={[workoutBlock, gridItem]}
         style={{ marginLeft: '5px', marginBottom: '10px' }}
+        onClick={handleWorkoutSelect}
       >
         <BlockHeader
           item={context.activeWorkout}
