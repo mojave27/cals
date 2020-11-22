@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import { useContext } from 'react'
 import { navigate } from '@reach/router'
 import Table from '../tables/SimpleTable'
 import { isUndefined } from 'lodash'
@@ -12,54 +12,20 @@ import {
   formButton
 } from '../../styles/main-styles'
 import { workoutBlock, blockHeader, setBlock } from '../../styles/program'
-import { gridContainer, gridItemNoHover } from '../../styles/gridStyles'
+import { gridStyles } from '../../styles/gridStyles'
+import ThemeContext from '../../context/ThemeContext'
 
-class ProgramOverview extends React.Component {
-  state = { sections: {}, expandText: 'Expand', expandAll: false }
+const ProgramOverview = props => {
+  const themeContext = useContext(ThemeContext)
+  const { gridItemNoHover, gridContainer } = gridStyles(themeContext)
 
-  render() {
-    // console.log(JSON.stringify(this.props.program))
-    return (
-      <div
-        css={cardNoHover}
-        id={this.props.program.id}
-      >
-        <span css={closeButton} onClick={this.props.handleClose}>
-          &times;
-        </span>
-        <div>
-          <div css={cardTitle}>{this.props.program.name}</div>
-          <div css={cardInfo}>{this.props.program.description}</div>
-          <div css={gridContainer}>
-            {this.renderWorkouts(this.props.program.workouts)}
-            <br />
-          </div>
-          {this.props.edit ? (
-            <button css={formButton} onClick={this.editProgram}>
-              Edit
-            </button>
-          ) : null}
-          {this.props.select ? (
-            <button
-              id={this.props.program.id}
-              css={formButton}
-              onClick={this.props.selectProgram}
-            >
-              Select
-            </button>
-          ) : null}
-        </div>
-      </div>
-    )
-  }
-
-  renderWorkouts = workouts => {
+  const renderWorkouts = workouts => {
     if (!isUndefined(workouts)) {
       return workouts.map(wo => {
         return (
           <div key={`${wo.id}`} css={[workoutBlock, gridItemNoHover]}>
             <div css={blockHeader}>{wo.name}</div>
-            <div>{this.renderSets(wo.sets)}</div>
+            <div>{renderSets(wo.sets)}</div>
           </div>
         )
       })
@@ -67,7 +33,7 @@ class ProgramOverview extends React.Component {
     return null
   }
 
-  renderSets = sets => {
+  const renderSets = sets => {
     return sets.map(set => {
       let data = {
         headers: ['name', 'reps'],
@@ -81,9 +47,39 @@ class ProgramOverview extends React.Component {
     })
   }
 
-  editProgram = () => {
-    navigate(`/program-form/${this.props.program.id}`)
+  const editProgram = () => {
+    navigate(`/program-form/${props.program.id}`)
   }
+
+  return (
+    <div css={cardNoHover} id={props.program.id}>
+      <span css={closeButton} onClick={props.handleClose}>
+        &times;
+      </span>
+      <div>
+        <div css={cardTitle}>{props.program.name}</div>
+        <div css={cardInfo}>{props.program.description}</div>
+        <div css={gridContainer}>
+          {renderWorkouts(props.program.workouts)}
+          <br />
+        </div>
+        {props.edit ? (
+          <button css={formButton} onClick={editProgram}>
+            Edit
+          </button>
+        ) : null}
+        {props.select ? (
+          <button
+            id={props.program.id}
+            css={formButton}
+            onClick={props.selectProgram}
+          >
+            Select
+          </button>
+        ) : null}
+      </div>
+    </div>
+  )
 }
 
 export default ProgramOverview

@@ -10,12 +10,16 @@ import ProgramHighlightCard from './ProgramHighlightCard'
 import ProgramOverview from './ProgramOverview'
 import { isEmpty } from 'lodash'
 import { formButton } from '../../styles/main-styles'
-import { gridContainerSingleColumn, gridItem } from '../../styles/gridStyles'
+import ThemeContext from '../../context/ThemeContext'
+import { gridStyles } from '../../styles/gridStyles'
 
 
 const Programs = props => {
-  let programContext = useContext(ProgramContext)
   const [routeKey, setRouteKey] = useState(0)
+
+  const themeContext = useContext(ThemeContext)
+  let programContext = useContext(ProgramContext)
+  let { gridContainerSingleColumn, gridItem } = gridStyles(themeContext.theme)
 
   const forceUpdate = routeKey => {
     clearSelectedProgram()

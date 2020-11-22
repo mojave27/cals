@@ -1,23 +1,10 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
-import { config as awsConfig } from '../config/lambdaConfig'
-import { Auth } from 'aws-amplify';
-
-const getConfigForAws = async () => {
-  const user = await Auth.currentAuthenticatedUser();
-  const token = user.signInUserSession.idToken.jwtToken;
-  let config = {        
-    headers: {
-      Authorization: token
-    },
-    ...awsConfig
-  }
-  return config
-}
+import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
 
 export let retrieve = async () => {
   const url = 'exercises'
-  let configWithAuth = await getConfigForAws()
+  let configWithAuth = await getAxiosConfigWithAuth()
   return axios
     // .get(url, config)
     .get(url, configWithAuth)
@@ -59,5 +46,3 @@ export let deleteExerciseById = id => {
 const parseResponse = response => {
   return response.data
 }
-
-// export default retrieve;

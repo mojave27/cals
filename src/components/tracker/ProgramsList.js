@@ -4,16 +4,29 @@ import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import { retrievePrograms } from '../../api/programsApi'
 import TrackerContext from '../../context/TrackerContext'
-// import { retrieveProgramById } from '../../api/programsApi'
 import ProgramHighlightCard from '../programs/ProgramHighlightCard'
-import ProgramOverview from '../programs/ProgramOverview'
+// import ProgramOverview from '../programs/ProgramOverview'
 import { isEmpty } from 'lodash'
-import { gridContainerSingleColumn, gridItem } from '../../styles/gridStyles'
-
+import { gridStyles } from '../../styles/gridStyles'
+import ThemeContext from '../../context/ThemeContext'
+import BasicSpinner from '../spinners/BasicSpinner'
 
 const ProgramsList = props => {
-  let trackerContext = useContext(TrackerContext)
   const [program, setProgram] = useState({})
+
+  const themeContext = useContext(ThemeContext)
+  let trackerContext = useContext(TrackerContext)
+  let { gridContainerSingleColumn, gridItem } = gridStyles(themeContext.theme)
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      const response = await retrievePrograms()
+      trackerContext.updatePrograms(response)
+    }
+
+    fetchMyAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleProgramSelect = event => {
     let id = event.currentTarget.id
@@ -48,34 +61,23 @@ const ProgramsList = props => {
     }
   }
 
-  useEffect(() => {
-    let didCancel = false
-
-    async function fetchMyAPI() {
-      const response = await retrievePrograms()
-      if (!didCancel) {
-        // Ignore if we started fetching something else
-        trackerContext.updatePrograms(response)
-        // setPrograms(response)
-      }
-    }
-
-    fetchMyAPI()
-    return () => {
-      didCancel = true
-    } // Remember if we start fetching something else
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  //   TODO: fix this conditional render.
-  return isEmpty(program) ? (
+  return trackerContext.programs.length <= 0 ? (
+    <BasicSpinner />
+  ) : isEmpty(program) ? (
     <React.Fragment>
-      <div css={gridContainerSingleColumn}>{renderPrograms(trackerContext.programs)}</div>
+      <div css={gridContainerSingleColumn}>
+        {renderPrograms(trackerContext.programs)}
+      </div>
     </React.Fragment>
   ) : (
-    <ProgramOverview select={true} handleClose={clearSelectedProgram} selectProgram={handleProgramSelect} program={program} />
+    null
+    // <ProgramOverview
+    //   select={true}
+    //   handleClose={clearSelectedProgram}
+    //   selectProgram={handleProgramSelect}
+    //   program={program}
+    // />
   )
-
 }
 
 export default ProgramsList

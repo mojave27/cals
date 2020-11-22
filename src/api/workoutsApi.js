@@ -1,23 +1,10 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
-import { config as awsConfig } from '../config/lambdaConfig'
-import { Auth } from 'aws-amplify';
+import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
 
 const URL = 'workouts'
-const getConfigForAws = async () => {
-  const user = await Auth.currentAuthenticatedUser();
-  const token = user.signInUserSession.idToken.jwtToken;
-  let config = {        
-    headers: {
-      Authorization: token
-    },
-    ...awsConfig
-  }
-  return config
-}
 
 export const retrieveWorkoutTemplates = () => {
-  // console.log('calling GET /workout-templates')
   return axios
     .get('workout-templates', config)
     .then(function(response) {
@@ -34,8 +21,7 @@ export const retrieveWorkoutTemplates = () => {
 }
 
 export const retrieve = async () => {
-  // console.log('calling GET /workouts')
-  let configWithAuth = await getConfigForAws()
+  let configWithAuth = await getAxiosConfigWithAuth()
   return axios
     .get(URL, configWithAuth)
     .then(function(response) {
@@ -50,8 +36,7 @@ export const retrieve = async () => {
 }
 
 export const retrieveWorkoutById = async (id) => {
-  // console.log(`calling GET /workouts/${id}`)
-  let configWithAuth = await getConfigForAws()
+  let configWithAuth = await getAxiosConfigWithAuth()
   let url = `${URL}/${id}`
   return axios
     .get(url, configWithAuth)

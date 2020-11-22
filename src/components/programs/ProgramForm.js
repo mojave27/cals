@@ -18,8 +18,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { isUndefined } from 'lodash'
 import { navigate } from '@reach/router'
-
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import ThemeContext from '../../context/ThemeContext'
+import { gridStyles } from '../../styles/gridStyles'
 import {
   basicButton,
   card,
@@ -32,9 +32,11 @@ import {
 } from '../../styles/main-styles'
 
 const ProgramForm = props => {
+  const themeContext = useContext(ThemeContext)
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  let { gridContainer, gridItem } = gridStyles(themeContext.theme)
 
   const saveProgram = async () => {
     if (typeof programContext.program.id !== 'undefined') {
