@@ -346,8 +346,8 @@ const WoDay = props => {
     let newSetId = generateNewId(wo.sets)
     let newSet = {}
     if (newSetId > 0) {
-      newSet = copyFromPreviousSet(wo.sets)
-      newSet.id = newSetId
+      newSet = copyFromPreviousSet(wo.sets, newSetId)
+//       newSet.id = newSetId
     } else {
 
       newSet = {
@@ -372,10 +372,11 @@ const WoDay = props => {
     // save to DB (we want auto-save on everything... maybe)
   }
 
-  const copyFromPreviousSet = (allSets) => {
+  const copyFromPreviousSet = (allSets, setId) => {
       // get previous set
       let previousSet = allSets[allSets.length - 1]
       let newSet = cloneDeep(previousSet)
+      newSet.id = setId
       // clear the reps from newSet
       let newExGroups = newSet.exerciseGroups.map(exGroup => {
       let newExGroup = {
