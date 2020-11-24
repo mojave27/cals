@@ -86,7 +86,6 @@ const WorkoutChooser = props => {
     setShowFromWorkouts(true)
   }
 
-
   return (
     <React.Fragment>
       {showFromPrograms === false && showFromWorkouts === false ?
