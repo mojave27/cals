@@ -70,7 +70,10 @@ const WoDay = props => {
   } = woDayStyles(themeContext.theme)
 
   const woDayLoaded = () => {
-    if(!props.location.state.new && (props.location.state.id !== woDayContext.woday.id)){
+    if (
+      !props.location.state.new &&
+      props.location.state.id !== woDayContext.woday.id
+    ) {
       return false
     } else {
       return true
@@ -163,6 +166,8 @@ const WoDay = props => {
     let value = event.target.value
     let woday = woDayContext.copyWoDay()
     let wo = woday.wo
+    console.log(wo)
+    console.log(`setId: ${setId}`)
 
     // find set
     let setIndex = findIndexOfId(setId, wo.sets)
@@ -170,6 +175,7 @@ const WoDay = props => {
 
     // find exercise
     let exGroupIndex = findIndexOfId(exGroupId, set.exerciseGroups)
+    console.log(`exGroupId: ${exGroupId}, exGroupIndex: ${exGroupIndex}`)
     let exIndex = findIndexOfId(
       exerciseId,
       set.exerciseGroups[exGroupIndex].exercises
@@ -336,12 +342,8 @@ const WoDay = props => {
     let woday = woDayContext.copyWoDay()
     let wo = woday.wo
 
-    console.log('woday before')
-    console.log({ woday })
-
     // create new set and exercise groups, add each exercise id, and set weights reps to empty
     // TODO: set the weights to same as previous set, if there was a previous set
-
 
     let newSetId = generateNewId(wo.sets)
     let newSet = {}
@@ -349,7 +351,6 @@ const WoDay = props => {
       newSet = copyFromPreviousSet(wo.sets)
       newSet.id = newSetId
     } else {
-
       newSet = {
         id: generateNewId(wo.sets),
         exerciseGroups: wo.exerciseGroups.map(exGroup => {
@@ -372,26 +373,25 @@ const WoDay = props => {
     // save to DB (we want auto-save on everything... maybe)
   }
 
-  const copyFromPreviousSet = (allSets) => {
-      // get previous set
-      let previousSet = allSets[allSets.length - 1]
-      let newSet = cloneDeep(previousSet)
-      // clear the reps from newSet
-      let newExGroups = newSet.exerciseGroups.map(exGroup => {
+  const copyFromPreviousSet = allSets => {
+    // get previous set
+    let previousSet = allSets[allSets.length - 1]
+    let newSet = cloneDeep(previousSet)
+    // clear the reps from newSet
+    let newExGroups = newSet.exerciseGroups.map(exGroup => {
       let newExGroup = {
+        id: exGroup.id,
         exercises: exGroup.exercises.map(ex => {
-        return {
-          id: ex.id,
-          weight: ex.weight,
-          reps: ''
-        }
-      })
-    }
-    return newExGroup
+          return {
+            id: ex.id,
+            weight: ex.weight,
+            reps: ''
+          }
+        })
+      }
+      return newExGroup
     })
     newSet.exerciseGroups = newExGroups
-    // console.log(previousSet)
-    // console.log(newSet)
     return newSet
   }
 
@@ -409,139 +409,134 @@ const WoDay = props => {
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
-        {woDayLoaded() ?
-        <div css={detailCard}>
-                  <input
-                    style={{ margin: '5px', float: 'right' }}
-                    type='button'
-                    value='X'
-                    css={[basicButton, { float: 'right' }]}
-                    onClick={home}
-                  />
-          <div css={cardNoHover}>
-            {/* --- section 1: Details --------------------------------------- */}
-            <div css={row} style={{ border: '1px solid #eee' }}>
-              <div
-                css={gridContainer}
-                style={{ margin: '5px', padding: '10px' }}
-              >
-                <div css={gridDate}>
-                  <DateInput
-                    startDate={getStartDate()}
-                    setStartDate={setDate}
-                    label={'Date'}
-                  />
-                </div>
+        {woDayLoaded() ? (
+          <div css={detailCard}>
+            <input
+              style={{ margin: '5px', float: 'right' }}
+              type='button'
+              value='X'
+              css={[basicButton, { float: 'right' }]}
+              onClick={home}
+            />
+            <div css={cardNoHover}>
+              {/* --- section 1: Details --------------------------------------- */}
+              <div css={row} style={{ border: '1px solid #eee' }}>
                 <div
-                  css={gridDuration}
-                  style={{ borderRadius: '3px' }}
+                  css={gridContainer}
+                  style={{ margin: '5px', padding: '10px' }}
                 >
-                  <TextInput
-                    label={'Duration'}
-                    name={'duration'}
-                    id={'duration'}
-                    placeholder={'workout duration...'}
-                    value={woDayContext.woday.duration}
-                    onChange={handleTextChange}
-                    styles={{ width: '75px' }}
-                  />
-                </div>
-                <div
-                  css={gridSave}
-                  style={{ borderRadius: '3px' }}
-                >
-                  <input
-                    style={{ margin: '5px', float: 'right' }}
-                    type='button'
-                    value='Save'
-                    css={[basicButton, { float: 'right' }]}
-                    onClick={saveWoDay}
-                  />
-                </div>
-                <div
-                  css={gridGoals}
-                  style={{ borderRadius: '3px', width: '50%' }}
-                >
-                  <TextInput
-                    label={'Goals'}
-                    name={'goals'}
-                    id={'goals'}
-                    placeholder={'enter goals here'}
-                    value={woDayContext.woday.goals}
-                    onChange={handleTextChange}
-                    styles={{ width: '300px' }}
-                  />
-                </div>
-                {/* --- MyStats --------------------------------------- */}
-                <div css={gridWeight}>
-                  <TextInput
-                    label={'Weight'}
-                    name={'weight'}
-                    id={'weight'}
-                    value={woDayContext.woday.weight}
-                    placeholder={'enter weight'}
-                    onChange={handleTextChange}
-                    styles={{ width: '100px' }}
-                  />
-                </div>
-                <div css={gridEnergy}>
-                  <RangeSlider
-                    label={'Energy'}
-                    min={0}
-                    max={10}
-                    jssClass={{ float: 'left' }}
-                    id='energyRange'
-                    value={woDayContext.woday.energy}
-                    onChange={handleSliderChange}
-                    theme={woDayContext.theme}
-                  />
-                </div>
-                <div css={gridSleep}>
-                  <RangeSlider
-                    label={'Sleep'}
-                    min={0}
-                    max={10}
-                    jssClass={{ float: 'left' }}
-                    id='sleepRange'
-                    value={woDayContext.woday.sleep}
-                    onChange={handleSliderChange}
-                    theme={woDayContext.theme}
-                  />
+                  <div css={gridDate}>
+                    <DateInput
+                      startDate={getStartDate()}
+                      setStartDate={setDate}
+                      label={'Date'}
+                    />
+                  </div>
+                  <div css={gridDuration} style={{ borderRadius: '3px' }}>
+                    <TextInput
+                      label={'Duration'}
+                      name={'duration'}
+                      id={'duration'}
+                      placeholder={'workout duration...'}
+                      value={woDayContext.woday.duration}
+                      onChange={handleTextChange}
+                      styles={{ width: '75px' }}
+                    />
+                  </div>
+                  <div css={gridSave} style={{ borderRadius: '3px' }}>
+                    <input
+                      style={{ margin: '5px', float: 'right' }}
+                      type='button'
+                      value='Save'
+                      css={[basicButton, { float: 'right' }]}
+                      onClick={saveWoDay}
+                    />
+                  </div>
+                  <div
+                    css={gridGoals}
+                    style={{ borderRadius: '3px', width: '50%' }}
+                  >
+                    <TextInput
+                      label={'Goals'}
+                      name={'goals'}
+                      id={'goals'}
+                      placeholder={'enter goals here'}
+                      value={woDayContext.woday.goals}
+                      onChange={handleTextChange}
+                      styles={{ width: '300px' }}
+                    />
+                  </div>
+                  {/* --- MyStats --------------------------------------- */}
+                  <div css={gridWeight}>
+                    <TextInput
+                      label={'Weight'}
+                      name={'weight'}
+                      id={'weight'}
+                      value={woDayContext.woday.weight}
+                      placeholder={'enter weight'}
+                      onChange={handleTextChange}
+                      styles={{ width: '100px' }}
+                    />
+                  </div>
+                  <div css={gridEnergy}>
+                    <RangeSlider
+                      label={'Energy'}
+                      min={0}
+                      max={10}
+                      jssClass={{ float: 'left' }}
+                      id='energyRange'
+                      value={woDayContext.woday.energy}
+                      onChange={handleSliderChange}
+                      theme={woDayContext.theme}
+                    />
+                  </div>
+                  <div css={gridSleep}>
+                    <RangeSlider
+                      label={'Sleep'}
+                      min={0}
+                      max={10}
+                      jssClass={{ float: 'left' }}
+                      id='sleepRange'
+                      value={woDayContext.woday.sleep}
+                      onChange={handleSliderChange}
+                      theme={woDayContext.theme}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* --- section 2: Cardio --------------------------------------- */}
-            <div css={[row, section]}>
-              <div css={sectionHeader}>Cardio</div>
-              <CardioTable
-                jssClass={[woTable]}
-                id={0}
-                data={convertCardioForTable()}
-                deleteRow={event => console.log(event)}
-                addCardioExercise={addCardioExercise}
-                onChange={handleExerciseChange}
-              />
-            </div>
-            {/* --- section -: stop watch ------------------------------------ */}
-            <div css={[row, section]}>
-              <StopWatch buttonClass={basicButton} />
-            </div>
-            {/* --- section 3: Weights --------------------------------------- */}
-            <div css={[row, section]}>
-              <div css={sectionHeader}>Weights</div>
-              <Workout
-                wo={woDayContext.woday.wo}
-                addExercise={addExercise}
-                addSet={addSet}
-                showWorkoutChooser={showWorkoutChooser}
-                onChange={handleSetChange}
-                onLeadCellChange={handleLeadCellChange}
-              />
+              {/* --- section 2: Cardio --------------------------------------- */}
+              <div css={[row, section]}>
+                <div css={sectionHeader}>Cardio</div>
+                <CardioTable
+                  jssClass={[woTable]}
+                  id={0}
+                  data={convertCardioForTable()}
+                  deleteRow={event => console.log(event)}
+                  addCardioExercise={addCardioExercise}
+                  onChange={handleExerciseChange}
+                />
+              </div>
+              {/* --- section -: stop watch ------------------------------------ */}
+              <div css={[row, section]}>
+                <StopWatch buttonClass={basicButton} />
+              </div>
+              {/* --- section 3: Weights --------------------------------------- */}
+              <div css={[row, section]}>
+                <div css={sectionHeader}>Weights</div>
+                <Workout
+                  wo={woDayContext.woday.wo}
+                  addExercise={addExercise}
+                  addSet={addSet}
+                  showWorkoutChooser={showWorkoutChooser}
+                  onChange={handleSetChange}
+                  onLeadCellChange={handleLeadCellChange}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        : <BasicSpinner />
-        }
+        ) : (
+          <BasicSpinner />
+        )}
       </div>
     </React.Fragment>
   )

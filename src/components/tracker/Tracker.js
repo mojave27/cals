@@ -72,10 +72,10 @@ const Tracker = props => {
   //   }
   // }
 
-  // return get(props, 'location.key', null) !== routeKey ? (
-    // forceUpdate(props.location.key)
-  // ) : (
-  return (
+  return get(props, 'location', null) !== null && get(props, 'location.key', null) !== routeKey ? (
+    forceUpdate(props.location.key)
+  ) : (
+  // return (
     <React.Fragment>
       {showSpinner === true ? (
         <BasicSpinner />
