@@ -86,6 +86,14 @@ const WorkoutChooser = props => {
     setShowFromWorkouts(true)
   }
 
+<<<<<<< HEAD
+=======
+  const done = () => {
+    setShowFromPrograms(false)
+    setShowFromWorkouts(false)
+  }
+
+>>>>>>> 79b42f6408a985bb317d1f4b8483fdeafdb3a53a
 
   return (
     <React.Fragment>
