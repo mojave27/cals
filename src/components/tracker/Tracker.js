@@ -6,7 +6,7 @@ import TrackerContext from '../../context/TrackerContext'
 import { retrieveProgramById } from '../../api/programsApi'
 import ProgramTracker from './ProgramTracker'
 import { styles } from '../../styles/MainStyles'
-import { isEmpty } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import { retrieveItemById } from 'list-utils'
@@ -64,9 +64,18 @@ const Tracker = props => {
     context.updateProgram({})
   }
 
-  return props.location.key !== routeKey ? (
+  // const updateLocationKey = props => {
+  //   let locationKey = get(props, 'location.key', null)
+  //   if (isEmpty(locationKey)) return 
+  //   if (locationKey !== routeKey) {
+  //     forceUpdate(props.location.key) 
+  //   }
+  // }
+
+  return get(props, 'location', null) !== null && get(props, 'location.key', null) !== routeKey ? (
     forceUpdate(props.location.key)
   ) : (
+  // return (
     <React.Fragment>
       {showSpinner === true ? (
         <BasicSpinner />
@@ -85,7 +94,7 @@ const Tracker = props => {
               />
             </div>
           ) : (
-            <ProgramTracker close={clearProgram} />
+            <ProgramTracker workoutSelect={props.handleWorkoutSelect} close={clearProgram} />
           )}
         </div>
       )}

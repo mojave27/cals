@@ -51,7 +51,7 @@ const ProgramTracker = props => {
   }
 
   const renderExerciseGroups = exerciseGroups => {
-    return exerciseGroups.map( (exGroup, index) => {
+    return exerciseGroups.map((exGroup, index) => {
       let data = {
         headers: ['name', 'reps'],
         rows: [...exGroup.exercises]
@@ -64,22 +64,32 @@ const ProgramTracker = props => {
     })
   }
 
+  const handleWorkoutSelect = event => {
+    let id = event.target.id
+    if (props.workoutSelect) {
+      props.workoutSelect(id)
+    }
+  }
+
   const renderWorkout = () => {
     if (!isEmpty(context.activeWorkout)) {
       return (
         <div
-        key={context.activeWorkout.id}
-        id={context.activeWorkout.id}
-        css={[workoutBlock, gridItem]}
-        style={{ marginLeft: '5px', marginBottom: '10px' }}
-      >
-        <BlockHeader
-          item={context.activeWorkout}
-          deleteItem={props.deleteWorkout}
-          editItem={props.editWorkout}
-        />
-        <div>{renderExerciseGroups(context.activeWorkout.exerciseGroups)}</div>
-      </div>
+          key={context.activeWorkout.id}
+          id={context.activeWorkout.id}
+          css={[workoutBlock, gridItem]}
+          style={{ marginLeft: '5px', marginBottom: '10px' }}
+          onClick={handleWorkoutSelect}
+        >
+          <BlockHeader
+            item={context.activeWorkout}
+            deleteItem={props.deleteWorkout}
+            editItem={props.editWorkout}
+          />
+          <div>
+            {renderExerciseGroups(context.activeWorkout.exerciseGroups)}
+          </div>
+        </div>
       )
     }
   }
@@ -272,7 +282,7 @@ const ProgramTracker = props => {
         {/* <!-- Tab content --> */}
         <div style={{ padding: '25px' }}>{renderWorkout()}</div>
       </div>
-    {/* } */}
+      {/* } */}
     </React.Fragment>
   )
 }

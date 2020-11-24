@@ -40,7 +40,7 @@ export const addWoDay = async (woday) => {
   return axios
     .post(URL, woday, configWithAuth)
     .then(response => {
-      console.log(JSON.stringify(response))
+      // console.log(JSON.stringify(response))
       const data = parseResponse(response)
       return data
     })
