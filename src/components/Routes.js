@@ -28,7 +28,7 @@ const Routes = () => {
       <DataConsistency path='/admin/consistency-check' />
       <Test path='/admin/test' />
       <Themer path='/prefs/themer' />
-      <WoDay path='/admin/test/woday' />
+      <WoDay path='/woday' />
       <WoDayTracker path='/tracker/woday' />
       <Login path='/login' />
     </Router>

@@ -7,7 +7,7 @@ import WoDayList from '../WoDay/WoDayList'
 import { Link, navigate } from '@reach/router'
 import { styles } from '../../styles/MainStyles'
 
-const WODAY_PATH = '/admin/test/woday'
+const WODAY_PATH = '/woday'
 
 const WoDayTracker = props => {
   let [showModal, setShowModal] = useState(false)
