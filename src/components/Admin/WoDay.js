@@ -349,7 +349,7 @@ const WoDay = props => {
     let newSet = {}
     if (newSetId > 0) {
       newSet = copyFromPreviousSet(wo.sets, newSetId)
-//       newSet.id = newSetId
+      newSet.id = newSetId
     } else {
       newSet = {
         id: generateNewId(wo.sets),
