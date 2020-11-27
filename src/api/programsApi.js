@@ -1,13 +1,15 @@
 import axios from "axios";
-import { config } from '../config/axiosConfig'
+import { config } from '../config/lambdaConfig'
+import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
+import { retrieveItemById } from 'list-utils'
 
-const NAME = 'programApi.js'
+const URL = 'programs'
+const NAME = 'programsApi'
 
-export const retrievePrograms = searchTerm => {
-  const url = 'programs'
-
+export const retrievePrograms = async (searchTerm) => {
+  let config = await getAxiosConfigWithAuth()
   return axios
-    .get(url, config)
+    .get(URL, config)
     .then(function (response) {
       const data = parseResponse(response)
       return data
@@ -19,24 +21,29 @@ export const retrievePrograms = searchTerm => {
     });
 };
 
-export const retrieveProgramById = programId => {
-  const url = `programs/${programId}`
-  return axios
-    .get(url, config)
-    .then(function (response) {
-      const data = parseResponse(response)
-      return data
-    })
-    .catch(function (error) {
-      _handleError(error)
-      return [];
-    });
+export const retrieveProgramById = async (id) => {
+  const programs = await retrievePrograms()
+  let program = retrieveItemById(id, programs)
+  console.log(program)
+  return program
+  // const url = `programs/${programId}`
+  // return axios
+  //   .get(url, config)
+  //   .then(function (response) {
+  //     const data = parseResponse(response)
+  //     return data
+  //   })
+  //   .catch(function (error) {
+  //     _handleError(error)
+  //     return [];
+  //   });
 };
 
-export const addProgram = program => {
-  const url = 'programs'
+export const addProgram = async (program) => {
+  let config = await getAxiosConfigWithAuth()
+  const URL = 'programs'
   return axios
-  .post(url, program, config)
+  .post(URL, program, config)
   .then(response => parseResponse(response))
   .catch( error => {
     _handleError(error)

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 // import ThemeContext from '../../context/ThemeContext'
 import Modal from '../Modal'
@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 
-const WODAY_PATH = '/admin/test/woday'
+const WODAY_PATH = '/woday'
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -3,19 +3,31 @@ import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
 import ProgramsList from './ProgramsList'
 import TrackerContext from '../../context/TrackerContext'
-import { retrieveProgramTracker } from '../../api/trackerApi'
+import { retrieveProgramById } from '../../api/programsApi'
 import ProgramTracker from './ProgramTracker'
-import { basicButton, cardNoHover, row } from '../../styles/main-styles'
-import { isEmpty } from 'lodash'
+import { styles } from '../../styles/MainStyles'
+import { get, isEmpty } from 'lodash'
+import ThemeContext from '../../context/ThemeContext'
+import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
+import { retrieveItemById } from 'list-utils'
+import BasicSpinner from '../spinners/BasicSpinner'
 
 const Tracker = props => {
-  let context = useContext(TrackerContext)
+  const themeContext = useContext(ThemeContext)
+  const context = useContext(TrackerContext)
   const [routeKey, setRouteKey] = useState(0)
   const [showProgramList, setShowProgramList] = useState(false)
+  const [showSpinner, setShowSpinner] = useState(false)
+
+  let { basicButton, cardNoHover, row } = styles(themeContext.theme)
 
   const forceUpdate = routeKey => {
     clearProgram()
     setRouteKey(routeKey)
+  }
+
+  const showTheSpinner = show => {
+    setShowSpinner(show)
   }
 
   const toggleShowProgramList = () => {
@@ -27,22 +39,47 @@ const Tracker = props => {
     toggleShowProgramList()
   }
 
-  const handleProgramSelect = id => {
+  const handleProgramSelect = async id => {
     toggleShowProgramList()
-    retrieveProgramTracker(id).then(response => {
-      context.updateProgram(response.fullProgram)
+    console.log('show the spinner')
+    showTheSpinner(true)
+    const allWorkouts = await retrieveWorkouts()
+    let program = await retrieveProgramById(id)
+    program.workouts = []
+    program.workoutIds.forEach(id => {
+      let workout = retrieveItemById(id, allWorkouts)
+      program.workouts.push(workout)
     })
+    // context.updateProgram(program)
+    updateProgram(program)
+  }
+
+  const updateProgram = program => {
+    console.log('hide the spinner')
+    showTheSpinner(false)
+    context.updateProgram(program)
   }
 
   const clearProgram = () => {
     context.updateProgram({})
   }
 
-  return props.location.key !== routeKey 
-  ? ( forceUpdate(props.location.key))
-  :(
+  // const updateLocationKey = props => {
+  //   let locationKey = get(props, 'location.key', null)
+  //   if (isEmpty(locationKey)) return 
+  //   if (locationKey !== routeKey) {
+  //     forceUpdate(props.location.key) 
+  //   }
+  // }
+
+  return get(props, 'location', null) !== null && get(props, 'location.key', null) !== routeKey ? (
+    forceUpdate(props.location.key)
+  ) : (
+  // return (
     <React.Fragment>
-      {showProgramList ? (
+      {showSpinner === true ? (
+        <BasicSpinner />
+      ) : showProgramList ? (
         <ProgramsList select={handleProgramSelect} />
       ) : (
         <div css={cardNoHover}>
@@ -57,7 +94,7 @@ const Tracker = props => {
               />
             </div>
           ) : (
-            <ProgramTracker close={clearProgram} />
+            <ProgramTracker workoutSelect={props.handleWorkoutSelect} close={clearProgram} />
           )}
         </div>
       )}

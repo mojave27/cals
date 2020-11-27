@@ -11,8 +11,9 @@ import { generateNewId } from '../ArrayUtils'
 import { cloneDeep, isEmpty, isUndefined } from 'lodash'
 
 
+import ThemeContext from '../../context/ThemeContext'
+import { gridStyles } from '../../styles/gridStyles'
 import { setBlock } from '../../styles/program'
-import { gridContainerOneColumn } from '../../styles/gridStyles'
 import { trackerSet } from '../../styles/programTracker.styles'
 import { topRight } from '../../styles/buttonStyles'
 import {
@@ -26,9 +27,11 @@ import {
 import { Row } from '../../styles/table'
 
 const WorkoutTracker = props => {
+  const themeContext = useContext(ThemeContext)
   let context = useContext(TrackerContext)
   const [showSpinner, setShowSpinner] = useState(false)
   const [activeSet, setActiveSet] = useState({})
+  let { gridContainerOneColumn } = gridStyles(themeContext.theme)
 
   const toggleSpinner = show => {
     if (isUndefined(show)){ 

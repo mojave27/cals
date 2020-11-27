@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { retrieve } from '../../api/wodaysApi'
 import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import ThemeContext from '../../context/ThemeContext'
+import BasicSpinner from '../spinners/BasicSpinner'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+// import Container from '@material-ui/core/Container'
+// import Grid from '@material-ui/core/Grid'
+// import Paper from '@material-ui/core/Paper'
 // import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
@@ -21,16 +28,26 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
-  const classes = useStyles()
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext)
 
   useEffect(() => {
     async function fetchMyAPI() {
-      const response = await retrieve()
-      console.log(response)
-      setWoDays(response)
+      let wodays = await retrieve()
+      const sortedWodays = sortWoDays(wodays)
+      setWoDays(sortedWodays)
     }
     fetchMyAPI()
   }, [])
+
+  const sortWoDays = wodays => {
+    wodays.sort(function(a, b){
+      let aDate = new Date(`${a.date.month} ${a.date.day} ${a.date.year}`) 
+      let bDate = new Date(`${b.date.month} ${b.date.day} ${b.date.year}`) 
+      return aDate-bDate
+    });
+    return wodays
+  }
 
   const doStuff = id => {
     console.log(`doing stuff with ${id}`)
@@ -38,35 +55,50 @@ const WoDayList = props => {
   }
 
   const renderWoDays = woDays => {
-    return woDays.map(woDay => {
-      let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
-        woDay.date.year
-      }`
-      let woName = woDay.wo.name ? woDay.wo.name : ''
-      return (
-        <Grid
-          key={`${date}-${woDay.id}`}
-          item
-          onClick={() => doStuff(woDay.id)}
-        >
-          <Paper className={classes.paper}>
-            {date} / {woName}
-          </Paper>
-        </Grid>
-      )
-    })
+    // let sortedWoDays = [...woDays]
+    return (
+      <div className={classes.tableContainer} >
+      <Table className={classes.table} aria-label='simple table' size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell className={classes.tableCell}>Date</TableCell>
+            <TableCell className={classes.tableCell}>Name</TableCell>
+            {/* <TableCell>ID</TableCell> */}
+            <TableCell className={classes.tableCell}>Goals</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {woDays.map(woDay => {
+            let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
+              woDay.date.year
+            }`
+            let woName = woDay.wo.name ? woDay.wo.name : ''
+            return (
+              <TableRow
+                key={`${date}-${woDay.id}`}
+                onClick={() => doStuff(woDay.id)}
+              >
+                <TableCell component='th' scope='row' className={classes.tableCell}>
+                  {date}
+                </TableCell>
+                <TableCell className={classes.tableCell}>{woName}</TableCell>
+                {/* <TableCell>{woDay.id}</TableCell> */}
+                <TableCell className={classes.tableCell}>{woDay.goals}</TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+      </div>
+    )
   }
 
   return (
-    <Container maxWidth='sm'>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justify='center' spacing={2}>
-            {renderWoDays(woDays)}
-          </Grid>
-        </Grid>
-      </Grid>
-    </Container>
+    <React.Fragment>
+      <div style={{ maxWidth: '800px', margin: '0px auto' }}>
+        {woDays.length === 0 ? <BasicSpinner /> : renderWoDays(woDays)}
+      </div>
+    </React.Fragment>
   )
 }
 

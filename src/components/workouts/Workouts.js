@@ -4,6 +4,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { emptyWorkout } from '../../context/WoProvider'
 import WoContext from '../../context/WoContext'
 import ThemeContext from '../../context/ThemeContext'
+import BasicSpinner from '../spinners/BasicSpinner'
 import {
   retrieve as retrieveWorkouts,
   deleteWorkout as deleteWorkoutApi
@@ -85,7 +86,7 @@ const Workouts = props => {
           />
           </div>
       ) : (
-        <div>Workouts</div>
+        <BasicSpinner />
       )}
     </React.Fragment>
   )

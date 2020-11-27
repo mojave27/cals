@@ -83,8 +83,8 @@ export const woDayStyles = theme => {
   let slider = {
     webkitAppearance: 'none' /* Override default CSS styles */,
     appearance: 'none',
-    width: '200px' /* Full-width */,
-    height: '15px' /* Specified height */,
+    width: '100px' /* Full-width */,
+    height: '10px' /* Specified height */,
     background: theme.color2.hex /* Grey background */,
     outline: 'none' /* Remove outline */,
     opacity: '0.7' /* Set transparency (for mouse-over effects on hover) */,

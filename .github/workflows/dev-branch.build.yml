@@ -3,9 +3,11 @@
 
 name: Node.js CI
 
-on: 
+# on: push
+on:
   push:
-    branches-ignore: [ master ]
+    branches-ignore:    
+    - master
 
 jobs:
   build:

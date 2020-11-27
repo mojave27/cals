@@ -1,26 +1,11 @@
 import axios from 'axios'
-// import { config } from '../config/axiosConfig'
-import { config } from '../config/lambdaConfig'
-import { Auth } from 'aws-amplify';
+import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
 
 const URL = 'wodays'
-const getConfigForAws = async () => {
-  const user = await Auth.currentAuthenticatedUser();
-  const token = user.signInUserSession.idToken.jwtToken;
-  let awsConfig = {        
-    headers: {
-      Authorization: token
-    },
-    ...config
-  }
-  return awsConfig
-}
 
 export const retrieve = async () => {
-  // console.log('calling GET /wodays')
-  let configWithAuth = await getConfigForAws()
+  let configWithAuth = await getAxiosConfigWithAuth()
   return axios
-    // .get(URL, awsConfig)
     .get(URL, configWithAuth)
     .then(function(response) {
       const data = parseResponse(response)
@@ -35,7 +20,7 @@ export const retrieve = async () => {
 
 export const retrieveWoDayById = async (id) => {
   let url = `${URL}/${id}`
-  let configWithAuth = await getConfigForAws()
+  let configWithAuth = await getAxiosConfigWithAuth()
   return axios
     .get(url, configWithAuth)
     .then(response => {
@@ -50,11 +35,12 @@ export const retrieveWoDayById = async (id) => {
 }
 
 export const addWoDay = async (woday) => {
-  console.log(`calling POST /wodays with ${woday}`)
-  let configWithAuth = await getConfigForAws()
+  console.log(`calling POST /wodays with ${JSON.stringify(woday)}`)
+  let configWithAuth = await getAxiosConfigWithAuth()
   return axios
     .post(URL, woday, configWithAuth)
     .then(response => {
+      // console.log(JSON.stringify(response))
       const data = parseResponse(response)
       return data
     })
@@ -65,6 +51,7 @@ export const addWoDay = async (woday) => {
 }
 
 export const updateWoDay = async (woday) => {
+  console.log('calling addWoDay from updateWoDay')
   await addWoDay(woday)
 }
 
@@ -82,6 +69,6 @@ export const updateWoDay = async (woday) => {
 // }
 
 const parseResponse = response => {
-  // console.log(JSON.stringify(response))
+  // console.log(response.data)
   return response.data
 }

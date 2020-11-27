@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import { useContext, useState } from 'react'
 import { findIndexOfId, updateItemById } from '../ArrayUtils'
+import CloseButton from '../inputs/CloseButton'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import { workoutBlock, blockHeader, setBlock } from '../../styles/program'
@@ -18,12 +19,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { isUndefined } from 'lodash'
 import { navigate } from '@reach/router'
-
-import { gridContainer, gridItem } from '../../styles/gridStyles'
+import ThemeContext from '../../context/ThemeContext'
+import { gridStyles } from '../../styles/gridStyles'
+import { styles } from '../../styles/MainStyles'
 import {
-  basicButton,
-  card,
-  closeButton,
   row,
   col25,
   col75,
@@ -31,10 +30,42 @@ import {
   formButton
 } from '../../styles/main-styles'
 
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import Container from '@material-ui/core/Container'
+import TextField from '@material-ui/core/TextField'
+import FormButton from '../inputs/FormButton'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      // margin: theme.spacing(1),
+      // width: theme.spacing(100),
+      // height: theme.spacing(16)
+      width: '90%',
+      height: theme.spacing(100)
+      // border: `1px solid ${theme.color1.hex}`
+    }
+  },
+  card: {
+    minWidth: 275,
+    backgroundColor: theme.color5.hex,
+    border: `1px solid ${theme.color4.hex}`
+  }
+}))
+
 const ProgramForm = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
+
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  let { gridContainer, gridItem } = gridStyles(themeContext.theme)
+  let { basicButton } = styles(themeContext.theme)
 
   const saveProgram = async () => {
     if (typeof programContext.program.id !== 'undefined') {
@@ -51,22 +82,27 @@ const ProgramForm = props => {
     toggleWorkoutModal()
   }
 
-  const saveWorkout = workout => {
-    let updatedProgram = { ...programContext.program }
-    let index = findIndexOfId(workout.id, updatedProgram.workouts)
-    if (index > -1) {
-      let workouts = updateItemById(
-        workout,
-        workout.id,
-        updatedProgram.workouts
-      )
-      updatedProgram.workouts = workouts
-    } else {
-      updatedProgram.workouts.push(workout)
-    }
-    programContext.updateProgram(updatedProgram)
-    // saveProgram()
+  const saveWorkout = async workout => {
+    await woContext.saveWorkoutInWorkoutsList(workout)
+    toggleWorkoutModal()
   }
+
+  // const saveWorkout = workout => {
+  //   let updatedProgram = { ...programContext.program }
+  //   let index = findIndexOfId(workout.id, updatedProgram.workouts)
+  //   if (index > -1) {
+  //     let workouts = updateItemById(
+  //       workout,
+  //       workout.id,
+  //       updatedProgram.workouts
+  //     )
+  //     updatedProgram.workouts = workouts
+  //   } else {
+  //     updatedProgram.workouts.push(workout)
+  //   }
+  //   programContext.updateProgram(updatedProgram)
+  //   // saveProgram()
+  // }
 
   const editWorkout = async event => {
     let id = event.currentTarget.id
@@ -160,93 +196,69 @@ const ProgramForm = props => {
 
   const renderMainForm = () => {
     return (
-      <div>
-        <div css={card}>
-          <div css={row}>
-            <span css={closeButton} onClick={handleClose}>
-              &times;
-            </span>
-          </div>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='name'>Program Name</label>
-            </div>
-            <div css={col75}>
-              <input
-                css={formInput}
-                type='text'
-                id='name'
-                name='name'
-                value={
-                  isUndefined(programContext.program.name)
-                    ? 'program name...'
-                    : programContext.program.name
-                }
-                placeholder='program name..'
-                onChange={handleTextChange}
-              />
-            </div>
-          </div>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='description'>Description</label>
-            </div>
-            <div css={col75}>
-              <textarea
-                css={formInput}
-                id='description'
-                name='description'
-                value={
-                  isUndefined(programContext.program)
-                    ? 'program description...'
-                    : programContext.program.description
-                }
-                placeholder='program description..'
-                onChange={handleTextChange}
-                style={{ height: '42px' }}
-              ></textarea>
-            </div>
-          </div>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='workouts'>Workouts</label>
-            </div>
-            <div css={col75}>
-              {programContext.program.workouts &&
-              programContext.program.workouts.length > 0 ? (
-                <div css={gridContainer}>
-                  {renderWorkouts(programContext.program.workouts)}
-                </div>
-              ) : null}
-              <input
-                style={{ display: 'block' }}
-                type='button'
-                value='Add Workout'
-                css={formButton}
-                onClick={addWorkout}
-              />
-            </div>
-          </div>
-          <div css={row}>
-            <input
+      <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
+        <Card className={classes.card} variant='outlined'>
+          <CardContent>
+            <CloseButton handleClose={handleClose} />
+            <div style={{ marginTop: '30px' }} />
+            <TextField
+              id='programName'
+              label='Program Name'
+              defaultValue={
+                isUndefined(programContext.program.name)
+                  ? 'program name...'
+                  : programContext.program.name
+              }
+              onChange={handleTextChange}
+              variant='outlined'
+              size='small'
+            />
+            <div style={{ marginTop: '10px' }} />
+            <TextField
+              id='description'
+              label='Description'
+              defaultValue={
+                isUndefined(programContext.program.name)
+                  ? 'program description...'
+                  : programContext.program.description
+              }
+              onChange={handleTextChange}
+              variant='outlined'
+              size='small'
+            />
+            <div style={{ marginTop: '10px' }} />
+            <label htmlFor='workouts'>Workouts</label>
+            {programContext.program.workouts &&
+            programContext.program.workouts.length > 0 ? (
+              <div css={gridContainer}>
+                {renderWorkouts(programContext.program.workouts)}
+              </div>
+            ) : null}
+            <div style={{ marginTop: '30px' }} />
+            <FormButton
+              buttonText={'Add Workout'}
+              onClick={addWorkout}
+            />
+            <div style={{ marginTop: '10px' }} />
+            <FormButton
               type='submit'
-              value='Save Program'
-              css={[basicButton, { float: 'right' }]}
+              styleProps={{ float: 'right' }}
+              buttonText={'Save Program'}
               onClick={saveProgram}
             />
-          </div>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
+      </form>
     )
   }
 
   return (
-    <React.Fragment>
+    <Container maxWidth='sm'>
       <Modal showModal={showWorkoutModal} handleClose={toggleWorkoutModal}>
         <WorkoutForm saveWorkout={saveWorkout} />
       </Modal>
       {renderMainForm()}
-    </React.Fragment>
+    </Container>
   )
 }
 
