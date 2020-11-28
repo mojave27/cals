@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -78,8 +78,21 @@ const icon = iconName => {
 const TopNav = props => {
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
-  const [expandSection, setExpandSection] = useState(false)
+  // const [expandSection, setExpandSection] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [expandSection, setExpandSection] = React.useState({})
+
+  useEffect(() => {
+    function setupForMenu() {
+      let sections = {}
+      menuConfig.forEach(item => {
+        sections[item.name] = false
+      })
+      setExpandSection(sections)
+    }
+    setupForMenu()
+    return () => {}
+  }, [])
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true)
@@ -89,8 +102,10 @@ const TopNav = props => {
     setDrawerOpen(false)
   }
 
-  const handleClick = () => {
-    setExpandSection(!expandSection)
+  const handleClick = name => {
+    console.log(name)
+    // setExpandSection(!expandSection)
+    setExpandSection({ ...expandSection, [name]: !expandSection[name]})
   }
 
   const sideNavItems = () => (
@@ -122,14 +137,14 @@ const TopNav = props => {
         if (item.type === 'dropdown') {
           return (
             <React.Fragment>
-              <ListItem button onClick={handleClick}>
+              <ListItem id={item.name} button onClick={() => handleClick(item.name)}>
                 <ListItemIcon>
                   {item.icon ? icon(item.icon) : '-'}
                 </ListItemIcon>
                 <ListItemText primary={item.name} />
-                {expandSection ? <ExpandLess /> : <ExpandMore />}
+                {expandSection[item.name] ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-              <Collapse in={expandSection} timeout='auto' unmountOnExit>
+              <Collapse in={expandSection[item.name]} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
                   {item.items.map(subitem => {
                     return (
