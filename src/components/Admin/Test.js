@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
@@ -32,9 +32,7 @@ export default Test
 const Table = () => {
   let context = useContext(ThemeContext)
   let { woHeader, woInput, woTable } = woDayStyles(context.theme)
-  let { basicButtonSmall, formContainer, row } = styles(context.theme)
   const classes = useStyles(context.theme)
-  const [spacing, setSpacing] = useState(2)
 
   return (
     <div className={classes.root}>

@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React from 'react'
 import { useContext, useState } from 'react'
-import { findIndexOfId, updateItemById } from '../ArrayUtils'
+import { findIndexOfId } from '../ArrayUtils'
 import CloseButton from '../inputs/CloseButton'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
@@ -22,17 +22,9 @@ import { navigate } from '@reach/router'
 import ThemeContext from '../../context/ThemeContext'
 import { gridStyles } from '../../styles/gridStyles'
 import { styles } from '../../styles/MainStyles'
-import {
-  row,
-  col25,
-  col75,
-  formInput,
-  formButton
-} from '../../styles/main-styles'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
@@ -65,7 +57,6 @@ const ProgramForm = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   let { gridContainer, gridItem } = gridStyles(themeContext.theme)
-  let { basicButton } = styles(themeContext.theme)
 
   const saveProgram = async () => {
     if (typeof programContext.program.id !== 'undefined') {
