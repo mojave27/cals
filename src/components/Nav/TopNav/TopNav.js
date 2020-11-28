@@ -2,26 +2,31 @@ import React, { useContext, useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import ThemeContext from '../../../context/ThemeContext'
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import Collapse from '@material-ui/core/Collapse'
 import Divider from '@material-ui/core/Divider'
+import Drawer from '@material-ui/core/Drawer'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
+import IconButton from '@material-ui/core/IconButton'
+import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
+import MenuIcon from '@material-ui/icons/Menu'
+import HomeIcon from '@material-ui/icons/Home'
+import LockIcon from '@material-ui/icons/Lock'
+import AssignmentIcon from '@material-ui/icons/Assignment'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import EditIcon from '@material-ui/icons/Edit'
+import ListAltIcon from '@material-ui/icons/ListAlt'
+import ThemeContext from '../../../context/ThemeContext'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 
-import Collapse from '@material-ui/core/Collapse'
-import StarBorder from '@material-ui/icons/StarBorder'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import { menuConfig } from './navMenuConfig'
+import { Link as RouterLink } from '@reach/router'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,17 +50,36 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    // ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
+    justifyContent: 'flex-end'
+  }
 }))
+
+const icon = iconName => {
+  if( iconName.toLowerCase() === 'home' ) {
+    return (<HomeIcon fontSize={'small'} />)
+  }
+  if( iconName.toLowerCase() === 'assignment' ) {
+    return (<AssignmentIcon fontSize={'small'} />)
+  }
+  if( iconName.toLowerCase() === 'trendingup' ) {
+    return (<TrendingUpIcon fontSize={'small'} />)
+  }
+  if( iconName.toLowerCase() === 'edit' ) {
+    return (<EditIcon fontSize={'small'} />)
+  }
+  if( iconName.toLowerCase() === 'listalt' ) {
+    return (<ListAltIcon fontSize={'small'} />)
+  }
+  if( iconName.toLowerCase() === 'lock' ) {
+    return (<LockIcon fontSize={'small'} />)
+  }
+}
 
 const TopNav = props => {
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
-  const [expandSection, setExpandSection] = React.useState(false)
-  const [drawerOpen, setDrawerOpen] = React.useState(false)
+  const [expandSection, setExpandSection] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true)
@@ -69,62 +93,60 @@ const TopNav = props => {
     setExpandSection(!expandSection)
   }
 
-  const toggleDrawer = open => event => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return
-    }
-    setDrawerOpen(open)
-  }
-
-  const list = () => (
+  const sideNavItems = () => (
     <div
       className={classes.list}
       role='presentation'
-      // onClick={handleDrawerClose()}
-      // onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <ListItem button onClick={handleClick}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary='Inbox' />
-        {expandSection ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={expandSection} timeout='auto' unmountOnExit>
-        <List component='div' disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary='Starred' />
-          </ListItem>
-        </List>
-      </Collapse>
+      {/* eslint-disable-next-line */}
+      {menuConfig.map(item => {
+        if (item.type === 'divider') {
+          return (<Divider />)
+        }
+        if (item.type === 'button') {
+          return (
+            <List>
+              <ListItem button key={item.name} component={RouterLink} to={item.link.to}>
+                <ListItemIcon>
+                  {item.icon ? icon(item.icon) : '-'}
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItem>
+            </List>
+          )
+        }
+        if (item.type === 'functionButton') {
+          //TODO: implement
+          return null
+        }
+        if (item.type === 'dropdown') {
+          return (
+            <React.Fragment>
+              <ListItem button onClick={handleClick}>
+                <ListItemIcon>
+                  {item.icon ? icon(item.icon) : '-'}
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+                {expandSection ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={expandSection} timeout='auto' unmountOnExit>
+                <List component='div' disablePadding>
+                  {item.items.map(subitem => {
+                    return (
+                      <ListItem button key={subitem.name} className={classes.nested} component={RouterLink} to={subitem.to}>
+                        <ListItemIcon>
+                          {subitem.icon ? icon(subitem.icon) : '' }
+                        </ListItemIcon>
+                        <ListItemText primary={subitem.text} />
+                      </ListItem>
+                    )
+                  })}
+                </List>
+              </Collapse>
+            </React.Fragment>
+          )
+        }
+      })}
     </div>
   )
 
@@ -146,6 +168,7 @@ const TopNav = props => {
           <Button color='inherit'>Login</Button>
         </Toolbar>
       </AppBar>
+
       <Drawer
         anchor={'left'}
         open={drawerOpen}
@@ -158,7 +181,7 @@ const TopNav = props => {
           </IconButton>
         </div>
         <Divider />
-        {list()}
+        {sideNavItems()}
       </Drawer>
     </div>
   )

@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
 import { useContext, useState } from 'react'
 import { findIndexOfId } from '../ArrayUtils'
 import CloseButton from '../inputs/CloseButton'
@@ -21,8 +20,6 @@ import { isUndefined } from 'lodash'
 import { navigate } from '@reach/router'
 import ThemeContext from '../../context/ThemeContext'
 import { gridStyles } from '../../styles/gridStyles'
-import { styles } from '../../styles/MainStyles'
-
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
