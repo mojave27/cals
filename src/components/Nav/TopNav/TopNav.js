@@ -132,6 +132,7 @@ const TopNav = props => {
                 key={item.name}
                 component={RouterLink}
                 to={item.link.to}
+                onClick={handleDrawerClose}
               >
                 <ListItemIcon>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
                 <ListItemText primary={item.name} />
@@ -160,7 +161,7 @@ const TopNav = props => {
                 timeout='auto'
                 unmountOnExit
               >
-                <List component='div' disablePadding>
+                <List component='div' disablePadding >
                   {item.items.map(subitem => {
                     return (
                       <ListItem
@@ -169,6 +170,7 @@ const TopNav = props => {
                         className={classes.nested}
                         component={RouterLink}
                         to={subitem.to}
+                        onClick={handleDrawerClose}
                       >
                         <ListItemIcon>
                           {subitem.icon ? icon(subitem.icon) : ''}
