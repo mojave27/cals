@@ -4,11 +4,19 @@ import React, { useContext } from 'react'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  }
+}))
 
 const Workout = props => {
   let context = useContext(ThemeContext)
   let { woHeader, woInput, woTable } = woDayStyles(context.theme)
   let { basicButtonSmall } = styles(context.theme)
+  const classes = useStyles(context.theme)
 
   const COL_1_TITLE = 'exercise'
   const COL_2_TITLE = 'reps'
@@ -19,16 +27,16 @@ const Workout = props => {
     return (
       <tr key={'firstHeaderRow'}>
         {headers.map((header, index) => {
-            const colWidth = header === COL_2_TITLE ? '15px' : '50px'
-            return (
-              <th 
-                key={`${header}-${index}`} 
-                css={woHeader}
-                style={{ maxWidth:colWidth }}
-              > 
-                {header}
-              </th>
-            )
+          const colWidth = header === COL_2_TITLE ? '15px' : '50px'
+          return (
+            <th
+              key={`${header}-${index}`}
+              css={woHeader}
+              style={{ maxWidth: colWidth }}
+            >
+              {header}
+            </th>
+          )
         })}
       </tr>
     )
@@ -142,54 +150,54 @@ const Workout = props => {
   }
 
   return (
-    <React.Fragment>
-      <div style={{ display: 'inline-block', margin: 'auto' }}>
-        <input
-          style={{ margin: '5px' }}
-          type='button'
-          value='Choose Workout'
-          css={[basicButtonSmall, { float: 'left' }]}
-          onClick={showWorkoutChooser}
-        />
-        <input
-          style={{ margin: '5px' }}
-          type='button'
-          value='Add Set'
-          css={[basicButtonSmall, { float: 'left' }]}
-          onClick={addSet}
-        />
-        <input
-          style={{ margin: '5px' }}
-          type='button'
-          value='Add Exercise'
-          css={[basicButtonSmall, { float: 'left' }]}
-          onClick={addExercise}
-        />
-      </div>
-      <br />
-      <div style={{ display: 'inline-block' }}>
-        <table css={woTable}>
-          <tbody>
-            {renderTableOneHeaderRows()}
-            {renderTableOneRows()}
-          </tbody>
-        </table>
-      </div>
-      <div
-        style={{
-          maxWidth: '400px',
-          display: 'inline-block',
-          overflow: 'scroll'
-        }}
-      >
-      <table css={woTable}>
-        <tbody>
-          {renderHeaderRows()}
-          {renderRows()}
-        </tbody>
-      </table>
+    <div className={classes.root}>
+          <div style={{ display: 'inline-block', margin: 'auto' }}>
+            <input
+              style={{ margin: '5px' }}
+              type='button'
+              value='Choose Workout'
+              css={[basicButtonSmall, { float: 'left' }]}
+              onClick={showWorkoutChooser}
+            />
+            <input
+              style={{ margin: '5px' }}
+              type='button'
+              value='Add Set'
+              css={[basicButtonSmall, { float: 'left' }]}
+              onClick={addSet}
+            />
+            <input
+              style={{ margin: '5px' }}
+              type='button'
+              value='Add Exercise'
+              css={[basicButtonSmall, { float: 'left' }]}
+              onClick={addExercise}
+            />
+          </div>
+          <br />
+          <div style={{ display: 'inline-block' }}>
+            <table css={woTable}>
+              <tbody>
+                {renderTableOneHeaderRows()}
+                {renderTableOneRows()}
+              </tbody>
+            </table>
+          </div>
+          <div
+            style={{
+              maxWidth: '600px',
+              display: 'inline-block',
+              overflow: 'scroll'
+            }}
+          >
+            <table css={woTable}>
+              <tbody>
+                {renderHeaderRows()}
+                {renderRows()}
+              </tbody>
+            </table>
+          </div>
     </div>
-    </React.Fragment>
   )
 }
 

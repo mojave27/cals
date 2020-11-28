@@ -1,11 +1,23 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { Fragment } from 'react'
-import { formContainer, row } from '../../styles/main-styles'
+import { useContext } from 'react'
+import { woDayStyles } from '../../styles/WoDayStyles'
+import { styles } from '../../styles/MainStyles'
+import ThemeContext from '../../context/ThemeContext'
+import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
 // import StopWatch from './StopWatch'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    textAlign: 'center'
+  }
+}))
+
 const Test = props => {
-  // const [reportData, setReportData] = useState({})
+  let context = useContext(ThemeContext)
+  let { formContainer, row } = styles(context.theme)
 
   return (
     <div css={formContainer}>
@@ -18,103 +30,141 @@ const Test = props => {
 export default Test
 
 const Table = () => {
-  // const addTab = () => {
+  let context = useContext(ThemeContext)
+  let { woHeader, woInput, woTable } = woDayStyles(context.theme)
+  const classes = useStyles(context.theme)
 
-  // }
   return (
-    <Fragment>
-      {/* <StopWatch /> */}
-      <div style={{ maxWidth: '150px', display: 'inline-block' }}>
-        <table style={{ border: '1px solid yellow' }}>
-          <tbody>
-            <tr>
-              <th rowSpan={2} style={{ border: '1px solid pink'}}>header</th>
-              <th rowSpan={2} style={{ border: '1px solid pink'}}>header</th>
-            </tr>
-            <tr>
-              <td>data</td>
-              <td>data</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div
-        style={{
-          maxWidth: '300px',
-          display: 'inline-block',
-          overflow: 'scroll'
-        }}
-      >
-        <table style={{ border: '1px solid lime' }}>
-          <tbody>
-            <tr>
-              <th colSpan='2'>date</th>
-              <th colSpan='2'>date</th>
-              <th colSpan='2'>date</th>
-              <th colSpan='2'>date</th>
-              <th colSpan='2'>date</th>
-            </tr>
-            <tr>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-              <th>header</th>
-            </tr>
-            <tr>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {/* <div
-        style={{
-          display: 'inline-block',
-          marginLeft: '20px',
-          fontSize: '2em',
-          fontWeight: '700',
-          cursor:'pointer'
-        }}
-        onClick={addTab}
-      >
-        +
-      </div>
-      <div>
-        <table style={{border:'1px solid #bbb'}}>
-          <tbody>
-            <tr>
-              <th rowSpan={2} style={{border:'1px solid #bbb'}}>span2a</th>
-              <th rowSpan={2} style={{border:'1px solid #bbb'}}>span2b</th>
-              <th style={{border:'1px solid #bbb'}}>span1-upper</th>
-              <th style={{border:'1px solid #bbb'}}>span1-upper</th>
-            </tr>
-            <tr>
-              <th style={{border:'1px solid #bbb'}}>span1-lower</th>
-              <th style={{border:'1px solid #bbb'}}>span1-lower</th>
-            </tr>
-            <tr>
-              <td style={{border:'1px solid #bbb'}}>ex</td>
-              <td style={{border:'1px solid #bbb'}}>target</td>
-              <td style={{border:'1px solid #bbb'}}>span1-td</td>
-              <td style={{border:'1px solid #bbb'}}>span1-td</td>
-            </tr>
-          </tbody>
-        </table>
-      </div> */}
-    </Fragment>
+    <div className={classes.root}>
+    <Grid container spacing={2}>
+      <Grid item>
+        {/* <div style={{ display: 'inline-block' }}> */}
+        <div>
+          <table css={woTable}>
+            <tbody>
+              <tr>
+                <th style={{ maxWidth: '50px' }} css={woHeader}>
+                  exercise
+                </th>
+                <th style={{ maxWidth: '15px' }} css={woHeader}>
+                  reps
+                </th>
+              </tr>
+              <tr id='20' style={{ border: '1px solid yellow' }}>
+                <td>
+                  <input
+                    name='name'
+                    data-exgroupid='0'
+                    type='text'
+                    css={[woInput, { width: '75px' }]}
+                    value='incline bench press'
+                  />
+                </td>
+                <td>
+                  <input
+                    name='reps'
+                    data-exgroupid='0'
+                    type='text'
+                    css={[woInput, { width: '75px' }]}
+                    value='10'
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Grid>
+      <Grid item>
+        <div
+          style={{
+            maxWidth: '400px',
+            // display: 'inline-block',
+            overflow: 'scroll'
+          }}
+        >
+          <table css={woTable}>
+            <tbody>
+              <tr>
+                <th css={woHeader}>weight</th>
+                <th css={woHeader}>reps</th>
+                <th css={woHeader}>weight</th>
+                <th css={woHeader}>reps</th>
+                <th css={woHeader}>weight</th>
+                <th css={woHeader}>reps</th>
+              </tr>
+              <tr id='20' style={{ border: '1px solid yellow' }}>
+                <td>
+                  <input
+                    data-setid='0'
+                    data-exgroupid='0'
+                    name='weight'
+                    type='text'
+                    placeholder='enter weight'
+                    css={[woInput, { width: '75px' }]}
+                    value='47'
+                  />
+                </td>
+                <td>
+                  <input
+                    data-setid='0'
+                    data-exgroupid='0'
+                    name='reps'
+                    type='text'
+                    placeholder='enter reps'
+                    css={[woInput, { width: '75px' }]}
+                    value='0'
+                  />
+                </td>
+                <td>
+                  <input
+                    data-setid='0'
+                    data-exgroupid='0'
+                    name='weight'
+                    type='text'
+                    placeholder='enter weight'
+                    css={[woInput, { width: '75px' }]}
+                    value='47'
+                  />
+                </td>
+                <td>
+                  <input
+                    data-setid='0'
+                    data-exgroupid='0'
+                    name='weight'
+                    type='text'
+                    placeholder='enter weight'
+                    css={[woInput, { width: '75px' }]}
+                    value='47'
+                  />
+                </td>
+                <td>
+                  <input
+                    data-setid='0'
+                    data-exgroupid='0'
+                    name='reps'
+                    type='text'
+                    placeholder='enter reps'
+                    css={[woInput, { width: '75px' }]}
+                    value='0'
+                  />
+                </td>
+                <td>
+                  <input
+                    data-setid='0'
+                    data-exgroupid='0'
+                    name='reps'
+                    type='text'
+                    placeholder='enter reps'
+                    css={[woInput, { width: '75px' }]}
+                    value='0'
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </Grid>
+    </Grid>
+    </div>
   )
 }

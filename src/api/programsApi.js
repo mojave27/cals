@@ -39,10 +39,11 @@ export const retrieveProgramById = async (id) => {
   //   });
 };
 
-export const addProgram = program => {
-  const url = 'programs'
+export const addProgram = async (program) => {
+  let config = await getAxiosConfigWithAuth()
+  const URL = 'programs'
   return axios
-  .post(url, program, config)
+  .post(URL, program, config)
   .then(response => parseResponse(response))
   .catch( error => {
     _handleError(error)

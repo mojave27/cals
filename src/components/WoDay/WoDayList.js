@@ -1,29 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react'
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
 import { retrieve } from '../../api/wodaysApi'
-import BasicSpinner from '../spinners/BasicSpinner'
 import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-
 import ThemeContext from '../../context/ThemeContext'
+import BasicSpinner from '../spinners/BasicSpinner'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+// import Container from '@material-ui/core/Container'
+// import Grid from '@material-ui/core/Grid'
+// import Paper from '@material-ui/core/Paper'
+// import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
-  tableContainer: {
-    paddingTop: '20px',
-    paddingBottom: '20px',
+  root: {
+    flexGrow: 1
   },
-  table: {
-    minWidth: 650,
-    backgroundColor: theme.color5.hex,
-    margin: 'auto',
+  paper: {
+    height: 140,
+    width: 100
   },
-  tableCell: {
-    color: theme.color5_text.hex
+  control: {
+    padding: theme.spacing(2)
   }
 }))
 

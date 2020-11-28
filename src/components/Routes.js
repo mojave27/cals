@@ -9,7 +9,7 @@ import Exercises from './exercises/Exercises'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
 import Themer from './prefs/Themer'
-import WoDay from './Admin/WoDay'
+import WoDay from './WoDay/WoDay'
 import WorkoutForm from './workouts/WorkoutForm'
 import Workouts from './workouts/Workouts'
 import WoDayTracker from './tracker/WoDayTracker'
@@ -28,7 +28,7 @@ const Routes = () => {
       <DataConsistency path='/admin/consistency-check' />
       <Test path='/admin/test' />
       <Themer path='/prefs/themer' />
-      <WoDay path='/admin/test/woday' />
+      <WoDay path='/woday' />
       <WoDayTracker path='/tracker/woday' />
       <Login path='/login' />
     </Router>

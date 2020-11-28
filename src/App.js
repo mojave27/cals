@@ -14,15 +14,8 @@ const useUser = () => {
     .then(user => {
       if (!user) {
         console.log('no user')
-        // navigate("/login")
         return undefined
       } else {
-        // console.log(JSON.stringify(user.signInUserSession.idToken.payload))
-        // console.log(
-          // JSON.stringify(
-            // user.signInUserSession.idToken.payload['cognito:groups']
-          // )
-        // )
         console.log('User is logged-in')
         return user
       }
