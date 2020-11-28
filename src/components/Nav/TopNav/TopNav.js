@@ -27,6 +27,7 @@ import Typography from '@material-ui/core/Typography'
 
 import { menuConfig } from './navMenuConfig'
 import { Link as RouterLink } from '@reach/router'
+import { Auth } from 'aws-amplify'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -55,23 +56,23 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const icon = iconName => {
-  if( iconName.toLowerCase() === 'home' ) {
-    return (<HomeIcon fontSize={'small'} />)
+  if (iconName.toLowerCase() === 'home') {
+    return <HomeIcon fontSize={'small'} />
   }
-  if( iconName.toLowerCase() === 'assignment' ) {
-    return (<AssignmentIcon fontSize={'small'} />)
+  if (iconName.toLowerCase() === 'assignment') {
+    return <AssignmentIcon fontSize={'small'} />
   }
-  if( iconName.toLowerCase() === 'trendingup' ) {
-    return (<TrendingUpIcon fontSize={'small'} />)
+  if (iconName.toLowerCase() === 'trendingup') {
+    return <TrendingUpIcon fontSize={'small'} />
   }
-  if( iconName.toLowerCase() === 'edit' ) {
-    return (<EditIcon fontSize={'small'} />)
+  if (iconName.toLowerCase() === 'edit') {
+    return <EditIcon fontSize={'small'} />
   }
-  if( iconName.toLowerCase() === 'listalt' ) {
-    return (<ListAltIcon fontSize={'small'} />)
+  if (iconName.toLowerCase() === 'listalt') {
+    return <ListAltIcon fontSize={'small'} />
   }
-  if( iconName.toLowerCase() === 'lock' ) {
-    return (<LockIcon fontSize={'small'} />)
+  if (iconName.toLowerCase() === 'lock') {
+    return <LockIcon fontSize={'small'} />
   }
 }
 
@@ -94,6 +95,14 @@ const TopNav = props => {
     return () => {}
   }, [])
 
+  const signOut = async () => {
+    try {
+      await Auth.signOut()
+    } catch (error) {
+      console.log('error signing out: ', error)
+    }
+  }
+
   const handleDrawerOpen = () => {
     setDrawerOpen(true)
   }
@@ -105,26 +114,26 @@ const TopNav = props => {
   const handleClick = name => {
     console.log(name)
     // setExpandSection(!expandSection)
-    setExpandSection({ ...expandSection, [name]: !expandSection[name]})
+    setExpandSection({ ...expandSection, [name]: !expandSection[name] })
   }
 
   const sideNavItems = () => (
-    <div
-      className={classes.list}
-      role='presentation'
-    >
+    <div className={classes.list} role='presentation'>
       {/* eslint-disable-next-line */}
       {menuConfig.map(item => {
         if (item.type === 'divider') {
-          return (<Divider />)
+          return <Divider />
         }
         if (item.type === 'button') {
           return (
             <List>
-              <ListItem button key={item.name} component={RouterLink} to={item.link.to}>
-                <ListItemIcon>
-                  {item.icon ? icon(item.icon) : '-'}
-                </ListItemIcon>
+              <ListItem
+                button
+                key={item.name}
+                component={RouterLink}
+                to={item.link.to}
+              >
+                <ListItemIcon>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
                 <ListItemText primary={item.name} />
               </ListItem>
             </List>
@@ -137,20 +146,32 @@ const TopNav = props => {
         if (item.type === 'dropdown') {
           return (
             <React.Fragment>
-              <ListItem id={item.name} button onClick={() => handleClick(item.name)}>
-                <ListItemIcon>
-                  {item.icon ? icon(item.icon) : '-'}
-                </ListItemIcon>
+              <ListItem
+                id={item.name}
+                button
+                onClick={() => handleClick(item.name)}
+              >
+                <ListItemIcon>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
                 <ListItemText primary={item.name} />
                 {expandSection[item.name] ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-              <Collapse in={expandSection[item.name]} timeout='auto' unmountOnExit>
+              <Collapse
+                in={expandSection[item.name]}
+                timeout='auto'
+                unmountOnExit
+              >
                 <List component='div' disablePadding>
                   {item.items.map(subitem => {
                     return (
-                      <ListItem button key={subitem.name} className={classes.nested} component={RouterLink} to={subitem.to}>
+                      <ListItem
+                        button
+                        key={subitem.name}
+                        className={classes.nested}
+                        component={RouterLink}
+                        to={subitem.to}
+                      >
                         <ListItemIcon>
-                          {subitem.icon ? icon(subitem.icon) : '' }
+                          {subitem.icon ? icon(subitem.icon) : ''}
                         </ListItemIcon>
                         <ListItemText primary={subitem.text} />
                       </ListItem>
@@ -180,7 +201,7 @@ const TopNav = props => {
           <Typography variant='h6' className={classes.title}>
             wo-log
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button color='inherit' onClick={signOut}>Logout</Button>
         </Toolbar>
       </AppBar>
 
