@@ -50,11 +50,21 @@ const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
+  paper: {
+    backgroundColor: theme.color5.hex,
+    color: theme.color5_text.hex
+  },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     justifyContent: 'flex-end'
+  },
+  icon: {
+    color: theme.color5_text.hex
+  },
+  divider: {
+    backgroundColor: theme.color4.hex
   }
 }))
 
@@ -130,7 +140,7 @@ const TopNav = props => {
       {/* eslint-disable-next-line */}
       {menuConfig.map(item => {
         if (item.type === 'divider') {
-          return <Divider />
+          return <Divider classes={{root: classes.divider}} />
         }
         if (item.type === 'button') {
           return (
@@ -142,7 +152,7 @@ const TopNav = props => {
                 to={item.link.to}
                 onClick={handleDrawerClose}
               >
-                <ListItemIcon>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
+                <ListItemIcon classes={{root: classes.icon }}>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
                 <ListItemText primary={item.name} />
               </ListItem>
             </List>
@@ -160,7 +170,7 @@ const TopNav = props => {
                 button
                 onClick={() => handleClick(item.name)}
               >
-                <ListItemIcon>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
+                <ListItemIcon classes={{root: classes.icon }}>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
                 <ListItemText primary={item.name} />
                 {expandSection[item.name] ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
@@ -180,7 +190,7 @@ const TopNav = props => {
                         to={subitem.to}
                         onClick={handleDrawerClose}
                       >
-                        <ListItemIcon>
+                        <ListItemIcon classes={{root: classes.icon }} >
                           {subitem.icon ? icon(subitem.icon) : ''}
                         </ListItemIcon>
                         <ListItemText primary={subitem.text} />
@@ -220,13 +230,14 @@ const TopNav = props => {
         open={drawerOpen}
         variant={'persistent'}
         onClose={handleDrawerClose}
+        classes={{ paper: classes.paper}}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton classes={{ root: classes.icon }} onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
+        <Divider classes={{root:classes.divider}} />
         {sideNavItems()}
       </Drawer>
     </div>
