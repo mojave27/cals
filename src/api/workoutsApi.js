@@ -39,7 +39,8 @@ export const retrieveWorkoutById = async (id) => {
   return axios
     .get(url, configWithAuth)
     .then(response => {
-      const data = parseResponse(response)
+      console.log(response)
+      const data = response.data
       return data
     })
     .catch(function(error) {
