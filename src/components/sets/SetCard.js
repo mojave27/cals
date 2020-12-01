@@ -170,7 +170,6 @@ const SetCard = props => {
 
   const selectExercise = event => {
     let id = event.target.id
-    console.log(`id from selectExercise: ${id}`)
     let updatedSelectedExercises = [...selectedExercises]
     let allExercisesId = findIndexOfId(id, allExercises) 
     updatedSelectedExercises.push(allExercises[allExercisesId])
@@ -216,7 +215,6 @@ const SetCard = props => {
 
   const saveSet = async () => {
     if (props.saveSet) {
-      console.log(`calling props.saveSet with ${JSON.stringify(setContext.set)}`)
       props.saveSet(setContext.set)
     }
   }

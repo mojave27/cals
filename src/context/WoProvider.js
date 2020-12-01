@@ -3,17 +3,12 @@ import WoContext from './WoContext'
 import { findIndexOfId, updateItemById } from '../components/ArrayUtils'
 
 export const emptyWorkout = {
+    id: '',
     name: '',
     description: '',
     exerciseGroups: [ { id:0, exercises: []} ],
     sets: [ {id:0, exerciseGroups: [ { id:0, exercises: []}] } ],
 }
-
-// export const emptyWorkoutTemplate = {
-//   name: '',
-//   description: '',
-//   sets: []
-// }
 
 class WoProvider extends React.Component {
   state = {

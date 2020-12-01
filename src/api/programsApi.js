@@ -1,7 +1,6 @@
 import axios from "axios";
-import { config } from '../config/lambdaConfig'
 import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
-import { retrieveItemById } from 'list-utils'
+import { retrieveItemByStringId } from '../components/ArrayUtils'
 
 const URL = 'programs'
 const NAME = 'programsApi'
@@ -11,33 +10,20 @@ export const retrievePrograms = async (searchTerm) => {
   return axios
     .get(URL, config)
     .then(function (response) {
-      const data = parseResponse(response)
-      return data
+      return response.data
     })
     .catch(function (error) {
       // handle error
-      console.log(`[ui - retrieve programs] api error: ${error}`);
+      console.log(`[programsApi - retrievePrograms] error: ${error}`);
       return [];
     });
 };
 
 export const retrieveProgramById = async (id) => {
   const programs = await retrievePrograms()
-  let program = retrieveItemById(id, programs)
-  console.log(program)
+  let program = retrieveItemByStringId(id, programs)
   return program
-  // const url = `programs/${programId}`
-  // return axios
-  //   .get(url, config)
-  //   .then(function (response) {
-  //     const data = parseResponse(response)
-  //     return data
-  //   })
-  //   .catch(function (error) {
-  //     _handleError(error)
-  //     return [];
-  //   });
-};
+}
 
 export const addProgram = async (program) => {
   let config = await getAxiosConfigWithAuth()
@@ -51,18 +37,19 @@ export const addProgram = async (program) => {
   })
 }
 
-export const updateProgram = program => {
-  const url = `programs/${program.id}`
-  return axios
-    .put(url, program, config)
-    .then(response => {
-      const data = parseResponse(response)
-      return data
-    })
-    .catch(error => {
-      _handleError(error)
-      return {}
-    })
+export const updateProgram = async (program) => {
+  return await addProgram(program)
+  // const url = `programs/${program.id}`
+  // return axios
+  //   .put(url, program, config)
+  //   .then(response => {
+  //     const data = parseResponse(response)
+  //     return data
+  //   })
+  //   .catch(error => {
+  //     _handleError(error)
+  //     return {}
+  //   })
 }
 
 const _handleError = error => {
@@ -70,5 +57,5 @@ const _handleError = error => {
 }
 
 const parseResponse = (response) => {
-  return response.data;
+  return JSON.parse(response.data.body)
 }

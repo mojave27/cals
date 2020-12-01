@@ -22,7 +22,6 @@ const WorkoutAddForm = props => {
 
   const saveWorkout = async () => {
     if (props.saveWorkout) {
-      console.log('calling props.saveWorkout')
       props.saveWorkout()
     }
   }
@@ -44,7 +43,6 @@ const WorkoutAddForm = props => {
 
   const handleRowClick = event => {
     let id = event.currentTarget.id
-    console.log(id)
   }
 
   // lots of changes going on here...

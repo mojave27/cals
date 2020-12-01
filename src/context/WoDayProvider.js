@@ -80,7 +80,6 @@ class WoDayProvider extends React.Component {
 
   isWoDayInList = () => {
     let answer = (findIndexOfId(this.state.woday.id, this.state.wodays) === -1) ? false : true
-    console.log(answer)
     return answer
   }
 

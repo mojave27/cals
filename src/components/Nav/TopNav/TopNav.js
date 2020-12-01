@@ -47,6 +47,9 @@ const useStyles = makeStyles(theme => ({
   list: {
     width: 250
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
@@ -112,9 +115,14 @@ const TopNav = props => {
   }
 
   const handleClick = name => {
-    console.log(name)
-    // setExpandSection(!expandSection)
-    setExpandSection({ ...expandSection, [name]: !expandSection[name] })
+    let updatedExpandSection = {}
+    // set all to false - so any currently expanded sections will collapse
+    for (const section of Object.entries(expandSection)) {
+      updatedExpandSection[section] = false
+    }
+    updatedExpandSection[name] = !expandSection[name]
+
+    setExpandSection(updatedExpandSection)
   }
 
   const sideNavItems = () => (

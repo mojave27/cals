@@ -74,6 +74,7 @@ const Workout = props => {
                 value={ex.name}
                 css={[woInput, { width: '75px' }]}
                 onChange={props.onLeadCellChange}
+                autocomplete={'off'}
               />
             </td>
             <td>
@@ -84,6 +85,7 @@ const Workout = props => {
                 value={ex.reps}
                 css={[woInput, { width: '75px' }]}
                 onChange={props.onLeadCellChange}
+                autocomplete={'off'}
               />
             </td>
           </tr>
@@ -113,6 +115,7 @@ const Workout = props => {
                       value={exercise.weight}
                       css={woInput}
                       onChange={props.onChange}
+                      autocomplete={'off'}
                     />
                   </td>
 
@@ -126,6 +129,7 @@ const Workout = props => {
                       value={exercise.reps}
                       css={woInput}
                       onChange={props.onChange}
+                      autocomplete={'off'}
                     />
                   </td>
                 </React.Fragment>
@@ -158,6 +162,7 @@ const Workout = props => {
               value='Choose Workout'
               css={[basicButtonSmall, { float: 'left' }]}
               onClick={showWorkoutChooser}
+              autocomplete={'off'}
             />
             <input
               style={{ margin: '5px' }}
@@ -165,6 +170,7 @@ const Workout = props => {
               value='Add Set'
               css={[basicButtonSmall, { float: 'left' }]}
               onClick={addSet}
+              autocomplete={'off'}
             />
             <input
               style={{ margin: '5px' }}
@@ -172,6 +178,7 @@ const Workout = props => {
               value='Add Exercise'
               css={[basicButtonSmall, { float: 'left' }]}
               onClick={addExercise}
+              autocomplete={'off'}
             />
           </div>
           <br />

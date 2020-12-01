@@ -35,10 +35,8 @@ const WorkoutTracker = props => {
 
   const toggleSpinner = show => {
     if (isUndefined(show)){ 
-      console.log(`toggling showSpinner from ${showSpinner} to ${!showSpinner}`)
       setShowSpinner(!showSpinner)
     }else{
-      console.log(`toggling showSpinner from ${showSpinner} to ${show}`)
       setShowSpinner(show)
     }
   }
@@ -70,7 +68,6 @@ const WorkoutTracker = props => {
     // ids.sort()
     // let newId = ids[ids.length - 1] + 1
     let newId = generateNewId(workout.sets)
-    console.log(`new id is ${newId}`)
     let set = {
       id: newId,
       exercises: []
@@ -100,14 +97,12 @@ const WorkoutTracker = props => {
   const copySet = async event => {
     toggleSpinner(true)
     let setId = event.target.parentNode.id
-    console.log(`copy set with id ${setId} to workout: ${context.activeWorkout.id}`)
 
     // --------------------------------------------------------
     let workout = context.activeWorkout
     let ids = getIdsFromList(workout.sets)
     ids.sort()
     let newId = ids[ids.length - 1] + 1
-    console.log(`new id is ${newId}`)
     let originalSet = context.activeWorkout.sets.find(set => Number(set.id) === Number(setId))
     let setCopy = cloneDeep(originalSet)
     setCopy.id = newId

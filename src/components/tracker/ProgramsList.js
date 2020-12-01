@@ -62,7 +62,7 @@ const ProgramsList = props => {
   }
 
   return trackerContext.programs.length <= 0 ? (
-    <BasicSpinner />
+    <BasicSpinner show={true} />
   ) : isEmpty(program) ? (
     <React.Fragment>
       <div css={gridContainerSingleColumn}>
