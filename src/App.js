@@ -49,8 +49,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log(`user:   ${JSON.stringify(this.state.user)}`)
-    // console.log(`groups: ${getUserGroups(this.state.user)}`)
     return (
       <AmplifyAuthenticator>
         <ThemeProvider>

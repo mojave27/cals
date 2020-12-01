@@ -8,10 +8,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-// import Container from '@material-ui/core/Container'
-// import Grid from '@material-ui/core/Grid'
-// import Paper from '@material-ui/core/Paper'
-// import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,7 +46,6 @@ const WoDayList = props => {
   }
 
   const doStuff = id => {
-    console.log(`doing stuff with ${id}`)
     props.chooseWoDay(id)
   }
 
@@ -63,7 +58,6 @@ const WoDayList = props => {
           <TableRow>
             <TableCell className={classes.tableCell}>Date</TableCell>
             <TableCell className={classes.tableCell}>Name</TableCell>
-            {/* <TableCell>ID</TableCell> */}
             <TableCell className={classes.tableCell}>Goals</TableCell>
           </TableRow>
         </TableHead>
@@ -82,7 +76,6 @@ const WoDayList = props => {
                   {date}
                 </TableCell>
                 <TableCell className={classes.tableCell}>{woName}</TableCell>
-                {/* <TableCell>{woDay.id}</TableCell> */}
                 <TableCell className={classes.tableCell}>{woDay.goals}</TableCell>
               </TableRow>
             )
@@ -96,7 +89,7 @@ const WoDayList = props => {
   return (
     <React.Fragment>
       <div style={{ maxWidth: '800px', margin: '0px auto' }}>
-        {woDays.length === 0 ? <BasicSpinner /> : renderWoDays(woDays)}
+        {woDays.length === 0 ? <BasicSpinner show={true} /> : renderWoDays(woDays)}
       </div>
     </React.Fragment>
   )

@@ -3,14 +3,12 @@ import { Router } from '@reach/router'
 import Home from './Home/Home'
 import Login from './Auth/Login'
 import Tracker from './tracker/Tracker'
-import Programs from './programs/Programs'
 import ProgramForm from './programs/ProgramForm'
 import Exercises from './exercises/Exercises'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
 import Themer from './prefs/Themer'
 import WoDay from './WoDay/WoDay'
-import WorkoutForm from './workouts/WorkoutForm'
 import Workouts from './workouts/Workouts'
 import WoDayTracker from './tracker/WoDayTracker'
 
@@ -19,11 +17,9 @@ const Routes = () => {
     <Router>
       <Home path='/' />
       <Tracker path='/program-tracker' />
-      <Programs path='/programs' />
       <ProgramForm path='/program-form' />
       <ProgramForm path='/program-form/:programId' />
       <Exercises path='/exercises' />
-      <WorkoutForm path='/manage/workoutsform' />
       <Workouts path='/manage/workouts' />
       <DataConsistency path='/admin/consistency-check' />
       <Test path='/admin/test' />

@@ -30,7 +30,6 @@ const MeStats = props => {
     let value = event.target.value
     switch (id) {
       case 'energyRange':
-        console.log('energyRange update.')
         setEnergyRange(value)
         break
       case 'sleepRange':

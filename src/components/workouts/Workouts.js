@@ -10,7 +10,7 @@ import {
   deleteWorkout as deleteWorkoutApi
 } from '../../api/workoutsApi'
 import Modal from '../Modal'
-import WorkoutForm from './WorkoutForm'
+import WorkoutFormOld from './WorkoutFormOld'
 import { findIndexOfId } from '../ArrayUtils'
 import WorkoutList from './WorkoutList'
 
@@ -67,8 +67,9 @@ const Workouts = props => {
 
   return (
     <React.Fragment>
+      {/* TODO: change this to the dialog */}
       <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
-        <WorkoutForm saveWorkout={saveWorkout} />
+        <WorkoutFormOld saveWorkout={saveWorkout} />
       </Modal>
       <button
         css={formButton}
@@ -86,7 +87,7 @@ const Workouts = props => {
           />
           </div>
       ) : (
-        <BasicSpinner />
+        <BasicSpinner show={true} />
       )}
     </React.Fragment>
   )

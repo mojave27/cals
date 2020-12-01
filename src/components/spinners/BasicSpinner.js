@@ -14,11 +14,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const BasicSpinner = () => {
+const BasicSpinner = props => {
   let context = useContext(ThemeContext)
   const classes = useStyles({ theme: context.theme })
+  const { show } = props
 
   return (
+    show === true ?
     <Container>
       <CircularProgress
         className={classes.bottom}
@@ -27,6 +29,7 @@ const BasicSpinner = () => {
         value={100}
       />
     </Container>
+    : null 
   )
 }
 

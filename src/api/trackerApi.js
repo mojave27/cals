@@ -5,7 +5,6 @@ const NAME = 'trackerApi.js'
 
 export const retrieveProgramTracker = id => {
   const url = `tracker/${id}`
-  // console.log(`[retrieveProgramTracker] GET ${url}`)
   return axios
     .get(url, config)
     .then(function (response) {

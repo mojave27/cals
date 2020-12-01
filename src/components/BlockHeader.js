@@ -16,6 +16,7 @@ import { useContext } from 'react'
 const BlockHeader = props => {
   let context = useContext(ThemeContext)
   let { blockHeader } = styles(context.theme)
+
   const renderIcons = ({ editItem, deleteItem, selectItem, ...props }) => {
     let id = props.item.id
     let icons = []

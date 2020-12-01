@@ -36,9 +36,6 @@ class TrackerProvider extends React.Component {
                 updateWorkoutsForProgram: workouts => {
                     const program = Object.assign({}, this.state.program)
                     program.workouts = workouts
-                    // console.log(`***************************************`)
-                    // console.log(`program.workouts from context provider:`)
-                    // console.log(JSON.stringify(program.workouts))
                     this.setState({program})
                 },
 
@@ -52,7 +49,7 @@ class TrackerProvider extends React.Component {
 
                 activeWorkout: this.state.activeWorkout,
                 setActiveWorkout: id => {
-                    let workout = this.state.program.workouts.find( wo => Number(wo.id) === Number(id))
+                    let workout = this.state.program.workouts.find( wo => wo.id === id)
                     this.setState({activeWorkout: workout})
                 },
                 updateActiveWorkout: workout => {

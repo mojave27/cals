@@ -9,7 +9,8 @@ import { styles } from '../../styles/MainStyles'
 import { get, isEmpty } from 'lodash'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-import { retrieveItemById } from 'list-utils'
+// import { retrieveItemById } from 'list-utils'
+import { retrieveItemByStringId } from '../ArrayUtils'
 import BasicSpinner from '../spinners/BasicSpinner'
 
 const Tracker = props => {
@@ -41,21 +42,18 @@ const Tracker = props => {
 
   const handleProgramSelect = async id => {
     toggleShowProgramList()
-    console.log('show the spinner')
     showTheSpinner(true)
     const allWorkouts = await retrieveWorkouts()
     let program = await retrieveProgramById(id)
     program.workouts = []
     program.workoutIds.forEach(id => {
-      let workout = retrieveItemById(id, allWorkouts)
+      let workout = retrieveItemByStringId(id, allWorkouts)
       program.workouts.push(workout)
     })
-    // context.updateProgram(program)
     updateProgram(program)
   }
 
   const updateProgram = program => {
-    console.log('hide the spinner')
     showTheSpinner(false)
     context.updateProgram(program)
   }
@@ -64,21 +62,12 @@ const Tracker = props => {
     context.updateProgram({})
   }
 
-  // const updateLocationKey = props => {
-  //   let locationKey = get(props, 'location.key', null)
-  //   if (isEmpty(locationKey)) return 
-  //   if (locationKey !== routeKey) {
-  //     forceUpdate(props.location.key) 
-  //   }
-  // }
-
   return get(props, 'location', null) !== null && get(props, 'location.key', null) !== routeKey ? (
     forceUpdate(props.location.key)
   ) : (
-  // return (
     <React.Fragment>
       {showSpinner === true ? (
-        <BasicSpinner />
+        <BasicSpinner show={showSpinner} />
       ) : showProgramList ? (
         <ProgramsList select={handleProgramSelect} />
       ) : (

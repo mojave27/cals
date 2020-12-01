@@ -33,7 +33,6 @@ const WoDay = props => {
   let themeContext = useContext(ThemeContext)
 
   useEffect(() => {
-    // console.log(`is new?: ${props.location.state.new}`)
     if (props.location.state.new) {
       woDayContext.setEmptyWoDay()
     } else {
@@ -82,6 +81,7 @@ const WoDay = props => {
 
   const retrieveWorkout = async workoutId => {
     let workout = await retrieveWorkoutById(workoutId)
+    console.log(workout)
     return workout
   }
 
@@ -301,6 +301,8 @@ const WoDay = props => {
   const chooseWorkout = async workoutId => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
+    console.log(workoutId)
+    console.log(workoutTemplate)
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
     updatedWoDay.wo = workout
     woDayContext.updateWoDay(updatedWoDay)
@@ -535,7 +537,7 @@ const WoDay = props => {
             </div>
           </div>
         ) : (
-          <BasicSpinner />
+          <BasicSpinner show={true} />
         )}
       </div>
     </React.Fragment>

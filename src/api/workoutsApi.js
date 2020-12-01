@@ -9,8 +9,6 @@ export const retrieveWorkoutTemplates = () => {
     .get('workout-templates', config)
     .then(function(response) {
       const data = parseResponse(response)
-      console.log('data...............')
-      console.log(data)
       return data
     })
     .catch(function(error) {
@@ -25,12 +23,12 @@ export const retrieve = async () => {
   return axios
     .get(URL, configWithAuth)
     .then(function(response) {
-      const data = parseResponse(response)
-      return data
+      // const data = parseResponse(response)
+      return response.data
     })
     .catch(function(error) {
       // handle error
-      console.log(`[ui - retrieve workouts] api error: ${error}`)
+      console.log(`[workoutsApi - retrieve] error: ${error}`)
       return []
     })
 }
@@ -52,7 +50,7 @@ export const retrieveWorkoutById = async (id) => {
 }
 
 export const addWorkout = async (workout) => {
-  console.log(`calling POST /workouts with ${workout}`)
+  console.log(`calling POST /workouts with ${JSON.stringify(workout)}`)
   let config = await getAxiosConfigWithAuth()
   // let data = {...workout}
   return axios
@@ -96,5 +94,5 @@ export const deleteWorkout = id => {
 }
 
 const parseResponse = response => {
-  return response.data
+  return JSON.parse(response.data.body)
 }

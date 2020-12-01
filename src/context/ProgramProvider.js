@@ -2,9 +2,11 @@ import React from 'react'
 import ProgramContext from './ProgramContext'
 
 const emptyProgram = {
+    'id': '',
     'name': '',
     'description': '',
-    'workouts': []
+    'workouts': [],
+    'workoutIds': []
   }
 
 class ProgramProvider extends React.Component {
@@ -24,9 +26,19 @@ class ProgramProvider extends React.Component {
                     this.setState({ program })
                 },
                 addWorkout: workout => {
-                    const program = Object.assign({}, this.state.program)
-                    program.workout.push(workout)
-                    this.setState({program})
+                    this.setState( prevState => {
+                        let program = prevState.program
+                        // program.workouts.push(workout)
+                        program.workoutIds.push(workout.id)
+                        return ({program})
+                    })
+                },
+                addWorkoutId: workoutId => {
+                    this.setState( prevState => {
+                        let program = prevState.program
+                        program.workoutIds.push(workoutId)
+                        return ({program})
+                    })
                 },
                 updateWorkoutsForPrograms: workouts => {
                     const program = Object.assign({}, this.state.program)

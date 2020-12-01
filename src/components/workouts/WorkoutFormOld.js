@@ -46,17 +46,17 @@ const WorkoutForm = props => {
 
   const saveWorkout = async () => {
     let response = {}
+    console.log(woContext.workout)
     if (woContext.workout.id) {
       response = await updateWorkout(woContext.workout)
     } else {
       response = await addWorkout(woContext.workout)
     }
     // update context because addWorkout will have added an id
-    await woContext.updateWorkout(response)
+    woContext.updateWorkout(response)
 
     if (props.saveWorkout) {
       props.saveWorkout(response)
-      // props.saveWorkout(response)
     }
   }
 
@@ -108,6 +108,7 @@ const WorkoutForm = props => {
 
   // lots of changes going on here...
   const handleSetChange = update => {
+    console.log({ update })
     // get set with matching id
     let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
 
@@ -160,7 +161,6 @@ const WorkoutForm = props => {
   const renderSets = exGroups => {
     if (exGroups && exGroups.length > 0) {
       return exGroups.map(exGroup => {
-        // console.log(`set: ${JSON.stringify(set)}`)
         let data = {
           setId: exGroup.id,
           headers: ['name', 'reps'],
