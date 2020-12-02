@@ -1,7 +1,7 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
 import {
-  findIndexOfId,
+  findIndexOfStringId,
   updateItemById
 } from '../components/ArrayUtils'
 import { cloneDeep } from 'lodash'
@@ -53,7 +53,7 @@ class WoDayProvider extends React.Component {
   saveWoDayInWoDaysList = woday => {
     let wodays = [...this.state.wodays]
     if (woday.id) {
-      let index = findIndexOfId(woday.id, wodays)
+      let index = findIndexOfStringId(woday.id, wodays)
       if (index > -1) {
         updateItemById(woday, woday.id, wodays)
       } else {
@@ -79,7 +79,7 @@ class WoDayProvider extends React.Component {
   }
 
   isWoDayInList = () => {
-    let answer = (findIndexOfId(this.state.woday.id, this.state.wodays) === -1) ? false : true
+    let answer = (findIndexOfStringId(this.state.woday.id, this.state.wodays) === -1) ? false : true
     return answer
   }
 

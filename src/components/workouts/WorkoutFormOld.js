@@ -187,7 +187,7 @@ const WorkoutForm = props => {
 
   return (
     <React.Fragment>
-      <div css={detailCard}>
+      <div css={detailCard} style={{maxWidth: '60%'}}>
         <WorkoutHeader workout={woContext.workout} onChange={handleTextChange} />
 
         <div css={stripe} style={{ marginTop: '10px', marginBottom: '5px' }} />
