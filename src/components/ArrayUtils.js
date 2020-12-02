@@ -43,13 +43,25 @@ const removeItemFromArrayByIndex = (index, list) => {
 
 /** id, list  */
 const findIndexOfId = (id, list) => {
+  if (isNumeric(id)) {
+    return findIndexOfNumericId(id, list)
+  } 
+  if (isString(id)) {
+    return findIndexOfStringId(id, list)
+  }
+  throw new Error(`argument 'id', ${id}, is neither number or string`)
+}
+
+/** id, list  */
+const findIndexOfNumericId = (id, list) => {
   validateIdAndListArgs(id, list)
   let index = list.findIndex(element => Number(element.id) === Number(id))
   return index
 }
 
 const findIndexOfStringId = (id, list) => {
-  // validateIdAndListArgs(id, list)
+  validateIsString(id)
+  validateIsList(list)
   let index = list.findIndex(element => element.id === id)
   return index
 }
@@ -72,11 +84,8 @@ const retrieveItemById = (id, list) => {
 }
 
 const retrieveItemByStringId = (id, list) => {
-  console.log(id)
   const stringId = id.toString()// validateIdAndListArgs(id, list)
-  console.log(stringId)
   let index = findIndexOfStringId(stringId, list)
-  console.log(index)
   if (index > -1) {
     return list[index]
   } else {
@@ -84,13 +93,39 @@ const retrieveItemByStringId = (id, list) => {
   }
 }
 
-
-/* takes an updated item, id, and list.                  *
- * overwrites the item in the list with the matching id. *
- * returns the updated list.                             */
+/* takes an updated item, id, and list.               *
+* calls the appropriate update function based on the  *
+* type of id.  returns updated list.                  */
 const updateItemById = (update, id, list) => {
+  if(isNumeric(id)) {
+    return updateItemByNumericId(update, id, list)
+  }
+  if(isString(id)) {
+    return updateItemByStringId(update, id, list)
+  }
+  throw new Error(`argument 'id', ${id}, is neither number or string`)
+}
+
+/* takes an updated item, Number id, and list.          *
+* overwrites the item in the list with the matching id. *
+* returns the updated list.                             */
+const updateItemByNumericId = (update, id, list) => {
   validateIdAndListArgs(id, list)
   let index = findIndexOfId(id, list)
+  if (index > -1) {
+    list[index] = update
+    return list
+  } else {
+    throw new Error(`No item found matching id: ${id}`)
+  }
+}
+
+/* takes an updated item, String id, and list.           *
+ * overwrites the item in the list with the matching id. *
+ * returns the updated list.                             */
+const updateItemByStringId = (update, id, list) => {
+  validateIsList(list)
+  let index = findIndexOfStringId(id, list)
   if (index > -1) {
     list[index] = update
     return list
@@ -106,9 +141,14 @@ const removeItem = (id, list) => {
   return list
 }
 
+/**
+ * please note this function sorts the results
+ * @param {} list 
+ */
 const getUniqueIds = list => {
-  // what if list isn't a list?
-  // what if length is 0?
+  validateIsList(list)
+  if(list.length === 0) return []
+
   let ids = Array.from(list, item => item.id)
   let cleanedIds = removeInvalidValuesFromList(ids)
   cleanedIds.sort()
@@ -127,15 +167,22 @@ const removeInvalidValuesFromList = list => {
 }
 
 const generateNewId = list => {
-  console.log({ list })
+  if (list.length === 0) return 0
+  if( isNumeric(list[0].id) ) {
+    return generateNewNumericId(list)
+  }
+  if( isString(list[0].id) ) {
+    throw new Error('support for string ids not implemented')
+  }
+}
+
+const generateNewNumericId = list => {
   let newId = 0
   let currentIds = getUniqueIds(list)
   if (currentIds.length <= 0) {
     return newId
   }
-
   newId = Math.max(...currentIds) + 1
-
   return newId
 }
 
@@ -157,23 +204,35 @@ const validateIsList = list => {
 }
 
 const validateIsNumber = num => {
-  if(isNaN(num)){
+  if(typeof num !== 'number'){
     throw new Error(`argument is not a number: ${num}`)
   }
 }
 
 const validateIsString = arg => {
-  if(!typeof arg === 'string'){
+  if(typeof arg !== 'string'){
     throw new Error(`argument is not a string: ${arg}`)
   }
+}
+
+const isNumeric = arg => {
+  return typeof arg === "number"
+}
+
+const isString = arg => {
+  return typeof arg === "string"
 }
 
 exports.compareByName = compareByName
 exports.dynamicSort = dynamicSort
 exports.findIndexOfId = findIndexOfId
+exports.findIndexOfNumericId = findIndexOfNumericId
 exports.findIndexOfStringId = findIndexOfStringId
 exports.generateNewId = generateNewId
+exports.generateNewNumericId = generateNewNumericId
 exports.getUniqueIds = getUniqueIds
+exports.isNumeric = isNumeric
+exports.isString = isString
 exports.removeInvalidValuesFromList = removeInvalidValuesFromList
 exports.removeItem = removeItem
 exports.removeItemById = removeItemById
@@ -182,3 +241,8 @@ exports.retrieveItemById = retrieveItemById
 exports.retrieveItemByStringId = retrieveItemByStringId
 exports.sortByStringProperty = sortByStringProperty
 exports.updateItemById = updateItemById
+exports.updateItemByNumericId = updateItemByNumericId
+exports.updateItemByStringId = updateItemByStringId
+exports.validateIsList = validateIsList
+exports.validateIsNumber = validateIsNumber
+exports.validateIsString = validateIsString

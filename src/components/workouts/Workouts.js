@@ -11,7 +11,7 @@ import {
 } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WorkoutFormOld from './WorkoutFormOld'
-import { findIndexOfId } from '../ArrayUtils'
+import { findIndexOfStringId } from '../ArrayUtils'
 import WorkoutList from './WorkoutList'
 
 import { styles } from '../../styles/MainStyles'
@@ -59,7 +59,7 @@ const Workouts = props => {
   }
 
   const setSelectedWorkoutToContext = workoutId => {
-    let index = findIndexOfId(workoutId, woContext.workouts)
+    let index = findIndexOfStringId(workoutId, woContext.workouts)
     if (index > -1) {
       woContext.updateWorkout(woContext.workouts[index])
     }
