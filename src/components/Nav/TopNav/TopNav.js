@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     width: 250
   },
   nested: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(4)
   },
   paper: {
     backgroundColor: theme.color5.hex,
@@ -138,13 +138,18 @@ const TopNav = props => {
   const sideNavItems = () => (
     <div className={classes.list} role='presentation'>
       {/* eslint-disable-next-line */}
-      {menuConfig.map(item => {
+      {menuConfig.map((item, index) => {
         if (item.type === 'divider') {
-          return <Divider classes={{root: classes.divider}} />
+          return (
+            <Divider
+              classes={{ root: classes.divider }}
+              key={`${item.name}-${index}`}
+            />
+          )
         }
         if (item.type === 'button') {
           return (
-            <List>
+            <List key={`${item.name}-${index}`}>
               <ListItem
                 button
                 key={item.name}
@@ -152,7 +157,9 @@ const TopNav = props => {
                 to={item.link.to}
                 onClick={handleDrawerClose}
               >
-                <ListItemIcon classes={{root: classes.icon }}>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
+                <ListItemIcon classes={{ root: classes.icon }}>
+                  {item.icon ? icon(item.icon) : '-'}
+                </ListItemIcon>
                 <ListItemText primary={item.name} />
               </ListItem>
             </List>
@@ -164,13 +171,15 @@ const TopNav = props => {
         }
         if (item.type === 'dropdown') {
           return (
-            <React.Fragment>
+            <React.Fragment key={`${item.name}-${index}`}>
               <ListItem
                 id={item.name}
                 button
                 onClick={() => handleClick(item.name)}
               >
-                <ListItemIcon classes={{root: classes.icon }}>{item.icon ? icon(item.icon) : '-'}</ListItemIcon>
+                <ListItemIcon classes={{ root: classes.icon }}>
+                  {item.icon ? icon(item.icon) : '-'}
+                </ListItemIcon>
                 <ListItemText primary={item.name} />
                 {expandSection[item.name] ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
@@ -179,19 +188,19 @@ const TopNav = props => {
                 timeout='auto'
                 unmountOnExit
               >
-                <List component='div' disablePadding >
-                  {item.items.map(subitem => {
+                <List component='div' disablePadding>
+                  {item.items.map((subitem, index) => {
                     return (
                       <ListItem
                         button
-                        key={subitem.name}
+                        key={`${subitem.name}-${index}`}
                         className={classes.nested}
                         component={RouterLink}
                         to={subitem.to}
                         onClick={handleDrawerClose}
                       >
-                        <ListItemIcon classes={{root: classes.icon }} >
-                          {subitem.icon ? icon(subitem.icon) : ''}
+                        <ListItemIcon classes={{ root: classes.icon }}>
+                          {subitem.icon ? icon(subitem.icon) : <div>{''}</div>}
                         </ListItemIcon>
                         <ListItemText primary={subitem.text} />
                       </ListItem>
@@ -215,13 +224,16 @@ const TopNav = props => {
             className={classes.menuButton}
             color='inherit'
             aria-label='menu'
+            onClick={handleDrawerOpen}
           >
-            <MenuIcon onClick={handleDrawerOpen} />
+            <MenuIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
             wo-log
           </Typography>
-          <Button color='inherit' onClick={signOut}>Logout</Button>
+          <Button color='inherit' onClick={signOut}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -230,14 +242,17 @@ const TopNav = props => {
         open={drawerOpen}
         variant={'persistent'}
         onClose={handleDrawerClose}
-        classes={{ paper: classes.paper}}
+        classes={{ paper: classes.paper }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton classes={{ root: classes.icon }} onClick={handleDrawerClose}>
+          <IconButton
+            classes={{ root: classes.icon }}
+            onClick={handleDrawerClose}
+          >
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider classes={{root:classes.divider}} />
+        <Divider classes={{ root: classes.divider }} />
         {sideNavItems()}
       </Drawer>
     </div>

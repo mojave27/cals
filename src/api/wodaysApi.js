@@ -35,7 +35,6 @@ export const retrieveWoDayById = async (id) => {
 }
 
 export const addWoDay = async (woday) => {
-  console.log(`calling POST /wodays with ${JSON.stringify(woday)}`)
   let configWithAuth = await getAxiosConfigWithAuth()
   return axios
     .post(URL, woday, configWithAuth)

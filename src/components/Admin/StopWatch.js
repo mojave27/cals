@@ -1,103 +1,67 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from 'react'
-import { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
-import { styles } from '../../styles/MainStyles'
+import React, { Component } from "react";
 
-const StopWatch = props => {
-  const [time, setTime] = useState('00:00:00')
-  const [timerRef, setTimeRef] = useState(null)
-  // let context = useContext(ThemeContext)
-  // let { basicButtonSmall } = styles(context.theme)
+class Stopwatch extends Component {
+  state = {
+    timerOn: false,
+    timerStart: 0,
+    timerTime: 0
+  };
 
-  // let timerRef = null
-  let seconds  = '00'
-  let minutes  = '00'
-  let hours    = '00'
+  startTimer = () => {
+    this.setState({
+      timerOn: true,
+      timerTime: this.state.timerTime,
+      timerStart: Date.now() - this.state.timerTime
+    });
+    this.timer = setInterval(() => {
+      this.setState({
+        timerTime: Date.now() - this.state.timerStart
+      });
+    }, 10);
+  };
 
-  const startTimer = () => {
-    timer()
+  stopTimer = () => {
+    this.setState({ timerOn: false });
+    clearInterval(this.timer);
+  };
+
+  resetTimer = () => {
+    this.setState({
+      timerStart: 0,
+      timerTime: 0
+    });
+  };
+
+  render() {
+    const { timerTime } = this.state;
+    let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+    let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+    let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+    let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
+    return (
+      <div className="Stopwatch">
+        <div className="Stopwatch-header">Stopwatch</div>
+        <div className="Stopwatch-display" style={{fontSize: '3.5em'}} >
+          {hours} : {minutes} : {seconds} : {centiseconds}
+        </div>
+        {this.state.timerOn === false && this.state.timerTime === 0 && (
+          <button onClick={this.startTimer}>Start</button>
+        )}
+        {this.state.timerOn === true && (
+          <button onClick={this.stopTimer}>Stop</button>
+        )}
+        {this.state.timerOn === false && this.state.timerTime > 0 && (
+          <button onClick={this.startTimer}>Resume</button>
+        )}
+        {this.state.timerOn === false && this.state.timerTime > 0 && (
+          <button onClick={this.resetTimer}>Reset</button>
+        )}
+      </div>
+    );
   }
-
-  const stopTimer = () => {
-    clearInterval(timerRef)
-    setTime('00:00:00')
-  }
-
-  const clearTimer = () => {
-    stopTimer()
-    seconds  = '00'
-    minutes  = '00'
-    hours    = '00'
-    document.getElementById('timer').innerHTML = `${hours}:${minutes}:${seconds}`
-  }
-
-  const updateTime = current => {
-    let updated = (Number(current) + 1).toString()
-    if (updated < 10) updated = `0${updated}`
-    if (updated === '60') updated = '00'
-    return updated
-  }
-
-  const updateHours = (hours, minutes, seconds) => {
-    let updatedHours = hours
-    if (minutes === '59' && seconds === '59') {
-      updatedHours = (Number(hours) + 1).toString()
-    }
-    if (updatedHours < 10 && updatedHours.substring(0, 1) !== '0') {
-      updatedHours = `0${updatedHours}`
-    }
-    return updatedHours
-  }
-
-  const timer = () => {
-    setTimeRef(setInterval(function() {
-      hours = updateHours(hours, minutes, seconds)
-      seconds = updateTime(seconds)
-      minutes = seconds === '00' ? updateTime(minutes) : minutes
-      setTime(`${hours}:${minutes}:${seconds}`)
-      // document.getElementById(
-        // 'timer'
-      // ).innerHTML = `${hours}:${minutes}:${seconds}`
-    }, 1000))
-  }
-
-  return (
-    <div>
-      {/* <h3 id='timer'>{'00:00:00'}</h3> */}
-      {/* <div id='timer' style={{fontSize: '3.5em'}}>{'00:00:00'}</div> */}
-      <div id='timer' style={{fontSize: '3.5em'}}>{time}</div>
-      <Button
-        onClick={startTimer}
-        text={'start'}
-      />
-      <Button
-        onClick={stopTimer}
-        text={'stop'}
-      />
-      <Button
-        onClick={clearTimer}
-        text={'reset'}
-      />
-    </div>
-  )
 }
 
-export default StopWatch
-
-
-const Button = props => {
-  let context = useContext(ThemeContext)
-  let { basicButtonSmall } = styles(context.theme)
-  return (
-    <input
-      style={{ margin: '5px' }}
-      type='button'
-      value={props.text}
-      css={basicButtonSmall}
-      onClick={props.onClick}
-    />
-  )
-}
+export default Stopwatch;

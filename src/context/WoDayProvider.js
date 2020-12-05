@@ -66,6 +66,7 @@ class WoDayProvider extends React.Component {
   }
 
   saveWoDay = async () => {
+    console.log('saving woday')
     // if(this.isWoDayInList()){
     if(this.state.woday.id === -1){
       let wodayId = await addWoDay(this.state.woday)
@@ -84,7 +85,6 @@ class WoDayProvider extends React.Component {
   }
 
   render() {
-    console.log(JSON.stringify(this.state.woday))
     return (
       <WoDayContext.Provider
         value={{

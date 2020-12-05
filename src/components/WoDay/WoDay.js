@@ -25,7 +25,8 @@ import { woDayStyles } from '../../styles/WoDayStyles'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-import StopWatch from './StopWatch'
+// import StopWatch from './StopWatch'
+import StopWatch from '../Admin/StopWatch'
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
@@ -140,13 +141,7 @@ const WoDay = props => {
     let name = event.target.name
     let exerciseId = event.target.parentNode.parentNode.id
     let exGroupId = event.target.dataset.exgroupid
-
-    console.log(
-      `value: ${value}, name: ${name}, exGroupId: ${exGroupId}, exerciseId: ${exerciseId}`
-    )
-
     let woday = woDayContext.copyWoDay()
-    console.log({ woday })
     let exGroupIndex = findIndexOfId(exGroupId, woday.wo.exerciseGroups)
     let exIndex = findIndexOfId(
       exerciseId,
@@ -166,8 +161,6 @@ const WoDay = props => {
     let value = event.target.value
     let woday = woDayContext.copyWoDay()
     let wo = woday.wo
-    console.log(wo)
-    console.log(`setId: ${setId}`)
 
     // find set
     let setIndex = findIndexOfId(setId, wo.sets)
@@ -175,7 +168,6 @@ const WoDay = props => {
 
     // find exercise
     let exGroupIndex = findIndexOfId(exGroupId, set.exerciseGroups)
-    console.log(`exGroupId: ${exGroupId}, exGroupIndex: ${exGroupIndex}`)
     let exIndex = findIndexOfId(
       exerciseId,
       set.exerciseGroups[exGroupIndex].exercises
