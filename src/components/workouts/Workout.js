@@ -27,7 +27,7 @@ const Workout = props => {
     return (
       <tr key={'firstHeaderRow'}>
         {headers.map((header, index) => {
-          const colWidth = header === COL_2_TITLE ? '15px' : '50px'
+          const colWidth = header === COL_2_TITLE ? '10px' : '50px'
           return (
             <th
               key={`${header}-${index}`}
@@ -83,7 +83,7 @@ const Workout = props => {
                 data-exgroupid={exGroup.id}
                 type='text'
                 value={ex.reps}
-                css={[woInput, { width: '75px' }]}
+                css={[woInput, { width: '15px' }]}
                 onChange={props.onLeadCellChange}
                 autoComplete={'off'}
               />
