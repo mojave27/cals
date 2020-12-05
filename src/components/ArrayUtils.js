@@ -43,10 +43,13 @@ const removeItemFromArrayByIndex = (index, list) => {
 
 /** id, list  */
 const findIndexOfId = (id, list) => {
+  console.log(id)
   if (isNumeric(id)) {
+    console.log(`id ${id} is numeric`)
     return findIndexOfNumericId(id, list)
   } 
   if (isString(id)) {
+    console.log(`id ${id} is string`)
     return findIndexOfStringId(id, list)
   }
   throw new Error(`argument 'id', ${id}, is neither number or string`)
@@ -62,7 +65,8 @@ const findIndexOfNumericId = (id, list) => {
 const findIndexOfStringId = (id, list) => {
   validateIsString(id)
   validateIsList(list)
-  let index = list.findIndex(element => element.id === id)
+  let index = list.findIndex(element => element.id == id)
+  console.log(`index: ${index}`)
   return index
 }
 

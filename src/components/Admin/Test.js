@@ -6,7 +6,7 @@ import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-// import StopWatch from './StopWatch'
+import StopWatch from './StopWatch'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,6 +36,7 @@ const Table = () => {
 
   return (
     <div className={classes.root}>
+      <StopWatch />
     <Grid container spacing={2}>
       <Grid item>
         {/* <div style={{ display: 'inline-block' }}> */}

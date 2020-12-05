@@ -1,16 +1,18 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 // eslint-disable-next-line no-unused-vars
-import * as React from 'react'
+import React, { useState } from 'react'
 import { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import { styles } from '../../styles/MainStyles'
 
 const StopWatch = props => {
+  const [time, setTime] = useState('00:00:00')
+  const [timerRef, setTimeRef] = useState(null)
   // let context = useContext(ThemeContext)
   // let { basicButtonSmall } = styles(context.theme)
 
-  let timerRef = null
+  // let timerRef = null
   let seconds  = '00'
   let minutes  = '00'
   let hours    = '00'
@@ -21,6 +23,7 @@ const StopWatch = props => {
 
   const stopTimer = () => {
     clearInterval(timerRef)
+    setTime('00:00:00')
   }
 
   const clearTimer = () => {
@@ -50,20 +53,22 @@ const StopWatch = props => {
   }
 
   const timer = () => {
-    timerRef = setInterval(function() {
+    setTimeRef(setInterval(function() {
       hours = updateHours(hours, minutes, seconds)
       seconds = updateTime(seconds)
       minutes = seconds === '00' ? updateTime(minutes) : minutes
-      document.getElementById(
-        'timer'
-      ).innerHTML = `${hours}:${minutes}:${seconds}`
-    }, 1000)
+      setTime(`${hours}:${minutes}:${seconds}`)
+      // document.getElementById(
+        // 'timer'
+      // ).innerHTML = `${hours}:${minutes}:${seconds}`
+    }, 1000))
   }
 
   return (
     <div>
       {/* <h3 id='timer'>{'00:00:00'}</h3> */}
-      <div id='timer' style={{fontSize: '3.5em'}}>{'00:00:00'}</div>
+      {/* <div id='timer' style={{fontSize: '3.5em'}}>{'00:00:00'}</div> */}
+      <div id='timer' style={{fontSize: '3.5em'}}>{time}</div>
       <Button
         onClick={startTimer}
         text={'start'}

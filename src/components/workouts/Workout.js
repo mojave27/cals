@@ -62,6 +62,7 @@ const Workout = props => {
   }
 
   const renderTableOneRows = () => {
+    console.log(JSON.stringify(props.wo))
     return props.wo.exerciseGroups.map((exGroup, index) => {
       return exGroup.exercises.map(ex => {
         return (

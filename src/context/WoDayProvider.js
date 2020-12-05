@@ -84,6 +84,7 @@ class WoDayProvider extends React.Component {
   }
 
   render() {
+    console.log(JSON.stringify(this.state.woday))
     return (
       <WoDayContext.Provider
         value={{
