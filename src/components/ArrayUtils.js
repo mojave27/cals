@@ -65,6 +65,7 @@ const findIndexOfNumericId = (id, list) => {
 const findIndexOfStringId = (id, list) => {
   validateIsString(id)
   validateIsList(list)
+  // eslint-disable-next-line eqeqeq
   let index = list.findIndex(element => element.id == id)
   console.log(`index: ${index}`)
   return index
