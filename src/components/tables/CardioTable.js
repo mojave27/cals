@@ -39,15 +39,15 @@ const CardioTable = props => {
       let id = get(row, 'id', 0)
       // let exerciseNumber = index + 1
       return (
-        <React.Fragment key={row.type}>
-          <tr id={`${id}-type`}>
+        <React.Fragment key={`fragment-${row.id}`}>
+          <tr id={`${id}-header`}>
             <th colSpan={2}>Cardio Exercise</th>
           </tr>
-          <tr id={`${id}-type`}>
+          <tr id={`${id}-row-type`}>
             <td>{'type'}</td>
             <td>
               <Input
-                id={`${row.id}-${row.type}`}
+                id={`${row.id}-${'type'}`}
                 name={'type'}
                 data={row.type}
                 onChange={handleCellChange}
@@ -55,7 +55,7 @@ const CardioTable = props => {
               />
             </td>
           </tr>
-          <tr id={`${id}-type`}>
+          <tr id={`${id}-row-distance`}>
             <td>{'distance'}</td>
             <td>
               <Input
@@ -67,7 +67,7 @@ const CardioTable = props => {
               />
             </td>
           </tr>
-          <tr id={`${id}-type`}>
+          <tr id={`${id}-row-duration`}>
             <td>{'duration'}</td>
             <td>
               <Input
@@ -79,7 +79,7 @@ const CardioTable = props => {
               />
             </td>
           </tr>
-          <tr id={`${id}-type`}>
+          <tr id={`${id}-row-heartRate`}>
             <td>{'heart rate'}</td>
             <td>
               <Input
@@ -181,9 +181,6 @@ const CardioTable = props => {
       </div>
       {themeContext.mobile === true ? (
         renderMobile(props)
-        // <table css={woTable}>
-        //   <tbody id={props.id}>{renderMobileRows(props.data)}</tbody>
-        // </table>
       ) : (
         <table css={woTable} style={{ margin: 'auto' }}>
           <tbody id={props.id}>{renderRows(props.data)}</tbody>
