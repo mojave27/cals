@@ -35,14 +35,13 @@ const CardioTable = props => {
     return rows
   }
 
-  const renderMobileRows = data => {
-    let rows = data.rows.map((row, index) => {
-      let id = get(row, 'id', index)
-      let exerciseNumber = index + 1
+  const renderMobileRows = row => {
+      let id = get(row, 'id', 0)
+      // let exerciseNumber = index + 1
       return (
-        <React.Fragment key={index}>
+        <React.Fragment key={row.type}>
           <tr id={`${id}-type`}>
-            <th colSpan={2}>Cardio Exercise {exerciseNumber}</th>
+            <th colSpan={2}>Cardio Exercise</th>
           </tr>
           <tr id={`${id}-type`}>
             <td>{'type'}</td>
@@ -94,8 +93,6 @@ const CardioTable = props => {
           </tr>
         </React.Fragment>
       )
-    })
-    return rows
   }
 
   const renderHeaders = headers => {
@@ -165,6 +162,16 @@ const CardioTable = props => {
     })
   }
 
+  const renderMobile = props => {
+    return props.data.rows.map(row => {
+      return(
+        <table style={{paddingBottom: '10px'}} css={woTable}>
+          <tbody id={props.id}>{renderMobileRows(row)}</tbody>
+        </table>)
+    })
+
+  }
+
   return (
     <React.Fragment>
       <div style={{ margin: 'auto' }}>
@@ -177,9 +184,10 @@ const CardioTable = props => {
         />
       </div>
       {themeContext.mobile === true ? (
-        <table css={woTable}>
-          <tbody id={props.id}>{renderMobileRows(props.data)}</tbody>
-        </table>
+        renderMobile(props)
+        // <table css={woTable}>
+        //   <tbody id={props.id}>{renderMobileRows(props.data)}</tbody>
+        // </table>
       ) : (
         <table css={woTable} style={{ margin: 'auto' }}>
           <tbody id={props.id}>{renderRows(props.data)}</tbody>

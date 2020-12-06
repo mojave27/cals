@@ -59,7 +59,6 @@ const WoDay = props => {
     gridContainer,
     gridDate,
     gridDuration,
-    gridSave,
     gridEnergy,
     gridGoals,
     gridSleep,
@@ -249,7 +248,7 @@ const WoDay = props => {
 
   const addCardioExercise = () => {
     let newCardioExercise = {
-      id: 0,
+      id: generateNewId(woDayContext.woday.cardio.exercises),
       type: '',
       duration: '',
       distance: '',
