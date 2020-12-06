@@ -206,14 +206,14 @@ export let styles = theme => {
   let basicButton = css({
     padding: '6px 20px',
     fontSize: 'inherit',
-    backgroundColor: theme.color4.hex,
-    color: theme.color4_text.hex,
-    border: `1px solid ${theme.color3.hex}`,
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex,
+    border: `1px solid ${theme.color2.hex}`,
     borderRadius: '2px',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.color3.hex,
-      color: theme.color3_text.hex
+      backgroundColor: theme.color2.hex,
+      color: theme.color2_text.hex
     }
   })
 

@@ -3,11 +3,12 @@ import { css } from '@emotion/core'
 export const woDayStyles = theme => {
   const gridContainer = css({
     display: 'grid',
-    gridTemplateAreas: `
-    'date duration save'
-    'goals goals goals'
-    'weight energy sleep'
-    `,
+    gridTemplateColumns: 'auto',
+    // gridTemplateAreas: `
+    // 'date duration save'
+    // 'goals goals goals'
+    // 'weight energy sleep'
+    // `,
     padding: '10px'
   })
 

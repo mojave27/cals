@@ -1,9 +1,16 @@
 import { css } from '@emotion/core'
 
 export let gridStyles = theme => {
+  // const responsiveGrid = css({
+  //     display: 'grid',
+  //     gridTemplateColumns: `repeat(autoFit, minmax('200px', '1fr'))`,
+  //     gridGap: '10px'
+  // })
+
+
   const gridContainer = css({
     display: 'grid',
-    gridTemplateColumns: 'auto auto auto',
+    gridTemplateColumns: 'auto',
     backgroundColor: theme.color4.rgba(0.8),
     padding: '10px',
     justifyContent: 'center'

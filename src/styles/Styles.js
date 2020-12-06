@@ -23,14 +23,14 @@ export const basicButton = (theme) => {
   return {
   padding: '6px 20px',
   fontSize: 'inherit',
-  backgroundColor: theme.color4.hex,
+  backgroundColor: theme.color3.hex,
   color: theme.color4_text.hex,
-  border: `1px solid ${theme.color3.hex}`,
+  border: `1px solid ${theme.color2.hex}`,
   borderRadius: '2px',
   width: `${mobile === true ? '80%' : 'auto'}`,
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex
+    backgroundColor: theme.color2.hex,
+    color: theme.color2_text.hex
   }}
 }

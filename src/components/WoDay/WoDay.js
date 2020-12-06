@@ -427,14 +427,14 @@ const WoDay = props => {
                   css={gridContainer}
                   style={{ margin: '5px', padding: '10px' }}
                 >
-                  <div css={gridDate}>
+                  <div >
                     <DateInput
                       startDate={getStartDate()}
                       setStartDate={setDate}
                       label={'Date'}
                     />
                   </div>
-                  <div css={gridDuration} style={{ borderRadius: '3px' }}>
+                  <div  style={{ borderRadius: '3px' }}>
                     <TextInput
                       label={'Duration'}
                       name={'duration'}
@@ -445,17 +445,8 @@ const WoDay = props => {
                       styles={{ width: '75px' }}
                     />
                   </div>
-                  {/* <div css={gridSave} style={{ borderRadius: '3px' }}>
-                    <input
-                      style={{ margin: '5px', float: 'right' }}
-                      type='button'
-                      value='Save'
-                      css={[basicButton, { float: 'right' }]}
-                      onClick={saveWoDay}
-                    />
-                  </div> */}
                   <div
-                    css={gridGoals}
+                    
                     style={{ borderRadius: '3px', width: '50%' }}
                   >
                     <TextInput
@@ -465,11 +456,11 @@ const WoDay = props => {
                       placeholder={'enter goals here'}
                       value={woDayContext.woday.goals}
                       onChange={handleTextChange}
-                      styles={{ width: '300px' }}
+                      styles={{ width: '100%' }}
                     />
                   </div>
                   {/* --- MyStats --------------------------------------- */}
-                  <div css={gridWeight}>
+                  <div >
                     <TextInput
                       label={'Weight'}
                       name={'weight'}
@@ -477,10 +468,10 @@ const WoDay = props => {
                       value={woDayContext.woday.weight}
                       placeholder={'enter weight'}
                       onChange={handleTextChange}
-                      styles={{ width: '100px' }}
+                      styles={{ width: '100%' }}
                     />
                   </div>
-                  <div css={gridEnergy}>
+                  <div >
                     <RangeSlider
                       label={'Energy'}
                       min={0}
@@ -492,7 +483,7 @@ const WoDay = props => {
                       theme={woDayContext.theme}
                     />
                   </div>
-                  <div css={gridSleep}>
+                  <div >
                     <RangeSlider
                       label={'Sleep'}
                       min={0}
