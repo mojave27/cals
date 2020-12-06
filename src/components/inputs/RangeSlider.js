@@ -22,8 +22,8 @@ const RangeSliderInput = props => {
     <React.Fragment>
       <label
         style={{
-          float: 'left',
-          display: 'inline',
+          // float: 'left',
+          // display: 'inline',
           fontWeight: '700',
           // width: '15%',
           marginRight: '5px'

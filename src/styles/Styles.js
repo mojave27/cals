@@ -21,16 +21,16 @@ export const basicButtonSmall = (theme) => {
 export const basicButton = (theme) => {
   const { mobile } = theme
   return {
-  padding: '6px 20px',
+  // padding: '6px 20px',
   fontSize: 'inherit',
-  backgroundColor: theme.color3.hex,
-  color: theme.color4_text.hex,
-  border: `1px solid ${theme.color2.hex}`,
+  backgroundColor: theme.color2.hex,
+  color: theme.color2_text.hex,
+  border: `1px solid ${theme.color1.hex}`,
   borderRadius: '2px',
   width: `${mobile === true ? '80%' : 'auto'}`,
   cursor: 'pointer',
   '&:hover': {
-    backgroundColor: theme.color2.hex,
-    color: theme.color2_text.hex
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex
   }}
 }

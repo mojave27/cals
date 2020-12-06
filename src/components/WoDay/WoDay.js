@@ -15,6 +15,10 @@ import Workout from '../workouts/Workout'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { cloneDeep } from 'lodash'
+import { makeStyles } from '@material-ui/core/styles'
+import { basicButton } from '../../styles/Styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 
 import WorkoutChooser from '../workouts/WorkoutChooser'
 
@@ -28,10 +32,25 @@ import '../../styles/datePicker.css'
 // import StopWatch from './StopWatch'
 import StopWatch from '../Admin/StopWatch'
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.color2_text.hex,
+    backgroundColor: theme.color2.hex,
+    margin: '3px'
+  },
+  basicButton: basicButton(theme)
+}))
+
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext)
 
   useEffect(() => {
     if (props.location.state.new) {
@@ -55,18 +74,7 @@ const WoDay = props => {
 
   let { cardNoHover, detailCard, row, basicButton } = styles(themeContext.theme)
 
-  let {
-    gridContainer,
-    gridDate,
-    gridDuration,
-    gridEnergy,
-    gridGoals,
-    gridSleep,
-    gridWeight,
-    section,
-    sectionHeader,
-    woTable
-  } = woDayStyles(themeContext.theme)
+  let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
   const woDayLoaded = () => {
     if (
@@ -406,96 +414,115 @@ const WoDay = props => {
       <div>
         {woDayLoaded() ? (
           <div css={detailCard}>
-            <input
-              style={{ margin: '5px', float: 'right' }}
-              type='button'
-              value='Save'
-              css={[basicButton, { float: 'right' }]}
-              onClick={saveWoDay}
-            />
-            <input
-              style={{ margin: '5px', float: 'right' }}
-              type='button'
-              value='X'
-              css={[basicButton, { float: 'right' }]}
-              onClick={home}
-            />
-            <div css={cardNoHover}>
+            <div id={'cardNoHover'} css={cardNoHover}>
+              <Grid
+                container
+                direction='row'
+                justify='flex-end'
+                alignItems='center'
+                spacing={1}
+              >
+                <Grid item xs={6} sm={3}>
+                  <input
+                    style={{ width: '60px', margin: '5px'}}
+                    type='button'
+                    value='Save'
+                    className={classes.basicButton}
+                    onClick={saveWoDay}
+                  />
+                  <input
+                    style={{ width: '60px', margin: '5px' }}
+                    type='button'
+                    value='Close'
+                    className={classes.basicButton}
+                    onClick={home}
+                  />
+                </Grid>
+              </Grid>
+              {/* </div> */}
               {/* --- section 1: Details --------------------------------------- */}
-              <div css={row} style={{ border: '1px solid #eee' }}>
-                <div
-                  css={gridContainer}
-                  style={{ margin: '5px', padding: '10px' }}
-                >
-                  <div >
-                    <DateInput
-                      startDate={getStartDate()}
-                      setStartDate={setDate}
-                      label={'Date'}
-                    />
-                  </div>
-                  <div  style={{ borderRadius: '3px' }}>
-                    <TextInput
-                      label={'Duration'}
-                      name={'duration'}
-                      id={'duration'}
-                      placeholder={'workout duration...'}
-                      value={woDayContext.woday.duration}
-                      onChange={handleTextChange}
-                      styles={{ width: '75px' }}
-                    />
-                  </div>
-                  <div
-                    
-                    style={{ borderRadius: '3px', width: '50%' }}
-                  >
-                    <TextInput
-                      label={'Goals'}
-                      name={'goals'}
-                      id={'goals'}
-                      placeholder={'enter goals here'}
-                      value={woDayContext.woday.goals}
-                      onChange={handleTextChange}
-                      styles={{ width: '100%' }}
-                    />
-                  </div>
-                  {/* --- MyStats --------------------------------------- */}
-                  <div >
-                    <TextInput
-                      label={'Weight'}
-                      name={'weight'}
-                      id={'weight'}
-                      value={woDayContext.woday.weight}
-                      placeholder={'enter weight'}
-                      onChange={handleTextChange}
-                      styles={{ width: '100%' }}
-                    />
-                  </div>
-                  <div >
-                    <RangeSlider
-                      label={'Energy'}
-                      min={0}
-                      max={10}
-                      jssClass={{ float: 'left' }}
-                      id='energyRange'
-                      value={woDayContext.woday.energy}
-                      onChange={handleSliderChange}
-                      theme={woDayContext.theme}
-                    />
-                  </div>
-                  <div >
-                    <RangeSlider
-                      label={'Sleep'}
-                      min={0}
-                      max={10}
-                      jssClass={{ float: 'left' }}
-                      id='sleepRange'
-                      value={woDayContext.woday.sleep}
-                      onChange={handleSliderChange}
-                      theme={woDayContext.theme}
-                    />
-                  </div>
-                </div>
+              <div
+                css={row}
+                style={{ marginTop: '10px', padding: '10px', border: '1px solid #eee' }}
+              >
+                <Grid container spacing={1} justify='flex-start'>
+                  <Grid item xs={12} sm={6}>
+                    <Paper className={classes.paper}>
+                      <DateInput
+                        startDate={getStartDate()}
+                        setStartDate={setDate}
+                        label={'Date'}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Paper className={classes.paper}>
+                      <TextInput
+                        label={'Duration'}
+                        name={'duration'}
+                        id={'duration'}
+                        placeholder={'workout duration...'}
+                        value={woDayContext.woday.duration}
+                        onChange={handleTextChange}
+                        styles={{ width: '50%' }}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Paper className={classes.paper}>
+                      <TextInput
+                        label={'Goals'}
+                        name={'goals'}
+                        id={'goals'}
+                        placeholder={'enter goals here'}
+                        value={woDayContext.woday.goals}
+                        onChange={handleTextChange}
+                        styles={{ width: '100%' }}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Paper className={classes.paper}>
+                      <TextInput
+                        label={'Weight'}
+                        name={'weight'}
+                        id={'weight'}
+                        value={woDayContext.woday.weight}
+                        placeholder={'enter weight'}
+                        onChange={handleTextChange}
+                        styles={{ width: '100%' }}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Paper className={classes.paper}>
+                      <RangeSlider
+                        label={'Energy'}
+                        min={0}
+                        max={10}
+                        // jssClass={{ float: 'left' }}
+                        id='energyRange'
+                        value={woDayContext.woday.energy}
+                        onChange={handleSliderChange}
+                        theme={woDayContext.theme}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Paper className={classes.paper}>
+                      <RangeSlider
+                        label={'Sleep'}
+                        min={0}
+                        max={10}
+                        // jssClass={{ float: 'left' }}
+                        id='sleepRange'
+                        value={woDayContext.woday.sleep}
+                        onChange={handleSliderChange}
+                        theme={woDayContext.theme}
+                      />
+                    </Paper>
+                  </Grid>
+                </Grid>
               </div>
               {/* --- section 2: Cardio --------------------------------------- */}
               <div css={[row, section]}>
