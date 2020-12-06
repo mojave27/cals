@@ -151,10 +151,6 @@ const CardioTable = props => {
     let name = event.target.name
     let value = event.target.value
 
-    console.log(id)
-    console.log(name)
-    console.log(value)
-
     props.onChange({
       id: id,
       name: name,
