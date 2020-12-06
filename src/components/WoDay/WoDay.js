@@ -74,22 +74,7 @@ const WoDay = props => {
 
   let { cardNoHover, detailCard, row, basicButton } = styles(themeContext.theme)
 
-<<<<<<< HEAD
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
-=======
-  let {
-    gridContainer,
-    gridDate,
-    gridDuration,
-    gridEnergy,
-    gridGoals,
-    gridSleep,
-    gridWeight,
-    section,
-    sectionHeader,
-    woTable
-  } = woDayStyles(themeContext.theme)
->>>>>>> 8791935807e31a6721c2ebace74b7652d62c9dac
 
   const woDayLoaded = () => {
     if (
