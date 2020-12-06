@@ -127,11 +127,13 @@ const WoDay = props => {
     // name: name, <-- will be property name
     // value: value <-- will be value to change to
     // }
+    console.log(update)
     let woday = woDayContext.copyWoDay()
     let idParts = update.id.split('-')
     let rowId = idParts[0]
     let index = findIndexOfId(rowId, woday.cardio.exercises)
     let exercise = woday.cardio.exercises[index]
+    console.log(exercise)
     exercise[update.name] = update.value
     woDayContext.updateWoDay(woday)
   }
@@ -408,6 +410,13 @@ const WoDay = props => {
             <input
               style={{ margin: '5px', float: 'right' }}
               type='button'
+              value='Save'
+              css={[basicButton, { float: 'right' }]}
+              onClick={saveWoDay}
+            />
+            <input
+              style={{ margin: '5px', float: 'right' }}
+              type='button'
               value='X'
               css={[basicButton, { float: 'right' }]}
               onClick={home}
@@ -437,7 +446,7 @@ const WoDay = props => {
                       styles={{ width: '75px' }}
                     />
                   </div>
-                  <div css={gridSave} style={{ borderRadius: '3px' }}>
+                  {/* <div css={gridSave} style={{ borderRadius: '3px' }}>
                     <input
                       style={{ margin: '5px', float: 'right' }}
                       type='button'
@@ -445,7 +454,7 @@ const WoDay = props => {
                       css={[basicButton, { float: 'right' }]}
                       onClick={saveWoDay}
                     />
-                  </div>
+                  </div> */}
                   <div
                     css={gridGoals}
                     style={{ borderRadius: '3px', width: '50%' }}

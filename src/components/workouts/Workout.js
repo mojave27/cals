@@ -4,32 +4,15 @@ import React, { useContext } from 'react'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
-
-const basicButtonSmall = (theme) => {
-  const { mobile } = theme
-  return {
-    backgroundColor: theme.color4.hex,
-    border: `1px solid ${theme.color3.hex}`,
-    borderRadius: '2px',
-    color: theme.color4_text.hex,
-    fontSize: '.9em',
-    margin: '5px',
-    padding: '1px 5px',
-    width: `${mobile === true ? '100%' : 'auto'}`,
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: theme.color3.hex,
-      color: theme.color3_text.hex
-    }
-  }
-}
+import { basicButton, basicButtonSmall } from '../../styles/Styles'
 
 const useStyles = makeStyles((context) => ({
   root: {
     flexGrow: 1,
     width: `${context.mobile === true ? '100%' : 'auto'}`,
   },
-  basicButtonSmall: basicButtonSmall(context)
+  basicButtonSmall: basicButtonSmall(context),
+  basicButton: basicButton(context)
 }))
 
 const Workout = props => {
@@ -176,7 +159,7 @@ const Workout = props => {
     <div className={classes.root}>
       <div style={{ margin: 'auto' }}>
         <input
-          className={classes.basicButtonSmall}
+          className={classes.basicButton}
           type='button'
           value='Choose Workout'
           onClick={showWorkoutChooser}
@@ -186,7 +169,7 @@ const Workout = props => {
           style={{ margin: '5px' }}
           type='button'
           value='Add Set'
-          className={classes.basicButtonSmall}
+          className={classes.basicButton}
           onClick={addSet}
           autoComplete={'off'}
         />
@@ -194,7 +177,7 @@ const Workout = props => {
           style={{ margin: '5px' }}
           type='button'
           value='Add Exercise'
-          className={classes.basicButtonSmall}
+          className={classes.basicButton}
           onClick={addExercise}
           autoComplete={'off'}
         />
