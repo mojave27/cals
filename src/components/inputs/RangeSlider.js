@@ -6,6 +6,22 @@ import { get } from 'lodash'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import ThemeContext from '../../context/ThemeContext'
 
+const styles = {
+  label: {
+    textAlign: 'right',
+    paddingRight: '30px',
+    display: 'inline-block',
+    fontWeight: '700',
+    float:'left',
+    padding:'5px 10px',
+    width:'75px'
+  },
+  input: {
+    display: 'inline-block',
+    lineHeight:'23px'
+  }
+}
+
 const RangeSliderInput = props => {
   let context = useContext(ThemeContext)
 
@@ -20,17 +36,10 @@ const RangeSliderInput = props => {
 
   return (
     <React.Fragment>
-      <label
-        style={{
-          float: 'left',
-          display: 'inline',
-          fontWeight: '700',
-          // width: '15%',
-          marginRight: '5px'
-        }}
-      >
-        {props.label}
-      </label>
+      <div style={styles.label}>
+        <label htmlFor={props.value}>{props.label}</label>
+      </div>
+      <div style={styles.input}>
       <input
         type='range'
         min={get(props, 'min', '0')}
@@ -40,7 +49,8 @@ const RangeSliderInput = props => {
         css={getCss()}
         id={props.id}
       />
-      <label>{props.value}</label>
+      <label style={{marginLeft: '5px'}}>{props.value}</label>
+      </div>
     </React.Fragment>
   )
 }
