@@ -498,10 +498,9 @@ const WoDay = props => {
                     <Paper className={classes.paper}>
                       <RangeSlider
                         label={'Energy'}
+                        id='energyRange'
                         min={0}
                         max={10}
-                        // jssClass={{ float: 'left' }}
-                        id='energyRange'
                         value={woDayContext.woday.energy}
                         onChange={handleSliderChange}
                         theme={woDayContext.theme}
@@ -512,10 +511,9 @@ const WoDay = props => {
                     <Paper className={classes.paper}>
                       <RangeSlider
                         label={'Sleep'}
+                        id='sleepRange'
                         min={0}
                         max={10}
-                        // jssClass={{ float: 'left' }}
-                        id='sleepRange'
                         value={woDayContext.woday.sleep}
                         onChange={handleSliderChange}
                         theme={woDayContext.theme}
