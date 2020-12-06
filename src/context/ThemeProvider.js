@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ThemeContext from './ThemeContext'
 import { themes } from '../styles/main-styles'
 import Cookies from 'universal-cookie'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-const getUserTheme = () => {
+const getUserTheme = (mobile) => {
   const cookies = new Cookies()
   // default to woSheet if no user theme set
   if (cookies.get('wolog-theme') === undefined) {
@@ -13,7 +14,10 @@ const getUserTheme = () => {
   } else {
     let themeValue = cookies.get('wolog-theme')
     console.log(`themeValue ${themeValue}`)
-    return themes[themeValue]
+    let activeTheme = themes[themeValue]
+    activeTheme.mobile = mobile
+    // return themes[themeValue]
+    return activeTheme
   }
 }
 
@@ -23,28 +27,25 @@ const setUserTheme = themeName => {
   cookies.set('wolog-theme', themeName, { path: '/' })
 }
 
-class ThemeProvider extends React.Component {
-  state = {
-    activeTheme: getUserTheme()
-  }
+const ThemeProvider = props => {
+  const mobile = useMediaQuery('(max-width:620px)')
+  const [activeTheme, setActiveTheme] = useState(getUserTheme(mobile))
 
-  render() {
-    return (
-      <ThemeContext.Provider
-        value={{
-          theme: this.state.activeTheme,
-          changeTheme: themeName => {
-            console.log(`provider changing theme to ${themeName}`)
-            // console.log(themes[themeName])
-            setUserTheme(themeName)
-            this.setState({ activeTheme: themes[themeName] })
-          }
-        }}
-      >
-        {this.props.children}
-      </ThemeContext.Provider>
-    )
-  }
+  return (
+    <ThemeContext.Provider
+      value={{
+        theme: activeTheme,
+        mobile: mobile,
+        changeTheme: themeName => {
+          console.log(`provider changing theme to ${themeName}`)
+          setUserTheme(themeName)
+          setActiveTheme(themes[themeName])
+        }
+      }}
+    >
+      {props.children}
+    </ThemeContext.Provider>
+  )
 }
 
 export default ThemeProvider

@@ -15,7 +15,7 @@ export const woDayStyles = theme => {
     minHeight: '150px',
     marginTop: '15px',
     padding: '15px',
-    width: '100%',
+    // width: '100%',
     border: '1px solid #eee'
   }
 
@@ -133,15 +133,12 @@ export const woDayStyles = theme => {
 
   let woTable = {
     margin: 'auto',
-    // borderCollapse: 'collapse',
-    // borderSpacing: '0',
     border: `1px solid ${theme.color5.hex}`,
     '& th': {
       backgroundColor: theme.color5.hex,
       color: theme.color5_text.hex
     },
     '& th, td': {
-      // textAlign: 'left',
       padding: '3px 8px'
     },
 

@@ -2,21 +2,23 @@
 import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import { woDayStyles } from '../../styles/WoDayStyles'
-import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
+import { basicButton, basicButtonSmall } from '../../styles/Styles'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((context) => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+    width: `${context.mobile === true ? '100%' : 'auto'}`,
+  },
+  basicButtonSmall: basicButtonSmall(context),
+  basicButton: basicButton(context)
 }))
 
 const Workout = props => {
   let context = useContext(ThemeContext)
   let { woHeader, woInput, woTable } = woDayStyles(context.theme)
-  let { basicButtonSmall } = styles(context.theme)
-  const classes = useStyles(context.theme)
+  const classes = useStyles(context)
 
   const COL_1_TITLE = 'exercise'
   const COL_2_TITLE = 'reps'
@@ -27,7 +29,7 @@ const Workout = props => {
     return (
       <tr key={'firstHeaderRow'}>
         {headers.map((header, index) => {
-          const colWidth = header === COL_2_TITLE ? '15px' : '50px'
+          const colWidth = header === COL_2_TITLE ? '10px' : '50px'
           return (
             <th
               key={`${header}-${index}`}
@@ -83,7 +85,7 @@ const Workout = props => {
                 data-exgroupid={exGroup.id}
                 type='text'
                 value={ex.reps}
-                css={[woInput, { width: '75px' }]}
+                css={[woInput, { width: '15px' }]}
                 onChange={props.onLeadCellChange}
                 autoComplete={'off'}
               />
@@ -155,55 +157,54 @@ const Workout = props => {
 
   return (
     <div className={classes.root}>
-          <div style={{ display: 'inline-block', margin: 'auto' }}>
-            <input
-              style={{ margin: '5px' }}
-              type='button'
-              value='Choose Workout'
-              css={[basicButtonSmall, { float: 'left' }]}
-              onClick={showWorkoutChooser}
-              autoComplete={'off'}
-            />
-            <input
-              style={{ margin: '5px' }}
-              type='button'
-              value='Add Set'
-              css={[basicButtonSmall, { float: 'left' }]}
-              onClick={addSet}
-              autoComplete={'off'}
-            />
-            <input
-              style={{ margin: '5px' }}
-              type='button'
-              value='Add Exercise'
-              css={[basicButtonSmall, { float: 'left' }]}
-              onClick={addExercise}
-              autoComplete={'off'}
-            />
-          </div>
-          <br />
-          <div style={{ display: 'inline-block' }}>
-            <table css={woTable}>
-              <tbody>
-                {renderTableOneHeaderRows()}
-                {renderTableOneRows()}
-              </tbody>
-            </table>
-          </div>
-          <div
-            style={{
-              maxWidth: '600px',
-              display: 'inline-block',
-              overflow: 'scroll'
-            }}
-          >
-            <table css={woTable}>
-              <tbody>
-                {renderHeaderRows()}
-                {renderRows()}
-              </tbody>
-            </table>
-          </div>
+      <div style={{ margin: 'auto' }}>
+        <input
+          className={classes.basicButton}
+          type='button'
+          value='Choose Workout'
+          onClick={showWorkoutChooser}
+          autoComplete={'off'}
+        />
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Add Set'
+          className={classes.basicButton}
+          onClick={addSet}
+          autoComplete={'off'}
+        />
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Add Exercise'
+          className={classes.basicButton}
+          onClick={addExercise}
+          autoComplete={'off'}
+        />
+      </div>
+      <br />
+      <div style={{ display: 'inline-block' }}>
+        <table css={woTable}>
+          <tbody>
+            {renderTableOneHeaderRows()}
+            {renderTableOneRows()}
+          </tbody>
+        </table>
+      </div>
+      <div
+        style={{
+          maxWidth: '600px',
+          display: 'inline-block',
+          overflow: 'scroll'
+        }}
+      >
+        <table css={woTable}>
+          <tbody>
+            {renderHeaderRows()}
+            {renderRows()}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

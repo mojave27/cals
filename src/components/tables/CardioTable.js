@@ -3,15 +3,22 @@ import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import { camelCase, get } from 'lodash'
 import { woDayStyles } from '../../styles/WoDayStyles'
-import { styles } from '../../styles/MainStyles'
+import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
+import { basicButton } from '../../styles/Styles'
 
-// class CardioTable extends React.Component {
-// state = {}
+const useStyles = makeStyles(context => ({
+  root: {
+    flexGrow: 1,
+    width: `${context.mobile === true ? '100%' : 'auto'}`
+  },
+  basicButton: basicButton(context)
+}))
+
 const CardioTable = props => {
   let themeContext = useContext(ThemeContext)
   let { woTable } = woDayStyles(themeContext.theme)
-  let { basicButtonSmall } = styles(themeContext.theme)
+  let classes = useStyles(themeContext)
 
   //TODO: can this be cleaned up and refactored
   const renderRows = data => {
@@ -26,6 +33,66 @@ const CardioTable = props => {
     })
     rows.splice(0, 0, headerRow)
     return rows
+  }
+
+  const renderMobileRows = row => {
+      let id = get(row, 'id', 0)
+      // let exerciseNumber = index + 1
+      return (
+        <React.Fragment key={row.type}>
+          <tr id={`${id}-type`}>
+            <th colSpan={2}>Cardio Exercise</th>
+          </tr>
+          <tr id={`${id}-type`}>
+            <td>{'type'}</td>
+            <td>
+              <Input
+                id={`${row.id}-${row.type}`}
+                name={'type'}
+                data={row.type}
+                onChange={handleCellChange}
+                disabled={props.disabled}
+              />
+            </td>
+          </tr>
+          <tr id={`${id}-type`}>
+            <td>{'distance'}</td>
+            <td>
+              <Input
+                id={`${row.id}-${row.type}`}
+                name={'distance'}
+                data={row.distance}
+                onChange={handleCellChange}
+                disabled={props.disabled}
+              />
+            </td>
+          </tr>
+          <tr id={`${id}-type`}>
+            <td>{'duration'}</td>
+            <td>
+              <Input
+                id={`${row.id}-${row.type}`}
+                name={'duration'}
+                data={row.duration}
+                onChange={handleCellChange}
+                disabled={props.disabled}
+              />
+            </td>
+          </tr>
+          <tr id={`${id}-type`}>
+            <td>{'heart rate'}</td>
+            <td>
+              <Input
+                id={`${row.id}-${row.type}`}
+                name={'heartRate'}
+                data={row.heartRate}
+                onChange={handleCellChange}
+                disabled={props.disabled}
+              />
+            </td>
+          </tr>
+        </React.Fragment>
+      )
   }
 
   const renderHeaders = headers => {
@@ -84,6 +151,10 @@ const CardioTable = props => {
     let name = event.target.name
     let value = event.target.value
 
+    console.log(id)
+    console.log(name)
+    console.log(value)
+
     props.onChange({
       id: id,
       name: name,
@@ -91,20 +162,37 @@ const CardioTable = props => {
     })
   }
 
+  const renderMobile = props => {
+    return props.data.rows.map(row => {
+      return(
+        <table style={{paddingBottom: '10px'}} css={woTable}>
+          <tbody id={props.id}>{renderMobileRows(row)}</tbody>
+        </table>)
+    })
+
+  }
+
   return (
     <React.Fragment>
-      <div style={{ display: 'inline-block', margin: 'auto' }}>
+      <div style={{ margin: 'auto' }}>
         <input
-          style={{ margin: '5px' }}
+          style={{ margin: '10px' }}
+          className={classes.basicButton}
           type='button'
           value='Add Exercise'
-          css={[basicButtonSmall, { float: 'left' }]}
           onClick={props.addCardioExercise}
         />
       </div>
-      <table css={woTable} style={{ margin: 'auto' }}>
-        <tbody id={props.id}>{renderRows(props.data)}</tbody>
-      </table>
+      {themeContext.mobile === true ? (
+        renderMobile(props)
+        // <table css={woTable}>
+        //   <tbody id={props.id}>{renderMobileRows(props.data)}</tbody>
+        // </table>
+      ) : (
+        <table css={woTable} style={{ margin: 'auto' }}>
+          <tbody id={props.id}>{renderRows(props.data)}</tbody>
+        </table>
+      )}
     </React.Fragment>
   )
 }
