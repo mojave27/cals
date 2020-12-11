@@ -15,6 +15,7 @@ import Workout from '../workouts/Workout'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { cloneDeep } from 'lodash'
+
 import { makeStyles } from '@material-ui/core/styles'
 import { basicButton } from '../../styles/Styles'
 import Paper from '@material-ui/core/Paper'

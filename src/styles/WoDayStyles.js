@@ -126,7 +126,7 @@ export const woDayStyles = theme => {
   }
 
   let woInput = {
-    width: '50px',
+    width: '25px',
     height: '22px',
     paddingTop: '2px',
     paddingRight: '10px'
