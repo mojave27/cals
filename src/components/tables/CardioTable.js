@@ -59,7 +59,7 @@ const CardioTable = props => {
             <td>{'distance'}</td>
             <td>
               <Input
-                id={`${row.id}-${row.type}`}
+                id={`${row.id}-distance`}
                 name={'distance'}
                 data={row.distance}
                 onChange={handleCellChange}
@@ -71,7 +71,7 @@ const CardioTable = props => {
             <td>{'duration'}</td>
             <td>
               <Input
-                id={`${row.id}-${row.type}`}
+                id={`${row.id}-duration`}
                 name={'duration'}
                 data={row.duration}
                 onChange={handleCellChange}
@@ -83,7 +83,7 @@ const CardioTable = props => {
             <td>{'heart rate'}</td>
             <td>
               <Input
-                id={`${row.id}-${row.type}`}
+                id={`${row.id}-heartRate`}
                 name={'heartRate'}
                 data={row.heartRate}
                 onChange={handleCellChange}
@@ -159,9 +159,9 @@ const CardioTable = props => {
   }
 
   const renderMobile = props => {
-    return props.data.rows.map(row => {
+    return props.data.rows.map( (row,index) => {
       return(
-        <table style={{paddingBottom: '10px'}} css={woTable}>
+        <table style={{paddingBottom: '10px'}} css={woTable} key={`table-${index}`}>
           <tbody id={props.id}>{renderMobileRows(row)}</tbody>
         </table>)
     })

@@ -20,6 +20,11 @@ import { basicButton } from '../../styles/Styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
+import { makeStyles } from '@material-ui/core/styles'
+import { basicButton } from '../../styles/Styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+
 import WorkoutChooser from '../workouts/WorkoutChooser'
 
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
@@ -163,7 +168,7 @@ const WoDay = props => {
   }
 
   const handleSetChange = event => {
-    let exerciseId = event.target.parentNode.parentNode.id
+    let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
     let name = event.target.name
@@ -316,8 +321,8 @@ const WoDay = props => {
       let newExercises = exGroup.exercises.map(exercise => {
         let newExercise = cloneDeep(exercise)
         delete newExercise.type
-        newExercise.weight = 0
-        newExercise.reps = 0
+        newExercise.weight = ''
+        newExercise.reps = ''
         return newExercise
       })
       let newExGroup = {}

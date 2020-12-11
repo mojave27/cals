@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     margin: 'auto',
     position: 'absolute',
-    width: 1200,
+    width: `${theme.mobile === true ? '90%' : 'auto'}`,
     top: 30,
     left: 30,
     backgroundColor: theme.color4.hex,
@@ -48,8 +48,8 @@ const useStyles = makeStyles(theme => ({
 const MyModal = props => {
   let context = useContext(ThemeContext)
   const classes = useStyles(context.theme)
+
   return props.showModal ? (
-    // <div className={classes.paper}>
       <Modal
         open={true}
         onClose={props.handleClose}
@@ -62,7 +62,6 @@ const MyModal = props => {
           {props.children}
         </div>
       </Modal>
-    // </div>
   ) :
   null
 }

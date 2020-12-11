@@ -3,19 +3,37 @@ import { jsx } from '@emotion/core'
 import React, { useContext, useEffect, useState } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-import { styles as gridStyles } from '../../styles/GridStyles2'
 import { styles } from '../../styles/MainStyles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import Tracker from '../tracker/Tracker'
 import WorkoutCard from './WorkoutCard'
+
+import { makeStyles } from '@material-ui/core/styles'
+import { basicButton } from '../../styles/Styles'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.color2_text.hex,
+    backgroundColor: theme.color2.hex,
+    margin: '3px'
+  },
+  basicButton: basicButton(theme)
+}))
 
 const WorkoutChooser = props => {
   let [workoutTemplates, setWorkoutTemplates] = useState([])
   let [showFromWorkouts, setShowFromWorkouts] = useState(false)
   let [showFromPrograms, setShowFromPrograms] = useState(false)
   let themeContext = useContext(ThemeContext)
-  let { gridContainer } = gridStyles(themeContext.theme)
   let { cardNoHover, detailCard, row, basicButton } = styles(themeContext.theme)
+  const classes = useStyles(themeContext)
 
   useEffect(() => {
     fetchMyAPI()
@@ -35,13 +53,14 @@ const WorkoutChooser = props => {
   const renderWorkouts = workouts => {
     return workouts.map(wo => {
       return (
-        <WorkoutCard
-          key={wo.id}
-          id={wo.id}
-          onClick={chooseWorkout}
-          item={wo}
-          selectItem={props.selectWorkout}
-        />
+        <Grid item xs={12} sm={4} key={wo.id}>
+          <WorkoutCard
+            id={wo.id}
+            onClick={chooseWorkout}
+            item={wo}
+            selectItem={props.selectWorkout}
+          />
+        </Grid>
       )
     })
   }
@@ -60,26 +79,38 @@ const WorkoutChooser = props => {
         <div css={detailCard}>
           <div css={cardNoHover}>
             <div css={row} style={{ border: '1px solid #eee' }}>
-              <input
-                style={{ margin: '5px' }}
-                type='button'
-                value='From Programs'
-                css={[basicButton]}
-                onClick={showWorkoutsFromPrograms}
-              />
-              <input
-                style={{ margin: '5px' }}
-                type='button'
-                value='From Workouts'
-                css={[basicButton]}
-                onClick={showWorkoutsFromWorkouts}
-              />
+              <Grid container spacing={1} justify='flex-start'>
+                <Grid item xs={12} sm={6}>
+                  <Paper className={classes.paper}>
+                    <input
+                      style={{ margin: '5px' }}
+                      type='button'
+                      value='From Programs'
+                      css={[basicButton]}
+                      onClick={showWorkoutsFromPrograms}
+                    />
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Paper className={classes.paper}>
+                    <input
+                      style={{ margin: '5px' }}
+                      type='button'
+                      value='From Workouts'
+                      css={[basicButton]}
+                      onClick={showWorkoutsFromWorkouts}
+                    />
+                  </Paper>
+                </Grid>
+              </Grid>
             </div>
           </div>
         </div>
       ) : showFromWorkouts === true ? (
         workoutTemplates.length > 0 ? (
-          <div css={gridContainer}>{renderWorkouts(workoutTemplates)}</div>
+          <Grid spacing={1} >
+            {renderWorkouts(workoutTemplates)}
+          </Grid>
         ) : (
           <BasicSpinner show={true} />
         )
