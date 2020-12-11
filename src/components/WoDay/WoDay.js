@@ -164,7 +164,7 @@ const WoDay = props => {
   }
 
   const handleSetChange = event => {
-    let exerciseId = event.target.parentNode.parentNode.id
+    let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
     let name = event.target.name
@@ -317,8 +317,8 @@ const WoDay = props => {
       let newExercises = exGroup.exercises.map(exercise => {
         let newExercise = cloneDeep(exercise)
         delete newExercise.type
-        newExercise.weight = 0
-        newExercise.reps = 0
+        newExercise.weight = ''
+        newExercise.reps = ''
         return newExercise
       })
       let newExGroup = {}

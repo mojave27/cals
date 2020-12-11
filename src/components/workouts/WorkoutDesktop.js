@@ -111,6 +111,7 @@ const Workout = props => {
                     <input
                       data-setid={set.id}
                       data-exgroupid={exGroup.id}
+                      data-exerciseid={exercise.id}
                       name={'weight'}
                       type='text'
                       placeholder={'enter weight'}
@@ -125,6 +126,7 @@ const Workout = props => {
                     <input
                       data-setid={set.id}
                       data-exgroupid={exGroup.id}
+                      data-exerciseid={exercise.id}
                       name={'reps'}
                       type='text'
                       placeholder={'enter reps'}
