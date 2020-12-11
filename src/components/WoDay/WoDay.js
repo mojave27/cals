@@ -20,16 +20,6 @@ import { basicButton } from '../../styles/Styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 
-import { makeStyles } from '@material-ui/core/styles'
-import { basicButton } from '../../styles/Styles'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
-
-import { makeStyles } from '@material-ui/core/styles'
-import { basicButton } from '../../styles/Styles'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
-
 import WorkoutChooser from '../workouts/WorkoutChooser'
 
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
