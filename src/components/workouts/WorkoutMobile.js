@@ -4,7 +4,6 @@ import React, { useContext } from 'react'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
 import { basicButton, basicButtonSmall } from '../../styles/Styles'
 
 const useStyles = makeStyles(context => ({
