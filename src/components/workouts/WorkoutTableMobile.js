@@ -9,18 +9,32 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import Typography from '@material-ui/core/Typography'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-const useStyles = makeStyles(context => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    width: `${context.mobile === true ? '100%' : 'auto'}`
+    width: `${theme.mobile === true ? '100%' : 'auto'}`
   },
   table: {
-    minWidth: '80%'
+    minWidth: '80%',
+    backgroundColor: theme.color3.rgba(0.5),
+    color: theme.color3_text.hex
+  },
+  tableCell: {
+    padding: '5px'
+  },
+  accordion: {
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex
   }
 }))
 
-const TestTable = props => {
+const WorkoutTableMobile = props => {
   let context = useContext(ThemeContext)
   const classes = useStyles(context)
 
@@ -30,15 +44,15 @@ const TestTable = props => {
 
     exGroup.exercises.forEach(exercise => {
       headerCells.push(
-        <TableCell key={`${exercise.id}-header`} colSpan={2}>
+        <TableCell key={`${exercise.id}-header`} colSpan={2} classes={{ root: classes.tableCell }} align={'center'}>
           {exercise.name}
         </TableCell>
       )
 
       secondRowHeaderCells.push(
         <React.Fragment key={`${exercise.id}-weight`}>
-          <TableCell>{'weight'}</TableCell>
-          <TableCell>{'reps'}</TableCell>
+          <TableCell classes={{ root: classes.tableCell }} align={'center'} >{'weight'}</TableCell>
+          <TableCell classes={{ root: classes.tableCell }} align={'center'} >{'reps'}</TableCell>
         </React.Fragment>
       )
     })
@@ -57,19 +71,18 @@ const TestTable = props => {
         setExGrp => setExGrp.id === exGroup.id
       )
       return (
-        <TableRow
-          key={`${set.id}-${exGroup.id}`}
-          id={exGroup.id}
-        >
+        <TableRow key={`${set.id}-${exGroup.id}`} id={exGroup.id}>
           {matchingSetExGroup.exercises.map(ex => {
             return (
               <React.Fragment key={`${set.id}-${ex.id}`}>
-                <TableCell>
+                <TableCell classes={{ root: classes.tableCell }}>
                   <TextField
-                    data-setid={set.id}
-                    data-exgroupid={exGroup.id}
-                    data-exerciseid={ex.id}
-                    name={'weight'}
+                    inputProps={{
+                      'data-setid': set.id,
+                      'data-exgroupid': exGroup.id,
+                      'data-exerciseid': ex.id,
+                      name: 'weight'
+                    }}
                     type='text'
                     placeholder={'enter weight'}
                     value={ex.weight}
@@ -80,12 +93,14 @@ const TestTable = props => {
                   />
                 </TableCell>
 
-                <TableCell>
+                <TableCell classes={{ root: classes.tableCell }}>
                   <TextField
-                    data-setid={set.id}
-                    data-exgroupid={exGroup.id}
-                    data-exerciseid={ex.id}
-                    name={'reps'}
+                    inputProps={{
+                      'data-setid': set.id,
+                      'data-exgroupid': exGroup.id,
+                      'data-exerciseid': ex.id,
+                      name: 'reps'
+                    }}
                     type='text'
                     placeholder={'enter reps'}
                     value={ex.reps}
@@ -103,27 +118,32 @@ const TestTable = props => {
     })
   }
 
-
   const renderExerciseGroups = () => {
     return props.wo.exerciseGroups.map((exGroup, index) => {
       return (
-        <React.Fragment key={`${exGroup}-${index}`}>
-          <div style={{ padding: '10px', margin: 'auto' }}>
-            <label
-              style={{ fontWeight: '700', paddingBottom: '5px' }}
-            >{`exercise group ${index}`}</label>
+        <Accordion key={`${exGroup}-${index}`} className={classes.accordion}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='panel1a-content'
+            id='panel1a-header'
+          >
+            <Typography className={classes.heading}>
+              Exercise Group {index}
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
             <TableContainer component={Paper}>
               <Table
                 className={classes.table}
-                size='small'
+                // size='small'
                 aria-label='a dense table'
               >
                 {renderTableOneHeaderRowsMobile(exGroup)}
                 <TableBody>{renderRowsMobile(exGroup, index)}</TableBody>
               </Table>
             </TableContainer>
-          </div>
-        </React.Fragment>
+          </AccordionDetails>
+        </Accordion>
       )
     })
   }
@@ -131,4 +151,4 @@ const TestTable = props => {
   return <div style={{ margin: 'auto' }}>{renderExerciseGroups()}</div>
 }
 
-export default TestTable
+export default WorkoutTableMobile

@@ -163,6 +163,7 @@ const WoDay = props => {
   }
 
   const handleSetChange = event => {
+
     let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
@@ -185,9 +186,6 @@ const WoDay = props => {
 
     // update weight or reps
     ex[name] = value
-
-    // console.log(woday)
-    // console.log(context.woday)
 
     woDayContext.updateWoDay(woday)
   }

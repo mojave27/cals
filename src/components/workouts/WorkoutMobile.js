@@ -29,6 +29,10 @@ const WorkoutMobile = props => {
     props.showWorkoutChooser()
   }
 
+  // const renderExerciseGroups = () => {
+  //   return props.wo.exerciseGroups.map((exGroup, index) => {
+  //     return (<WorkoutTableMobile 
+
   return (
     <div className={classes.root}>
       <div style={{ margin: 'auto' }}>
@@ -57,6 +61,7 @@ const WorkoutMobile = props => {
         />
       </div>
 
+      {/* <div style={{ margin: 'auto' }}>{renderExerciseGroups()}</div> */}
       <WorkoutTableMobile {...props} />
     </div>
   )
