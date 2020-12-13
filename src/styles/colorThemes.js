@@ -209,7 +209,7 @@ export const bakery = {
 	lightText: {
 		hex: '#EEE',
 		rgba: alpha => buildRgba(238, 238, 238, alpha)
-	},
+	}
 }
 
 export const woSheet = {
