@@ -8,7 +8,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import TextField from '@material-ui/core/TextField'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
@@ -22,11 +21,36 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: '80%',
-    backgroundColor: theme.color3.rgba(0.5),
-    color: theme.color3_text.hex
+    backgroundColor: theme.color2.hex,
+    color: theme.color2_text.hex
   },
   tableCell: {
-    padding: '5px'
+    padding: '5px',
+    backgroundColor: theme.color3.rgba(0.2),
+    color: theme.color3_text.hex,
+    border: 0
+  },
+  tableHeaderCell: {
+    padding: '5px',
+    // backgroundColor: theme.color3.rgba(0.3),
+    backgroundColor: theme.color5.rgba(0.7),
+    color: theme.color5_text.hex
+  },
+  input: {
+    font: 'inherit',
+    color: 'currentColor',
+    width: '100%',
+    border: `1px solid ${theme.color3.hex}`,
+    height: '1.1876em',
+    margin: 0,
+    display: 'block',
+    padding: '6px 0 7px',
+    minWidth: 0,
+    backgroundColor: theme.color1.hex,
+    boxSizing: 'content-box',
+    letterSpacing: 'inherit',
+    animationDuration: '10ms',
+    textAlign: 'center'
   },
   accordion: {
     backgroundColor: theme.color2.hex,
@@ -48,15 +72,30 @@ const WorkoutTableMobile = props => {
 
     exGroup.exercises.forEach(exercise => {
       headerCells.push(
-        <TableCell key={`${exercise.id}-header`} colSpan={2} classes={{ root: classes.tableCell }} align={'center'}>
+        <TableCell
+          key={`${exercise.id}-header`}
+          colSpan={2}
+          classes={{ root: classes.tableHeaderCell }}
+          align={'center'}
+        >
           {exercise.name}
         </TableCell>
       )
 
       secondRowHeaderCells.push(
         <React.Fragment key={`${exercise.id}-weight`}>
-          <TableCell classes={{ root: classes.tableCell }} align={'center'} >{'weight'}</TableCell>
-          <TableCell classes={{ root: classes.tableCell }} align={'center'} >{'reps'}</TableCell>
+          <TableCell
+            classes={{ root: classes.tableHeaderCell }}
+            align={'center'}
+          >
+            {'weight'}
+          </TableCell>
+          <TableCell
+            classes={{ root: classes.tableHeaderCell }}
+            align={'center'}
+          >
+            {'reps'}
+          </TableCell>
         </React.Fragment>
       )
     })
@@ -80,38 +119,32 @@ const WorkoutTableMobile = props => {
             return (
               <React.Fragment key={`${set.id}-${ex.id}`}>
                 <TableCell classes={{ root: classes.tableCell }}>
-                  <TextField
-                    inputProps={{
-                      'data-setid': set.id,
-                      'data-exgroupid': exGroup.id,
-                      'data-exerciseid': ex.id,
-                      name: 'weight'
-                    }}
+                  <input
+                    data-setid={set.id}
+                    data-exgroupid={exGroup.id}
+                    data-exerciseid={ex.id}
+                    name={'weight'}
                     type='text'
                     placeholder={'enter weight'}
                     value={ex.weight}
                     onChange={props.onChange}
                     autoComplete={'off'}
-                    variant='outlined'
-                    size='small'
+                    className={classes.input}
                   />
                 </TableCell>
 
                 <TableCell classes={{ root: classes.tableCell }}>
-                  <TextField
-                    inputProps={{
-                      'data-setid': set.id,
-                      'data-exgroupid': exGroup.id,
-                      'data-exerciseid': ex.id,
-                      name: 'reps'
-                    }}
+                  <input
+                    data-setid={set.id}
+                    data-exgroupid={exGroup.id}
+                    data-exerciseid={ex.id}
+                    name={'reps'}
                     type='text'
                     placeholder={'enter reps'}
                     value={ex.reps}
                     onChange={props.onChange}
                     autoComplete={'off'}
-                    variant='outlined'
-                    size='small'
+                    className={classes.input}
                   />
                 </TableCell>
               </React.Fragment>
@@ -127,12 +160,14 @@ const WorkoutTableMobile = props => {
       return (
         <Accordion key={`${exGroup}-${index}`} className={classes.accordion}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon classes={{ root: classes.expandIcon }} />}
+            expandIcon={
+              <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
+            }
             aria-controls='panel1a-content'
             id='panel1a-header'
           >
             <Typography className={classes.heading}>
-              Exercise Group {index}
+              Exercise Group {index + 1}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
