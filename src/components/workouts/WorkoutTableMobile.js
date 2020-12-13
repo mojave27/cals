@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -32,8 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
   tableHeaderCell: {
     padding: '5px',
-    // backgroundColor: theme.color3.rgba(0.3),
-    backgroundColor: theme.color5.rgba(0.7),
+    backgroundColor: theme.color5.rgba(0.8),
     color: theme.color5_text.hex
   },
   input: {
@@ -77,6 +76,7 @@ const WorkoutTableMobile = props => {
           colSpan={2}
           classes={{ root: classes.tableHeaderCell }}
           align={'center'}
+          style={{ borderRight: '1px solid grey' }}
         >
           {exercise.name}
         </TableCell>
@@ -92,6 +92,7 @@ const WorkoutTableMobile = props => {
           </TableCell>
           <TableCell
             classes={{ root: classes.tableHeaderCell }}
+            style={{ borderRight: '1px solid grey' }}
             align={'center'}
           >
             {'reps'}
@@ -114,7 +115,11 @@ const WorkoutTableMobile = props => {
         setExGrp => setExGrp.id === exGroup.id
       )
       return (
-        <TableRow key={`${set.id}-${exGroup.id}`} id={exGroup.id}>
+        <TableRow
+          key={`${set.id}-${exGroup.id}`}
+          id={exGroup.id}
+          style={{ borderBottom: '1px solid lightgrey' }}
+        >
           {matchingSetExGroup.exercises.map(ex => {
             return (
               <React.Fragment key={`${set.id}-${ex.id}`}>
@@ -133,7 +138,10 @@ const WorkoutTableMobile = props => {
                   />
                 </TableCell>
 
-                <TableCell classes={{ root: classes.tableCell }}>
+                <TableCell
+                  classes={{ root: classes.tableCell }}
+                  style={{ borderRight: '1px solid grey' }}
+                >
                   <input
                     data-setid={set.id}
                     data-exgroupid={exGroup.id}
