@@ -16,20 +16,15 @@ import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { cloneDeep } from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import { basicButton } from '../../styles/Styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-
+import Button from '@material-ui/core/Button'
 import WorkoutChooser from '../workouts/WorkoutChooser'
-
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
-
 import { styles } from '../../styles/MainStyles'
 import { woDayStyles } from '../../styles/WoDayStyles'
-
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-// import StopWatch from './StopWatch'
 import StopWatch from '../Admin/StopWatch'
 
 const useStyles = makeStyles(theme => ({
@@ -42,8 +37,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.color2_text.hex,
     backgroundColor: theme.color2.hex,
     margin: '3px'
-  },
-  basicButton: basicButton(theme)
+  }
 }))
 
 const WoDay = props => {
@@ -72,7 +66,7 @@ const WoDay = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  let { cardNoHover, detailCard, row, basicButton } = styles(themeContext.theme)
+  let { cardNoHover, detailCard, row } = styles(themeContext.theme)
 
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
@@ -163,6 +157,7 @@ const WoDay = props => {
   }
 
   const handleSetChange = event => {
+
     let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
@@ -185,9 +180,6 @@ const WoDay = props => {
 
     // update weight or reps
     ex[name] = value
-
-    // console.log(woday)
-    // console.log(context.woday)
 
     woDayContext.updateWoDay(woday)
   }
@@ -423,20 +415,8 @@ const WoDay = props => {
                 spacing={1}
               >
                 <Grid item xs={6} sm={3}>
-                  <input
-                    style={{ width: '60px', margin: '5px'}}
-                    type='button'
-                    value='Save'
-                    className={classes.basicButton}
-                    onClick={saveWoDay}
-                  />
-                  <input
-                    style={{ width: '60px', margin: '5px' }}
-                    type='button'
-                    value='Close'
-                    className={classes.basicButton}
-                    onClick={home}
-                  />
+                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={saveWoDay}>{'Save'}</Button>
+                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={home}>{'Close'}</Button>
                 </Grid>
               </Grid>
               {/* </div> */}
@@ -536,7 +516,7 @@ const WoDay = props => {
               </div>
               {/* --- section -: stop watch ------------------------------------ */}
               <div css={[row, section]}>
-                <StopWatch buttonClass={basicButton} />
+                <StopWatch />
               </div>
               {/* --- section 3: Weights --------------------------------------- */}
               <div css={[row, section]}>

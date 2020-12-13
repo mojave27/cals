@@ -1,3 +1,46 @@
+export const primaries = {
+	name: 'primaries',
+	palette: { type: "light"},
+	color1: {
+		hex: '#F2F2F2',
+		rgba: alpha => buildRgba(242, 242, 242, alpha)	
+	},
+	get color1_text() {
+		return this.darkText
+	},
+	color2: {
+		hex: '#F2B705',
+		rgba: alpha => buildRgba(242, 183, 5, alpha)	
+	},
+	get color2_text() {
+		return this.darkText
+	},
+	color3: {
+		hex: '#04D9C4',
+		rgba: alpha => buildRgba(4, 217, 196, alpha)	
+	},
+	get color3_text() {
+		return this.darkText
+	},
+	color4: {
+		hex: '#0788D9',
+		rgba: alpha => buildRgba(7, 136, 217, alpha)	
+	},
+	get color4_text() {
+		return this.color1
+	},
+	color5: {
+		hex: '#BF0A3A',
+		rgba: alpha => buildRgba(191, 10, 58, alpha)	
+	},
+	get color5_text() {
+		return this.color1
+	},
+	darkText: {
+		hex: '#333',
+		rgba: alpha => buildRgba(51, 51, 51, alpha)	
+	},
+}
 
 export const siberianWinter = {
   name: 'siberianWinter',
@@ -127,41 +170,45 @@ export const stormTrooper = {
   }
 }
 
-export const faHome1 = {
+export const bakery = {
   color1: {
-		hex: '#FFFFFF',
-		rgba: alpha => buildRgba(255, 255, 255, alpha)
+		hex: '#F2E9D8',
+		rgba: alpha => buildRgba(242, 233, 216, alpha)
 	},
 	get color1_text() {
 		return this.color5
 	},
 	color2: {
-		hex: '#46B493',
-		rgba: alpha => buildRgba(70, 180, 147, alpha)
+		hex: '#B6E1F2',
+		rgba: alpha => buildRgba(182, 225, 242, alpha)
 	},
 	get color2_text() {
 		return this.color5
 	},
 	color3: {
-		hex: '#9BCC5C',
-		rgba: alpha => buildRgba(155, 204, 92, alpha)
+		hex: '#7798D9',
+		rgba: alpha => buildRgba(119, 152, 217, alpha)
 	},
 	get color3_text() {
 		return this.color5
 	},
 	color4: {
-		hex: '#3B9999',
-		rgba: alpha => buildRgba(59, 153, 153, alpha)
+		hex: '#465D8C',
+		rgba: alpha => buildRgba(70, 93, 140, alpha)
 	},
 	get color4_text() {
 		return this.color1
 	},
 	color5: {
-		hex: '#014F37',
-		rgba: alpha => buildRgba(1, 79, 55, alpha)
+		hex: '#484F73',
+		rgba: alpha => buildRgba(72, 79, 115, alpha)
 	},
 	get color5_text() {
 		return this.color1
+	},
+	lightText: {
+		hex: '#EEE',
+		rgba: alpha => buildRgba(238, 238, 238, alpha)
 	},
 }
 

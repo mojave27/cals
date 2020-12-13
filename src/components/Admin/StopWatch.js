@@ -1,7 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-// eslint-disable-next-line no-unused-vars
 import React, { Component } from "react";
+import Button from '@material-ui/core/Button'
 
 class Stopwatch extends Component {
   state = {
@@ -48,16 +46,16 @@ class Stopwatch extends Component {
           {hours}:{minutes}:{seconds}<span style={{fontSize: '0.5em'}}>:{centiseconds}</span>
         </div>
         {this.state.timerOn === false && this.state.timerTime === 0 && (
-          <button onClick={this.startTimer}>Start</button>
+          <Button size='small' onClick={this.startTimer} variant='contained'>{'Start'}</Button>
         )}
         {this.state.timerOn === true && (
-          <button onClick={this.stopTimer}>Stop</button>
+          <Button size='small' onClick={this.stopTimer} variant='contained'>{'Stop'}</Button>
         )}
         {this.state.timerOn === false && this.state.timerTime > 0 && (
-          <button onClick={this.startTimer}>Resume</button>
+          <Button size='small' onClick={this.startTimer} variant='contained'>{'Resume'}</Button>
         )}
         {this.state.timerOn === false && this.state.timerTime > 0 && (
-          <button onClick={this.resetTimer}>Reset</button>
+          <Button size='small' onClick={this.resetTimer} variant='contained'>{'Reset'}</Button>
         )}
       </div>
     );

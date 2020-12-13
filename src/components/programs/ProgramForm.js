@@ -77,35 +77,9 @@ const ProgramForm = props => {
 
   const saveWorkout = async workout => {
     console.log(`saveWorkout: ${JSON.stringify(workout)}`)
-    // await woContext.saveWorkoutInWorkoutsList(workout)
     await programContext.addWorkout(workout)
     toggleWorkoutModal()
   }
-
-  // const editWorkout = async event => {
-  //   let id = event.currentTarget.id
-  //   console.log(`[PROGRAM FORM] editWorkout with id ${id}`)
-  //   let workout = await retrieveWorkoutById(id)
-  //   console.log(`workout: ${JSON.stringify(workout)}`)
-  //   await woContext.updateWorkout(workout)
-  //   toggleWorkoutModal()
-  // }
-
-  // const deleteWorkout = event => {
-  //   let id = event.currentTarget.id
-  //   console.log(`deleting workout with id: ${id}`)
-  //   deleteWorkoutApi(id)
-  //   removeWorkoutFromProgramInContext(id)
-  // }
-
-  // const removeWorkoutFromProgramInContext = workoutId => {
-  //   let program = programContext.program
-  //   let workouts = program.workouts
-  //   let indexOfWorkout = findIndexOfId(workoutId, workouts)
-  //   workouts.splice(indexOfWorkout, 1)
-  //   program.workouts = workouts
-  //   programContext.updateProgram(program)
-  // }
 
   const handleTextChange = e => {
     let { id, value } = e.target

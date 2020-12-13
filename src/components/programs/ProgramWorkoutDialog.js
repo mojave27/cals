@@ -18,7 +18,7 @@ import ThemeContext from '../../context/ThemeContext'
 const EXISTING = 'Choose Existing'
 const NEW = 'Create New'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   avatarExisting: {
     backgroundColor: blue[100],
     color: blue[600],
@@ -27,7 +27,11 @@ const useStyles = makeStyles({
     backgroundColor: green[100],
     color: green[600],
   },
-});
+  dialogBar: {
+    backgroundColor: green[100],
+    color: green[600],
+  }
+}))
 
 const ProgramWorkoutDialog = props => {
   const themeContext = useContext(ThemeContext)
@@ -36,14 +40,14 @@ const ProgramWorkoutDialog = props => {
 
   const handleClose = () => {
     onClose();
-  };
+  }
 
   const handleListItemClick = (value) => {
     onSelect(value);
-  };
+  }
 
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+    <Dialog onClose={handleClose} open={open} style={{backgroundColor: '#333'}}>
       <DialogTitle id="simple-dialog-title">Choose Workout</DialogTitle>
       <List>
           <ListItem button onClick={() => handleListItemClick(EXISTING)} key={EXISTING}>

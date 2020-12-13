@@ -3,22 +3,21 @@ import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import { camelCase, get } from 'lodash'
 import { woDayStyles } from '../../styles/WoDayStyles'
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
 import ThemeContext from '../../context/ThemeContext'
-import { basicButton } from '../../styles/Styles'
 
-const useStyles = makeStyles(context => ({
-  root: {
-    flexGrow: 1,
-    width: `${context.mobile === true ? '100%' : 'auto'}`
-  },
-  basicButton: basicButton(context)
-}))
+// const useStyles = makeStyles(context => ({
+//   root: {
+//     flexGrow: 1,
+//     width: `${context.mobile === true ? '100%' : 'auto'}`
+//   }
+// }))
 
 const CardioTable = props => {
   let themeContext = useContext(ThemeContext)
   let { woTable } = woDayStyles(themeContext.theme)
-  let classes = useStyles(themeContext)
+  // let classes = useStyles(themeContext)
 
   //TODO: can this be cleaned up and refactored
   const renderRows = data => {
@@ -111,12 +110,7 @@ const CardioTable = props => {
     // add the delete button
     tds.push(
       <td style={{ borderLeft: '1px solid #eee' }} key={`${row.id}-delete`}>
-        <input
-          id={`${row.id}-${j}`}
-          type='button'
-          value='delete'
-          onClick={props.deleteRow}
-        />
+        <Button id={`${row.id}-${j}`} size='small' onClick={props.deleteRow} variant='contained'>{'delete'}</Button>
       </td>
     )
 
@@ -170,14 +164,8 @@ const CardioTable = props => {
 
   return (
     <React.Fragment>
-      <div style={{ margin: 'auto' }}>
-        <input
-          style={{ margin: '10px' }}
-          className={classes.basicButton}
-          type='button'
-          value='Add Exercise'
-          onClick={props.addCardioExercise}
-        />
+      <div style={{ margin: 'auto', marginBottom: '10px' }}>
+        <Button size='small' onClick={props.addCardioExercise} variant='contained'>{'Add Exercise'}</Button>
       </div>
       {themeContext.mobile === true ? (
         renderMobile(props)
