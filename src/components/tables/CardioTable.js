@@ -3,21 +3,21 @@ import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import { camelCase, get } from 'lodash'
 import { woDayStyles } from '../../styles/WoDayStyles'
-import { makeStyles } from '@material-ui/core/styles'
+// import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ThemeContext from '../../context/ThemeContext'
 
-const useStyles = makeStyles(context => ({
-  root: {
-    flexGrow: 1,
-    width: `${context.mobile === true ? '100%' : 'auto'}`
-  }
-}))
+// const useStyles = makeStyles(context => ({
+//   root: {
+//     flexGrow: 1,
+//     width: `${context.mobile === true ? '100%' : 'auto'}`
+//   }
+// }))
 
 const CardioTable = props => {
   let themeContext = useContext(ThemeContext)
   let { woTable } = woDayStyles(themeContext.theme)
-  let classes = useStyles(themeContext)
+  // let classes = useStyles(themeContext)
 
   //TODO: can this be cleaned up and refactored
   const renderRows = data => {
