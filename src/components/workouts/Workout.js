@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 import { basicButton, basicButtonSmall } from '../../styles/Styles'
 import WorkoutTableMobile from './WorkoutTableMobile'
 
@@ -31,31 +33,11 @@ const Workout = props => {
 
   return (
     <div className={classes.root}>
-      <div style={{ margin: 'auto' }}>
-        <input
-          className={classes.basicButton}
-          type='button'
-          value='Choose Workout'
-          onClick={showWorkoutChooser}
-          autoComplete={'off'}
-        />
-        <input
-          style={{ margin: '5px' }}
-          type='button'
-          value='Add Set'
-          className={classes.basicButton}
-          onClick={addSet}
-          autoComplete={'off'}
-        />
-        <input
-          style={{ margin: '5px' }}
-          type='button'
-          value='Add Exercise'
-          className={classes.basicButton}
-          onClick={addExercise}
-          autoComplete={'off'}
-        />
-      </div>
+      <ButtonGroup size='small' orientation={context.mobile === true ? 'vertical': ''} variant='contained' style={{margin:'10px'}}>
+        <Button style={{margin:'1px'}} onClick={showWorkoutChooser}>{'Choose Workout'}</Button>
+        <Button style={{margin:'1px'}} onClick={addSet}>{'Add Set'}</Button>
+        <Button style={{margin:'1px'}} onClick={addExercise}>{'Add Exercise'}</Button>
+      </ButtonGroup>
 
       <WorkoutTableMobile {...props} />
     </div>

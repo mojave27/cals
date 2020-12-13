@@ -16,9 +16,10 @@ import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { cloneDeep } from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import { basicButton } from '../../styles/Styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 import WorkoutChooser from '../workouts/WorkoutChooser'
 
@@ -42,8 +43,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.color2_text.hex,
     backgroundColor: theme.color2.hex,
     margin: '3px'
-  },
-  basicButton: basicButton(theme)
+  }
 }))
 
 const WoDay = props => {
@@ -421,20 +421,8 @@ const WoDay = props => {
                 spacing={1}
               >
                 <Grid item xs={6} sm={3}>
-                  <input
-                    style={{ width: '60px', margin: '5px'}}
-                    type='button'
-                    value='Save'
-                    className={classes.basicButton}
-                    onClick={saveWoDay}
-                  />
-                  <input
-                    style={{ width: '60px', margin: '5px' }}
-                    type='button'
-                    value='Close'
-                    className={classes.basicButton}
-                    onClick={home}
-                  />
+                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={saveWoDay}>{'Save'}</Button>
+                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={home}>{'Close'}</Button>
                 </Grid>
               </Grid>
               {/* </div> */}
@@ -534,7 +522,7 @@ const WoDay = props => {
               </div>
               {/* --- section -: stop watch ------------------------------------ */}
               <div css={[row, section]}>
-                <StopWatch buttonClass={basicButton} />
+                <StopWatch />
               </div>
               {/* --- section 3: Weights --------------------------------------- */}
               <div css={[row, section]}>
