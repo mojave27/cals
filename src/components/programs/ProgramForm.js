@@ -1,19 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { Fragment, useContext, useState } from 'react'
-// import { findIndexOfId } from '../ArrayUtils'
 import CloseButton from '../inputs/CloseButton'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { updateProgram, addProgram } from '../../api/programsApi'
-// import {
-//   deleteWorkout as deleteWorkoutApi,
-//   retrieveWorkoutById
-// } from '../../api/workoutsApi'
 import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
-// import WorkoutListDialog from '../workouts/WorkoutListDialog'
-
+import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { navigate } from '@reach/router'
 import { gridStyles } from '../../styles/gridStyles'
@@ -22,7 +16,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
-// import InputLabel from '@material-ui/core/InputLabel'
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
 
@@ -73,6 +66,7 @@ const ProgramForm = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
+  const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
   let { gridContainer } = gridStyles(themeContext.theme)
 
   const toggleWorkoutModal = () => {
@@ -81,6 +75,10 @@ const ProgramForm = props => {
 
   const toggleWorkoutDialog = () => {
     setShowWorkoutDialog(!showWorkoutDialog)
+  }
+  
+  const toggleWorkoutListDialog = () => {
+    setShowWorkoutListDialog(!showWorkoutListDialog)
   }
 
   const closeAllDialogs = () => {
@@ -190,6 +188,7 @@ const ProgramForm = props => {
     if(item.toLowerCase() === 'choose existing') {
       console.log('existing')
       toggleWorkoutModal()
+      toggleWorkoutListDialog()
     }
     if(item.toLowerCase() === 'create new') {
       console.log('new')
@@ -205,6 +204,10 @@ const ProgramForm = props => {
         open={showWorkoutModal}
         onSelect={handleWorkoutDialogSelection}
         onClose={toggleWorkoutModal}
+      />
+      <WorkoutListDialog
+        open={showWorkoutListDialog}
+        onClose={toggleWorkoutListDialog}
       />
       <WorkoutFormDialog open={showWorkoutDialog} onClose={toggleWorkoutDialog} saveWorkout={saveWorkout}/>
       {renderMainForm()}

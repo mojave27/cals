@@ -26,6 +26,7 @@ class TrackerProvider extends React.Component {
                     this.setState({ program: {} })
                 },
                 updateProgram: program => {
+                    // console.log(program)
                     this.setState({ program })
                 },
                 addWorkout: workout => {
