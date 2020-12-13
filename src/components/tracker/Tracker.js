@@ -12,6 +12,7 @@ import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 // import { retrieveItemById } from 'list-utils'
 import { retrieveItemByStringId } from '../ArrayUtils'
 import BasicSpinner from '../spinners/BasicSpinner'
+import FormButton from '../inputs/FormButton'
 
 const Tracker = props => {
   const themeContext = useContext(ThemeContext)
@@ -74,11 +75,8 @@ const Tracker = props => {
         <div css={cardNoHover}>
           {isEmpty(context.program) ? (
             <div css={row}>
-              <input
-                style={{ margin: '5px' }}
-                type='button'
-                value='Select Program'
-                css={[basicButton, { float: 'left' }]}
+              <FormButton 
+                buttonText='Select Program'
                 onClick={newWorkout}
               />
             </div>
