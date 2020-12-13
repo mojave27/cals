@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '../Modal'
 import WoDayList from '../WoDay/WoDayList'
-import { Link, navigate } from '@reach/router'
+import { navigate } from '@reach/router'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
+import FormButton from '../inputs/FormButton'
 
 const WODAY_PATH = '/woday'
 
@@ -33,30 +34,25 @@ const WoDayTracker = props => {
     navigate(WODAY_PATH, { state: { id: id } })
   }
 
+  const newWoDay = () => {
+    // console.log(id)
+    navigate(WODAY_PATH, { state: { new: true } })
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WoDayList done={toggleModal} chooseWoDay={chooseWoDay} />
       </Modal>
-      <Container maxWidth='sm'>
+      <Container maxWidth='xs'>
         <Paper className={classes.paper} elevation={0}>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Link to={WODAY_PATH} state={{ new: true }}>
-                <input
-                  style={{ margin: '5px' }}
-                  type='button'
-                  value='New WoDay'
-                />
-              </Link>
+              {/* <Button variant='outlined' onClick={newWoDay}>{'New WoDay'}</Button> */}
+              <FormButton buttonText={'New WoDay'} onClick={newWoDay} />
             </Grid>
             <Grid item xs={6}>
-              <input
-                style={{ margin: '5px' }}
-                type='button'
-                value='Existing WoDay'
-                onClick={toggleModal}
-              />
+              <FormButton onClick={toggleModal} buttonText={'Existing WoDay'}/>
             </Grid>
           </Grid>
         </Paper>

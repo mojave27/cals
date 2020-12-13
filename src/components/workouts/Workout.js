@@ -3,16 +3,13 @@ import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import { basicButton, basicButtonSmall } from '../../styles/Styles'
 import WorkoutTableMobile from './WorkoutTableMobile'
 
 const useStyles = makeStyles(context => ({
   root: {
     flexGrow: 1,
     width: `${context.mobile === true ? '100%' : 'auto'}`
-  },
-  basicButtonSmall: basicButtonSmall(context),
-  basicButton: basicButton(context)
+  }
 }))
 
 const Workout = props => {

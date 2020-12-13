@@ -171,16 +171,16 @@ export const stormTrooper = {
 }
 
 export const bakery = {
-  color1: {
-		hex: '#F2E9D8',
-		rgba: alpha => buildRgba(242, 233, 216, alpha)
+	color1: {
+		hex: '#F2F2F2',
+		rgba: alpha => buildRgba(242, 242, 242, alpha)	
 	},
 	get color1_text() {
 		return this.color5
 	},
-	color2: {
-		hex: '#B6E1F2',
-		rgba: alpha => buildRgba(182, 225, 242, alpha)
+  color2: {
+		hex: '#F2E9D8',
+		rgba: alpha => buildRgba(242, 233, 216, alpha)
 	},
 	get color2_text() {
 		return this.color5

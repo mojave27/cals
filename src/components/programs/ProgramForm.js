@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 // import { findIndexOfId } from '../ArrayUtils'
 import CloseButton from '../inputs/CloseButton'
 import WoContext from '../../context/WoContext'
@@ -17,11 +17,12 @@ import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { navigate } from '@reach/router'
 import { gridStyles } from '../../styles/gridStyles'
-import { makeStyles } from '@material-ui/core/styles'
+import { fade, makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
+// import InputLabel from '@material-ui/core/InputLabel'
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
 
@@ -35,14 +36,38 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     minWidth: 275,
-    backgroundColor: theme.color5.hex,
-    border: `1px solid ${theme.color4.hex}`
+    backgroundColor: theme.color4.hex,
+    border: `1px solid ${theme.color3.hex}`
+  },
+  label: {
+    color: theme.color4_text.hex
   }
 }))
+
+const useStylesInput = makeStyles((theme) => ({
+  root: {
+    color: theme.color1_text.hex,
+    border: `1px solid ${theme.color3.hex}`,
+    overflow: 'hidden',
+    borderRadius: 4,
+    backgroundColor: theme.color1.hex,
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    '&:hover': {
+      backgroundColor: '#fff',
+    },
+    '&$focused': {
+      backgroundColor: '#fff',
+      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
+      borderColor: theme.color3.hex
+    },
+  },
+  focused: {},
+}));
 
 const ProgramForm = props => {
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
+  const inputClasses = useStylesInput(themeContext.theme)
 
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)
@@ -58,13 +83,16 @@ const ProgramForm = props => {
     setShowWorkoutDialog(!showWorkoutDialog)
   }
 
+  const closeAllDialogs = () => {
+    setShowWorkoutDialog(false)
+    setShowWorkoutModal(false)
+  }
+
   const saveProgram = async () => {
     let program = {}
     if (typeof programContext.program.id !== 'undefined' && programContext.program.id !== '') {
-      console.log(`updating program ${JSON.stringify(programContext.program)}`)
       program = await updateProgram(programContext.program)
     } else {
-      console.log(`adding program ${JSON.stringify(programContext.program)}`)
       program = await addProgram(programContext.program)
     }
     await programContext.updateProgram(program)
@@ -76,9 +104,10 @@ const ProgramForm = props => {
   }
 
   const saveWorkout = async workout => {
-    console.log(`saveWorkout: ${JSON.stringify(workout)}`)
+    console.log(`saveWorkout: ${workout}`)
     await programContext.addWorkout(workout)
-    toggleWorkoutModal()
+    // toggleWorkoutModal()
+    closeAllDialogs()
   }
 
   const handleTextChange = e => {
@@ -96,8 +125,6 @@ const ProgramForm = props => {
 
   const renderWorkouts = workouts => {
     return workouts.map(wo => {
-      console.log(`rendering workoutCard with:`)
-      console.log(wo)
       return (
         <WorkoutCard
           key={wo.id}
@@ -115,7 +142,9 @@ const ProgramForm = props => {
           <CardContent>
             <CloseButton handleClose={handleClose} />
             <div style={{ marginTop: '30px' }} />
+            {/* <InputLabel shrink>Count</InputLabel> */}
             <TextField
+              InputProps={{ classes: inputClasses }}
               id='programName'
               label='Program Name'
               defaultValue={programContext.program.name}
@@ -125,6 +154,7 @@ const ProgramForm = props => {
             />
             <div style={{ marginTop: '10px' }} />
             <TextField
+              InputProps={{ classes: inputClasses }}
               id='description'
               label='Description'
               defaultValue={programContext.program.description}
@@ -133,11 +163,13 @@ const ProgramForm = props => {
               size='small'
             />
             <div style={{ marginTop: '10px' }} />
-            <label htmlFor='workouts'>Workouts</label>
             {programContext.program.workouts && programContext.program.workouts.length > 0 ? (
+              <Fragment>
+              <label htmlFor='workouts' className={classes.label}>Workouts</label>
               <div css={gridContainer}>
                 {renderWorkouts(programContext.program.workouts)}
               </div>
+              </Fragment>
             ) : null}
             <div style={{ marginTop: '30px' }} />
             <FormButton buttonText={'Add Workout'} onClick={addWorkout} />

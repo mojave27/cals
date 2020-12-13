@@ -11,7 +11,7 @@ const WorkoutCard = props => {
   let themeContext = useContext(ThemeContext)
   let { gridItem } = gridStyles(themeContext.theme)
   const { setBlock, workoutBlock } = programStyles(themeContext.theme)
-  const { editItem, deleteItem, key, id, item } = props
+  const { editItem, deleteItem, id, item } = props
 
   const handleClick = () => {
     if (props.onClick) props.onClick(id)
@@ -39,7 +39,7 @@ const WorkoutCard = props => {
 
   return (
     <div
-      key={key}
+      key={id}
       id={id}
       css={[workoutBlock, gridItem]}
       style={{ marginLeft: '5px', marginBottom: '10px' }}
