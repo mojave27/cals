@@ -29,8 +29,12 @@ const useStyles = makeStyles(theme => ({
     padding: '5px'
   },
   accordion: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex
+    backgroundColor: theme.color2.hex,
+    color: theme.color2_text.hex,
+    border: `1px solid ${theme.color3.hex}`
+  },
+  expandIcon: {
+    color: theme.color2_text.hex
   }
 }))
 
@@ -123,7 +127,7 @@ const WorkoutTableMobile = props => {
       return (
         <Accordion key={`${exGroup}-${index}`} className={classes.accordion}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon classes={{ root: classes.expandIcon }} />}
             aria-controls='panel1a-content'
             id='panel1a-header'
           >
