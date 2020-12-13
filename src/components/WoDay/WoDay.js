@@ -19,18 +19,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
-
 import WorkoutChooser from '../workouts/WorkoutChooser'
-
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
-
 import { styles } from '../../styles/MainStyles'
 import { woDayStyles } from '../../styles/WoDayStyles'
-
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-// import StopWatch from './StopWatch'
 import StopWatch from '../Admin/StopWatch'
 
 const useStyles = makeStyles(theme => ({
@@ -72,7 +66,7 @@ const WoDay = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  let { cardNoHover, detailCard, row, basicButton } = styles(themeContext.theme)
+  let { cardNoHover, detailCard, row } = styles(themeContext.theme)
 
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 

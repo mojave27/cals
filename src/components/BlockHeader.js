@@ -25,7 +25,6 @@ const BlockHeader = props => {
         <FontAwesomeIcon
           key={`${id}-${Math.random()}`}
           alt={'select workout'}
-          id={id}
           style={{ marginLeft: '10px', float: 'right' }}
           icon={faCheck}
           onClick={selectItem}
@@ -37,7 +36,6 @@ const BlockHeader = props => {
         <FontAwesomeIcon
           key={`${id}-${Math.random()}`}
           alt={'edit workout'}
-          id={id}
           style={{ marginLeft: '10px', float: 'right' }}
           icon={faEdit}
           onClick={() => editItem(id)}
@@ -49,7 +47,6 @@ const BlockHeader = props => {
         <FontAwesomeIcon
           key={`${id}-${Math.random()}`}
           alt={'remove workout from program'}
-          id={id}
           style={{ marginLeft: '10px', float: 'right' }}
           icon={faTrashAlt}
           onClick={() => deleteItem(id)}
