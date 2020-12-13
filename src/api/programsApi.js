@@ -26,6 +26,7 @@ export const retrieveProgramById = async (id) => {
 }
 
 export const addProgram = async (program) => {
+  console.log(program)
   let config = await getAxiosConfigWithAuth()
   const URL = 'programs'
   return axios

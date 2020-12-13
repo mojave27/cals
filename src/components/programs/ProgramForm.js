@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import CloseButton from '../inputs/CloseButton'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
@@ -10,7 +8,6 @@ import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
 import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { navigate } from '@reach/router'
-import { gridStyles } from '../../styles/gridStyles'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -18,12 +15,13 @@ import Container from '@material-ui/core/Container'
 import TextField from '@material-ui/core/TextField'
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     '& > *': {
-      width: '90%',
+      width: '100%',
       height: theme.spacing(100)
     }
   },
@@ -37,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const useStylesInput = makeStyles((theme) => ({
+const useStylesInput = makeStyles(theme => ({
   root: {
     color: theme.color1_text.hex,
     border: `1px solid ${theme.color3.hex}`,
@@ -46,16 +44,16 @@ const useStylesInput = makeStyles((theme) => ({
     backgroundColor: theme.color1.hex,
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     '&:hover': {
-      backgroundColor: '#fff',
+      backgroundColor: '#fff'
     },
     '&$focused': {
       backgroundColor: '#fff',
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
       borderColor: theme.color3.hex
-    },
+    }
   },
-  focused: {},
-}));
+  focused: {}
+}))
 
 const ProgramForm = props => {
   const themeContext = useContext(ThemeContext)
@@ -67,7 +65,6 @@ const ProgramForm = props => {
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
   const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
-  let { gridContainer } = gridStyles(themeContext.theme)
 
   const toggleWorkoutModal = () => {
     setShowWorkoutModal(!showWorkoutModal)
@@ -76,7 +73,7 @@ const ProgramForm = props => {
   const toggleWorkoutDialog = () => {
     setShowWorkoutDialog(!showWorkoutDialog)
   }
-  
+
   const toggleWorkoutListDialog = () => {
     setShowWorkoutListDialog(!showWorkoutListDialog)
   }
@@ -88,7 +85,10 @@ const ProgramForm = props => {
 
   const saveProgram = async () => {
     let program = {}
-    if (typeof programContext.program.id !== 'undefined' && programContext.program.id !== '') {
+    if (
+      typeof programContext.program.id !== 'undefined' &&
+      programContext.program.id !== ''
+    ) {
       program = await updateProgram(programContext.program)
     } else {
       program = await addProgram(programContext.program)
@@ -104,7 +104,6 @@ const ProgramForm = props => {
   const saveWorkout = async workout => {
     console.log(`saveWorkout: ${workout}`)
     await programContext.addWorkout(workout)
-    // toggleWorkoutModal()
     closeAllDialogs()
   }
 
@@ -121,29 +120,41 @@ const ProgramForm = props => {
     navigate('/program-tracker')
   }
 
-  const renderWorkouts = workouts => {
-    return workouts.map(wo => {
-      return (
-        <WorkoutCard
-          key={wo.id}
-          id={wo.id}
-          item={wo}
-        />
-      )
-    })
+  const renderWorkouts = () => {
+    let workouts = programContext.program.workouts
+    return workouts && workouts.length > 0 ? (
+      <Fragment>
+        <label htmlFor='workouts' className={classes.label}>
+          Workouts
+        </label>
+        <Grid container spacing={1} justify='flex-start'>
+        {workouts.map(wo => {
+          return (
+            <Grid item xs={12} sm={4} key={wo.id}>
+              <WorkoutCard
+                id={wo.id}
+                item={wo}
+                selectItem={props.selectWorkout}
+              />
+            </Grid>
+          )
+        })}
+        </Grid>
+      </Fragment>
+    ) : null
   }
 
   const renderMainForm = () => {
     return (
       <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
         <Card className={classes.card} variant='outlined'>
-          <CardContent>
+          <CardContent style={{overflow:'scroll'}}>
             <CloseButton handleClose={handleClose} />
             <div style={{ marginTop: '30px' }} />
             {/* <InputLabel shrink>Count</InputLabel> */}
             <TextField
               InputProps={{ classes: inputClasses }}
-              id='programName'
+              id='name'
               label='Program Name'
               defaultValue={programContext.program.name}
               onChange={handleTextChange}
@@ -161,15 +172,6 @@ const ProgramForm = props => {
               size='small'
             />
             <div style={{ marginTop: '10px' }} />
-            {programContext.program.workouts && programContext.program.workouts.length > 0 ? (
-              <Fragment>
-              <label htmlFor='workouts' className={classes.label}>Workouts</label>
-              <div css={gridContainer}>
-                {renderWorkouts(programContext.program.workouts)}
-              </div>
-              </Fragment>
-            ) : null}
-            <div style={{ marginTop: '30px' }} />
             <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
             <div style={{ marginTop: '10px' }} />
             <FormButton
@@ -178,6 +180,8 @@ const ProgramForm = props => {
               buttonText={'Save Program'}
               onClick={saveProgram}
             />
+            <div style={{ marginTop: '30px' }} />
+            {renderWorkouts()}
           </CardContent>
         </Card>
       </form>
@@ -185,12 +189,12 @@ const ProgramForm = props => {
   }
 
   const handleWorkoutDialogSelection = item => {
-    if(item.toLowerCase() === 'choose existing') {
+    if (item.toLowerCase() === 'choose existing') {
       console.log('existing')
       toggleWorkoutModal()
       toggleWorkoutListDialog()
     }
-    if(item.toLowerCase() === 'create new') {
+    if (item.toLowerCase() === 'create new') {
       console.log('new')
       toggleWorkoutModal()
       toggleWorkoutDialog()
@@ -209,7 +213,11 @@ const ProgramForm = props => {
         open={showWorkoutListDialog}
         onClose={toggleWorkoutListDialog}
       />
-      <WorkoutFormDialog open={showWorkoutDialog} onClose={toggleWorkoutDialog} saveWorkout={saveWorkout}/>
+      <WorkoutFormDialog
+        open={showWorkoutDialog}
+        onClose={toggleWorkoutDialog}
+        saveWorkout={saveWorkout}
+      />
       {renderMainForm()}
     </Container>
   )

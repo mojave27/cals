@@ -16,7 +16,9 @@ import { retrieveItemByStringId } from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative'
+    position: 'relative',
+    backgroundColor: theme.color5.hex,
+    color: theme.color5_text.hex
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -72,7 +74,7 @@ const WorkoutListDialog = props => {
             <CloseIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Sound
+            Choose Workout(s)
           </Typography>
           <Button autoFocus color='inherit' onClick={handleClose}>
             save
