@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import React from 'react'
 import Select from '../inputs/Select'
 import { EXERCISE_TYPES } from '../../constants'
-import addExercise from '../../api/addExercise'
+import { addExercise } from '../../api/exercisesApi'
 
 import {
   basicButton,
@@ -73,6 +73,7 @@ class Exercise extends React.Component {
       name: this.state.exerciseName,
       reps: this.state.exerciseReps,
       type: this.state.exerciseType,
+      id: ''
     }
     addExercise(exercise).then(response => {
       this.props.done()
@@ -86,6 +87,8 @@ class Exercise extends React.Component {
 
   handleTextChange = e => {
     let { id, value } = e.target
+    console.log(id)
+    console.log(value)
     this.setState(prevState => {
       let newState = { ...prevState }
       newState[id] = value
