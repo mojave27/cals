@@ -21,7 +21,7 @@ const Tracker = props => {
   const [showProgramList, setShowProgramList] = useState(false)
   const [showSpinner, setShowSpinner] = useState(false)
 
-  let { basicButton, cardNoHover, row } = styles(themeContext.theme)
+  let { cardNoHover, row } = styles(themeContext.theme)
 
   const forceUpdate = routeKey => {
     clearProgram()
