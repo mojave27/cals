@@ -65,6 +65,7 @@ export const menuConfig = [
     icon: 'Edit',
     items: [
       // { to: '/programs', text: 'programs' },
+      { to: '/program-form', text: 'add program' },
       { to: '/manage/workouts', text: 'workouts' },
       { to: '/exercises', text: 'exercises' },
       { to: '/prefs/themer', text: 'theme' }
@@ -88,8 +89,7 @@ export const menuConfig = [
     },
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
-      { to: '/admin/test', text: 'test page' },
-      { to: '/program-form', text: 'program form' }
+      { to: '/admin/test', text: 'test page' }
     ]
   },
   { type: 'divider'},

@@ -26,9 +26,11 @@ class ProgramProvider extends React.Component {
                     this.setState({ program })
                 },
                 addWorkout: workout => {
+                    console.log(`adding workout to context:`)
+                    console.log(workout)
                     this.setState( prevState => {
                         let program = prevState.program
-                        // program.workouts.push(workout)
+                        program.workouts.push(workout)
                         program.workoutIds.push(workout.id)
                         return ({program})
                     })

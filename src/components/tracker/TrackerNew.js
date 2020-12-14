@@ -5,23 +5,18 @@ import ProgramsList from './ProgramsList'
 import TrackerContext from '../../context/TrackerContext'
 import { retrieveProgramById } from '../../api/programsApi'
 import ProgramTracker from './ProgramTracker'
-import { styles } from '../../styles/MainStyles'
-import { get, isEmpty } from 'lodash'
+import { get } from 'lodash'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-// import { retrieveItemById } from 'list-utils'
 import { retrieveItemByStringId } from '../ArrayUtils'
 import BasicSpinner from '../spinners/BasicSpinner'
-import FormButton from '../inputs/FormButton'
 
 const Tracker = props => {
   const themeContext = useContext(ThemeContext)
   const context = useContext(TrackerContext)
   const [routeKey, setRouteKey] = useState(0)
-  const [showProgramList, setShowProgramList] = useState(false)
+  const [showProgramList, setShowProgramList] = useState(true)
   const [showSpinner, setShowSpinner] = useState(false)
-
-  let { cardNoHover, row } = styles(themeContext.theme)
 
   const forceUpdate = routeKey => {
     clearProgram()
@@ -36,10 +31,10 @@ const Tracker = props => {
     setShowProgramList(!showProgramList)
   }
 
-  const newWorkout = () => {
-    context.clearProgram()
-    toggleShowProgramList()
-  }
+  // const chooseProgram = () => {
+  //   context.clearProgram()
+  //   toggleShowProgramList()
+  // }
 
   const handleProgramSelect = async id => {
     toggleShowProgramList()
@@ -59,11 +54,13 @@ const Tracker = props => {
     context.updateProgram(program)
   }
 
-  const clearProgram = () => {
-    context.updateProgram({})
+  const clearProgram = async () => {
+    await context.clearProgram()
+    toggleShowProgramList()
   }
 
-  return get(props, 'location', null) !== null && get(props, 'location.key', null) !== routeKey ? (
+  return get(props, 'location', null) !== null &&
+    get(props, 'location.key', null) !== routeKey ? (
     forceUpdate(props.location.key)
   ) : (
     <React.Fragment>
@@ -72,18 +69,10 @@ const Tracker = props => {
       ) : showProgramList ? (
         <ProgramsList select={handleProgramSelect} />
       ) : (
-        <div css={cardNoHover}>
-          {isEmpty(context.program) ? (
-            <div css={row}>
-              <FormButton 
-                buttonText='Select Program'
-                onClick={newWorkout}
-              />
-            </div>
-          ) : (
-            <ProgramTracker workoutSelect={props.handleWorkoutSelect} close={clearProgram} />
-          )}
-        </div>
+        <ProgramTracker
+          workoutSelect={props.handleWorkoutSelect}
+          close={clearProgram}
+        />
       )}
     </React.Fragment>
   )

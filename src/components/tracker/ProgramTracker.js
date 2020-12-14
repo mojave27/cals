@@ -18,7 +18,7 @@ const ProgramTracker = props => {
   const { tab } = programStyles(themeContext.theme)
 
   const renderTabs = () => {
-    let tabs = context.program.workouts.map( (wo,index) => {
+    let tabs = context.program.workouts.map((wo, index) => {
       let activeWorkoutId = get(context.program, 'activeWorkout.id', -1)
       let active = activeWorkoutId === wo.id
       let className = active ? 'active' : 'inactive'
@@ -27,10 +27,10 @@ const ProgramTracker = props => {
           key={wo.id}
           id={wo.id}
           className={className}
-          name={wo.name === "" ? `workout-${index}` : wo.name}
+          name={wo.name === '' ? `workout-${index}` : wo.name}
           onClick={openWorkout}
         >
-          {wo.name === "" ? `workout-${index}` : wo.name}
+          {wo.name === '' ? `workout-${index}` : wo.name}
         </button>
       )
     })
@@ -78,12 +78,17 @@ const ProgramTracker = props => {
     props.close()
   }
 
-  return (
+  // const showStuff = () => {
+    // console.log(context.program)
+  // }
+
+  return isEmpty(context.program) ? null : (
     <React.Fragment>
       <div id={context.program.id}>
         <span css={closeButton} onClick={handleClose}>
           &times;
         </span>
+        {/* {showStuff()} */}
         <div css={cardTitle}>{context.program.name}</div>
         <div css={cardInfo}>{context.program.description}</div>
 

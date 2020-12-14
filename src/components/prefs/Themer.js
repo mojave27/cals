@@ -30,11 +30,11 @@ const Themer = props => {
       <ChangeTheme theme={'bakery'} />
       <div style={{ color: context.theme.color1, margin:'50px' }}>{context.theme.name}</div>
       <hr/>
-      <div style={{backgroundColor: context.theme.color1.hex, color: context.theme.color1_text.hex}}>color1</div>
-      <div style={{backgroundColor: context.theme.color2.hex, color: context.theme.color2_text.hex}}>color2</div>
-      <div style={{backgroundColor: context.theme.color3.hex, color: context.theme.color3_text.hex}}>color3</div>
-      <div style={{backgroundColor: context.theme.color4.hex, color: context.theme.color4_text.hex}}>color4</div>
-      <div style={{backgroundColor: context.theme.color5.hex, color: context.theme.color5_text.hex, border: `1px solid ${context.theme.color4.hex}`}}>color5</div>
+      <div style={{backgroundColor: context.theme.color1.hex, color: context.theme.color1_text.hex, height:'100px', width:'200px'}}>color1</div>
+      <div style={{backgroundColor: context.theme.color2.hex, color: context.theme.color2_text.hex, height:'100px', width:'200px'}}>color2</div>
+      <div style={{backgroundColor: context.theme.color3.hex, color: context.theme.color3_text.hex, height:'100px', width:'200px'}}>color3</div>
+      <div style={{backgroundColor: context.theme.color4.hex, color: context.theme.color4_text.hex, height:'100px', width:'200px'}}>color4</div>
+      <div style={{backgroundColor: context.theme.color5.hex, color: context.theme.color5_text.hex, border: `1px solid ${context.theme.color4.hex}`, height:'100px', width:'200px'}}>color5</div>
     </div>
   )
 }
