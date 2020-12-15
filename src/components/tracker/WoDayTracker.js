@@ -46,11 +46,6 @@ const WoDayTracker = props => {
     navigate(WODAY_PATH)
   }
 
-  const newWoDay = () => {
-    // console.log(id)
-    navigate(WODAY_PATH, { state: { new: true } })
-  }
-
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
