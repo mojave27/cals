@@ -36,10 +36,6 @@ import {
 
 const WorkoutDay = props => {
 
-  const saveWorkout = async () => {
-
-  }
-
   const handleCellChange = event => {
     let { id, value, name } = event.target
     // create the update object

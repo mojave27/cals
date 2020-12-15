@@ -19,6 +19,25 @@ export let retrieve = async () => {
     })
 }
 
+export let addExercise = async (exercise) => {
+  console.log(`posting exercise: ${JSON.stringify(exercise)}`)
+  const url = 'exercises'
+  let configWithAuth = await getAxiosConfigWithAuth()
+
+  return axios
+    .post(url, exercise, configWithAuth)
+    .then(function(response) {
+      console.log(response)
+      const data = parseResponse(response)
+      return data
+    })
+    .catch(function(error) {
+      // handle error
+      console.log(`[ui - retrieve exercises] api error: ${error}`)
+      return []
+    })
+}
+
 export let deleteExercisesById = ids => {
   let responses = []
   ids.forEach( async id => {

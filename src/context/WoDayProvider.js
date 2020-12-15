@@ -1,14 +1,9 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
-import {
-  findIndexOfStringId,
-  updateItemById
-} from '../components/ArrayUtils'
+import { findIndexOfStringId, updateItemById } from '../components/ArrayUtils'
 import { cloneDeep } from 'lodash'
 import {
-  addWoDay,
   retrieve as fetchWoDays,
-  retrieveWoDayById,
   updateWoDay
 } from '../api/wodaysApi'
 
@@ -67,20 +62,19 @@ class WoDayProvider extends React.Component {
 
   saveWoDay = async () => {
     console.log('saving woday')
-    // if(this.isWoDayInList()){
-    if(this.state.woday.id === -1){
-      let wodayId = await addWoDay(this.state.woday)
-      let woday = await retrieveWoDayById(wodayId)
-      let wodays = await fetchWoDays()
-      this.setState({woday, wodays})
-      // this.saveWoDayInWoDaysList(woday)
-    } else {
-      await updateWoDay(this.state.woday)
-    }
+    let savedWoDay = await updateWoDay(this.state.woday)
+    await this.setState(prevState => {
+      let updatedWoDay = prevState.woday
+      updatedWoDay.id = savedWoDay.id
+      return { woday: updatedWoDay }
+    })
   }
 
   isWoDayInList = () => {
-    let answer = (findIndexOfStringId(this.state.woday.id, this.state.wodays) === -1) ? false : true
+    let answer =
+      findIndexOfStringId(this.state.woday.id, this.state.wodays) === -1
+        ? false
+        : true
     return answer
   }
 
@@ -96,10 +90,10 @@ class WoDayProvider extends React.Component {
           updateWoDay: woday => {
             this.setState({ woday })
           },
-          setEmptyWoDay: () => {
+          setEmptyWoDay: async () => {
             let woday = cloneDeep(emptyWoDay)
             // woday.id = generateNewId(this.state.wodays)
-            this.setState({ woday: woday })
+            await this.setState({ woday: woday })
           },
           addSet: set => {
             const woday = Object.assign({}, this.state.woday)

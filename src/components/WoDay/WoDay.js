@@ -2,8 +2,7 @@ import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { navigate } from '@reach/router'
-import { useContext, useEffect, useState } from 'react'
-import { retrieveWoDayById } from '../../api/wodaysApi'
+import { useContext, useState } from 'react'
 import { retrieveWorkoutById } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WoDayContext from '../../context/WoDayContext'
@@ -46,39 +45,13 @@ const WoDay = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
 
-  useEffect(() => {
-    if (props.location.state.new) {
-      woDayContext.setEmptyWoDay()
-    } else {
-      let didCancel = false
-      async function fetchWoDay() {
-        const response = await retrieveWoDayById(props.location.state.id)
-        if (!didCancel) {
-          woDayContext.updateWoDay(response)
-        }
-      }
-
-      fetchWoDay()
-      return () => {
-        didCancel = true
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   let { cardNoHover, detailCard, row } = styles(themeContext.theme)
 
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
   const woDayLoaded = () => {
-    if (
-      !props.location.state.new &&
-      props.location.state.id !== woDayContext.woday.id
-    ) {
-      return false
-    } else {
       return true
-    }
   }
 
   const retrieveWorkout = async workoutId => {
