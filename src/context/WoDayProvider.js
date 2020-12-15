@@ -68,15 +68,20 @@ class WoDayProvider extends React.Component {
   saveWoDay = async () => {
     console.log('saving woday')
     // if(this.isWoDayInList()){
-    if(this.state.woday.id === -1){
-      let wodayId = await addWoDay(this.state.woday)
-      let woday = await retrieveWoDayById(wodayId)
-      let wodays = await fetchWoDays()
-      this.setState({woday, wodays})
-      // this.saveWoDayInWoDaysList(woday)
-    } else {
-      await updateWoDay(this.state.woday)
-    }
+    // if (this.state.woday.id === -1 || this.state.woday.id === ''){
+    //   let wodayId = await addWoDay(this.state.woday)
+    //   let woday = await retrieveWoDayById(wodayId)
+    //   let wodays = await fetchWoDays()
+    //   await this.setState({woday, wodays})
+    //   // this.saveWoDayInWoDaysList(woday)
+    // } else {
+      let savedWoDay = await updateWoDay(this.state.woday)
+      await this.setState(prevState => {
+        let updatedWoDay = prevState.woday
+        updatedWoDay.id = savedWoDay.id
+        return ({woday: updatedWoDay})
+      })
+    // }
   }
 
   isWoDayInList = () => {
@@ -96,10 +101,10 @@ class WoDayProvider extends React.Component {
           updateWoDay: woday => {
             this.setState({ woday })
           },
-          setEmptyWoDay: () => {
+          setEmptyWoDay: async () => {
             let woday = cloneDeep(emptyWoDay)
             // woday.id = generateNewId(this.state.wodays)
-            this.setState({ woday: woday })
+            await this.setState({ woday: woday })
           },
           addSet: set => {
             const woday = Object.assign({}, this.state.woday)

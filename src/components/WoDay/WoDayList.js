@@ -44,6 +44,7 @@ const WoDayList = props => {
       let bDate = new Date(`${b.date.month} ${b.date.day} ${b.date.year}`)
       return aDate - bDate
     })
+    wodays.reverse()
     return wodays
   }
 

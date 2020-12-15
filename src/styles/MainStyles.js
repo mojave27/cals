@@ -33,6 +33,8 @@ export let styles = theme => {
     border: `1px solid ${theme.color4.hex}`,
     borderRadius: '2px',
     backgroundColor: theme.color4.hex,
+    // background: `linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)`,
+    background: `linear-gradient(0deg, ${theme.color4.hex} 30%, ${theme.color4.rgba(0.6)} 90%)`,
     padding: '20px',
     boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
     transition: '0.3s',

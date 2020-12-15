@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '../Modal'
 import WoDayList from '../WoDay/WoDayList'
+import WoDayContext from '../../context/WoDayContext'
+import { retrieveWoDayById } from '../../api/wodaysApi'
 import { navigate } from '@reach/router'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
@@ -23,20 +25,25 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayTracker = props => {
   let [showModal, setShowModal] = useState(false)
+
+  let woDayContext = useContext(WoDayContext)
   const classes = useStyles()
 
   const toggleModal = () => {
     setShowModal(!showModal)
   }
 
-  const chooseWoDay = id => {
+  const chooseWoDay = async (id) => {
     console.log(id)
-    navigate(WODAY_PATH, { state: { id: id } })
+    const response = await retrieveWoDayById(id)
+    console.log(response)
+    await woDayContext.updateWoDay(response)
+    navigate(WODAY_PATH)
   }
 
-  const newWoDay = () => {
-    // console.log(id)
-    navigate(WODAY_PATH, { state: { new: true } })
+  const newWoDay = async () => {
+    await woDayContext.setEmptyWoDay()
+    navigate(WODAY_PATH)
   }
 
   return (
