@@ -1,14 +1,9 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
-import {
-  findIndexOfStringId,
-  updateItemById
-} from '../components/ArrayUtils'
+import { findIndexOfStringId, updateItemById } from '../components/ArrayUtils'
 import { cloneDeep } from 'lodash'
 import {
-  addWoDay,
   retrieve as fetchWoDays,
-  retrieveWoDayById,
   updateWoDay
 } from '../api/wodaysApi'
 
@@ -67,25 +62,19 @@ class WoDayProvider extends React.Component {
 
   saveWoDay = async () => {
     console.log('saving woday')
-    // if(this.isWoDayInList()){
-    // if (this.state.woday.id === -1 || this.state.woday.id === ''){
-    //   let wodayId = await addWoDay(this.state.woday)
-    //   let woday = await retrieveWoDayById(wodayId)
-    //   let wodays = await fetchWoDays()
-    //   await this.setState({woday, wodays})
-    //   // this.saveWoDayInWoDaysList(woday)
-    // } else {
-      let savedWoDay = await updateWoDay(this.state.woday)
-      await this.setState(prevState => {
-        let updatedWoDay = prevState.woday
-        updatedWoDay.id = savedWoDay.id
-        return ({woday: updatedWoDay})
-      })
-    // }
+    let savedWoDay = await updateWoDay(this.state.woday)
+    await this.setState(prevState => {
+      let updatedWoDay = prevState.woday
+      updatedWoDay.id = savedWoDay.id
+      return { woday: updatedWoDay }
+    })
   }
 
   isWoDayInList = () => {
-    let answer = (findIndexOfStringId(this.state.woday.id, this.state.wodays) === -1) ? false : true
+    let answer =
+      findIndexOfStringId(this.state.woday.id, this.state.wodays) === -1
+        ? false
+        : true
     return answer
   }
 
