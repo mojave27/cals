@@ -41,7 +41,7 @@ class Stopwatch extends Component {
     let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
     return (
       <div className="Stopwatch">
-        <div className="Stopwatch-header">Stopwatch</div>
+        {this.props.header !== undefined ? <div className="Stopwatch-header">Stopwatch</div> : null}
         <div className="Stopwatch-display" style={{fontSize: '3.5em'}} >
           {hours}:{minutes}:{seconds}<span style={{fontSize: '0.5em'}}>:{centiseconds}</span>
         </div>

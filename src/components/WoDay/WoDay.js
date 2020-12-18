@@ -2,7 +2,7 @@ import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { navigate } from '@reach/router'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { retrieveWorkoutById } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WoDayContext from '../../context/WoDayContext'
@@ -25,6 +25,7 @@ import { woDayStyles } from '../../styles/WoDayStyles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
 import StopWatch from '../Admin/StopWatch'
+import { AppBar, Toolbar } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,17 +42,47 @@ const useStyles = makeStyles(theme => ({
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
+  let [showStopWatch, setShowStopWatch] = useState(false)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
-
 
   let { cardNoHover, detailCard, row } = styles(themeContext.theme)
 
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
+  useEffect(() => {
+    windowLoc()
+    // return () => { }
+  }, )
+
+  const windowLoc = () => {
+    if (typeof window !== "undefined") {
+      window.onscroll = () => {
+        let currentScrollPos = window.pageYOffset;
+        console.log(currentScrollPos)
+        let maxScroll = document.body.scrollHeight - window.innerHeight;
+        // console.log(maxScroll)
+
+        // console.log(currentScrollPos/maxScroll)
+        
+        if ( (currentScrollPos/maxScroll) > .10) {
+          setShowStopWatch(true)
+        }else{
+          setShowStopWatch(false)
+        }
+        // if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
+        //   this.setState({ opacity: "0" })
+        //   // console.log(currentScrollPos)
+        // } else {
+        //   this.setState({ opacity: "1" })
+        // }
+      }
+    }
+  }
+
   const woDayLoaded = () => {
-      return true
+    return true
   }
 
   const retrieveWorkout = async workoutId => {
@@ -130,7 +161,6 @@ const WoDay = props => {
   }
 
   const handleSetChange = event => {
-
     let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
@@ -371,12 +401,31 @@ const WoDay = props => {
     return data
   }
 
+  const startTimer = () => {
+    setShowStopWatch(!showStopWatch)
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
+        {showStopWatch === true ? (
+          <AppBar position='sticky'>
+            <Toolbar>
+              <StopWatch />
+              <Button
+                    style={{ margin: '3px' }}
+                    variant='contained'
+                    size='small'
+                    onClick={saveWoDay}
+                  >
+                    {'Save'}
+                  </Button>>
+            </Toolbar>
+          </AppBar>
+        ) : null}
         {woDayLoaded() ? (
           <div css={detailCard}>
             <div id={'cardNoHover'} css={cardNoHover}>
@@ -388,15 +437,33 @@ const WoDay = props => {
                 spacing={1}
               >
                 <Grid item xs={6} sm={3}>
-                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={saveWoDay}>{'Save'}</Button>
-                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={home}>{'Close'}</Button>
+                  <Button
+                    style={{ margin: '3px' }}
+                    variant='contained'
+                    size='small'
+                    onClick={saveWoDay}
+                  >
+                    {'Save'}
+                  </Button>
+                  <Button
+                    style={{ margin: '3px' }}
+                    variant='contained'
+                    size='small'
+                    onClick={home}
+                  >
+                    {'Close'}
+                  </Button>
                 </Grid>
               </Grid>
               {/* </div> */}
               {/* --- section 1: Details --------------------------------------- */}
               <div
                 css={row}
-                style={{ marginTop: '10px', padding: '10px', border: '1px solid #eee' }}
+                style={{
+                  marginTop: '10px',
+                  padding: '10px',
+                  border: '1px solid #eee'
+                }}
               >
                 <Grid container spacing={1} justify='flex-start'>
                   <Grid item xs={12} sm={6}>
@@ -488,9 +555,26 @@ const WoDay = props => {
                 />
               </div>
               {/* --- section -: stop watch ------------------------------------ */}
+              {showStopWatch === true ? 
+              null
+              :
               <div css={[row, section]}>
-                <StopWatch />
+                {/* <StopWatch onClick={startTimer} /> */}
+                <div
+                  className='Stopwatch-display'
+                  style={{ fontSize: '3.5em' }}
+                >
+                  {'00:00:00'}<span style={{ fontSize: '0.5em' }}>:00</span>
+                </div>
+                <Button
+                  size='small'
+                  onClick={startTimer}
+                  variant='contained'
+                >
+                  {'Start'}
+                </Button>
               </div>
+            }
               {/* --- section 3: Weights --------------------------------------- */}
               <div css={[row, section]}>
                 <div css={sectionHeader}>Weights</div>
