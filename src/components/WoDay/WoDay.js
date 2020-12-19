@@ -24,8 +24,7 @@ import { styles } from '../../styles/MainStyles'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-import StopWatch from '../Admin/StopWatch'
-import { AppBar, Toolbar } from '@material-ui/core'
+import WoDayAppBar from './WoDayAppBar'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +42,10 @@ const useStyles = makeStyles(theme => ({
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
   let [showStopWatch, setShowStopWatch] = useState(false)
+  let [timerOn, setTimerOn] = useState(false)
+  let [timerStart, setTimerStart] = useState(0)
+  let [timerTime, setTimerTime] = useState(0)
+  let [timer, setTimer] = useState(null)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
@@ -53,14 +56,13 @@ const WoDay = props => {
 
   useEffect(() => {
     windowLoc()
-    // return () => { }
   }, )
 
   const windowLoc = () => {
     if (typeof window !== "undefined") {
       window.onscroll = () => {
         let currentScrollPos = window.pageYOffset;
-        console.log(currentScrollPos)
+        // console.log(currentScrollPos)
         let maxScroll = document.body.scrollHeight - window.innerHeight;
         // console.log(maxScroll)
 
@@ -80,6 +82,30 @@ const WoDay = props => {
       }
     }
   }
+
+  /* *********** timer funcs ************************ */
+  const startTimer = () => {
+    console.log('stuff')
+    console.log(Date.now() - timerTime)
+    // setTimerTime(timerTime)
+    setTimerStart(Date.now() - timerTime)
+    setTimerOn(true)
+    setTimer(setInterval(() => {
+      console.log(Date.now() - timerStart)
+      setTimerTime(Date.now() - timerStart)
+    }, 10))
+  }
+
+  const stopTimer = () => {
+    setTimerOn(false)
+    clearInterval(timer)
+  }
+
+  const resetTimer = () => {
+    setTimerStart(0)
+    setTimerTime(0)
+  }
+
 
   const woDayLoaded = () => {
     return true
@@ -401,7 +427,7 @@ const WoDay = props => {
     return data
   }
 
-  const startTimer = () => {
+  const showTimer = () => {
     setShowStopWatch(!showStopWatch)
   }
 
@@ -412,19 +438,14 @@ const WoDay = props => {
       </Modal>
       <div>
         {showStopWatch === true ? (
-          <AppBar position='sticky'>
-            <Toolbar>
-              <StopWatch />
-              <Button
-                    style={{ margin: '3px' }}
-                    variant='contained'
-                    size='small'
-                    onClick={saveWoDay}
-                  >
-                    {'Save'}
-                  </Button>>
-            </Toolbar>
-          </AppBar>
+          <WoDayAppBar 
+            show={showStopWatch}
+            startTimer={startTimer}
+            stopTimer={stopTimer}
+            resetTimer={resetTimer}
+            timerTime={timerTime}
+            timerOn={timerOn}
+          />
         ) : null}
         {woDayLoaded() ? (
           <div css={detailCard}>
@@ -555,26 +576,21 @@ const WoDay = props => {
                 />
               </div>
               {/* --- section -: stop watch ------------------------------------ */}
-              {showStopWatch === true ? 
-              null
-              :
-              <div css={[row, section]}>
-                {/* <StopWatch onClick={startTimer} /> */}
-                <div
-                  className='Stopwatch-display'
-                  style={{ fontSize: '3.5em' }}
-                >
-                  {'00:00:00'}<span style={{ fontSize: '0.5em' }}>:00</span>
+              {showStopWatch === true ? null : (
+                <div css={[row, section]}>
+                  {/* <StopWatch onClick={startTimer} /> */}
+                  <div
+                    className='Stopwatch-display'
+                    style={{ fontSize: '3.5em' }}
+                  >
+                    {'00:00:00'}
+                    <span style={{ fontSize: '0.5em' }}>:00</span>
+                  </div>
+                  <Button size='small' onClick={showTimer} variant='contained'>
+                    {'Start'}
+                  </Button>
                 </div>
-                <Button
-                  size='small'
-                  onClick={startTimer}
-                  variant='contained'
-                >
-                  {'Start'}
-                </Button>
-              </div>
-            }
+              )}
               {/* --- section 3: Weights --------------------------------------- */}
               <div css={[row, section]}>
                 <div css={sectionHeader}>Weights</div>
