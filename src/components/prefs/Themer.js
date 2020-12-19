@@ -26,8 +26,10 @@ const Themer = props => {
       <ChangeTheme theme={'stormTrooperInverse'} />
       <ChangeTheme theme={'siberianWinter'} />
       <ChangeTheme theme={'woSheet'} />
-      <ChangeTheme theme={'primaries'} />
+      <ChangeTheme theme={'crystal'} />
       <ChangeTheme theme={'bakery'} />
+      <ChangeTheme theme={'lake'} />
+      <ChangeTheme theme={'villa'} />
       <div style={{ color: context.theme.color1, margin:'50px' }}>{context.theme.name}</div>
       <hr/>
       <div style={{backgroundColor: context.theme.color1.hex, color: context.theme.color1_text.hex, height:'100px', width:'200px'}}>color1</div>

@@ -1,3 +1,80 @@
+export const villa = {
+	color1: {
+					hex: '#FFFFFF',
+					rgba: alpha => buildRgba(255, 255, 255, alpha)
+	},
+	get color1_text() {
+					return this.color5
+	},
+	color2: {
+					hex: '#EBE8E4',
+					rgba: alpha => buildRgba(235, 232, 228, alpha)
+	},
+	get color2_text() {
+					return this.color5
+	},
+	color3: {
+					hex: '#F5F099',
+					rgba: alpha => buildRgba(245, 240, 153, alpha)
+	},
+	get color3_text() {
+					return this.color5
+	},
+	color4: {
+					hex: '#FA9C1E',
+					rgba: alpha => buildRgba(250, 156, 30, alpha)
+	},
+	get color4_text() {
+					return this.color1
+	},
+	color5: {
+					hex: '#48A180',
+					rgba: alpha => buildRgba(72, 161, 128, alpha)
+	},
+	get color5_text() {
+					return this.color1
+	},
+}
+
+export const crystal = {
+	color1: {
+		hex: '#F2F2F2',
+		rgba: alpha => buildRgba(242, 242, 242, alpha)
+	},
+	get color1_text() {
+		return this.color5
+	},
+	color2: {
+		hex: '#D9D9D9',
+		rgba: alpha => buildRgba(217, 217, 217, alpha)
+	},
+	get color2_text() {
+		return this.color5
+	},
+	color3: {
+		hex: '#95ACBF',
+		rgba: alpha => buildRgba(149, 172, 191, alpha)
+	},
+	get color3_text() {
+		return this.color5
+	},
+	color4: {
+		hex: '#4C5D73',
+		rgba: alpha => buildRgba(76, 93, 115, alpha)
+	},
+	get color4_text() {
+		return this.color1
+	},
+	color5: {
+		hex: '#404040',
+		rgba: alpha => buildRgba(64, 64, 64, alpha)
+	},
+	get color5_text() {
+		return this.color1
+	},
+}
+
+
 export const primaries = {
 	name: 'primaries',
 	palette: { type: "light"},
@@ -262,8 +339,8 @@ export const lake = {
 		return this.color5
 	},
 	color2: {
-		hex: '#F3FFE2',
-		rgba: alpha => buildRgba(243, 255, 226, alpha)
+		hex: '#F2FEFE',
+		rgba: alpha => buildRgba(242, 254, 254, alpha)
 	},
 	get color2_text() {
 		return this.color5

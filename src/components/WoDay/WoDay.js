@@ -25,6 +25,7 @@ import { woDayStyles } from '../../styles/WoDayStyles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
 import WoDayAppBar from './WoDayAppBar'
+import StopWatch from '../Admin/StopWatch'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,16 +43,20 @@ const useStyles = makeStyles(theme => ({
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
   let [showStopWatch, setShowStopWatch] = useState(false)
-  let [timerOn, setTimerOn] = useState(false)
-  let [timerStart, setTimerStart] = useState(0)
-  let [timerTime, setTimerTime] = useState(0)
+  let [timerState, setTimerState] = useState({
+    timerOn: false,
+    timerStart: 0,
+    timerTime: 0
+  })
+  // let [timerOn, setTimerOn] = useState(false)
+  // let [timerStart, setTimerStart] = useState(0)
+  // let [timerTime, setTimerTime] = useState(0)
   let [timer, setTimer] = useState(null)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
 
   let { cardNoHover, detailCard, row } = styles(themeContext.theme)
-
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
   useEffect(() => {
@@ -85,25 +90,39 @@ const WoDay = props => {
 
   /* *********** timer funcs ************************ */
   const startTimer = () => {
-    console.log('stuff')
-    console.log(Date.now() - timerTime)
+    // console.log('stuff')
+    // console.log(Date.now() - timerTime)
     // setTimerTime(timerTime)
-    setTimerStart(Date.now() - timerTime)
-    setTimerOn(true)
+    // setTimerStart(Date.now() - timerTime)
+    // setTimerOn(true)
+    setTimerState({
+      timerOn: true,
+      timerStart: Date.now() - timerState.timerTime,
+      timerTime: timerState.timerTime
+    })
     setTimer(setInterval(() => {
-      console.log(Date.now() - timerStart)
-      setTimerTime(Date.now() - timerStart)
+      // console.log(timerState.timerTime)
+      // console.log(Date.now())
+      // console.log(Date.now() - timerState.timerStart)
+      // setTimerTime(Date.now() - timerStart)
+      setTimerState({
+        timerOn: true,
+        timerStart: timerState.timerStart,
+        timerTime: Date.now() - timerState.timerStart
+      })
     }, 10))
   }
 
   const stopTimer = () => {
-    setTimerOn(false)
+    // setTimerOn(false)
+    setTimerState({timerOn: false, timerTime: timerState.timerTime, timerStart: timerState.timerStart})
     clearInterval(timer)
   }
 
   const resetTimer = () => {
-    setTimerStart(0)
-    setTimerTime(0)
+    // setTimerStart(0)
+    // setTimerTime(0)
+    setTimerState({timerOn: timerState.timerOn, timerStart: 0, timerTime: 0})
   }
 
 
@@ -443,8 +462,8 @@ const WoDay = props => {
             startTimer={startTimer}
             stopTimer={stopTimer}
             resetTimer={resetTimer}
-            timerTime={timerTime}
-            timerOn={timerOn}
+            timerTime={timerState.timerTime}
+            timerOn={timerState.timerOn}
           />
         ) : null}
         {woDayLoaded() ? (
@@ -578,17 +597,17 @@ const WoDay = props => {
               {/* --- section -: stop watch ------------------------------------ */}
               {showStopWatch === true ? null : (
                 <div css={[row, section]}>
-                  {/* <StopWatch onClick={startTimer} /> */}
-                  <div
+                  <StopWatch onClick={startTimer} />
+                  {/* <div
                     className='Stopwatch-display'
                     style={{ fontSize: '3.5em' }}
                   >
                     {'00:00:00'}
                     <span style={{ fontSize: '0.5em' }}>:00</span>
-                  </div>
-                  <Button size='small' onClick={showTimer} variant='contained'>
+                  </div> */}
+                  {/* <Button size='small' onClick={showTimer} variant='contained'>
                     {'Start'}
-                  </Button>
+                  </Button> */}
                 </div>
               )}
               {/* --- section 3: Weights --------------------------------------- */}

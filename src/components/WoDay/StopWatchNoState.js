@@ -15,7 +15,7 @@ class Stopwatch extends Component {
   }
 
   doStuff = () => {
-    console.log(this.props.timerTime/3600000)
+    console.log(this.props)
   }
 
   render() {
