@@ -9,8 +9,6 @@ class Stopwatch extends Component {
   };
 
   startTimer = () => {
-    console.log(this.state.timerTime)
-    console.log(Date.now() - this.state.timerTime)
     this.setState({
       timerOn: true,
       // timerTime: this.state.timerTime,

@@ -2,7 +2,7 @@ import React from 'react'
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { navigate } from '@reach/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { retrieveWorkoutById } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WoDayContext from '../../context/WoDayContext'
@@ -17,7 +17,6 @@ import { cloneDeep } from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import WorkoutChooser from '../workouts/WorkoutChooser'
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
 import { styles } from '../../styles/MainStyles'
@@ -25,7 +24,6 @@ import { woDayStyles } from '../../styles/WoDayStyles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
 import WoDayAppBar from './WoDayAppBar'
-import StopWatch from '../Admin/StopWatch'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,16 +40,6 @@ const useStyles = makeStyles(theme => ({
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
-  let [showStopWatch, setShowStopWatch] = useState(false)
-  let [timerState, setTimerState] = useState({
-    timerOn: false,
-    timerStart: 0,
-    timerTime: 0
-  })
-  // let [timerOn, setTimerOn] = useState(false)
-  // let [timerStart, setTimerStart] = useState(0)
-  // let [timerTime, setTimerTime] = useState(0)
-  let [timer, setTimer] = useState(null)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
@@ -59,72 +47,34 @@ const WoDay = props => {
   let { cardNoHover, detailCard, row } = styles(themeContext.theme)
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
-  useEffect(() => {
-    windowLoc()
-  }, )
+  // useEffect(() => {
+  //   windowLoc()
+  // }, )
 
-  const windowLoc = () => {
-    if (typeof window !== "undefined") {
-      window.onscroll = () => {
-        let currentScrollPos = window.pageYOffset;
-        // console.log(currentScrollPos)
-        let maxScroll = document.body.scrollHeight - window.innerHeight;
-        // console.log(maxScroll)
+  // const windowLoc = () => {
+  //   if (typeof window !== "undefined") {
+  //     window.onscroll = () => {
+  //       let currentScrollPos = window.pageYOffset;
+  //       // console.log(currentScrollPos)
+  //       let maxScroll = document.body.scrollHeight - window.innerHeight;
+  //       // console.log(maxScroll)
 
-        // console.log(currentScrollPos/maxScroll)
-        
-        if ( (currentScrollPos/maxScroll) > .10) {
-          setShowStopWatch(true)
-        }else{
-          setShowStopWatch(false)
-        }
-        // if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
-        //   this.setState({ opacity: "0" })
-        //   // console.log(currentScrollPos)
-        // } else {
-        //   this.setState({ opacity: "1" })
-        // }
-      }
-    }
-  }
+  //       // console.log(currentScrollPos/maxScroll)
 
-  /* *********** timer funcs ************************ */
-  const startTimer = () => {
-    // console.log('stuff')
-    // console.log(Date.now() - timerTime)
-    // setTimerTime(timerTime)
-    // setTimerStart(Date.now() - timerTime)
-    // setTimerOn(true)
-    setTimerState({
-      timerOn: true,
-      timerStart: Date.now() - timerState.timerTime,
-      timerTime: timerState.timerTime
-    })
-    setTimer(setInterval(() => {
-      // console.log(timerState.timerTime)
-      // console.log(Date.now())
-      // console.log(Date.now() - timerState.timerStart)
-      // setTimerTime(Date.now() - timerStart)
-      setTimerState({
-        timerOn: true,
-        timerStart: timerState.timerStart,
-        timerTime: Date.now() - timerState.timerStart
-      })
-    }, 10))
-  }
-
-  const stopTimer = () => {
-    // setTimerOn(false)
-    setTimerState({timerOn: false, timerTime: timerState.timerTime, timerStart: timerState.timerStart})
-    clearInterval(timer)
-  }
-
-  const resetTimer = () => {
-    // setTimerStart(0)
-    // setTimerTime(0)
-    setTimerState({timerOn: timerState.timerOn, timerStart: 0, timerTime: 0})
-  }
-
+  //       if ( (currentScrollPos/maxScroll) > .10) {
+  //         setShowStopWatch(true)
+  //       }else{
+  //         setShowStopWatch(false)
+  //       }
+  //       // if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
+  //       //   this.setState({ opacity: "0" })
+  //       //   // console.log(currentScrollPos)
+  //       // } else {
+  //       //   this.setState({ opacity: "1" })
+  //       // }
+  //     }
+  //   }
+  // }
 
   const woDayLoaded = () => {
     return true
@@ -446,9 +396,9 @@ const WoDay = props => {
     return data
   }
 
-  const showTimer = () => {
-    setShowStopWatch(!showStopWatch)
-  }
+  // const showTimer = () => {
+  //   setShowStopWatch(!showStopWatch)
+  // }
 
   return (
     <React.Fragment>
@@ -456,46 +406,10 @@ const WoDay = props => {
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
-        {showStopWatch === true ? (
-          <WoDayAppBar 
-            show={showStopWatch}
-            startTimer={startTimer}
-            stopTimer={stopTimer}
-            resetTimer={resetTimer}
-            timerTime={timerState.timerTime}
-            timerOn={timerState.timerOn}
-          />
-        ) : null}
+        <WoDayAppBar onSave={saveWoDay} onClose={home} />
         {woDayLoaded() ? (
           <div css={detailCard}>
             <div id={'cardNoHover'} css={cardNoHover}>
-              <Grid
-                container
-                direction='row'
-                justify='flex-end'
-                alignItems='center'
-                spacing={1}
-              >
-                <Grid item xs={6} sm={3}>
-                  <Button
-                    style={{ margin: '3px' }}
-                    variant='contained'
-                    size='small'
-                    onClick={saveWoDay}
-                  >
-                    {'Save'}
-                  </Button>
-                  <Button
-                    style={{ margin: '3px' }}
-                    variant='contained'
-                    size='small'
-                    onClick={home}
-                  >
-                    {'Close'}
-                  </Button>
-                </Grid>
-              </Grid>
-              {/* </div> */}
               {/* --- section 1: Details --------------------------------------- */}
               <div
                 css={row}
@@ -594,22 +508,6 @@ const WoDay = props => {
                   onChange={handleExerciseChange}
                 />
               </div>
-              {/* --- section -: stop watch ------------------------------------ */}
-              {showStopWatch === true ? null : (
-                <div css={[row, section]}>
-                  <StopWatch onClick={startTimer} />
-                  {/* <div
-                    className='Stopwatch-display'
-                    style={{ fontSize: '3.5em' }}
-                  >
-                    {'00:00:00'}
-                    <span style={{ fontSize: '0.5em' }}>:00</span>
-                  </div> */}
-                  {/* <Button size='small' onClick={showTimer} variant='contained'>
-                    {'Start'}
-                  </Button> */}
-                </div>
-              )}
               {/* --- section 3: Weights --------------------------------------- */}
               <div css={[row, section]}>
                 <div css={sectionHeader}>Weights</div>

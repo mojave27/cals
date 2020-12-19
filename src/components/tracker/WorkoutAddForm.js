@@ -43,6 +43,7 @@ const WorkoutAddForm = props => {
 
   const handleRowClick = event => {
     let id = event.currentTarget.id
+    console.log(id)
   }
 
   // lots of changes going on here...
