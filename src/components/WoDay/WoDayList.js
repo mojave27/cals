@@ -4,8 +4,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { basicButton } from '../../styles/Styles'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import IconButton from '@material-ui/core/IconButton'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import Container from '@material-ui/core/Container'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +25,18 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.color2.hex,
     margin: '3px'
   },
-  basicButton: basicButton(theme)
+  basicButton: basicButton(theme),
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)'
+  },
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  }
 }))
 
 const WoDayList = props => {
@@ -53,26 +68,45 @@ const WoDayList = props => {
   }
 
   const renderWoDays = woDays => {
-    // let sortedWoDays = [...woDays]
     return (
+      <Container style={{padding:'25px'}}>
       <Grid container spacing={1}>
         {woDays.map(woDay => {
           let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
             woDay.date.year
           }`
-          let woName = woDay.wo.name ? woDay.wo.name : ''
           return (
-            <Grid item xs={12} sm={12} key={`${date}-${woDay.id}`}>
-              <Paper
-                className={classes.paper}
-                onClick={() => doStuff(woDay.id)}
-              >
-                {date}-{woName}-{woDay.goals}
-              </Paper>
+            <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
+              <Card className={classes.root}>
+                <CardHeader
+                  action={
+                    <IconButton
+                      aria-label='settings'
+                      onClick={() => doStuff(woDay.id)}
+                    >
+                      <AddCircleIcon />
+                    </IconButton>
+                  }
+                  title={date}
+                  subheader={woDay.wo.name ? woDay.wo.name : 'none'}
+                />
+                {/* <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color='textSecondary'
+                    gutterBottom
+                  >
+                    Workout Goals
+                  </Typography>
+                  <Typography>
+                    {woDay.goals === '' ? 'none' : woDay.goals}
+                  </Typography>
+                </CardContent> */}
+              </Card>
             </Grid>
           )
         })}
-      </Grid>
+      </Grid></Container>
     )
   }
 
