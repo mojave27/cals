@@ -30,7 +30,7 @@ const Workout = props => {
 
   return (
     <div className={classes.root}>
-      <ButtonGroup size='small' orientation={context.mobile === true ? 'vertical': ''} variant='contained' style={{margin:'10px'}}>
+      <ButtonGroup size='small' orientation={context.mobile === true ? 'vertical': 'horizontal'} variant='contained' style={{margin:'10px'}}>
         <Button style={{margin:'1px'}} onClick={showWorkoutChooser}>{'Choose Workout'}</Button>
         <Button style={{margin:'1px'}} onClick={addSet}>{'Add Set'}</Button>
         <Button style={{margin:'1px'}} onClick={addExercise}>{'Add Exercise'}</Button>
