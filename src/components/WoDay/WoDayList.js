@@ -6,13 +6,12 @@ import BasicSpinner from '../spinners/BasicSpinner'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
 import Container from '@material-ui/core/Container'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    textAlign: 'center'
   },
   control: {
     padding: theme.spacing(2)
@@ -75,31 +74,11 @@ const WoDayList = props => {
           }`
           return (
             <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
-              <Card className={classes.root}>
+              <Card className={classes.root} onClick={() => doStuff(woDay.id)}>
                 <CardHeader
-                  action={
-                    <IconButton
-                      aria-label='settings'
-                      onClick={() => doStuff(woDay.id)}
-                    >
-                      <AddCircleIcon />
-                    </IconButton>
-                  }
                   title={date}
                   subheader={woDay.wo.name ? woDay.wo.name : 'none'}
                 />
-                {/* <CardContent>
-                  <Typography
-                    className={classes.title}
-                    color='textSecondary'
-                    gutterBottom
-                  >
-                    Workout Goals
-                  </Typography>
-                  <Typography>
-                    {woDay.goals === '' ? 'none' : woDay.goals}
-                  </Typography>
-                </CardContent> */}
               </Card>
             </Grid>
           )

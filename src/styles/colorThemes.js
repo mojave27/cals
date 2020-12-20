@@ -1,3 +1,42 @@
+export const sea = {
+	color1: {
+					hex: '#555757',
+					rgba: alpha => buildRgba(85, 87, 87, alpha)
+	},
+	get color1_text() {
+					return this.color5
+	},
+	color2: {
+					hex: '#87C4C4',
+					rgba: alpha => buildRgba(135, 196, 196, alpha)
+	},
+	get color2_text() {
+					return this.color5
+	},
+	color3: {
+					hex: '#BCF5F5',
+					rgba: alpha => buildRgba(188, 245, 245, alpha)
+	},
+	get color3_text() {
+					return this.color5
+	},
+	color4: {
+					hex: '#F5FAFA',
+					rgba: alpha => buildRgba(245, 250, 250, alpha)
+	},
+	get color4_text() {
+					return this.color1
+	},
+	color5: {
+					hex: '#FFFFFF',
+					rgba: alpha => buildRgba(255, 255, 255, alpha)
+	},
+	get color5_text() {
+					return this.color1
+	},
+}
+
+
 export const villa = {
 	color1: {
 					hex: '#FFFFFF',

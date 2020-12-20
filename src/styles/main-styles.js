@@ -8,7 +8,8 @@ import {
   crystal,
   bakery,
   lake,
-  villa
+  villa,
+  sea
 } from './colorThemes'
 
 export let themes = {
@@ -19,7 +20,8 @@ export let themes = {
   crystal: crystal,
   bakery: bakery,
   lake: lake,
-  villa: villa
+  villa: villa,
+  sea: sea
 }
 
 export let changeTheme = themeName => {

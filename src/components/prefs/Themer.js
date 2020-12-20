@@ -56,6 +56,9 @@ const Themer = props => {
       <Grid item>
       <ChangeTheme theme={'villa'} />
       </Grid>
+      <Grid item>
+      <ChangeTheme theme={'sea'} />
+      </Grid>
       </Grid>
       <div style={{ color: context.theme.color1, margin: '50px' }}>
         {context.theme.name}

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   input: {
     font: 'inherit',
-    color: 'currentColor',
+    color: theme.color1_text.hex,
     width: '100%',
     border: `1px solid ${theme.color3.hex}`,
     height: '1.1876em',
