@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import { Button, Grid } from '@material-ui/core'
 
 class Stopwatch extends Component {
@@ -6,7 +6,7 @@ class Stopwatch extends Component {
     timerOn: false,
     timerStart: 0,
     timerTime: 0
-  };
+  }
 
   startTimer = () => {
     this.setState({
@@ -21,57 +21,50 @@ class Stopwatch extends Component {
   }
 
   stopTimer = () => {
-    this.setState({ timerOn: false });
-    clearInterval(this.timer);
-  };
+    this.setState({ timerOn: false })
+    clearInterval(this.timer)
+  }
 
   resetTimer = () => {
     this.setState({
       timerStart: 0,
       timerTime: 0
-    });
-  };
+    })
+  }
 
   render() {
-    const { timerTime } = this.state;
-    let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
-    let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
-    let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
-    let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
+    const { timerTime } = this.state
+    let centiseconds = ('0' + (Math.floor(timerTime / 10) % 100)).slice(-2)
+    let seconds = ('0' + (Math.floor(timerTime / 1000) % 60)).slice(-2)
+    let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2)
+    let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2)
     return (
-      <div className="Stopwatch">
-        <Grid container spacing={3} justify='center' direction='row' alignContent='center' alignItems='center'>
-          {/* <Grid item xs={9} sm={8}> */}
-            <div className="Stopwatch-display" style={{fontSize: '3.5em'}} >
-              {hours}:{minutes}:{seconds}<span style={{fontSize: '0.5em'}}>:{centiseconds}</span>
-            </div>
-         {/* </Grid> */}
-        {this.state.timerOn === false && this.state.timerTime === 0 && (
-          // <Grid item xs={3} sm={2}>
-          <div style={{float:'right', marginLeft:'15px'}}>
-            <Button size='small' onClick={this.startTimer} variant='contained'>{'Start'}</Button>
-          </div>
-          // </Grid>
-        )}
-        {this.state.timerOn === true && (
-          // <Grid item xs={3} sm={2}>
-            <Button size='small' onClick={this.stopTimer} variant='contained'>{'Stop'}</Button>
-          // </Grid>
-        )}
-        {this.state.timerOn === false && this.state.timerTime > 0 && (
-          // <Grid item xs={1} sm={2}>
-            <Button size='small' onClick={this.startTimer} variant='contained'>{'Resume'}</Button>
-          // </Grid>
-        )}
-        {this.state.timerOn === false && this.state.timerTime > 0 && (
-          // <Grid item xs={1} sm={2}>
-            <Button size='small' onClick={this.resetTimer} variant='contained'>{'Reset'}</Button>
-          // </Grid>
-        )}
-        </Grid>
-      </div>
-    );
+        <div style={{ fontSize: '3.5em', border:'1px solid red', flexGrow: 1 }}>
+          {hours}:{minutes}:{seconds}
+          <span style={{ fontSize: '0.5em' }}>:{centiseconds}</span>
+          {this.state.timerOn === false && this.state.timerTime === 0 && (
+            <Button color={'inherit'} onClick={this.startTimer}>
+              {'Start'}
+            </Button>
+          )}
+          {this.state.timerOn === true && (
+            <Button color={'inherit'} onClick={this.stopTimer}>
+              {'Stop'}
+            </Button>
+          )}
+          {this.state.timerOn === false && this.state.timerTime > 0 && (
+            <Button color={'inherit'} onClick={this.startTimer}>
+              {'Resume'}
+            </Button>
+          )}
+          {this.state.timerOn === false && this.state.timerTime > 0 && (
+            <Button color={'inherit'} onClick={this.resetTimer}>
+              {'Reset'}
+            </Button>
+          )}
+        </div>
+    )
   }
 }
 
-export default Stopwatch;
+export default Stopwatch
