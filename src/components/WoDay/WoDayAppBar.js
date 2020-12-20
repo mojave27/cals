@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import StopWatch from '../Admin/StopWatch'
-import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, Toolbar } from '@material-ui/core'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 

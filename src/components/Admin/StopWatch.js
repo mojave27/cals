@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Grid } from '@material-ui/core'
-import { callbackify } from 'util'
+import { Button } from '@material-ui/core'
 
 class Stopwatch extends Component {
   state = {
