@@ -29,11 +29,10 @@ const WoDayAppBar = props => {
           </Grid>
           <Grid item xs={2} sm={4} alignContent='flex-end'>
             <div style={{float:'right', margin:'0px'}}>
-              {/* <Button variant='contained' size='small' onClick={props.onSave} style={{marginRight:'10px'}}> */}
-              <Button variant='contained' size='small' onClick={props.onSave}>
+              <Button color={'inherit'} onClick={props.onSave}>
                 {'Save'}
               </Button>
-              <Button variant='contained' size='small' onClick={props.onClose}>
+              <Button color={'inherit'} onClick={props.onClose}>
                 {'Close'}
               </Button>
             </div>
