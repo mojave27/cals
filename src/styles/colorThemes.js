@@ -59,25 +59,15 @@ export const seaOrig = {
 					return this.color5
 	},
 	color4: {
-<<<<<<< HEAD
-					hex: '#DAF7F7',
-					rgba: alpha => buildRgba(218, 247, 247, alpha)
-=======
 					hex: '#F5FAFA',
 					rgba: alpha => buildRgba(245, 250, 250, alpha)
->>>>>>> 78ad7468f881d84afb677b9ea67e182f8dfb4b06
 	},
 	get color4_text() {
 					return this.color1
 	},
 	color5: {
-<<<<<<< HEAD
-					hex: '#F5FAFA',
-					rgba: alpha => buildRgba(245, 250, 250, alpha)
-=======
 					hex: '#FFFFFF',
 					rgba: alpha => buildRgba(255, 255, 255, alpha)
->>>>>>> 78ad7468f881d84afb677b9ea67e182f8dfb4b06
 	},
 	get color5_text() {
 					return this.color1
