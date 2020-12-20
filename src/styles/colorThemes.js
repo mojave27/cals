@@ -1,5 +1,43 @@
 export const sea = {
 	color1: {
+					hex: '#102861',
+					rgba: alpha => buildRgba(16, 40, 97, alpha)
+	},
+	get color1_text() {
+					return this.color5
+	},
+	color2: {
+					hex: '#245EE3',
+					rgba: alpha => buildRgba(36, 94, 227, alpha)
+	},
+	get color2_text() {
+					return this.color5
+	},
+	color3: {
+					hex: '#71C9FF',
+					rgba: alpha => buildRgba(113, 201, 255, alpha)
+	},
+	get color3_text() {
+					return this.color5
+	},
+	color4: {
+					hex: '#EEEEEE',
+					rgba: alpha => buildRgba(238, 238, 238, alpha)
+	},
+	get color4_text() {
+					return this.color1
+	},
+	color5: {
+					hex: '#FFFFFF',
+					rgba: alpha => buildRgba(255, 255, 255, alpha)
+	},
+	get color5_text() {
+					return this.color1
+	},
+}
+
+export const seaOrig = {
+	color1: {
 					hex: '#555757',
 					rgba: alpha => buildRgba(85, 87, 87, alpha)
 	},
@@ -21,15 +59,25 @@ export const sea = {
 					return this.color5
 	},
 	color4: {
+<<<<<<< HEAD
 					hex: '#DAF7F7',
 					rgba: alpha => buildRgba(218, 247, 247, alpha)
+=======
+					hex: '#F5FAFA',
+					rgba: alpha => buildRgba(245, 250, 250, alpha)
+>>>>>>> 78ad7468f881d84afb677b9ea67e182f8dfb4b06
 	},
 	get color4_text() {
 					return this.color1
 	},
 	color5: {
+<<<<<<< HEAD
 					hex: '#F5FAFA',
 					rgba: alpha => buildRgba(245, 250, 250, alpha)
+=======
+					hex: '#FFFFFF',
+					rgba: alpha => buildRgba(255, 255, 255, alpha)
+>>>>>>> 78ad7468f881d84afb677b9ea67e182f8dfb4b06
 	},
 	get color5_text() {
 					return this.color1
