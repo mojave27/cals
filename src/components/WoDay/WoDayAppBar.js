@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import StopWatch from '../Admin/StopWatch'
-import { AppBar, Toolbar } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
+import { AppBar, Button, Grid, Toolbar } from '@material-ui/core'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -18,23 +17,27 @@ const WoDayAppBar = props => {
   return (
     <AppBar position='sticky' className={classes.appBar}>
       <Toolbar>
-        <StopWatch />
-        <Button
-          style={{ margin: '0px 5px 0px 25px' }}
-          variant='contained'
-          size='small'
-          onClick={props.onSave}
+        <Grid
+          container
+          spacing={2}
+          justify='center'
+          alignItems='center'
+          direction='row'
         >
-          {'Save'}
-        </Button>
-        <Button
-          style={{ margin: '3px' }}
-          variant='contained'
-          size='small'
-          onClick={props.onClose}
-        >
-          {'Close'}
-        </Button>
+          <Grid item xs={8} sm={8}>
+            <StopWatch />
+          </Grid>
+          <Grid item xs={4} sm={4}>
+            <div style={{float:'right'}}>
+              <Button variant='contained' size='small' onClick={props.onSave} style={{marginRight:'10px'}}>
+                {'Save'}
+              </Button>
+              <Button variant='contained' size='small' onClick={props.onClose}>
+                {'Close'}
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
       </Toolbar>
     </AppBar>
   )
