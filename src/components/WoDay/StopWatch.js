@@ -39,9 +39,7 @@ class Stopwatch extends Component {
     let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2)
     let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2)
     return (
-        // <div style={{ fontSize: '3.5em', border:'1px solid red', flexGrow: 1 }}>
         <div style={{ fontSize: 'calc(3vw + 25px)', flexGrow: 1 }}>
-          <div style={{ fontSize: '0.2em', padding: '0px'}}>Stopwatch</div>
           {hours}:{minutes}:{seconds}
           <span style={{ fontSize: '0.5em' }}>:{centiseconds}</span>
           {this.state.timerOn === false && this.state.timerTime === 0 && (
@@ -64,6 +62,9 @@ class Stopwatch extends Component {
               {'Reset'}
             </Button>
           )}
+            <Button color={'inherit'} onClick={this.props.onClose}>
+              {'Hide'}
+            </Button>
         </div>
     )
   }

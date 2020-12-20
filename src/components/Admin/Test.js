@@ -6,7 +6,7 @@ import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-import StopWatch from './StopWatch'
+import StopWatch from '../WoDay/StopWatch'
 
 const useStyles = makeStyles(theme => ({
   root: {
