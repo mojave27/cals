@@ -24,12 +24,13 @@ const WoDayAppBar = props => {
           alignItems='center'
           direction='row'
         >
-          <Grid item xs={8} sm={8}>
+          <Grid item xs={10} sm={8}>
             <StopWatch />
           </Grid>
-          <Grid item xs={4} sm={4}>
-            <div style={{float:'right'}}>
-              <Button variant='contained' size='small' onClick={props.onSave} style={{marginRight:'10px'}}>
+          <Grid item xs={2} sm={4} alignContent='flex-end'>
+            <div style={{float:'right', margin:'0px'}}>
+              {/* <Button variant='contained' size='small' onClick={props.onSave} style={{marginRight:'10px'}}> */}
+              <Button variant='contained' size='small' onClick={props.onSave}>
                 {'Save'}
               </Button>
               <Button variant='contained' size='small' onClick={props.onClose}>
