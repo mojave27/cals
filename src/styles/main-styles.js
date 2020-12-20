@@ -5,8 +5,10 @@ import {
   stormTrooperInverse,
   woSheet,
   siberianWinter,
-  primaries,
-  bakery
+  crystal,
+  bakery,
+  lake,
+  villa
 } from './colorThemes'
 
 export let themes = {
@@ -14,8 +16,10 @@ export let themes = {
   stormTrooperInverse: stormTrooperInverse,
   woSheet: woSheet,
   siberianWinter: siberianWinter,
-  primaries: primaries,
-  bakery: bakery
+  crystal: crystal,
+  bakery: bakery,
+  lake: lake,
+  villa: villa
 }
 
 export let changeTheme = themeName => {

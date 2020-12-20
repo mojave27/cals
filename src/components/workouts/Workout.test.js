@@ -1,8 +1,3 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import React from 'react'
-import Workout from './Workout'
-
 // import { mount, shallow, render } from 'enzyme'
 
 describe('tests', () => {

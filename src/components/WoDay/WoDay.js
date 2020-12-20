@@ -17,14 +17,13 @@ import { cloneDeep } from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import WorkoutChooser from '../workouts/WorkoutChooser'
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
 import { styles } from '../../styles/MainStyles'
 import { woDayStyles } from '../../styles/WoDayStyles'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
-import StopWatch from '../Admin/StopWatch'
+import WoDayAppBar from './WoDayAppBar'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,13 +44,40 @@ const WoDay = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
 
-
   let { cardNoHover, detailCard, row } = styles(themeContext.theme)
-
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
+  // useEffect(() => {
+  //   windowLoc()
+  // }, )
+
+  // const windowLoc = () => {
+  //   if (typeof window !== "undefined") {
+  //     window.onscroll = () => {
+  //       let currentScrollPos = window.pageYOffset;
+  //       // console.log(currentScrollPos)
+  //       let maxScroll = document.body.scrollHeight - window.innerHeight;
+  //       // console.log(maxScroll)
+
+  //       // console.log(currentScrollPos/maxScroll)
+
+  //       if ( (currentScrollPos/maxScroll) > .10) {
+  //         setShowStopWatch(true)
+  //       }else{
+  //         setShowStopWatch(false)
+  //       }
+  //       // if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
+  //       //   this.setState({ opacity: "0" })
+  //       //   // console.log(currentScrollPos)
+  //       // } else {
+  //       //   this.setState({ opacity: "1" })
+  //       // }
+  //     }
+  //   }
+  // }
+
   const woDayLoaded = () => {
-      return true
+    return true
   }
 
   const retrieveWorkout = async workoutId => {
@@ -130,7 +156,6 @@ const WoDay = props => {
   }
 
   const handleSetChange = event => {
-
     let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
@@ -371,32 +396,28 @@ const WoDay = props => {
     return data
   }
 
+  // const showTimer = () => {
+  //   setShowStopWatch(!showStopWatch)
+  // }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
       <div>
+        <WoDayAppBar onSave={saveWoDay} onClose={home} />
         {woDayLoaded() ? (
           <div css={detailCard}>
             <div id={'cardNoHover'} css={cardNoHover}>
-              <Grid
-                container
-                direction='row'
-                justify='flex-end'
-                alignItems='center'
-                spacing={1}
-              >
-                <Grid item xs={6} sm={3}>
-                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={saveWoDay}>{'Save'}</Button>
-                  <Button style={{margin:'3px'}} variant='contained' size='small' onClick={home}>{'Close'}</Button>
-                </Grid>
-              </Grid>
-              {/* </div> */}
               {/* --- section 1: Details --------------------------------------- */}
               <div
                 css={row}
-                style={{ marginTop: '10px', padding: '10px', border: '1px solid #eee' }}
+                style={{
+                  marginTop: '10px',
+                  padding: '10px',
+                  border: '1px solid #eee'
+                }}
               >
                 <Grid container spacing={1} justify='flex-start'>
                   <Grid item xs={12} sm={6}>
@@ -486,10 +507,6 @@ const WoDay = props => {
                   addCardioExercise={addCardioExercise}
                   onChange={handleExerciseChange}
                 />
-              </div>
-              {/* --- section -: stop watch ------------------------------------ */}
-              <div css={[row, section]}>
-                <StopWatch />
               </div>
               {/* --- section 3: Weights --------------------------------------- */}
               <div css={[row, section]}>

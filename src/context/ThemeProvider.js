@@ -16,7 +16,6 @@ const getUserTheme = (mobile) => {
     console.log(`themeValue ${themeValue}`)
     let activeTheme = themes[themeValue]
     activeTheme.mobile = mobile
-    // return themes[themeValue]
     return activeTheme
   }
 }

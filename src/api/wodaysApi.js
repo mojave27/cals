@@ -35,7 +35,6 @@ export const retrieveWoDayById = async (id) => {
 }
 
 export const addWoDay = async (woday) => {
-  console.log(woday)
   let configWithAuth = await getAxiosConfigWithAuth()
   return axios
     .post(URL, woday, configWithAuth)
@@ -50,7 +49,6 @@ export const addWoDay = async (woday) => {
 }
 
 export const updateWoDay = async (woday) => {
-  console.log(woday)
   let savedWoDay = await addWoDay(woday)
   return savedWoDay
 }

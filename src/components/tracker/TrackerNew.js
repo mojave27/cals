@@ -6,13 +6,13 @@ import TrackerContext from '../../context/TrackerContext'
 import { retrieveProgramById } from '../../api/programsApi'
 import ProgramTracker from './ProgramTracker'
 import { get } from 'lodash'
-import ThemeContext from '../../context/ThemeContext'
+// import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import { retrieveItemByStringId } from '../ArrayUtils'
 import BasicSpinner from '../spinners/BasicSpinner'
 
 const Tracker = props => {
-  const themeContext = useContext(ThemeContext)
+  // const themeContext = useContext(ThemeContext)
   const context = useContext(TrackerContext)
   const [routeKey, setRouteKey] = useState(0)
   const [showProgramList, setShowProgramList] = useState(true)
