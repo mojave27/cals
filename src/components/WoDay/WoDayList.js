@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
+  const [forceSpinner, setForceSpinner] = useState(false)
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
 
@@ -61,6 +62,7 @@ const WoDayList = props => {
   }
 
   const doStuff = id => {
+    setForceSpinner(true)
     props.chooseWoDay(id)
   }
 
@@ -87,10 +89,16 @@ const WoDayList = props => {
     )
   }
 
+  const showSpinner = () => {
+    if (forceSpinner) return true
+    return woDays.length === 0
+  }
+
   return (
     <React.Fragment>
       <div style={{ maxWidth: '800px', margin: '0px auto' }}>
-        {woDays.length === 0 ? (
+        {/* {woDays.length === 0 ? ( */}
+        {showSpinner() ? (
           <BasicSpinner show={true} />
         ) : (
           renderWoDays(woDays)
