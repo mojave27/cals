@@ -22,19 +22,25 @@ const WoDayAppBar = props => {
     <AppBar position='sticky' className={classes.appBar}>
       <Toolbar>
         {show === false ? (
-          <div style={{flexGrow: 1, float: 'left'}}>
-          <Button color={'inherit'} onClick={toggleShow} style={{flexGrow: 1, float: 'left'}}>
-            {'Stopwatch'}
-          </Button>
+          <div style={{ flexGrow: 1, float: 'left' }}>
+            <Button
+              color={'inherit'}
+              onClick={toggleShow}
+              style={{ flexGrow: 1, float: 'left' }}
+            >
+              {'Stopwatch'}
+            </Button>
           </div>
         ) : null}
         {show === true ? <StopWatch onClose={toggleShow} /> : null}
-        <Button color={'inherit'} onClick={props.onSave}>
-          {'Save'}
-        </Button>
-        <Button color={'inherit'} onClick={props.onClose}>
-          {'Close'}
-        </Button>
+        <div>
+          <Button color={'inherit'} onClick={props.onSave}>
+            {'Save'}
+          </Button>
+          <Button color={'inherit'} onClick={props.onClose}>
+            {'Close'}
+          </Button>
+        </div>
       </Toolbar>
     </AppBar>
   )

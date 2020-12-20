@@ -28,7 +28,7 @@ const ThemedContent = props => {
                   style={{
                     backgroundColor: `${context.theme.color5.hex}`,
                     height: '300vh',
-                    maxWidth: `${context.mobile === true ? '95%' : '80%'}`,
+                    maxWidth: `${context.mobile === true ? '100%' : '80%'}`,
                     margin: '20px auto'
                   }}
                 >

@@ -1,244 +1,242 @@
 export const sea = {
-	color1: {
-					hex: '#102861',
-					rgba: alpha => buildRgba(16, 40, 97, alpha)
-	},
-	get color1_text() {
-					return this.color5
-	},
-	color2: {
-					hex: '#245EE3',
-					rgba: alpha => buildRgba(36, 94, 227, alpha)
-	},
-	get color2_text() {
-					return this.color5
-	},
-	color3: {
-					hex: '#71C9FF',
-					rgba: alpha => buildRgba(113, 201, 255, alpha)
-	},
-	get color3_text() {
-					return this.color5
-	},
-	color4: {
-					hex: '#EEEEEE',
-					rgba: alpha => buildRgba(238, 238, 238, alpha)
-	},
-	get color4_text() {
-					return this.color1
-	},
-	color5: {
-					hex: '#FFFFFF',
-					rgba: alpha => buildRgba(255, 255, 255, alpha)
-	},
-	get color5_text() {
-					return this.color1
-	},
+  color1: {
+    hex: '#274469',
+    rgba: alpha => buildRgba(39, 68, 105, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#477DBF',
+    rgba: alpha => buildRgba(71, 125, 191, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#65B4E6',
+    rgba: alpha => buildRgba(101, 180, 230, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(238, 238, 238, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
 export const seaOrig = {
-	color1: {
-					hex: '#555757',
-					rgba: alpha => buildRgba(85, 87, 87, alpha)
-	},
-	get color1_text() {
-					return this.color5
-	},
-	color2: {
-					hex: '#87C4C4',
-					rgba: alpha => buildRgba(135, 196, 196, alpha)
-	},
-	get color2_text() {
-					return this.color5
-	},
-	color3: {
-					hex: '#BCF5F5',
-					rgba: alpha => buildRgba(188, 245, 245, alpha)
-	},
-	get color3_text() {
-					return this.color5
-	},
-	color4: {
-					hex: '#F5FAFA',
-					rgba: alpha => buildRgba(245, 250, 250, alpha)
-	},
-	get color4_text() {
-					return this.color1
-	},
-	color5: {
-					hex: '#FFFFFF',
-					rgba: alpha => buildRgba(255, 255, 255, alpha)
-	},
-	get color5_text() {
-					return this.color1
-	},
+  color1: {
+    hex: '#555757',
+    rgba: alpha => buildRgba(85, 87, 87, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#87C4C4',
+    rgba: alpha => buildRgba(135, 196, 196, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#BCF5F5',
+    rgba: alpha => buildRgba(188, 245, 245, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#F5FAFA',
+    rgba: alpha => buildRgba(245, 250, 250, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
-
 export const villa = {
-	color1: {
-					hex: '#FFFFFF',
-					rgba: alpha => buildRgba(255, 255, 255, alpha)
-	},
-	get color1_text() {
-					return this.color5
-	},
-	color2: {
-					hex: '#EBE8E4',
-					rgba: alpha => buildRgba(235, 232, 228, alpha)
-	},
-	get color2_text() {
-					return this.color5
-	},
-	color3: {
-					hex: '#F5F099',
-					rgba: alpha => buildRgba(245, 240, 153, alpha)
-	},
-	get color3_text() {
-					return this.color5
-	},
-	color4: {
-					hex: '#FA9C1E',
-					rgba: alpha => buildRgba(250, 156, 30, alpha)
-	},
-	get color4_text() {
-					return this.color1
-	},
-	color5: {
-					hex: '#48A180',
-					rgba: alpha => buildRgba(72, 161, 128, alpha)
-	},
-	get color5_text() {
-					return this.color1
-	},
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#EBE8E4',
+    rgba: alpha => buildRgba(235, 232, 228, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#F5F099',
+    rgba: alpha => buildRgba(245, 240, 153, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#FA9C1E',
+    rgba: alpha => buildRgba(250, 156, 30, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#48A180',
+    rgba: alpha => buildRgba(72, 161, 128, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
 export const crystal = {
-	color1: {
-		hex: '#F2F2F2',
-		rgba: alpha => buildRgba(242, 242, 242, alpha)
-	},
-	get color1_text() {
-		return this.color5
-	},
-	color2: {
-		hex: '#D9D9D9',
-		rgba: alpha => buildRgba(217, 217, 217, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#95ACBF',
-		rgba: alpha => buildRgba(149, 172, 191, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#4C5D73',
-		rgba: alpha => buildRgba(76, 93, 115, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#404040',
-		rgba: alpha => buildRgba(64, 64, 64, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
+  color1: {
+    hex: '#F2F2F2',
+    rgba: alpha => buildRgba(242, 242, 242, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#D9D9D9',
+    rgba: alpha => buildRgba(217, 217, 217, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#95ACBF',
+    rgba: alpha => buildRgba(149, 172, 191, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#4C5D73',
+    rgba: alpha => buildRgba(76, 93, 115, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#404040',
+    rgba: alpha => buildRgba(64, 64, 64, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
-
 export const primaries = {
-	name: 'primaries',
-	palette: { type: "light"},
-	color1: {
-		hex: '#F2F2F2',
-		rgba: alpha => buildRgba(242, 242, 242, alpha)	
-	},
-	get color1_text() {
-		return this.darkText
-	},
-	color2: {
-		hex: '#F2B705',
-		rgba: alpha => buildRgba(242, 183, 5, alpha)	
-	},
-	get color2_text() {
-		return this.darkText
-	},
-	color3: {
-		hex: '#04D9C4',
-		rgba: alpha => buildRgba(4, 217, 196, alpha)	
-	},
-	get color3_text() {
-		return this.darkText
-	},
-	color4: {
-		hex: '#0788D9',
-		rgba: alpha => buildRgba(7, 136, 217, alpha)	
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#BF0A3A',
-		rgba: alpha => buildRgba(191, 10, 58, alpha)	
-	},
-	get color5_text() {
-		return this.color1
-	},
-	darkText: {
-		hex: '#333',
-		rgba: alpha => buildRgba(51, 51, 51, alpha)	
-	},
+  name: 'primaries',
+  palette: { type: 'light' },
+  color1: {
+    hex: '#F2F2F2',
+    rgba: alpha => buildRgba(242, 242, 242, alpha)
+  },
+  get color1_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#F2B705',
+    rgba: alpha => buildRgba(242, 183, 5, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#04D9C4',
+    rgba: alpha => buildRgba(4, 217, 196, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#0788D9',
+    rgba: alpha => buildRgba(7, 136, 217, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#BF0A3A',
+    rgba: alpha => buildRgba(191, 10, 58, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  },
+  darkText: {
+    hex: '#333',
+    rgba: alpha => buildRgba(51, 51, 51, alpha)
+  }
 }
 
 export const siberianWinter = {
   name: 'siberianWinter',
-	palette: { type: "dark" },
-	color1: {
-		hex: '#FFFBFF',
-		rgba: alpha => buildRgba(255, 251, 255, alpha)
-	},
-	get color1_text() {
-		return this.color5
-	},
-	color2: {
-		hex: '#E8ECED',
-		rgba: alpha => buildRgba(232, 235, 237, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#A4B7BB',
-		rgba: alpha => buildRgba(163, 182, 186, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#76A0B0',
-		rgba: alpha => buildRgba(117, 160, 175, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#35262D',
-		rgba: alpha => buildRgba(52, 38, 45, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
+  palette: { type: 'dark' },
+  color1: {
+    hex: '#FFFBFF',
+    rgba: alpha => buildRgba(255, 251, 255, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#E8ECED',
+    rgba: alpha => buildRgba(232, 235, 237, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#A4B7BB',
+    rgba: alpha => buildRgba(163, 182, 186, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#76A0B0',
+    rgba: alpha => buildRgba(117, 160, 175, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#35262D',
+    rgba: alpha => buildRgba(52, 38, 45, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
 export const stormTrooperInverse = {
   name: 'stormTrooperInverse',
-	palette: { type: "dark" },
+  palette: { type: 'dark' },
   color5: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -282,7 +280,7 @@ export const stormTrooperInverse = {
 
 export const stormTrooper = {
   name: 'stormTrooper',
-	palette: { type: "light" },
+  palette: { type: 'light' },
   color1: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -325,202 +323,201 @@ export const stormTrooper = {
 }
 
 export const bakery = {
-	color1: {
-		hex: '#F2F2F2',
-		rgba: alpha => buildRgba(242, 242, 242, alpha)	
-	},
-	get color1_text() {
-		return this.color5
-	},
+  color1: {
+    hex: '#F2F2F2',
+    rgba: alpha => buildRgba(242, 242, 242, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
   color2: {
-		hex: '#F2E9D8',
-		rgba: alpha => buildRgba(242, 233, 216, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#7798D9',
-		rgba: alpha => buildRgba(119, 152, 217, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#465D8C',
-		rgba: alpha => buildRgba(70, 93, 140, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#484F73',
-		rgba: alpha => buildRgba(72, 79, 115, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
-	lightText: {
-		hex: '#EEE',
-		rgba: alpha => buildRgba(238, 238, 238, alpha)
-	}
+    hex: '#F2E9D8',
+    rgba: alpha => buildRgba(242, 233, 216, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#7798D9',
+    rgba: alpha => buildRgba(119, 152, 217, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#465D8C',
+    rgba: alpha => buildRgba(70, 93, 140, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#484F73',
+    rgba: alpha => buildRgba(72, 79, 115, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  },
+  lightText: {
+    hex: '#EEE',
+    rgba: alpha => buildRgba(238, 238, 238, alpha)
+  }
 }
 
 export const woSheet = {
-	name: 'woSheet',
-	palette: { type: "dark" },
-	color1: {
-		hex: '#FEFFFF',
-		// hex: '#06FBFB',
-		rgba: alpha => buildRgba(254, 255, 255, alpha)
-	},
-	get color1_text() {
-		return this.color5
-	},
-	color2: {
-		hex: '#F3F2F2',
-		rgba: alpha => buildRgba(243, 242, 242, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#FFD883',
-		rgba: alpha => buildRgba(255, 216, 131, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#999899',
-		rgba: alpha => buildRgba(153, 152, 153, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#444443',
-		rgba: alpha => buildRgba(68, 68, 67, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
+  name: 'woSheet',
+  palette: { type: 'dark' },
+  color1: {
+    hex: '#FEFFFF',
+    // hex: '#06FBFB',
+    rgba: alpha => buildRgba(254, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#F3F2F2',
+    rgba: alpha => buildRgba(243, 242, 242, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#FFD883',
+    rgba: alpha => buildRgba(255, 216, 131, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#999899',
+    rgba: alpha => buildRgba(153, 152, 153, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#444443',
+    rgba: alpha => buildRgba(68, 68, 67, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
 export const lake = {
-	color1: {
-		hex: '#FFFFFF',
-		rgba: alpha => buildRgba(255, 255, 255, alpha)
-	},
-	get color1_text() {
-		return this.color5
-	},
-	color2: {
-		hex: '#F2FEFE',
-		rgba: alpha => buildRgba(242, 254, 254, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#ACF0F2',
-		rgba: alpha => buildRgba(172, 240, 242, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#1695A3',
-		rgba: alpha => buildRgba(22, 149, 163, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#225378',
-		rgba: alpha => buildRgba(34, 83, 120, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#F2FEFE',
+    rgba: alpha => buildRgba(242, 254, 254, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#ACF0F2',
+    rgba: alpha => buildRgba(172, 240, 242, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#1695A3',
+    rgba: alpha => buildRgba(22, 149, 163, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#225378',
+    rgba: alpha => buildRgba(34, 83, 120, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
 export const book = {
-	color1: {
-		hex: '#F0F2F2',
-		rgba: alpha => buildRgba(239, 242, 242, alpha)
-	},
-	get color1_text() {
-		return this.color5
-	},
-	color2: {
-		hex: '#96C6D9',
-		rgba: alpha => buildRgba(149, 197, 216, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#54A1BF',
-		rgba: alpha => buildRgba(84, 160, 191, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#59A8D9',
-		rgba: alpha => buildRgba(88, 167, 216, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#4184BF',
-		rgba: alpha => buildRgba(65, 132, 191, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
+  color1: {
+    hex: '#F0F2F2',
+    rgba: alpha => buildRgba(239, 242, 242, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#96C6D9',
+    rgba: alpha => buildRgba(149, 197, 216, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#54A1BF',
+    rgba: alpha => buildRgba(84, 160, 191, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#59A8D9',
+    rgba: alpha => buildRgba(88, 167, 216, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#4184BF',
+    rgba: alpha => buildRgba(65, 132, 191, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
 
 export const dina = {
-	color1: {
-		hex: '#F2E6DF',
-		rgba: alpha => buildRgba(242, 230, 223, alpha)
-	},
-	get color1_text() {
-		return this.color5
-	},
-	color2: {
-		hex: '#F2E0C9',
-		rgba: alpha => buildRgba(242, 224, 201, alpha)
-	},
-	get color2_text() {
-		return this.color5
-	},
-	color3: {
-		hex: '#D9C0A3',
-		rgba: alpha => buildRgba(217, 192, 163, alpha)
-	},
-	get color3_text() {
-		return this.color5
-	},
-	color4: {
-		hex: '#BFAC95',
-		rgba: alpha => buildRgba(191, 172, 149, alpha)
-	},
-	get color4_text() {
-		return this.color1
-	},
-	color5: {
-		hex: '#8C7C6D',
-		rgba: alpha => buildRgba(140, 124, 109, alpha)
-	},
-	get color5_text() {
-		return this.color1
-	},
+  color1: {
+    hex: '#F2E6DF',
+    rgba: alpha => buildRgba(242, 230, 223, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#F2E0C9',
+    rgba: alpha => buildRgba(242, 224, 201, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#D9C0A3',
+    rgba: alpha => buildRgba(217, 192, 163, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#BFAC95',
+    rgba: alpha => buildRgba(191, 172, 149, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#8C7C6D',
+    rgba: alpha => buildRgba(140, 124, 109, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
 }
-
 
 export const fordRaptor = {
   color1: {
@@ -557,7 +554,7 @@ export const fordRaptor = {
   },
   get color5_text() {
     return this.color1
-  },
+  }
 }
 
 export const themeOne = {
