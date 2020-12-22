@@ -9,7 +9,8 @@ import {
   generateNewId
 } from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
-import Table from '../tables/SimpleTable'
+// import Table from '../tables/SimpleTable'
+import Table from '../tables/WorkoutTable'
 import { setBlock } from '../../styles/program'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'
@@ -108,12 +109,11 @@ const WorkoutForm = props => {
 
   // lots of changes going on here...
   const handleSetChange = update => {
-    console.log({ update })
     // get set with matching id
-    let set = { ...retrieveItemById(update.setId, woContext.workout.sets) }
+    let exGroup = { ...retrieveItemById(update.exGroupId, woContext.workout.exerciseGroups) }
 
     // find exercise with matching id
-    let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
+    let targetExercise = { ...retrieveItemById(update.id, exGroup.exercises) }
 
     // update the appropriate value (based on name field - which will be either 'name' or 'reps')
     //   set that value to update.value
@@ -123,18 +123,18 @@ const WorkoutForm = props => {
     let updatedExerciseList = updateItemById(
       targetExercise,
       update.id,
-      set.exercises
+      exGroup.exercises
     )
-    set.exercises = updatedExerciseList
+    exGroup.exercises = updatedExerciseList
 
-    let updatedSetList = updateItemById(
-      set,
-      update.setId,
-      woContext.workout.sets
+    let updatedExerciseGroups = updateItemById(
+      exGroup,
+      update.exGroupId,
+      woContext.workout.exerciseGroups
     )
 
     //update context
-    woContext.updateExerciseGroupsForWorkout(updatedSetList)
+    woContext.updateExerciseGroupsForWorkout(updatedExerciseGroups)
   }
 
   const deleteExercise = id => {
@@ -158,6 +158,7 @@ const WorkoutForm = props => {
     }
   }
 
+  // this is actually rendering exercise groups, not sets
   const renderSets = exGroups => {
     if (exGroups && exGroups.length > 0) {
       return exGroups.map(exGroup => {
@@ -172,6 +173,7 @@ const WorkoutForm = props => {
               disabled={false}
               data={data}
               handleSetChange={handleSetChange}
+              onCellChange={handleSetChange}
               onClick={handleRowClick}
               deleteRow={deleteExercise}
               deleteItem={deleteSet}

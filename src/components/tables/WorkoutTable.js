@@ -1,114 +1,118 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { isUndefined } from 'lodash'
-import { setHeader, table, tableInput, workoutCell, dayLeftCell, dayRightCell } from '../../styles/table'
+import { table } from '../../styles/table'
+import BlockHeader from '../BlockHeader'
 
+//TODO: update this table to use context instead of passing the props/data all around it.
 class Table extends React.Component {
-  state = {}
+  state = { }
 
   render() {
     return (
-      <div style={{ overflow: 'scroll', maxWidth:'700px' }}>
-        <table css={table} style={{overflow:'scroll'}}>
-          <tbody id={this.props.setId}>
-            {this.renderRows(this.props.data)}
-          </tbody>
+      <div style={{ overflowX: 'auto' }}>
+        <table css={table}>
+          <tbody id={this.props.setId}>{this.renderRows(this.props.data)}</tbody>
         </table>
       </div>
     )
   }
 
+  setupBlockHeader = (colCount, id, deleteItem, editItem) => {
+    let item = { id: id, name: `set ${id}` }
+    return (
+      <tr style={{border:'1px solid cyan'}} key={Math.random()}>
+        <th colSpan={colCount}>
+          <BlockHeader item={item} deleteItem={deleteItem} editItem={editItem} />
+        </th>
+      </tr>
+    )
+  }
+  
+  //TODO: can this be cleaned up and refactored
   renderRows = data => {
-    let headerRow = this.renderHeaders()
+    let blockHeader = this.setupBlockHeader( data.headers.length + 1, data.setId, this.props.deleteItem, this.props.editItem )
+    let headerRow = this.renderHeaders(data.headers)
+
     let rows = data.rows.map((row, index) => {
-      let id = typeof row.id === 'undefined' ? index : row.id
-      return (
-        <tr id={id} data-setid={data.setId} key={index}>
-          {this.renderRow(row, data)}
-        </tr>
-      )
+      let id = (typeof row.id === 'undefined') ? index : row.id
+      return <tr
+      id={id}
+      data-setid={data.setId}
+      key={index}>
+        {this.renderRow(row, data.headers)}
+      </tr>
     })
 
-    let allRows = [headerRow, ...rows]
+    let allRows = []
+    if (! this.props.disabled ){
+      allRows = [blockHeader, headerRow, ...rows]
+    }else{
+      allRows = [headerRow, ...rows]
+    }
     return allRows
   }
 
-  renderHeaders = () => {
-    let headers = ['exercise', 'target reps']
-    let columnWidths = ['125px', '100px', '100px', '100px']
-    let count = !isUndefined(this.props.data.dates)
-      ? this.props.data.dates.length
-      : 0
-    for (let i = 0; i < count; i++) {
-      headers.push('exercise')
-      headers.push('actual reps')
-      columnWidths.push('100px')
-      columnWidths.push('100px')
+  renderHeaders = headers => {
+    if ( ! this.props.disabled ) {
+      headers.splice(0,0,'')
     }
     return (
-      <tr key={Math.random()}>
-        {headers.map((header, index) => (
-          <th css={setHeader}
-            style={{ minWidth: `${columnWidths[index]}` }}
-            key={`header-${Math.random()}`}
-          >
-            {header}
-          </th>
+      <tr key={headers.toString()}>
+        {headers.map(header => (
+          <th key={header}>{header}</th>
         ))}
       </tr>
     )
   }
 
-  renderRow = (row, data) => {
-    let tds = []
-    tds.push(<td key={Math.random()}>{row.name}</td>)
-    tds.push(
-      <td key={Math.random()} css={workoutCell}>
-        {row.reps}
-      </td>
-    )
+  deleteRow = event => {
 
-    // for each date, add columns for weight and actual-reps
-    let count = data.dates ? data.dates.length : 0
-    for (let i = 0; i < count; i++) {
-      let valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].weight : ''
+  }
+
+  renderRow = (row, headers) => {
+    // TODO: if this.props.disabled = false, then add delete icon (extra <td>)
+    let tds = []
+    let j = 0
+    if ( ! this.props.disabled ) {
+      j = 1
       tds.push(
-        <td key={Math.random()} css={dayLeftCell}>
-          <Input
-            id={row.id}
-            name={'weight'}
-            //TODO: WTF?? why do i need to do this double check on isUndefined?
-            data={valueData}
-            onChange={this.props.onCellChange}
-          />
-        </td>
-      )
-      valueData = !isUndefined(row.dates) && !isUndefined(row.dates[i]) ? row.dates[i].actualReps : ''
+          <td style={{borderLeft:'1px solid #000'}} key={Math.random()}>
+            <input id={row.id} type='button' value='delete' onClick={this.props.deleteRow} />
+          </td>)
+    }
+
+    for (let i = j; i < headers.length; i++) {
       tds.push(
-        <td key={Math.random()} css={dayRightCell}>
-          <Input
-            id={row.id}
-            name={'actual reps'}
-            data={valueData}
-            onChange={this.props.onCellChange}
-          />
-        </td>
-      )
+          <td onClick={this.clickPart} style={{borderLeft:'1px solid #000'}} key={i}>
+            <Input id={row.id} name={headers[i]} data={row[headers[i]]}  onChange={this.handleSetChange} disabled={this.props.disabled} />
+          </td>)
     }
     return tds
+  }
+
+  // todo: need to give the exercise id
+  handleSetChange = event => {
+    // get setId from tr (parentNode/td > parentNode/tr)
+    let exGroupId = event.target.parentNode.parentNode.dataset['setid']
+    let id = event.target.id
+    let name = event.target.name
+    let value = event.target.value
+    this.props.handleSetChange({exGroupId: exGroupId, id: id, name: name, value: value})
   }
 
 }
 
 const Input = props => {
   return (
-    <input
+    <input 
       id={props.id}
+      // data-setid={props.data.setId}
       name={props.name}
-      type='text'
-      value={props.data ? props.data : ''}
-      css={tableInput}
+      type='text' 
+      disabled={props.disabled} 
+      value={props.data ? props.data : ''} 
+      style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'1em', width:'100%', lineHeight:'14px'}} 
       onChange={props.onChange}
     />
   )

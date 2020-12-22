@@ -75,6 +75,16 @@ const removeItemById = (id, list) => {
 }
 
 const retrieveItemById = (id, list) => {
+  if (isNumeric(id)) {
+    return retrieveItemByNumericId(id, list)
+  } 
+  if (isString(id)) {
+    return retrieveItemByStringId(id, list)
+  }
+  throw new Error(`argument 'id', ${id}, is neither number or string`)
+}
+
+const retrieveItemByNumericId = (id, list) => {
   validateIdAndListArgs(id, list)
   let index = findIndexOfId(id, list)
   if (index > -1) {
@@ -239,6 +249,7 @@ exports.removeItem = removeItem
 exports.removeItemById = removeItemById
 exports.removeItemFromArrayByIndex = removeItemFromArrayByIndex
 exports.retrieveItemById = retrieveItemById
+exports.retrieveItemByNumericId = retrieveItemByNumericId
 exports.retrieveItemByStringId = retrieveItemByStringId
 exports.sortByStringProperty = sortByStringProperty
 exports.updateItemById = updateItemById
