@@ -282,8 +282,8 @@ export let formButton = css({
 
 export let formContainer = css({
   borderRadius: '2px',
-  borderTop: `1px solid ${activeTheme.color2.hex}`,
-  borderBottom: `1px solid ${activeTheme.color2.hex}`,
+  // borderTop: `1px solid ${activeTheme.color2.hex}`,
+  // borderBottom: `1px solid ${activeTheme.color2.hex}`,
   backgroundColor: activeTheme.color5.hex,
   color: activeTheme.color5_text.hex,
   padding: '20px'

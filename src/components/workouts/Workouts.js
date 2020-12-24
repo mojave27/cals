@@ -10,9 +10,10 @@ import {
   deleteWorkout as deleteWorkoutApi
 } from '../../api/workoutsApi'
 import Modal from '../Modal'
-import WorkoutFormOld from './WorkoutFormOld'
+import WorkoutForm from './WorkoutForm'
 import { findIndexOfStringId } from '../ArrayUtils'
 import WorkoutList from './WorkoutList'
+import Container from '@material-ui/core/Container'
 
 import { styles } from '../../styles/MainStyles'
 import { styles as gridStyles } from '../../styles/GridStyles2'
@@ -74,7 +75,9 @@ const Workouts = props => {
     <React.Fragment>
       {/* TODO: change this to the dialog */}
       <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
-        <WorkoutFormOld saveWorkout={saveWorkout} />
+        <Container maxWidth={'small'}>
+          <WorkoutForm saveWorkout={saveWorkout} />
+        </Container>
       </Modal>
       <button
         css={formButton}
