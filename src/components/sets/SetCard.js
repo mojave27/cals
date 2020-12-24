@@ -7,6 +7,7 @@ import { updateSet } from '../../api/setsApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'
 import SetContext from '../../context/SetContext'
+// import ThemeContext from '../../context/ThemeContext'
 import BlockHeader from '../BlockHeader'
 
 import {
@@ -23,6 +24,7 @@ import {
 //       to the parent component via props
 const SetCard = props => {
   let setContext = useContext(SetContext)
+  // let themeContext = useContext(ThemeContext)
   const [allExercises, setAllExercises] = useState([])
   const [selectedExercises, setSelectedExercises] = useState([])
   const [showExerciseList, setShowExerciseList] = useState(false)

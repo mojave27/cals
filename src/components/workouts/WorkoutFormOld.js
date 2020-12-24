@@ -9,7 +9,6 @@ import {
   generateNewId
 } from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
-// import Table from '../tables/SimpleTable'
 import Table from '../tables/WorkoutTable'
 import { setBlock } from '../../styles/program'
 import WoContext from '../../context/WoContext'

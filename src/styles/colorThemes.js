@@ -36,6 +36,51 @@ export const sea = {
   }
 }
 
+export const snow = {
+  name: 'snow',
+  palette: { type: 'light' },
+  type: 'custom',
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color4_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(234, 234, 234, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#FEFEFE',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.darkText
+  }
+}
+
 export const seaOrig = {
   color1: {
     hex: '#555757',

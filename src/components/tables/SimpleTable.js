@@ -1,121 +1,219 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import React from 'react'
-import { table } from '../../styles/table'
-import BlockHeader from '../BlockHeader'
+import React, { useContext } from 'react'
+import ThemeContext from '../../context/ThemeContext'
+import { fade, makeStyles } from '@material-ui/core/styles'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@material-ui/core'
+import { IconButton, Paper, TextField } from '@material-ui/core'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever' 
+import EditIcon from '@material-ui/icons/Edit' 
 
-//TODO: update this table to use context instead of passing the props/data all around it.
-class Table extends React.Component {
-  state = { }
-
-  render() {
-    return (
-      <div style={{ overflowX: 'auto' }}>
-        <table css={table}>
-          <tbody id={this.props.setId}>{this.renderRows(this.props.data)}</tbody>
-        </table>
-      </div>
-    )
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    textAlign: 'center'
+  },
+  container: {
+    marginBottom: '10px'
+  },
+  table: {
+    backgroundColor: theme.color4.hex,
+    color: theme.color4_text.hex
+  },
+  th: {
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex,
+    textAlign: 'left'
+  },
+  thLeft: {
+    width: '10%'
+  },
+  td: {
+    textAlign: 'left',
+    color: theme.color4_text.hex
+  },
+  tdLeft: {
+    width: '10%'
+  },
+  cardHeader: {
+    padding: '6px 16px 0px 16px'
+  },
+  cardContent: {
+    padding: '8px 16px 0px 16px'
   }
+}))
 
-  setupBlockHeader = (colCount, id, deleteItem, editItem) => {
+//TODO: update table to use context instead of passing the props/data all around it.
+const SimpleTable = props => {
+  let themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
+
+  const setupBlockHeader = (colCount, id, deleteItem, editItem) => {
     let item = { id: id, name: `set ${id}` }
     return (
-      <tr style={{border:'1px solid cyan'}} key={Math.random()}>
-        <th colSpan={colCount}>
-          <BlockHeader item={item} deleteItem={deleteItem} editItem={editItem} />
-        </th>
-      </tr>
+      <TableRow key={Math.random()}>
+        <TableCell colSpan={colCount} className={classes.th}>
+        {item.name}
+          <IconButton id={id} aria-label='Delete' onClick={() => editItem(id)}>
+            <EditIcon color='inherit' fontSize='small' />
+          </IconButton>
+          <IconButton id={id} aria-label='Delete' onClick={() => deleteItem(id)}>
+            <DeleteForeverIcon color='inherit' fontSize='small' />
+          </IconButton>
+        </TableCell>
+    </TableRow>
     )
   }
-  
-  //TODO: can this be cleaned up and refactored
-  renderRows = data => {
-    let blockHeader = this.setupBlockHeader( data.headers.length + 1, data.setId, this.props.deleteItem, this.props.editItem )
-    let headerRow = this.renderHeaders(data.headers)
 
-    let rows = data.rows.map((row, index) => {
-      let id = (typeof row.id === 'undefined') ? index : row.id
-      return <tr
-      id={id}
-      data-setid={data.setId}
-      key={index}>
-        {this.renderRow(row, data.headers)}
-      </tr>
-    })
+  //TODO: can be cleaned up and refactored
+  const renderRows = data => {
+    let blockHeader = setupBlockHeader(
+      data.headers.length + 1,
+      data.setId,
+      props.deleteItem,
+      props.editItem
+    )
+    let tableHead = renderHeaders(blockHeader, data.headers)
 
-    let allRows = []
-    if (! this.props.disabled ){
-      allRows = [blockHeader, headerRow, ...rows]
-    }else{
-      allRows = [headerRow, ...rows]
-    }
-    return allRows
+    let tableBody = (
+      <TableBody>
+        {data.rows.map((row, index) => {
+          let id = typeof row.id === 'undefined' ? index : row.id
+          return (
+            <TableRow id={id} data-setid={data.setId} key={index}>
+              {renderRow(row, data.headers)}
+            </TableRow>
+          )
+        })}
+      </TableBody>
+    )
+
+    return [tableHead, tableBody]
   }
 
-  renderHeaders = headers => {
-    if ( ! this.props.disabled ) {
-      headers.splice(0,0,'')
-    }
+  const renderHeaders = (blockHeader, headers) => {
     return (
-      <tr key={headers.toString()}>
-        {headers.map(header => (
-          <th key={header}>{header}</th>
-        ))}
-      </tr>
+      <TableHead>
+        {blockHeader}
+        <TableRow key={headers.toString()}>
+          {props.disabled === false ? <TableCell className={classes.th}></TableCell> : null }
+          {headers.map( (header,index) => (
+            index === 0 
+            ? <TableCell className={classes.th}>{header}</TableCell>
+            : <TableCell className={classes.th}>{header}</TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
     )
   }
 
-  deleteRow = event => {
-
-  }
-
-  renderRow = (row, headers) => {
-    // TODO: if this.props.disabled = false, then add delete icon (extra <td>)
-    let tds = []
-    let j = 0
-    if ( ! this.props.disabled ) {
-      j = 1
-      tds.push(
-          <td style={{borderLeft:'1px solid #000'}} key={Math.random()}>
-            <input id={row.id} type='button' value='delete' onClick={this.props.deleteRow} />
-          </td>)
-    }
-
-    for (let i = j; i < headers.length; i++) {
-      tds.push(
-          <td onClick={this.clickPart} style={{borderLeft:'1px solid #000'}} key={i}>
-            <Input id={row.id} name={headers[i]} data={row[headers[i]]}  onChange={this.handleSetChange} disabled={this.props.disabled} />
-          </td>)
-    }
-    return tds
-  }
+  // const deleteRow = event => {console.log(event)}
 
   // todo: need to give the exercise id
-  handleSetChange = event => {
+  const handleSetChange = event => {
     // get setId from tr (parentNode/td > parentNode/tr)
     let setId = event.target.parentNode.parentNode.dataset['setid']
     let id = event.target.id
     let name = event.target.name
     let value = event.target.value
-    this.props.handleSetChange({setId: setId, id: id, name: name, value: value})
+    props.handleSetChange({ setId: setId, id: id, name: name, value: value })
   }
 
+  const renderRow = (row, headers) => {
+    // TODO: if props.disabled = false, then add delete icon (extra <td>)
+    let tds = []
+    let j = 0
+    if (!props.disabled) {
+      console.log('adding 1 to j')
+      j = 1
+      tds.push(
+        <TableCell
+          className={`${classes.tdLeft} ${classes.td}`}
+          key={Math.random()}
+        >
+          <IconButton id={row.id} aria-label='Delete' onClick={props.deleteRow}>
+            <DeleteForeverIcon color='inherit' fontSize='small' />
+          </IconButton>
+        </TableCell>
+      )
+    }
+
+    for (let i = 0; i < headers.length; i++) {
+      console.log(i)
+      console.log(j)
+      console.log(headers)
+      console.log(headers[i])
+      console.log(row)
+      console.log(row[headers[i]])
+      tds.push(
+        <TableCell className={classes.td} key={i}>
+          <Input
+            id={row.id}
+            name={headers[i]}
+            data={row[headers[i]]}
+            onChange={handleSetChange}
+            disabled={props.disabled}
+          />
+        </TableCell>
+      )
+    }
+    return tds
+  }
+
+  return (
+    <TableContainer component={Paper} className={classes.container}>
+      <Table className={classes.table} size='small'>
+        {renderRows(props.data)}
+      </Table>
+    </TableContainer>
+  )
 }
 
+const useStylesInput = makeStyles(theme => ({
+  root: {
+    color: theme.color1_text.hex,
+    border: `1px solid ${theme.color3.hex}`,
+    overflow: 'hidden',
+    borderRadius: 4,
+    backgroundColor: theme.color1.hex,
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    '&:hover': {
+      backgroundColor: '#fff'
+    },
+    '&$focused': {
+      backgroundColor: '#fff',
+      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
+      borderColor: theme.color3.hex
+    }
+  },
+  focused: {}
+}))
+
 const Input = props => {
+  const themeContext = useContext(ThemeContext)
+  const inputClasses = useStylesInput(themeContext.theme)
   return (
-    <input 
+    <TextField
       id={props.id}
-      // data-setid={props.data.setId}
       name={props.name}
-      type='text' 
-      disabled={props.disabled} 
-      value={props.data ? props.data : ''} 
-      style={{backgroundColor:'inherit', border: 'none', color:'inherit', fontSize:'1em', width:'100%', lineHeight:'14px'}} 
+      // label={props.name}
+      value={props.data ? props.data : ''}
+      type='text'
+      InputProps={{ classes: inputClasses }}
+      InputLabelProps={{
+        shrink: true,
+        color: 'inherit'
+      }}
+      variant='outlined'
       onChange={props.onChange}
+      size='small'
     />
   )
 }
 
-export default Table
+export default SimpleTable

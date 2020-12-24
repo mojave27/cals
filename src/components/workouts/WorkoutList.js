@@ -1,5 +1,5 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import { Container, Grid } from '@material-ui/core'
 import WorkoutCard from '../workouts/WorkoutCard'
 
 const WorkoutList = props => {
@@ -8,10 +8,11 @@ const WorkoutList = props => {
   }
 
   return (
-    <Grid container spacing={1} justify='flex-start'>
+      <Container style={{padding:'25px'}}>
+    <Grid container spacing={2} justify='flex-start'>
       {props.workouts.map(wo => {
         return (
-          <Grid item xs={12} sm={4} key={wo.id}>
+          <Grid item xs={12} sm={6} key={wo.id}>
             <WorkoutCard
               key={wo.id}
               id={wo.id}
@@ -23,7 +24,7 @@ const WorkoutList = props => {
           </Grid>
         )
       })}
-    </Grid>
+    </Grid></Container>
   )
 }
 

@@ -54,7 +54,7 @@ const Themer = props => {
       <ChangeTheme theme={'lake'} />
       </Grid>
       <Grid item>
-      <ChangeTheme theme={'villa'} />
+      <ChangeTheme theme={'snow'} />
       </Grid>
       <Grid item>
       <ChangeTheme theme={'sea'} />
