@@ -1,19 +1,30 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import { useContext } from 'react'
-import { woDayStyles } from '../../styles/WoDayStyles'
+import { useContext, useState } from 'react'
 import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
-import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-import StopWatch from '../WoDay/StopWatch'
 
-const useStyles = makeStyles(theme => ({
+import React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+
+
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    textAlign: 'center'
-  }
-}))
+    // backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    height: 224,
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+  },
+}));
 
 const Test = props => {
   let context = useContext(ThemeContext)
@@ -22,150 +33,137 @@ const Test = props => {
   return (
     <div css={formContainer}>
       <div css={row}>Test Page</div>
-      <Table />
+      <SimpleTabs />
+      <VerticalTabs />
     </div>
   )
 }
 
 export default Test
 
-const Table = () => {
-  let context = useContext(ThemeContext)
-  let { woHeader, woInput, woTable } = woDayStyles(context.theme)
-  const classes = useStyles(context.theme)
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
+
+
+const VerticalTabs = () => {
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div className={classes.verticalTabs}>
+      <Tabs
+        orientation="vertical"
+        variant="scrollable"
+        value={value}
+        onChange={handleChange}
+        aria-label="Vertical tabs example"
+        className={classes.tabs}
+      >
+        <Tab label="Item One" {...a11yProps(0)} />
+        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Item Three" {...a11yProps(2)} />
+        <Tab label="Item Four" {...a11yProps(3)} />
+        <Tab label="Item Five" {...a11yProps(4)} />
+        <Tab label="Item Six" {...a11yProps(5)} />
+        <Tab label="Item Seven" {...a11yProps(6)} />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        Item One
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Item Four
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        Item Five
+      </TabPanel>
+      <TabPanel value={value} index={5}>
+        Item Six
+      </TabPanel>
+      <TabPanel value={value} index={6}>
+        Item Seven
+      </TabPanel>
+    </div>
+  );
+}
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+// function a11yProps(index) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     'aria-controls': `simple-tabpanel-${index}`,
+//   };
+// }
+
+
+const SimpleTabs = () => {
+  let themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <div className={classes.root}>
-      <StopWatch />
-    <Grid container spacing={2}>
-      <Grid item>
-        {/* <div style={{ display: 'inline-block' }}> */}
-        <div>
-          <table css={woTable}>
-            <tbody>
-              <tr>
-                <th style={{ maxWidth: '50px' }} css={woHeader}>
-                  exercise
-                </th>
-                <th style={{ maxWidth: '15px' }} css={woHeader}>
-                  reps
-                </th>
-              </tr>
-              <tr id='20' style={{ border: '1px solid yellow' }}>
-                <td>
-                  <input
-                    name='name'
-                    data-exgroupid='0'
-                    type='text'
-                    css={[woInput, { width: '75px' }]}
-                    value='incline bench press'
-                  />
-                </td>
-                <td>
-                  <input
-                    name='reps'
-                    data-exgroupid='0'
-                    type='text'
-                    css={[woInput, { width: '75px' }]}
-                    value='10'
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </Grid>
-      <Grid item>
-        <div
-          style={{
-            maxWidth: '400px',
-            // display: 'inline-block',
-            overflow: 'scroll'
-          }}
-        >
-          <table css={woTable}>
-            <tbody>
-              <tr>
-                <th css={woHeader}>weight</th>
-                <th css={woHeader}>reps</th>
-                <th css={woHeader}>weight</th>
-                <th css={woHeader}>reps</th>
-                <th css={woHeader}>weight</th>
-                <th css={woHeader}>reps</th>
-              </tr>
-              <tr id='20' style={{ border: '1px solid yellow' }}>
-                <td>
-                  <input
-                    data-setid='0'
-                    data-exgroupid='0'
-                    name='weight'
-                    type='text'
-                    placeholder='enter weight'
-                    css={[woInput, { width: '75px' }]}
-                    value='47'
-                  />
-                </td>
-                <td>
-                  <input
-                    data-setid='0'
-                    data-exgroupid='0'
-                    name='reps'
-                    type='text'
-                    placeholder='enter reps'
-                    css={[woInput, { width: '75px' }]}
-                    value='0'
-                  />
-                </td>
-                <td>
-                  <input
-                    data-setid='0'
-                    data-exgroupid='0'
-                    name='weight'
-                    type='text'
-                    placeholder='enter weight'
-                    css={[woInput, { width: '75px' }]}
-                    value='47'
-                  />
-                </td>
-                <td>
-                  <input
-                    data-setid='0'
-                    data-exgroupid='0'
-                    name='weight'
-                    type='text'
-                    placeholder='enter weight'
-                    css={[woInput, { width: '75px' }]}
-                    value='47'
-                  />
-                </td>
-                <td>
-                  <input
-                    data-setid='0'
-                    data-exgroupid='0'
-                    name='reps'
-                    type='text'
-                    placeholder='enter reps'
-                    css={[woInput, { width: '75px' }]}
-                    value='0'
-                  />
-                </td>
-                <td>
-                  <input
-                    data-setid='0'
-                    data-exgroupid='0'
-                    name='reps'
-                    type='text'
-                    placeholder='enter reps'
-                    css={[woInput, { width: '75px' }]}
-                    value='0'
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </Grid>
-    </Grid>
+      <AppBar position="static">
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        Item One
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
     </div>
-  )
+  );
 }
+

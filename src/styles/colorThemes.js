@@ -1,4 +1,6 @@
 export const sea = {
+  name: 'sea',
+  type: 'custom',
   color1: {
     hex: '#274469',
     rgba: alpha => buildRgba(39, 68, 105, alpha)
@@ -36,7 +38,54 @@ export const sea = {
   }
 }
 
+export const snow = {
+  name: 'snow',
+  palette: { type: 'light' },
+  type: 'custom',
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color4_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(234, 234, 234, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#FEFEFE',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.darkText
+  }
+}
+
 export const seaOrig = {
+  name: 'seaOrig',
+  type: 'custom',
   color1: {
     hex: '#555757',
     rgba: alpha => buildRgba(85, 87, 87, alpha)
@@ -75,6 +124,8 @@ export const seaOrig = {
 }
 
 export const villa = {
+  name: 'villa',
+  type: 'custom',
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
@@ -113,6 +164,8 @@ export const villa = {
 }
 
 export const crystal = {
+  name: 'crystal',
+  type: 'custom',
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -322,7 +375,53 @@ export const stormTrooper = {
   }
 }
 
+export const vader = {
+  name: 'vader',
+  palette: { type: 'dark' },
+  color1: {
+    hex: '#dadee0',
+    rgba: alpha => buildRgba(235, 240, 242, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#D2D7D9',
+    rgba: alpha => buildRgba(210, 215, 217, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#9FA4A6',
+    rgba: alpha => buildRgba(159, 164, 166, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#262626',
+    rgba: alpha => buildRgba(38, 38, 38, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#0D0D0D',
+    rgba: alpha => buildRgba(13, 13, 13, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  },
+  color5_highlight: {
+    hex: '#0D0D0D',
+    rgba: alpha => buildRgba(13, 13, 13, alpha)
+  }
+}
+
 export const bakery = {
+  name: 'bakery',
+  type: 'custom',
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -406,6 +505,8 @@ export const woSheet = {
 }
 
 export const lake = {
+  name: 'lake',
+  type: 'custom',
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
@@ -444,6 +545,7 @@ export const lake = {
 }
 
 export const book = {
+  name: 'book',
   color1: {
     hex: '#F0F2F2',
     rgba: alpha => buildRgba(239, 242, 242, alpha)
@@ -482,6 +584,7 @@ export const book = {
 }
 
 export const dina = {
+  name: 'dina',
   color1: {
     hex: '#F2E6DF',
     rgba: alpha => buildRgba(242, 230, 223, alpha)
@@ -520,6 +623,7 @@ export const dina = {
 }
 
 export const fordRaptor = {
+  name: 'fordRaptor',
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, 1)
@@ -558,6 +662,7 @@ export const fordRaptor = {
 }
 
 export const themeOne = {
+  name: 'themeOne',
   color1: {
     hex: '#2D3540',
     rgba: alpha => buildRgba(45, 53, 64, alpha)
@@ -585,6 +690,7 @@ export const themeOne = {
 }
 
 export const themeTwo = {
+  name: 'themeTwo',
   color4: {
     hex: '#2D3540',
     rgba: alpha => buildRgba(45, 53, 6, alpha)
@@ -612,6 +718,7 @@ export const themeTwo = {
 }
 
 export const themeThree = {
+  name: 'themeThree',
   color4: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)

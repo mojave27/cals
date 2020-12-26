@@ -6,7 +6,7 @@ import ThemeContext from '../../context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   bottom: {
-    color: theme.color1.hex,
+    color: theme.name === 'snow' ? 'red' : theme.color1.hex,
     animationDuration: '1250ms',
     position: 'absolute',
     left: '50%',

@@ -101,6 +101,12 @@ const ProgramForm = props => {
     toggleWorkoutModal()
   }
 
+  const addCardio = async () => {
+    // await woContext.setEmptyWorkout()
+    // toggleWorkoutModal()
+    console.log('%cpretending to add cardio', 'color:#fff; background-color:navy')
+  }
+
   const saveWorkout = async workout => {
     console.log(`saveWorkout: ${workout}`)
     await programContext.addWorkout(workout)
@@ -120,6 +126,15 @@ const ProgramForm = props => {
     navigate('/program-tracker')
   }
 
+  const deleteItem = async id => {
+    //remove workout from program in context.
+    console.log(`pretending to remove workout with id ${id}`)
+  }
+
+  const schedule = async id => {
+    console.log(`pretending to open schedule form`)
+  }
+
   const renderWorkouts = () => {
     let workouts = programContext.program.workouts
     return workouts && workouts.length > 0 ? (
@@ -135,6 +150,8 @@ const ProgramForm = props => {
                 id={wo.id}
                 item={wo}
                 selectItem={props.selectWorkout}
+                deleteItem={deleteItem}
+                disabled={false}
               />
             </Grid>
           )
@@ -153,7 +170,7 @@ const ProgramForm = props => {
             <div style={{ marginTop: '30px' }} />
             {/* <InputLabel shrink>Count</InputLabel> */}
             <TextField
-              InputProps={{ classes: inputClasses }}
+              InputProps={{ classes: inputClasses.root }}
               id='name'
               label='Program Name'
               defaultValue={programContext.program.name}
@@ -163,7 +180,7 @@ const ProgramForm = props => {
             />
             <div style={{ marginTop: '10px' }} />
             <TextField
-              InputProps={{ classes: inputClasses }}
+              InputProps={{ classes: inputClasses.root }}
               id='description'
               label='Description'
               defaultValue={programContext.program.description}
@@ -173,6 +190,10 @@ const ProgramForm = props => {
             />
             <div style={{ marginTop: '10px' }} />
             <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
+            <div style={{ marginTop: '10px' }} />
+            <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
+            <div style={{ marginTop: '10px' }} />
+            <FormButton buttonText={'Schedule'} onClick={schedule} />
             <div style={{ marginTop: '10px' }} />
             <FormButton
               type='submit'

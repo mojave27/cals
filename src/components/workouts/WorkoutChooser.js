@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import { styles } from '../../styles/MainStyles'
@@ -10,8 +10,7 @@ import WorkoutCard from './WorkoutCard'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { basicButton } from '../../styles/Styles'
-import Paper from '@material-ui/core/Paper'
-import Grid from '@material-ui/core/Grid'
+import { Container, Grid, Paper } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -74,7 +73,7 @@ const WorkoutChooser = props => {
   }
 
   return (
-    <React.Fragment>
+      <Container style={{padding:'25px'}}>
       {showFromPrograms === false && showFromWorkouts === false ? (
         <div css={detailCard}>
           <div css={cardNoHover}>
@@ -108,7 +107,7 @@ const WorkoutChooser = props => {
         </div>
       ) : showFromWorkouts === true ? (
         workoutTemplates.length > 0 ? (
-          <Grid spacing={1} >
+          <Grid container spacing={1} >
             {renderWorkouts(workoutTemplates)}
           </Grid>
         ) : (
@@ -117,7 +116,7 @@ const WorkoutChooser = props => {
       ) : showFromPrograms === true ? (
         <Tracker handleWorkoutSelect={chooseWorkout} />
       ) : null}
-    </React.Fragment>
+      </Container>
   )
 }
 
