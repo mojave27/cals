@@ -1,7 +1,14 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
-import { Card, CardHeader, CardContent} from '@material-ui/core'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import { Card, CardHeader, CardContent } from '@material-ui/core'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
@@ -11,7 +18,8 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    textAlign: 'center'
+    textAlign: 'center',
+    margin: 'auto'
   },
   container: {
     marginBottom: '10px'
@@ -25,16 +33,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'left'
   },
   thLeft: {
-    width: '70%',
+    width: '70%'
   },
-  td: { 
+  td: {
     textAlign: 'left',
     color: theme.color4_text.hex
   },
-  tdLeft: { 
-    width: '70%',
+  tdLeft: {
+    width: '70%'
   },
-  cardHeader:{
+  cardHeader: {
     padding: '6px 16px 0px 16px'
   },
   cardContent: {
@@ -45,7 +53,6 @@ const useStyles = makeStyles(theme => ({
 const WorkoutCard = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
-  // const { editItem, deleteItem, id, item } = props
 
   const handleClick = () => {
     if (props.onClick) props.onClick(props.id)
@@ -59,24 +66,32 @@ const WorkoutCard = props => {
           rows: [...exGroup.exercises]
         }
         return (
-              <TableContainer component={Paper} className={classes.container} key={exGroup.id}>
-              <Table className={classes.table} size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={`${classes.thLeft} ${classes.th}`}>{'name'}</TableCell>
-                    <TableCell className={classes.th}>{'reps'}</TableCell>
+          <TableContainer
+            component={Paper}
+            className={classes.container}
+            key={exGroup.id}
+          >
+            <Table className={classes.table} size='small'>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={`${classes.thLeft} ${classes.th}`}>
+                    {'name'}
+                  </TableCell>
+                  <TableCell className={classes.th}>{'reps'}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.rows.map(row => (
+                  <TableRow key={row.name}>
+                    <TableCell className={`${classes.tdLeft} ${classes.td}`}>
+                      {row.name}
+                    </TableCell>
+                    <TableCell className={classes.td}>{row.reps}</TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data.rows.map((row) => (
-                    <TableRow key={row.name}>
-                      <TableCell className={`${classes.tdLeft} ${classes.td}`}>{row.name}</TableCell>
-                      <TableCell className={classes.td}>{row.reps}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         )
       })
     } else {
@@ -93,20 +108,34 @@ const WorkoutCard = props => {
   }
 
   return (
-    <Card className={classes.root} onClick={handleClick} key={props.id}>
+    <Card
+      className={classes.root}
+      style={{maxWidth:props.maxWidth}}
+      variant="outlined"
+      onClick={handleClick}
+      key={props.id}
+    >
       <CardHeader
-      className={classes.cardHeader}
+        className={classes.cardHeader}
         title={props.item.name}
         titleTypographyProps={{ variant: 'h6' }}
         action={
-          <React.Fragment>
-            <IconButton aria-label='Edit' onClick={() => editItem(props.item.id)}>
-              <EditIcon color='inherit' fontSize='small' />
-            </IconButton>
-            <IconButton aria-label='Delete' onClick={() => deleteItem(props.item.id)}>
-              <DeleteForeverIcon color='inherit' fontSize='small' />
-            </IconButton>
-          </React.Fragment>
+          props.disabled === false ? (
+            <React.Fragment>
+              <IconButton
+                aria-label='Edit'
+                onClick={() => editItem(props.item.id)}
+              >
+                <EditIcon color='inherit' fontSize='small' />
+              </IconButton>
+              <IconButton
+                aria-label='Delete'
+                onClick={() => deleteItem(props.item.id)}
+              >
+                <DeleteForeverIcon color='inherit' fontSize='small' />
+              </IconButton>
+            </React.Fragment>
+          ) : null
         }
       />
       <CardContent className={classes.cardContent}>

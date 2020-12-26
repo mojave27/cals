@@ -1,6 +1,7 @@
 import { css } from '@emotion/core'
 
 import {
+  vader,
   stormTrooper,
   stormTrooperInverse,
   woSheet,
@@ -13,6 +14,7 @@ import {
 } from './colorThemes'
 
 export let themes = {
+  vader: vader,
   stormTrooper: stormTrooper,
   stormTrooperInverse: stormTrooperInverse,
   woSheet: woSheet,
@@ -28,10 +30,7 @@ export let changeTheme = themeName => {
   this.activeTheme = themes[themeName]
 }
 
-export let activeTheme = siberianWinter
-// export let activeTheme = stormTrooperInverse
-// export let activeTheme = stormTrooper
-// export let activeTheme = woSheet
+export let activeTheme = crystal
 
 export let basics = css({
   borderTop: `1px solid ${activeTheme.color2.hex}`,

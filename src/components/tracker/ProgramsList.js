@@ -4,19 +4,30 @@ import React, { useContext } from 'react'
 import { useEffect, useState } from 'react'
 import { retrievePrograms } from '../../api/programsApi'
 import TrackerContext from '../../context/TrackerContext'
-import ProgramHighlightCard from '../programs/ProgramHighlightCard'
-// import ProgramOverview from '../programs/ProgramOverview'
 import { isEmpty } from 'lodash'
 import { gridStyles } from '../../styles/gridStyles'
+import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    textAlign: 'center'
+  }
+}))
 
 const ProgramsList = props => {
   const [program, setProgram] = useState({})
 
-  const themeContext = useContext(ThemeContext)
   let trackerContext = useContext(TrackerContext)
-  let { gridContainerSingleColumn, gridItem } = gridStyles(themeContext.theme)
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
+  let { gridContainer, gridItem } = gridStyles(themeContext.theme)
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -28,11 +39,11 @@ const ProgramsList = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleProgramSelect = event => {
-    let id = event.currentTarget.id
+  const handleProgramSelect = id => {
     clearSelectedProgram()
     props.select(id)
   }
+
 
   const clearSelectedProgram = () => {
     setProgram({})
@@ -40,22 +51,26 @@ const ProgramsList = props => {
 
   //TODO: add fa icon for previewing and for selecting
   //      also allows select via just clicking the card
-  const ProgramRow = program => {
-    let index = program.id
-    return (
-      <ProgramHighlightCard
-        key={index}
-        program={program}
-        onClick={handleProgramSelect}
-      />
-    )
-  }
-
   const renderPrograms = programs => {
     if (programs && programs.length > 0) {
-      return programs.map(program => {
-        return ProgramRow(program)
-      })
+      return (
+        <Container style={{padding:'25px'}}>
+        <Grid container spacing={1}>
+          {programs.map(program => {
+            return (
+              <Grid item xs={12} sm={4} key={`${program.id}`}>
+                <Card className={classes.root} onClick={() => handleProgramSelect(program.id)}>
+                  <CardHeader
+                    title={program.name ? program.name : '-'}
+                    subheader={program.description ? program.description : '-'}
+                  />
+                </Card>
+              </Grid>
+            )
+          })}
+        </Grid>
+        </Container>
+      )
     } else {
       return <div css={gridItem}></div>
     }
@@ -65,18 +80,12 @@ const ProgramsList = props => {
     <BasicSpinner show={true} />
   ) : isEmpty(program) ? (
     <React.Fragment>
-      <div css={gridContainerSingleColumn}>
+      <div css={gridContainer}>
         {renderPrograms(trackerContext.programs)}
       </div>
     </React.Fragment>
   ) : (
     null
-    // <ProgramOverview
-    //   select={true}
-    //   handleClose={clearSelectedProgram}
-    //   selectProgram={handleProgramSelect}
-    //   program={program}
-    // />
   )
 }
 

@@ -33,6 +33,9 @@ const Themer = props => {
     <div style={{ minHeight: '100vh' }}>
       <Grid container spacing={2} justify='center'>
       <Grid item>
+        <ChangeTheme theme={'vader'} />
+      </Grid>
+      <Grid item>
         <ChangeTheme theme={'stormTrooper'} />
       </Grid>
       <Grid item>
