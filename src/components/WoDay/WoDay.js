@@ -47,35 +47,6 @@ const WoDay = props => {
   let { cardNoHover, detailCard, row } = styles(themeContext.theme)
   let { section, sectionHeader, woTable } = woDayStyles(themeContext.theme)
 
-  // useEffect(() => {
-  //   windowLoc()
-  // }, )
-
-  // const windowLoc = () => {
-  //   if (typeof window !== "undefined") {
-  //     window.onscroll = () => {
-  //       let currentScrollPos = window.pageYOffset;
-  //       // console.log(currentScrollPos)
-  //       let maxScroll = document.body.scrollHeight - window.innerHeight;
-  //       // console.log(maxScroll)
-
-  //       // console.log(currentScrollPos/maxScroll)
-
-  //       if ( (currentScrollPos/maxScroll) > .10) {
-  //         setShowStopWatch(true)
-  //       }else{
-  //         setShowStopWatch(false)
-  //       }
-  //       // if (currentScrollPos > 0 && currentScrollPos < maxScroll) {
-  //       //   this.setState({ opacity: "0" })
-  //       //   // console.log(currentScrollPos)
-  //       // } else {
-  //       //   this.setState({ opacity: "1" })
-  //       // }
-  //     }
-  //   }
-  // }
-
   const woDayLoaded = () => {
     return true
   }

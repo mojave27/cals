@@ -54,9 +54,9 @@ const Tracker = props => {
     updateProgram(program)
   }
 
-  const updateProgram = program => {
+  const updateProgram = async program => {
     showTheSpinner(false)
-    context.updateProgram(program)
+    await context.updateProgram(program)
   }
 
   const clearProgram = () => {

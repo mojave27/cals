@@ -6,8 +6,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex
   }
 }))
 
