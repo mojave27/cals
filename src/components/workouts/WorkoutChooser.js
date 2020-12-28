@@ -7,10 +7,10 @@ import { styles } from '../../styles/MainStyles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import Tracker from '../tracker/Tracker'
 import WorkoutCard from './WorkoutCard'
-
 import { makeStyles } from '@material-ui/core/styles'
 import { basicButton } from '../../styles/Styles'
 import { Container, Grid, Paper } from '@material-ui/core'
+import ArrayUtils from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,8 +49,12 @@ const WorkoutChooser = props => {
     props.chooseWorkout(workoutId)
   }
 
+  const sortWorkouts = workouts => {
+    return ArrayUtils.sortByStringProperty(workouts, 'name', true)
+  }
+
   const renderWorkouts = workouts => {
-    return workouts.map(wo => {
+    return sortWorkouts(workouts).map(wo => {
       return (
         <Grid item xs={12} sm={4} key={wo.id}>
           <WorkoutCard
@@ -108,6 +112,7 @@ const WorkoutChooser = props => {
       ) : showFromWorkouts === true ? (
         workoutTemplates.length > 0 ? (
           <Grid container spacing={1} >
+            {/* TODO: CAN WORKOUT LIST BE USED HERE INSTEAD? */}
             {renderWorkouts(workoutTemplates)}
           </Grid>
         ) : (

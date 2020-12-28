@@ -16,6 +16,7 @@ import TextField from '@material-ui/core/TextField'
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
 import Grid from '@material-ui/core/Grid'
+import ScheduleDialog from './ScheduleDialog'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,10 +45,10 @@ const useStylesInput = makeStyles(theme => ({
     backgroundColor: theme.color1.hex,
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     '&:hover': {
-      backgroundColor: '#fff'
+      backgroundColor: '#eee'
     },
     '&$focused': {
-      backgroundColor: '#fff',
+      backgroundColor: '#eee',
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
       borderColor: theme.color3.hex
     }
@@ -63,6 +64,7 @@ const ProgramForm = props => {
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
   const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
 
@@ -72,6 +74,10 @@ const ProgramForm = props => {
 
   const toggleWorkoutDialog = () => {
     setShowWorkoutDialog(!showWorkoutDialog)
+  }
+
+  const toggleScheduleDialog = () => {
+    setShowScheduleDialog(!showScheduleDialog)
   }
 
   const toggleWorkoutListDialog = () => {
@@ -113,6 +119,11 @@ const ProgramForm = props => {
     closeAllDialogs()
   }
 
+  // const addWorkoutToSchedule = async workout => {
+  //   await programContext.addWorkoutToSchedule(day, workout)
+
+  // }
+
   const handleTextChange = e => {
     let { id, value } = e.target
     let updatedProgram = { ...programContext.program }
@@ -129,10 +140,6 @@ const ProgramForm = props => {
   const deleteItem = async id => {
     //remove workout from program in context.
     console.log(`pretending to remove workout with id ${id}`)
-  }
-
-  const schedule = async id => {
-    console.log(`pretending to open schedule form`)
   }
 
   const renderWorkouts = () => {
@@ -168,9 +175,10 @@ const ProgramForm = props => {
           <CardContent style={{overflow:'scroll'}}>
             <CloseButton handleClose={handleClose} />
             <div style={{ marginTop: '30px' }} />
-            {/* <InputLabel shrink>Count</InputLabel> */}
+            
             <TextField
-              InputProps={{ classes: inputClasses.root }}
+              // inputProps={{ style: { color: 'red', backgroundColor: 'yellow' }}}
+              InputProps={{ classes: inputClasses }}
               id='name'
               label='Program Name'
               defaultValue={programContext.program.name}
@@ -193,7 +201,7 @@ const ProgramForm = props => {
             <div style={{ marginTop: '10px' }} />
             <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
             <div style={{ marginTop: '10px' }} />
-            <FormButton buttonText={'Schedule'} onClick={schedule} />
+            <FormButton buttonText={'Schedule'} onClick={toggleScheduleDialog} />
             <div style={{ marginTop: '10px' }} />
             <FormButton
               type='submit'
@@ -222,6 +230,10 @@ const ProgramForm = props => {
     }
   }
 
+  const handleWorkoutListSelect = async workout => {
+    await programContext.addWorkout(workout)
+  }
+
   return (
     <Container maxWidth='sm'>
       <ProgramWorkoutDialog
@@ -232,11 +244,17 @@ const ProgramForm = props => {
       />
       <WorkoutListDialog
         open={showWorkoutListDialog}
+        onSelect={handleWorkoutListSelect}
         onClose={toggleWorkoutListDialog}
       />
       <WorkoutFormDialog
         open={showWorkoutDialog}
         onClose={toggleWorkoutDialog}
+        saveWorkout={saveWorkout}
+      />
+      <ScheduleDialog
+        open={showScheduleDialog}
+        onClose={toggleScheduleDialog}
         saveWorkout={saveWorkout}
       />
       {renderMainForm()}

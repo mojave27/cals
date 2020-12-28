@@ -22,6 +22,8 @@ import {
 
 // TODO: disconnect this from SetContext and just have it manage the set(s) locally, and save/update
 //       to the parent component via props
+
+// TODO: change this to ExerciseGroup card, since it isn't really a Set.
 const SetCard = props => {
   let setContext = useContext(SetContext)
   // let themeContext = useContext(ThemeContext)
@@ -30,6 +32,7 @@ const SetCard = props => {
   const [showExerciseList, setShowExerciseList] = useState(false)
 
   useEffect(() => {
+    console.log('in useEffect')
     async function fetchData() {
       let exercises = await retrieve()
       setAllExercises(sortByName(exercises))
@@ -44,124 +47,10 @@ const SetCard = props => {
     return sortByStringProperty(exercises, 'name', ignoreCase)
   }
 
-  const renderSet = () => {
-    return (
-      <div css={formContainer}>
-        <div css={row}>
-          <div css={col25}>
-            <div>{`id: ${getSetId()}`} </div>
-            <label htmlFor='exercises'>exercises for set</label>
-          </div>
-
-          <div css={col75}>
-            <div css={row}>{renderExercisesForSet(setContext.set.exercises)}</div>
-            <div css={row}>
-              <input
-                style={{ margin: '5px' }}
-                type='button'
-                value='Add Exercise'
-                css={[basicButton, { float: 'right' }]}
-                onClick={toggleModal}
-              />
-            </div>
-          </div>
-          <div css={row}>
-            <input
-              style={{ margin: '5px' }}
-              type='button'
-              value='Save Set'
-              css={[basicButton, { float: 'right' }]}
-              onClick={saveSet}
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const renderExerciseList = () => {
-    return (
-      <React.Fragment>
-        <div onClick={props.done}>close</div>
-        <div css={row}>{renderAllExercises(allExercises)}</div>
-        <div css={row}>
-          <input
-            style={{ margin: '5px' }}
-            type='button'
-            value='Save to Set'
-            css={[basicButton, { float: 'right' }]}
-            onClick={addExercisesToSet}
-          />
-          <input
-            style={{ margin: '5px' }}
-            type='button'
-            value='Cancel'
-            css={[basicButton, { float: 'right' }]}
-            onClick={toggleModal}
-          />
-        </div>
-      </React.Fragment>
-    )
-  }
-
-  const renderAllExercises = exercises => {
-    return exercises.map(exercise => {
-      return (
-        <div
-          id={exercise.id}
-          css={getClasses(exercise.id)}
-          key={exercise.id}
-          onClick={selectExercise}
-        >
-          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
-        </div>
-      )
-    })
-  }
-
-  const renderExercisesForSet = exercises => {
-    return exercises.map(exercise => {
-      let index = exercise.id
-      return (
-        <div id={index} css={getClasses(exercise.id)} key={index}>
-          <BlockHeader item={{ id: exercise.id, name: exercise.name }} deleteItem={deleteExercise} editItem={editExercise} />
-          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
-          <input
-            css={[formInput, { width: '100px' }]}
-            type='text'
-            id={exercise.id}
-            name='exerciseReps'
-            value={exercise.reps}
-            placeholder='exercise reps..'
-            onChange={handleRepsChange}
-          />
-        </div>
-      )
-    })
-  }
-
-  const getSetId = () => {
-    return isUndefined(setContext.set.id) ? ' ' : setContext.set.id
-  }
-
-  const getClasses = id => {
-    let index = selectedExercises.findIndex(exercise => {
-      return Number(exercise.id) === Number(id)
-    })
-
-    // (-1 = not found, 0 = found)
-    // if (index === 0 ) console.log(`${JSON.stringify(selectedExercises[index])}`)
-
-    if (index === -1) {
-      return miniCard
-    } else {
-      return [miniCard, selectedMiniCard]
-    }
-  }
-
   const handleRepsChange = event => {
     event.stopPropagation()
     let { id, value } = event.target
+    console.log(id)
     let exercisesForSet = [...setContext.set.exercises]
     let index = exercisesForSet.findIndex(
       exercise => Number(exercise.id) === Number(id)
@@ -173,7 +62,7 @@ const SetCard = props => {
   const selectExercise = event => {
     let id = event.target.id
     let updatedSelectedExercises = [...selectedExercises]
-    let allExercisesId = findIndexOfId(id, allExercises) 
+    let allExercisesId = findIndexOfId(id, allExercises)
     updatedSelectedExercises.push(allExercises[allExercisesId])
     setSelectedExercises(updatedSelectedExercises)
   }
@@ -200,8 +89,6 @@ const SetCard = props => {
   }
 
   const deleteExercise = id => {
-    // let id = event.currentTarget.id
-    console.log(`would delete exercise with id ${id}`)
     let exercises = setContext.set.exercises
     let index = findIndexOfId(id, exercises)
     if (index > -1) {
@@ -221,7 +108,152 @@ const SetCard = props => {
     }
   }
 
-  return showExerciseList ? renderExerciseList() : renderSet()
+  return (
+    showExerciseList ? (
+      <ExerciseList
+        onSelect={selectExercise}
+        onSave={addExercisesToSet}
+        onClose={toggleModal}
+        exercises={allExercises}
+        selectedExercises={selectedExercises}
+      />
+    ) : (
+      <ExerciseGroup
+        onAdd={toggleModal}
+        onChange={handleRepsChange}
+        onDelete={deleteExercise}
+        onEdit={editExercise}
+        onSave={saveSet}
+        selectedExercises={selectedExercises}
+      />
+    )
+  )
 }
 
 export default SetCard
+
+const ExerciseGroup = props => {
+  const setContext = useContext(SetContext)
+
+  const getClasses = id => {
+    let index = findIndexOfId(id, props.selectedExercises)
+    if (index === -1) {
+      return miniCard
+    } else {
+      return [miniCard, selectedMiniCard]
+    }
+  }
+
+  const getSetId = () => {
+    return isUndefined(setContext.set.id) ? ' ' : setContext.set.id
+  }
+
+  const renderExercisesForSet = exercises => {
+    return exercises.map(exercise => {
+      let index = exercise.id
+      return (
+        <div id={index} css={getClasses(exercise.id)} key={index}>
+          <BlockHeader
+            item={{ id: exercise.id, name: exercise.name }}
+            deleteItem={props.onDelete}
+            editItem={props.onEdit}
+          />
+          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
+          <input
+            css={[formInput, { width: '100px' }]}
+            type='text'
+            id={exercise.id}
+            name='exerciseReps'
+            value={exercise.reps}
+            placeholder='exercise reps..'
+            onChange={props.onChange}
+          />
+        </div>
+      )
+    })
+  }
+
+  return (
+    <div css={formContainer}>
+      <div css={row}>
+        <div css={col25}>
+          <div>{`id: ${getSetId()}`} </div>
+          <label htmlFor='exercises'>exercises for set</label>
+        </div>
+
+        <div css={col75}>
+          <div css={row}>
+            {renderExercisesForSet(setContext.set.exercises)}
+          </div>
+          <div css={row}>
+            <input
+              style={{ margin: '5px' }}
+              type='button'
+              value='Add Exercise'
+              css={[basicButton, { float: 'right' }]}
+              onClick={props.onAdd}
+            />
+          </div>
+        </div>
+        <div css={row}>
+          <input
+            style={{ margin: '5px' }}
+            type='button'
+            value='Save Set'
+            css={[basicButton, { float: 'right' }]}
+            onClick={props.onSave}
+          />
+        </div>
+      </div>
+    </div>
+  )
+
+}
+
+const ExerciseList = props => {
+  const getClasses = id => {
+    let index = findIndexOfId(id, props.selectedExercises)
+    if (index === -1) {
+      return miniCard
+    } else {
+      return [miniCard, selectedMiniCard]
+    }
+  }
+
+  const renderAllExercises = exercises => {
+    return exercises.map(exercise => {
+      return (
+        <div
+          id={exercise.id}
+          css={getClasses(exercise.id)}
+          key={exercise.id}
+          onClick={props.onSelect}
+        >
+          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
+        </div>
+      )
+    })
+  }
+
+  return (
+    <React.Fragment>
+      <div css={row}>
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Save to Set'
+          css={[basicButton, { float: 'right' }]}
+          onClick={props.onSave}
+        />
+        <input
+          style={{ margin: '5px' }}
+          type='button'
+          value='Cancel'
+          css={[basicButton, { float: 'right' }]}
+          onClick={props.onClose}
+        />
+      </div>
+      <div css={row}>{renderAllExercises(props.exercises)}</div>
+    </React.Fragment>
+  )
+}
