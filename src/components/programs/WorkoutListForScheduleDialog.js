@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-// import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
 import WorkoutList from '../workouts/WorkoutList'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-// import ProgramContext from '../../context/ProgramContext'
+import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieveItemByStringId } from '../ArrayUtils'
 
@@ -32,33 +32,28 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const WorkoutListDialog = props => {
   const theme = useContext(ThemeContext)
-  // const programContext = useContext(ProgramContext)
+  const programContext = useContext(ProgramContext)
   const classes = useStyles(theme)
 
-  const [workouts, setWorkouts] = useState([])
+  const [ workouts, setWorkouts ] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      if (!props.workouts) {
-        const allWorkouts = await retrieveWorkouts()
-        setWorkouts(allWorkouts)
-      } else {
-        setWorkouts(props.workouts)
-      }
+      const allWorkouts = await retrieveWorkouts()
+      setWorkouts(allWorkouts)
     }
 
     fetchData()
-    return () => {}
-  }, [props.workouts])
+    return () => { }
+  }, [])
 
   const handleClose = () => {
     if (props.onClose) props.onClose()
   }
 
-  const selectWorkout = async workoutId => {
-    console.log(`%cWorkoutListDialog selectWorkout: ${workoutId}`, 'color:lime;backgroundColor:navy;border:1px solid red')
+  const selectWorkout = async (workoutId) => {
     let workout = retrieveItemByStringId(workoutId, workouts)
-    props.onSelect(workout)
+    await programContext.addWorkout(workout)
   }
 
   return (
@@ -71,7 +66,7 @@ const WorkoutListDialog = props => {
       <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton
-            edge='end'
+            edge='start'
             color='inherit'
             onClick={handleClose}
             aria-label='close'
@@ -81,9 +76,9 @@ const WorkoutListDialog = props => {
           <Typography variant='h6' className={classes.title}>
             Choose Workout(s)
           </Typography>
-          {/* <Button autoFocus color='inherit' onClick={handleClose}>
+          <Button autoFocus color='inherit' onClick={handleClose}>
             save
-          </Button> */}
+          </Button>
         </Toolbar>
       </AppBar>
       <WorkoutList workouts={workouts} onClick={selectWorkout} />

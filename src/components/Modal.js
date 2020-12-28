@@ -9,12 +9,12 @@ const useStyles = makeStyles(theme => ({
   paper: {
     margin: 'auto',
     position: 'absolute',
-    width: `${theme.mobile === true ? '90%' : 'auto'}`,
+    // width: `${theme.mobile === true ? '90%' : 'auto'}`,
     top: 30,
     left: 30,
     backgroundColor: theme.color4.hex,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    // padding: theme.spacing(2, 4, 3),
     overflow: 'auto'
   },
   content: {
