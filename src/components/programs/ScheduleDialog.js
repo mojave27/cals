@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
+  AppBar,
   Button,
   Container,
   Dialog,
-  AppBar,
-  Toolbar,
   IconButton,
-  Typography,
-  Slide
+  Slide,
+  Toolbar,
+  Typography
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import ThemeContext from '../../context/ThemeContext'
@@ -181,9 +181,11 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
+        <Container>
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
+        </Container>
       )}
     </div>
   )
