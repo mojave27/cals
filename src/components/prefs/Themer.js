@@ -136,6 +136,7 @@ const Themer = props => {
             <Paper className={classes.paper}>
               <DateInput
                 label={'Date'}
+                setStartDate={() => new Date()}
               />
             </Paper>
           </Grid>
@@ -148,6 +149,7 @@ const Themer = props => {
                 placeholder={'workout duration...'}
                 value={'0'}
                 styles={{ width: '50%' }}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -160,6 +162,7 @@ const Themer = props => {
                 placeholder={'enter goals here'}
                 value={'some goals'}
                 styles={{ width: '100%' }}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -172,6 +175,7 @@ const Themer = props => {
                 value={'0'}
                 placeholder={'enter weight'}
                 styles={{ width: '100%' }}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -182,7 +186,8 @@ const Themer = props => {
                 id='energyRange'
                 min={0}
                 max={10}
-                value={"7"}
+                value={7}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -193,7 +198,8 @@ const Themer = props => {
                 id='sleepRange'
                 min={0}
                 max={10}
-                value={"8"}
+                value={8}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>

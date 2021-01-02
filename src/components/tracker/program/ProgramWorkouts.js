@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import TrackerContext from '../../../context/TrackerContext'
+// import ProgramContext from '../../../context/ProgramContext'
 import ThemeContext from '../../../context/ThemeContext'
 import WorkoutCard from '../../workouts/WorkoutCard'
 import { isEmpty } from 'lodash'
 import Spinner from '../../Spinner'
 import PropTypes from 'prop-types'
-import { Box, Tab, Tabs, Typography } from '@material-ui/core'
+import { Box, Container, Tab, Tabs } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,13 +35,13 @@ const ProgramWorkouts = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
   const [value, setValue] = useState(0)
-  let context = useContext(TrackerContext)
+  // let context = useContext(ProgramContext)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
-  return isEmpty(context.program) 
+  return isEmpty(props.program) 
     ? <Spinner /> 
     : (<div className={classes.verticalTabs}>
       <Tabs
@@ -54,16 +54,16 @@ const ProgramWorkouts = props => {
         aria-label='workout tabs'
         className={classes.tabs}
       >
-        {context.program.workouts.map((wo, index) => {
+        {props.program.workouts.map((wo, index) => {
           let name = wo.name === '' ? `workout-${index}` : wo.name
           return (
-            <Tab className={classes.tab} label={name} {...a11yProps(index)} />
+            <Tab className={classes.tab} label={name} {...a11yProps(index)} key={`tab-${index}`} />
           )
         })}
       </Tabs>
-      {context.program.workouts.map((wo, index) => {
+      {props.program.workouts.map((wo, index) => {
         return (
-          <TabPanel className={classes.tabPanel} value={value} index={index}>
+          <TabPanel className={classes.tabPanel} value={value} index={index} key={`tabpanel-${index}`}>
             <WorkoutCard
               key={wo.id}
               id={wo.id}
@@ -95,9 +95,11 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
+        <Container>
         <Box p={3}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
+          </Container>
       )}
     </div>
   )

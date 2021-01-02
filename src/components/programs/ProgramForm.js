@@ -4,19 +4,24 @@ import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { updateProgram, addProgram } from '../../api/programsApi'
+import CardioFormDialog from './CardioFormDialog'
 import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
 import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { navigate } from '@reach/router'
 import { fade, makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Container from '@material-ui/core/Container'
-import TextField from '@material-ui/core/TextField'
+import CardioCard from './CardioCard'
+import {
+  Card,
+  CardContent,
+  Container,
+  TextField,
+  Grid
+} from '@material-ui/core'
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
-import Grid from '@material-ui/core/Grid'
 import ScheduleDialog from './ScheduleDialog'
+import { generateNewId } from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -66,6 +71,7 @@ const ProgramForm = props => {
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
   const [showScheduleDialog, setShowScheduleDialog] = useState(false)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
+  const [showCardioDialog, setShowCardioDialog] = useState(false)
   const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
 
   const toggleWorkoutModal = () => {
@@ -74,6 +80,10 @@ const ProgramForm = props => {
 
   const toggleWorkoutDialog = () => {
     setShowWorkoutDialog(!showWorkoutDialog)
+  }
+
+  const toggleCardioDialog = () => {
+    setShowCardioDialog(!showCardioDialog)
   }
 
   const toggleScheduleDialog = () => {
@@ -109,8 +119,8 @@ const ProgramForm = props => {
 
   const addCardio = async () => {
     // await woContext.setEmptyWorkout()
-    // toggleWorkoutModal()
-    console.log('%cpretending to add cardio', 'color:#fff; background-color:navy')
+    toggleCardioDialog()
+    // console.log('%cpretending to add cardio', 'color:#fff; background-color:navy')
   }
 
   const saveWorkout = async workout => {
@@ -119,10 +129,13 @@ const ProgramForm = props => {
     closeAllDialogs()
   }
 
-  // const addWorkoutToSchedule = async workout => {
-  //   await programContext.addWorkoutToSchedule(day, workout)
-
-  // }
+  const saveCardio = async cardio => {
+    console.log(`saveCardio: ${JSON.stringify(cardio)}`)
+    const id = generateNewId(programContext.program.cardio)
+    cardio.id = id
+    await programContext.addCardio(cardio)
+    closeAllDialogs()
+  }
 
   const handleTextChange = e => {
     let { id, value } = e.target
@@ -142,6 +155,26 @@ const ProgramForm = props => {
     console.log(`pretending to remove workout with id ${id}`)
   }
 
+  const renderCardio = () => {
+    let cardios = programContext.program.cardio
+    return cardios && cardios.length > 0 ? (
+      <Fragment>
+        <label htmlFor='workouts' className={classes.label}>
+          Cardio
+        </label>
+        <Grid container spacing={1} justify='flex-start'>
+          {programContext.program.cardio.map(cardioRoutine => {
+            return (
+              <Grid item xs={12} sm={12} key={cardioRoutine.id}>
+                <CardioCard data={[cardioRoutine]} />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Fragment>
+    ) : null
+  }
+
   const renderWorkouts = () => {
     let workouts = programContext.program.workouts
     return workouts && workouts.length > 0 ? (
@@ -150,19 +183,19 @@ const ProgramForm = props => {
           Workouts
         </label>
         <Grid container spacing={1} justify='flex-start'>
-        {workouts.map(wo => {
-          return (
-            <Grid item xs={12} sm={4} key={wo.id}>
-              <WorkoutCard
-                id={wo.id}
-                item={wo}
-                selectItem={props.selectWorkout}
-                deleteItem={deleteItem}
-                disabled={false}
-              />
-            </Grid>
-          )
-        })}
+          {workouts.map(wo => {
+            return (
+              <Grid item xs={12} sm={4} key={wo.id}>
+                <WorkoutCard
+                  id={wo.id}
+                  item={wo}
+                  selectItem={props.selectWorkout}
+                  deleteItem={deleteItem}
+                  disabled={false}
+                />
+              </Grid>
+            )
+          })}
         </Grid>
       </Fragment>
     ) : null
@@ -172,10 +205,9 @@ const ProgramForm = props => {
     return (
       <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
         <Card className={classes.card} variant='outlined'>
-          <CardContent style={{overflow:'scroll'}}>
+          <CardContent style={{ overflow: 'scroll' }}>
             <CloseButton handleClose={handleClose} />
             <div style={{ marginTop: '30px' }} />
-            
             <TextField
               // inputProps={{ style: { color: 'red', backgroundColor: 'yellow' }}}
               InputProps={{ classes: inputClasses }}
@@ -201,7 +233,10 @@ const ProgramForm = props => {
             <div style={{ marginTop: '10px' }} />
             <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
             <div style={{ marginTop: '10px' }} />
-            <FormButton buttonText={'Schedule'} onClick={toggleScheduleDialog} />
+            <FormButton
+              buttonText={'Schedule'}
+              onClick={toggleScheduleDialog}
+            />
             <div style={{ marginTop: '10px' }} />
             <FormButton
               type='submit'
@@ -210,6 +245,7 @@ const ProgramForm = props => {
               onClick={saveProgram}
             />
             <div style={{ marginTop: '30px' }} />
+            {renderCardio()}
             {renderWorkouts()}
           </CardContent>
         </Card>
@@ -251,6 +287,11 @@ const ProgramForm = props => {
         open={showWorkoutDialog}
         onClose={toggleWorkoutDialog}
         saveWorkout={saveWorkout}
+      />
+      <CardioFormDialog
+        open={showCardioDialog}
+        onClose={toggleCardioDialog}
+        saveWorkout={saveCardio}
       />
       <ScheduleDialog
         open={showScheduleDialog}

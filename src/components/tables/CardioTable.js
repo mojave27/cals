@@ -36,7 +36,6 @@ const CardioTable = props => {
 
   const renderMobileRows = row => {
       let id = get(row, 'id', 0)
-      // let exerciseNumber = index + 1
       return (
         <React.Fragment key={`fragment-${row.id}`}>
           <tr id={`${id}-header`}>

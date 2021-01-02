@@ -1,23 +1,23 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import TrackerContext from '../../context/TrackerContext'
 import ThemeContext from '../../context/ThemeContext'
 import { isEmpty } from 'lodash'
 import ProgramWorkouts from './program/ProgramWorkouts'
+import ScheduleDayViewer from '../programs/ScheduleDayViewer'
+import TabPanel from '../controls/TabPanel'
 
-import PropTypes from 'prop-types'
 import {
   AppBar,
   Card,
   CardHeader,
-  Box,
+  Container,
   IconButton,
   Tab,
-  Tabs,
-  Typography
+  Tabs
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import AccordionWrapper from '../accordion/AccordionWrapper'
+import ProgramContext from '../../context/ProgramContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,12 +37,20 @@ const useStyles = makeStyles(theme => ({
     color: theme.color4_text.hex
   },
   verticalTabs: {
-    flexGrow: 1,
-    display: 'flex',
-    height: 224
+    backgroundColor: theme.color5.hex,
+    color: theme.color5_text.hex,
+    width:'100%',
+  },
+  tab: {
+    color: theme.color5_text.hex
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
+  },
+  tabPanel: {
+    backgroundColor: theme.color5.hex,
+    color: theme.color5_text.hex,
+    margin: 'auto'
   },
   closeButton: {
     float: 'right'
@@ -52,7 +60,7 @@ const useStyles = makeStyles(theme => ({
 const ProgramTracker = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
-  let context = useContext(TrackerContext)
+  let context = useContext(ProgramContext)
 
   // const addTab = async () => {
   //   console.log('add tab')
@@ -85,17 +93,19 @@ const ProgramTracker = props => {
               aria-label='Close'
               onClick={handleClose}
             >
-              <CloseIcon style={{ color: themeContext.theme.color4_text.hex }} fontSize='small' />
+              <CloseIcon
+                style={{ color: themeContext.theme.color4_text.hex }}
+                fontSize='small'
+              />
             </IconButton>
           }
-          subheaderTypographyProps={{ color: themeContext.theme.color4_text.hex }}
           title={context.program.name}
           subheader={context.program.description}
         />
       </Card>
 
       <AccordionWrapper label={'workout list'}>
-        <ProgramWorkouts />
+        <ProgramWorkouts program={context.program} />
       </AccordionWrapper>
 
       <AccordionWrapper label={'schedule'}>
@@ -107,31 +117,31 @@ const ProgramTracker = props => {
 
 export default ProgramTracker
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props
+// function TabPanel(props) {
+//   const { children, value, index, ...other } = props
 
-  return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  )
-}
+//   return (
+//     <div
+//       role='tabpanel'
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && (
+//         <Container>
+//           <Box p={3}>{children}</Box>
+//         </Container>
+//       )}
+//     </div>
+//   )
+// }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
-}
+// TabPanel.propTypes = {
+//   children: PropTypes.node,
+//   index: PropTypes.any.isRequired,
+//   value: PropTypes.any.isRequired
+// }
 
 function a11yProps(index) {
   return {
@@ -141,36 +151,42 @@ function a11yProps(index) {
 }
 
 const Schedule = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
-  return isEmpty(props.program.schedule) 
-    ? <div>No schedule defined BUTTON_TO_EDIT_SCHEDULE</div> 
-    : (<div className={classes.root}>
+  return isEmpty(props.program.schedule) ? (
+    <div>No schedule defined BUTTON_TO_EDIT_SCHEDULE</div>
+  ) : (
+    <Container>
       <AppBar position='static'>
         <Tabs
+          orientation={'horizontal'}
+          variant={'scrollable'}
           value={value}
           onChange={handleChange}
           aria-label='simple tabs example'
         >
-          <Tab label='Item One' {...a11yProps(0)} />
-          <Tab label='Item Two' {...a11yProps(1)} />
-          <Tab label='Item Three' {...a11yProps(2)} />
+          {props.program.schedule.days.map((day, index) => {
+            return (
+              <Tab
+                label={day.name}
+                {...a11yProps(index)}
+                key={`${day.id}-${index}`}
+              />
+            )
+          })}
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        Item One - {props.program.name}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </div>)
+      {props.program.schedule.days.map((day, index) => {
+        return (
+          <TabPanel value={value} index={0} key={`${day.id}-${index}`}>
+            <ScheduleDayViewer program={props.program} day={day} key={index}/>
+          </TabPanel>
+        )
+      })}
+    </Container>
+  )
 }
