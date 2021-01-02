@@ -9,12 +9,14 @@ import {
   CardContent,
   Container
 } from '@material-ui/core'
+import CardioCard from './CardioCard'
+import CardioListDialog from '../workouts/CardioListDialog'
+import WorkoutCard from '../workouts/WorkoutCard'
 import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles } from '@material-ui/core/styles'
-import WorkoutCard from '../workouts/WorkoutCard'
 import { retrieveItemById } from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
@@ -58,6 +60,7 @@ const ScheduleDay = props => {
   const classes = useStyles(themeContext)
 
   const [showWorkoutList, setShowWorkoutList] = useState(false)
+  const [showCardioList, setShowCardioList] = useState(false)
 
   const handleClick = () => {
     if (props.onClick) props.onClick(props.id)
@@ -71,29 +74,54 @@ const ScheduleDay = props => {
     if (props.deleteItem) props.deleteItem(id)
   }
 
-  const addWorkout = () => {
-    console.log('add workout clicked')
+  const addWeightsRoutine = () => {
+    console.log('add weights workout clicked')
     toggleWorkoutList()
+  }
+
+  const addCardio = () => {
+    console.log('add weights workout clicked')
+    toggleCardioList()
   }
 
   const toggleWorkoutList = () => {
     setShowWorkoutList(!showWorkoutList)
   }
 
+  const toggleCardioList = () => {
+    setShowCardioList(!showCardioList)
+  }
+
   const handleWorkoutListSelect = workout => {
-    // console.log(`%cWorkoutListDialog selectWorkout: ${props.item.id}`, 'color:lime;backgroundColor:navy;border:1px solid red')
-    // console.log(`%cWorkoutListDialog selectWorkout: ${workout.id}`, 'color:lime;backgroundColor:navy;border:1px solid red')
-    // console.log('selected....      ')
-    // console.log(`  day.id: ${props.item.id}`)
-    // console.log(`  workout.id: ${workout.id}`)
     let dayId = props.item.id
-    let workoutId = workout.id
-    programContext.addWorkoutToSchedule(dayId, workoutId)
+    programContext.addWorkoutToSchedule(dayId, workout.id)
+  }
+
+  const handleCardioListSelect = cardio => {
+    let dayId = props.item.id
+    programContext.addCardioToSchedule(dayId, cardio.id)
+  }
+
+  const renderCardioForDay = id => {
+    let day = retrieveItemById(id, programContext.program.schedule.days)
+    return (
+      <Container>
+        {day.routine.cardio.map(cardioId => {
+          let cardioRoutine = retrieveItemById(
+            cardioId,
+            programContext.program.cardio
+          )
+          return (
+            // <CardioCard disabled={true} item={cardio} id={cardio.id} key={cardio.id} />
+            <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
+          )
+        })}
+      </Container>
+    )
   }
 
   const renderWorkoutsForDay = id => {
     let day = retrieveItemById(id, programContext.program.schedule.days)
-    console.log(JSON.stringify(day))
     return (
       <Container>
         {day.routine.workouts.map(workoutId => {
@@ -106,53 +134,64 @@ const ScheduleDay = props => {
     )
   }
 
-  return showWorkoutList ? (
-    <WorkoutListDialog
-      open={true}
-      onClose={toggleWorkoutList}
-      workouts={programContext.program.workouts}
-      onSelect={handleWorkoutListSelect}
-    />
-  ) : (
-    <Card
-      className={classes.root}
-      style={{ maxWidth: props.maxWidth }}
-      variant='outlined'
-      onClick={handleClick}
-      key={props.id}
-    >
-      <CardHeader
-        className={classes.cardHeader}
-        title={props.item.name}
-        titleTypographyProps={{ variant: 'h6' }}
-        action={
-          props.disabled === false ? (
-            <React.Fragment>
-              <IconButton
-                aria-label='Edit'
-                onClick={() => editItem(props.item.id)}
-              >
-                <EditIcon color='inherit' fontSize='small' />
-              </IconButton>
-              <IconButton
-                aria-label='Delete'
-                onClick={() => deleteItem(props.item.id)}
-              >
-                <DeleteForeverIcon color='inherit' fontSize='small' />
-              </IconButton>
-            </React.Fragment>
-          ) : null
-        }
+  return (
+    <React.Fragment>
+      <WorkoutListDialog
+        open={showWorkoutList}
+        onClose={toggleWorkoutList}
+        workouts={programContext.program.workouts}
+        onSelect={handleWorkoutListSelect}
       />
-      <CardContent className={classes.cardContent}>
-        {renderWorkoutsForDay(props.item.id)}
-      </CardContent>
-      <CardActions disableSpacing>
-        <Button variant='outlined' onClick={addWorkout}>
-          {'Add Workout'}
-        </Button>
-      </CardActions>
-    </Card>
+      <CardioListDialog
+        open={showCardioList}
+        onClose={toggleCardioList}
+        cardioRoutines={programContext.program.cardio}
+        onSelect={handleCardioListSelect}
+      />
+      <Card
+        className={classes.root}
+        style={{ maxWidth: props.maxWidth }}
+        variant='outlined'
+        onClick={handleClick}
+        key={props.id}
+      >
+        <CardHeader
+          className={classes.cardHeader}
+          title={props.item.name}
+          titleTypographyProps={{ variant: 'h6' }}
+          action={
+            props.disabled === false ? (
+              <React.Fragment>
+                <IconButton
+                  aria-label='Edit'
+                  onClick={() => editItem(props.item.id)}
+                >
+                  <EditIcon color='inherit' fontSize='small' />
+                </IconButton>
+                <IconButton
+                  aria-label='Delete'
+                  onClick={() => deleteItem(props.item.id)}
+                >
+                  <DeleteForeverIcon color='inherit' fontSize='small' />
+                </IconButton>
+              </React.Fragment>
+            ) : null
+          }
+        />
+        <CardActions disableSpacing>
+          <Button variant='outlined' onClick={addWeightsRoutine}>
+            {'Add Weights'}
+          </Button>
+          <Button variant='outlined' onClick={addCardio}>
+            {'Add Cardio'}
+          </Button>
+        </CardActions>
+        <CardContent className={classes.cardContent}>
+          {renderCardioForDay(props.item.id)}
+          {renderWorkoutsForDay(props.item.id)}
+        </CardContent>
+      </Card>
+    </React.Fragment>
   )
 }
 

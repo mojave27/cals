@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import ThemeContext from '../../context/ThemeContext'
-import WorkoutForm from '../workouts/WorkoutForm'
+import CardioForm from './CardioForm'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -27,13 +26,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const WorkoutFormDialog = props => {
+const CardioFormDialog = props => {
   const theme = useContext(ThemeContext)
   const classes = useStyles(theme);
   const { open, onClose, saveWorkout } = props
 
   const handleSave = workout => {
     saveWorkout(workout)
+    onClose()
   };
 
   const handleClose = () => {
@@ -50,16 +50,13 @@ const WorkoutFormDialog = props => {
             <Typography variant="h6" className={classes.title}>
               Create Workout
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleSave}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
 
-        <WorkoutForm saveWorkout={handleSave} />
+        <CardioForm saveWorkout={handleSave} />
 
       </Dialog>
   );
 }
 
-export default WorkoutFormDialog
+export default CardioFormDialog

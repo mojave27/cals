@@ -2,11 +2,13 @@ import React from 'react'
 import ProgramContext from './ProgramContext'
 import { generateNewId, findIndexOfId } from '../components/ArrayUtils'
 import { cloneDeep } from 'lodash'
+// import { logger } from '../logging/logger'
 
 const emptyProgram = {
     id: '',
     name: '',
     description: '',
+    cardio: [],
     workouts: [],
     workoutIds: [],
     schedule: {
@@ -18,7 +20,7 @@ const emptyScheduleDay = {
   id: -1,
   name: 'day one',
   routine: {
-    cardio: {},
+    cardio: [],
     workouts: []
   }
 }
@@ -45,6 +47,16 @@ class ProgramProvider extends React.Component {
                 updateProgram: program => {
                     this.setState({ program })
                 },
+                addCardio: cardio => {
+                    console.log(`adding cardio to context:`)
+                    console.log(cardio)
+                    this.setState( prevState => {
+                        let program = prevState.program
+                        program.cardio.push(cardio)
+                        // program.workoutIds.push(workout.id)
+                        return ({program})
+                    })
+                },
                 addWorkout: workout => {
                     console.log(`adding workout to context:`)
                     console.log(workout)
@@ -55,19 +67,19 @@ class ProgramProvider extends React.Component {
                         return ({program})
                     })
                 },
-                addWorkoutToSchedule: (dayId, workoutId) => {
-                    console.log(`adding workout to schedule:`)
-                    // console.log(`%cdayId: ${dayId}`, 'color:yellow;backgroundColor:navy;border:1px solid yellow')
-                    // console.log(`%cworkoutId: ${workoutId}`, 'color:yellow;backgroundColor:navy;border:1px solid yellow')
+                addCardioToSchedule: (dayId, cardioId) => {
                     this.setState( prevState => {
                         let program = prevState.program
-                        console.log(`%cBEFORE: ${JSON.stringify(program.schedule.days)}`, 'color:lime;backgroundColor:navy;border:1px solid lime')
                         let index = findIndexOfId(dayId, program.schedule.days)
-                        // let day = program.schedule.days[index]
-                        // console.log(`%cday: ${JSON.stringify(day)}`, 'color:red;backgroundColor:navy;border:1px solid lime')
+                        program.schedule.days[index].routine.cardio.push(cardioId)
+                        return ({program})
+                    })
+                },
+                addWorkoutToSchedule: (dayId, workoutId) => {
+                    this.setState( prevState => {
+                        let program = prevState.program
+                        let index = findIndexOfId(dayId, program.schedule.days)
                         program.schedule.days[index].routine.workouts.push(workoutId)
-                        // day.routine.workouts.push(workoutId)
-                        console.log(`%cAFTER: ${JSON.stringify(program.schedule.days)}`, 'color:cyan;backgroundColor:navy;border:1px solid cyan')
                         return ({program})
                     })
                 },
