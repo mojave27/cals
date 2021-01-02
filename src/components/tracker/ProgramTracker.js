@@ -1,13 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import { isEmpty } from 'lodash'
 import ProgramWorkouts from './program/ProgramWorkouts'
 import ScheduleDayViewer from '../programs/ScheduleDayViewer'
 import TabPanel from '../controls/TabPanel'
-
 import {
-  AppBar,
   Card,
   CardHeader,
   Container,
@@ -39,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   verticalTabs: {
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
-    width:'100%',
+    width: '100%'
   },
   tab: {
     color: theme.color5_text.hex
@@ -62,26 +60,13 @@ const ProgramTracker = props => {
   const classes = useStyles(themeContext.theme)
   let context = useContext(ProgramContext)
 
-  // const addTab = async () => {
-  //   console.log('add tab')
-  //   let id = generateNewId(context.program.workouts)
-  //   let newWorkout = {
-  //     id: id,
-  //     name: '',
-  //     description: '',
-  //     sets: [],
-  //     days: []
-  //   }
-  //   await context.updateNewWorkout(newWorkout)
-  // }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const handleClose = () => {
     props.close()
   }
-
-  // const printProgram = program => {
-  //   console.log(JSON.stringify(program))
-  // }
 
   return isEmpty(context.program) ? null : (
     <div id={context.program.id}>
@@ -117,32 +102,6 @@ const ProgramTracker = props => {
 
 export default ProgramTracker
 
-// function TabPanel(props) {
-//   const { children, value, index, ...other } = props
-
-//   return (
-//     <div
-//       role='tabpanel'
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-//     >
-//       {value === index && (
-//         <Container>
-//           <Box p={3}>{children}</Box>
-//         </Container>
-//       )}
-//     </div>
-//   )
-// }
-
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.any.isRequired,
-//   value: PropTypes.any.isRequired
-// }
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -151,6 +110,8 @@ function a11yProps(index) {
 }
 
 const Schedule = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
@@ -161,17 +122,20 @@ const Schedule = props => {
     <div>No schedule defined BUTTON_TO_EDIT_SCHEDULE</div>
   ) : (
     <Container>
-      <AppBar position='static'>
+      <div className={classes.verticalTabs}>
         <Tabs
           orientation={'horizontal'}
           variant={'scrollable'}
           value={value}
           onChange={handleChange}
-          aria-label='simple tabs example'
+          scrollButtons='auto'
+          aria-label='schedule tabs'
+          className={classes.tabs}
         >
           {props.program.schedule.days.map((day, index) => {
             return (
               <Tab
+                className={classes.tab}
                 label={day.name}
                 {...a11yProps(index)}
                 key={`${day.id}-${index}`}
@@ -179,11 +143,16 @@ const Schedule = props => {
             )
           })}
         </Tabs>
-      </AppBar>
+      </div>
       {props.program.schedule.days.map((day, index) => {
         return (
-          <TabPanel value={value} index={0} key={`${day.id}-${index}`}>
-            <ScheduleDayViewer program={props.program} day={day} key={index}/>
+          <TabPanel
+            className={classes.tabPanel}
+            value={value}
+            index={index}
+            key={`${day.id}-${index}`}
+          >
+            <ScheduleDayViewer program={props.program} day={day} key={index} />
           </TabPanel>
         )
       })}

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
+import { Card, CardContent } from '@material-ui/core'
 import {
   Paper,
   Table,
@@ -84,7 +85,16 @@ const CardioCard = props => {
 
   return (
     <React.Fragment>
+    <Card
+      className={classes.root}
+      style={{maxWidth:props.maxWidth}}
+      variant="outlined"
+      key={props.id}
+    >
+      <CardContent>
       {renderTable(props.data)}
+      </CardContent>
+      </Card>
     </React.Fragment>
   )
 }

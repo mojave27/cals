@@ -1,11 +1,6 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Container
-} from '@material-ui/core'
+import { Card, CardContent, Container, Typography } from '@material-ui/core'
 import CardioCard from './CardioCard'
 import WorkoutCard from '../workouts/WorkoutCard'
 import { makeStyles } from '@material-ui/core/styles'
@@ -51,28 +46,21 @@ const ScheduleDayViewer = props => {
   const classes = useStyles(themeContext)
 
   const renderCardio = () => {
-    return (
-      props.day.routine.cardio ?
+    return props.day.routine.cardio ? (
       <Container>
+        <Typography variant={'h5'} gutterBottom>{'Cardio'}</Typography>
         {props.day.routine.cardio.map(cardioId => {
-          let cardioRoutine = retrieveItemById(
-            cardioId,
-            props.program.cardio
-          )
-          return (
-            <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
-          )
+          let cardioRoutine = retrieveItemById(cardioId, props.program.cardio)
+          return <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
         })}
       </Container>
-      :
-      null
-    )
+    ) : null
   }
 
   const renderWorkouts = () => {
-    return (
-      props.day.routine.workouts.length > 0 ?
+    return props.day.routine.workouts.length > 0 ? (
       <Container>
+        <Typography variant={'h5'} gutterBottom>{'Weights'}</Typography>
         {props.day.routine.workouts.map(workoutId => {
           let wo = retrieveItemById(workoutId, props.program.workouts)
           return (
@@ -80,29 +68,21 @@ const ScheduleDayViewer = props => {
           )
         })}
       </Container>
-      : null
-    )
+    ) : null
   }
 
   return (
-    <React.Fragment>
-      <Card
-        className={classes.root}
-        style={{ maxWidth: props.maxWidth }}
-        variant='outlined'
-        key={props.id}
-      >
-        <CardHeader
-          className={classes.cardHeader}
-          title={props.day.name}
-          titleTypographyProps={{ variant: 'h6' }}
-        />
-        <CardContent className={classes.cardContent}>
-          {renderCardio()}
-          {renderWorkouts()}
-        </CardContent>
-      </Card>
-    </React.Fragment>
+    <Card
+      className={classes.root}
+      style={{ maxWidth: props.maxWidth }}
+      variant='outlined'
+      key={props.id}
+    >
+      <CardContent className={classes.cardContent}>
+        {renderCardio()}
+        {renderWorkouts()}
+      </CardContent>
+    </Card>
   )
 }
 

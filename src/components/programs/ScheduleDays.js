@@ -13,13 +13,13 @@ const useScheduleStyles = makeStyles(theme => ({
   verticalTabs: {
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
-    width:'100%'
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
+    width: '100%'
   },
   tab: {
     color: theme.color5_text.hex
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPanel: {
     backgroundColor: theme.color5.hex,
@@ -45,26 +45,36 @@ const ScheduleDays = props => {
   }
 
   return (
-  <div className={classes.verticalTabs}>
+    <div className={classes.verticalTabs}>
       <Tabs
         orientation='horizontal'
         variant='scrollable'
         value={value}
         onChange={handleChange}
-        scrollButtons="auto"
+        scrollButtons='auto'
         aria-label='workout tabs'
-        className={classes.tabs}
+        // className={classes.tabs}
       >
         {props.days.map((day, index) => {
           let name = day.name === '' ? `workout-${index}` : day.name
           return (
-            <Tab className={classes.tab} label={name} {...a11yProps(index)} key={`${name}-${index}`}/>
+            <Tab
+              className={classes.tab}
+              label={name}
+              {...a11yProps(index)}
+              key={`${name}-${index}`}
+            />
           )
         })}
       </Tabs>
       {props.days.map((day, index) => {
         return (
-          <TabPanel className={classes.tabPanel} value={value} index={index} key={`${day.name}-${index}`}>
+          <TabPanel
+            className={classes.tabPanel}
+            value={value}
+            index={index}
+            key={`${day.name}-${index}`}
+          >
             <ScheduleDay
               key={day.id}
               id={day.id}

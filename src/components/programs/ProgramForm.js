@@ -272,6 +272,7 @@ const ProgramForm = props => {
 
   return (
     <Container maxWidth='sm'>
+      {/* < */}
       <ProgramWorkoutDialog
         saveWorkout={saveWorkout}
         open={showWorkoutModal}

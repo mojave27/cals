@@ -43,7 +43,8 @@ const ProgramWorkouts = props => {
 
   return isEmpty(props.program) 
     ? <Spinner /> 
-    : (<div className={classes.verticalTabs}>
+    : (<Container>
+      <div className={classes.verticalTabs}>
       <Tabs
         // orientation={themeContext.theme.mobile === true ? 'horizontal' : 'vertical'}
         orientation='horizontal'
@@ -57,26 +58,35 @@ const ProgramWorkouts = props => {
         {props.program.workouts.map((wo, index) => {
           let name = wo.name === '' ? `workout-${index}` : wo.name
           return (
-            <Tab className={classes.tab} label={name} {...a11yProps(index)} key={`tab-${index}`} />
+            <Tab 
+              className={classes.tab} 
+              label={name} 
+              {...a11yProps(index)} 
+              key={`tab-${index}`} 
+            />
           )
         })}
       </Tabs>
       {props.program.workouts.map((wo, index) => {
         return (
-          <TabPanel className={classes.tabPanel} value={value} index={index} key={`tabpanel-${index}`}>
+          <TabPanel 
+            className={classes.tabPanel} 
+            value={value} 
+            index={index} 
+            key={`tabpanel-${index}`}
+          >
             <WorkoutCard
               key={wo.id}
               id={wo.id}
               item={wo}
               maxWidth={'375px'}
-              // deleteItem={props.deleteWorkout}
-              // editItem={props.editWorkout}
               disabled={true}
             />
           </TabPanel>
         )
       })}
     </div>
+    </Container>
   )
 }
 
