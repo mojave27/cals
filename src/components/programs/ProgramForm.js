@@ -227,7 +227,7 @@ const ProgramForm = props => {
             />
             <div style={{ marginTop: '10px' }} />
             <TextField
-              InputProps={{ classes: inputClasses.root }}
+              InputProps={{ classes: inputClasses }}
               id='description'
               label='Description'
               defaultValue={programContext.program.description}
