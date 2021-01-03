@@ -22,6 +22,7 @@ import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
 import ScheduleDialog from './ScheduleDialog'
 import { generateNewId } from '../ArrayUtils'
+import ProgramChooser from './ProgramChooser'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,6 +74,7 @@ const ProgramForm = props => {
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
   const [showCardioDialog, setShowCardioDialog] = useState(false)
   const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
+  const [showProgramChooser, setShowProgramChooser] = useState(true)
 
   const toggleWorkoutModal = () => {
     setShowWorkoutModal(!showWorkoutModal)
@@ -92,6 +94,10 @@ const ProgramForm = props => {
 
   const toggleWorkoutListDialog = () => {
     setShowWorkoutListDialog(!showWorkoutListDialog)
+  }
+
+  const toggleProgramChooser = () => {
+    setShowProgramChooser(!showProgramChooser)
   }
 
   const closeAllDialogs = () => {
@@ -147,6 +153,7 @@ const ProgramForm = props => {
   //TODO: make this do something else?
   const handleClose = async () => {
     await saveProgram()
+    programContext.clearProgram()
     navigate('/program-tracker')
   }
 
@@ -299,7 +306,12 @@ const ProgramForm = props => {
         onClose={toggleScheduleDialog}
         saveWorkout={saveWorkout}
       />
-      {renderMainForm()}
+      {showProgramChooser ?
+      <ProgramChooser 
+        onClose={toggleProgramChooser}
+      />
+      :
+      renderMainForm()}
     </Container>
   )
 }

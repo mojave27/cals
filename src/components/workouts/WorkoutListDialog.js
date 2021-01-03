@@ -1,15 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Dialog from '@material-ui/core/Dialog'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
+import { AppBar, Button, Dialog, Slide, Toolbar, IconButton, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import Slide from '@material-ui/core/Slide'
 import WorkoutList from '../workouts/WorkoutList'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-// import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieveItemByStringId } from '../ArrayUtils'
 
@@ -79,9 +73,9 @@ const WorkoutListDialog = props => {
           <Typography variant='h6' className={classes.title}>
             Choose Workout(s)
           </Typography>
-          {/* <Button autoFocus color='inherit' onClick={handleClose}>
-            save
-          </Button> */}
+          <Button autoFocus color='inherit' onClick={handleClose}>
+            done
+          </Button>}
         </Toolbar>
       </AppBar>
       <WorkoutList workouts={workouts} onClick={selectWorkout} />
