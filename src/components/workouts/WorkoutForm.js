@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
-import SetCard from '../sets/SetCard'
+// import SetCard from '../sets/SetCard'
+import SetDialog from './SetDialog'
 import {
   findIndexOfId,
   retrieveItemById,
@@ -240,7 +241,8 @@ const WorkoutForm = props => {
       </CardContent>
     </Card> */}
 
-      <div css={detailCard} style={{maxWidth: '60%'}}>
+      {/* <div css={detailCard} style={{maxWidth: '60%'}}> */}
+      <div css={detailCard}>
         <WorkoutHeader workout={woContext.workout} onChange={handleTextChange} />
 
         <div css={stripe} style={{ marginTop: '10px', marginBottom: '5px' }} />
@@ -255,12 +257,11 @@ const WorkoutForm = props => {
             <Button value='Add Set' onClick={showSetCard} />
             <Button value='Save Workout' onClick={saveWorkout} />
 
-            {showExerciseGroupDialog ? (
-              <SetCard
-                saveSet={addExerciseGroupToWorkout}
-                done={toggleSetDialog}
+              <SetDialog
+                open={showExerciseGroupDialog}
+                onSave={addExerciseGroupToWorkout}
+                onClose={toggleSetDialog}
               />
-            ) : null}
 
           </div>
         </div>

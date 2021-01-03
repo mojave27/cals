@@ -81,7 +81,7 @@ const SimpleTable = props => {
     let tableHead = renderHeaders(blockHeader, data.headers)
 
     let tableBody = (
-      <TableBody>
+      <TableBody key={Math.random()}>
         {data.rows.map((row, index) => {
           let id = typeof row.id === 'undefined' ? index : row.id
           return (
@@ -98,14 +98,14 @@ const SimpleTable = props => {
 
   const renderHeaders = (blockHeader, headers) => {
     return (
-      <TableHead>
+      <TableHead key={Math.random()}>
         {blockHeader}
         <TableRow key={headers.toString()}>
-          {props.disabled === false ? <TableCell className={classes.th}></TableCell> : null }
+          {props.disabled === false ? <TableCell key={Math.random()} className={classes.th}></TableCell> : null }
           {headers.map( (header,index) => (
             index === 0 
-            ? <TableCell className={classes.th}>{header}</TableCell>
-            : <TableCell className={classes.th}>{header}</TableCell>
+            ? <TableCell key={`${header}-${index}`} className={classes.th}>{header}</TableCell>
+            : <TableCell key={`${header}-${index}`} className={classes.th}>{header}</TableCell>
           ))}
         </TableRow>
       </TableHead>
@@ -127,10 +127,7 @@ const SimpleTable = props => {
   const renderRow = (row, headers) => {
     // TODO: if props.disabled = false, then add delete icon (extra <td>)
     let tds = []
-    let j = 0
     if (!props.disabled) {
-      console.log('adding 1 to j')
-      j = 1
       tds.push(
         <TableCell
           className={`${classes.tdLeft} ${classes.td}`}
@@ -144,12 +141,6 @@ const SimpleTable = props => {
     }
 
     for (let i = 0; i < headers.length; i++) {
-      console.log(i)
-      console.log(j)
-      console.log(headers)
-      console.log(headers[i])
-      console.log(row)
-      console.log(row[headers[i]])
       tds.push(
         <TableCell className={classes.td} key={i}>
           <Input

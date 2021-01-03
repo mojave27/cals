@@ -1,11 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { AppBar, Button, Dialog, Slide, Toolbar, IconButton, Typography } from '@material-ui/core'
+import {
+  AppBar,
+  Button,
+  Container,
+  Dialog,
+  IconButton,
+  Slide,
+  Toolbar,
+  Typography
+} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import WorkoutList from '../workouts/WorkoutList'
-import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import ThemeContext from '../../context/ThemeContext'
-import { retrieveItemByStringId } from '../ArrayUtils'
+import ScheduleDays from './ScheduleDays'
+import ProgramContext from '../../context/ProgramContext'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -16,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1
+  },
+  conatiner: {
+    padding: '10px'
   }
 }))
 
@@ -23,47 +34,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
-const WorkoutListDialog = props => {
+const ScheduleDialog = props => {
   const theme = useContext(ThemeContext)
-  // const programContext = useContext(ProgramContext)
   const classes = useStyles(theme)
-
-  const [workouts, setWorkouts] = useState([])
-
-  useEffect(() => {
-    async function fetchData() {
-      if (!props.workouts) {
-        const allWorkouts = await retrieveWorkouts()
-        setWorkouts(allWorkouts)
-      } else {
-        setWorkouts(props.workouts)
-      }
-    }
-
-    fetchData()
-    return () => {}
-  }, [props.workouts])
+  const { open, onClose } = props
+  let programContext = useContext(ProgramContext)
 
   const handleClose = () => {
-    if (props.onClose) props.onClose()
+    onClose()
   }
 
-  const selectWorkout = async workoutId => {
-    let workout = retrieveItemByStringId(workoutId, workouts)
-    props.onSelect(workout)
+  const addDay = async () => {
+    console.log('%cAdding Day', 'color:lime;background:#333')
+    await programContext.addDayToSchedule()
   }
 
   return (
     <Dialog
       fullScreen
-      open={props.open}
+      open={open}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
       <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton
-            edge='end'
+            edge='start'
             color='inherit'
             onClick={handleClose}
             aria-label='close'
@@ -71,16 +67,27 @@ const WorkoutListDialog = props => {
             <CloseIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Choose Workout(s)
+            {'Schedule'}
           </Typography>
           <Button autoFocus color='inherit' onClick={handleClose}>
             done
-          </Button>}
+          </Button>
         </Toolbar>
       </AppBar>
-      <WorkoutList workouts={workouts} onClick={selectWorkout} />
+      <div style={{marginTop:'30px'}} />
+      <Container maxWidth='sm' className={classes.container}>
+        {/* Add a day to the schedule */}
+        <Button variant='outlined' onClick={addDay}>
+          Add Day
+        </Button>
+        {/* show the 'form' for the 'day' */}
+        {programContext.program.schedule ?
+        <ScheduleDays days={programContext.program.schedule.days} />
+        : null
+        }
+      </Container>
     </Dialog>
   )
 }
 
-export default WorkoutListDialog
+export default ScheduleDialog

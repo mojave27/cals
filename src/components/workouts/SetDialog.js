@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import ThemeContext from '../../context/ThemeContext'
-import WorkoutForm from '../workouts/WorkoutForm'
+import SetCard from '../sets/SetCard'
+import SetContext from '../../context/SetContext'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -27,18 +28,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const WorkoutFormDialog = props => {
+const FullScreenDialog = props => {
   const theme = useContext(ThemeContext)
+  const setContext = useContext(SetContext)
   const classes = useStyles(theme);
-  const { open, onClose, saveWorkout } = props
-
-  const handleSave = workout => {
-    saveWorkout(workout)
-  };
+  const { open, onClose, onSave } = props
 
   const handleClose = () => {
     onClose()
-  };
+  }
+
+  const handleSave = () => {
+    onSave(setContext.set)
+  }
 
   return (
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -48,7 +50,7 @@ const WorkoutFormDialog = props => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Create Workout
+              Set
             </Typography>
             <Button autoFocus color="inherit" onClick={handleSave}>
               save
@@ -56,10 +58,10 @@ const WorkoutFormDialog = props => {
           </Toolbar>
         </AppBar>
 
-        <WorkoutForm saveWorkout={handleSave} />
+        <SetCard saveSet={onSave} done={handleClose} />
 
       </Dialog>
   );
 }
 
-export default WorkoutFormDialog
+export default FullScreenDialog

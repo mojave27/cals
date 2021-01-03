@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
@@ -28,6 +28,10 @@ const useStyles = makeStyles(theme => ({
 const Themer = props => {
   let context = useContext(ThemeContext)
   let classes = useStyles(context)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -132,6 +136,7 @@ const Themer = props => {
             <Paper className={classes.paper}>
               <DateInput
                 label={'Date'}
+                setStartDate={() => new Date()}
               />
             </Paper>
           </Grid>
@@ -142,8 +147,9 @@ const Themer = props => {
                 name={'duration'}
                 id={'duration'}
                 placeholder={'workout duration...'}
-                value={0}
+                value={'0'}
                 styles={{ width: '50%' }}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -156,6 +162,7 @@ const Themer = props => {
                 placeholder={'enter goals here'}
                 value={'some goals'}
                 styles={{ width: '100%' }}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -165,9 +172,10 @@ const Themer = props => {
                 label={'Weight'}
                 name={'weight'}
                 id={'weight'}
-                value={0}
+                value={'0'}
                 placeholder={'enter weight'}
                 styles={{ width: '100%' }}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -179,7 +187,7 @@ const Themer = props => {
                 min={0}
                 max={10}
                 value={7}
-                // theme={woDayContext.theme}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>
@@ -191,7 +199,7 @@ const Themer = props => {
                 min={0}
                 max={10}
                 value={8}
-                // theme={woDayContext.theme}
+                onChange={() => {}}
               />
             </Paper>
           </Grid>

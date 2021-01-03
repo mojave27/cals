@@ -21,7 +21,7 @@ const useUser = () => {
       }
     })
     .catch(err => {
-      console.log('in useEffect - catch')
+      console.log('in useUser - catch')
       console.log("Couldn't get the logged-in user for some reason: " + err)
       // navigate("/login")
       return undefined

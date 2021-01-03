@@ -4,20 +4,20 @@ import WorkoutCard from '../workouts/WorkoutCard'
 import ArrayUtils from '../ArrayUtils'
 import PropTypes from 'prop-types'
 
-const WorkoutList = props => {
+const CardioList = props => {
   const handleClick = id => {
     // console.log(`%cWorkoutList handleClick: ${id}`, 'color:lime;backgroundColor:navy;border:1px solid red')
     if (props.onClick) props.onClick(id)
   }
 
-  const sortWorkouts = workouts => {
-    return ArrayUtils.sortByStringProperty(workouts, 'name', true)
+  const sortCardioRoutines = cardioRoutines => {
+    return ArrayUtils.sortByStringProperty(cardioRoutines, 'name', true)
   }
 
   return (
     <Container style={{ padding: '25px' }}>
       <Grid container spacing={2} justify='flex-start'>
-        {sortWorkouts(props.workouts).map(wo => {
+        {sortCardioRoutines(props.cardioRoutines).map(wo => {
           return (
             <Grid item xs={12} sm={6} key={wo.id}>
               <WorkoutCard
@@ -25,8 +25,8 @@ const WorkoutList = props => {
                 id={wo.id}
                 item={wo}
                 onClick={() => handleClick(wo.id)}
-                deleteItem={props.deleteWorkout}
-                editItem={props.editWorkout}
+                deleteItem={props.deleteCardio}
+                editItem={props.editCardio}
                 disabled={props.disabled}
               />
             </Grid>
@@ -37,17 +37,17 @@ const WorkoutList = props => {
   )
 }
 
-WorkoutList.propTypes = {
-  workouts: PropTypes.array,
+CardioList.propTypes = {
+  cardioRoutines: PropTypes.array,
   disabled: PropTypes.bool,
-  deleteWorkout: PropTypes.func,
-  editWorkout: PropTypes.func,
+  deleteCardio: PropTypes.func,
+  editCardio: PropTypes.func,
   onClick: PropTypes.func
 }
 
-WorkoutList.defaultProps = {
-  // disabled: true,
-  workouts: []
-}
+// CardioList.defaultProps = {
+//   // disabled: true,
+//   cardioRoutines: []
+// }
 
-export default WorkoutList
+export default CardioList

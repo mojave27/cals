@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { AppBar, Button, Dialog, Slide, Toolbar, IconButton, Typography } from '@material-ui/core'
+import { AppBar, Button, Dialog, IconButton, Slide, Toolbar, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import WorkoutList from '../workouts/WorkoutList'
-import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
+import CardioList from '../workouts/CardioList'
+// import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieveItemByStringId } from '../ArrayUtils'
 
@@ -23,34 +23,34 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
-const WorkoutListDialog = props => {
+const CardioListDialog = props => {
   const theme = useContext(ThemeContext)
-  // const programContext = useContext(ProgramContext)
   const classes = useStyles(theme)
 
-  const [workouts, setWorkouts] = useState([])
+  const [cardioRoutines, setCardioRoutines] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      if (!props.workouts) {
-        const allWorkouts = await retrieveWorkouts()
-        setWorkouts(allWorkouts)
+      if (!props.cardioRoutines) {
+        // const allCardioRoutines = await retrieveCardioRoutines()
+        // setCardioRoutines(allCardioRoutines)
       } else {
-        setWorkouts(props.workouts)
+        setCardioRoutines(props.cardioRoutines)
       }
     }
 
     fetchData()
     return () => {}
-  }, [props.workouts])
+  }, [props.cardioRoutines])
 
   const handleClose = () => {
     if (props.onClose) props.onClose()
   }
 
-  const selectWorkout = async workoutId => {
-    let workout = retrieveItemByStringId(workoutId, workouts)
-    props.onSelect(workout)
+  const selectCardio = async cardioId => {
+    console.log(`%cCardioListDialog selectCardio: ${cardioId}`, 'color:lime;backgroundColor:navy;border:1px solid red')
+    let cardio = retrieveItemByStringId(cardioId, cardioRoutines)
+    props.onSelect(cardio)
   }
 
   return (
@@ -71,16 +71,16 @@ const WorkoutListDialog = props => {
             <CloseIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Choose Workout(s)
+            Choose Cardio Routine(s)
           </Typography>
           <Button autoFocus color='inherit' onClick={handleClose}>
             done
-          </Button>}
+          </Button>
         </Toolbar>
       </AppBar>
-      <WorkoutList workouts={workouts} onClick={selectWorkout} />
+      <CardioList cardioRoutines={cardioRoutines} onClick={selectCardio} />
     </Dialog>
   )
 }
 
-export default WorkoutListDialog
+export default CardioListDialog

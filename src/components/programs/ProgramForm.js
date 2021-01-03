@@ -4,18 +4,25 @@ import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { updateProgram, addProgram } from '../../api/programsApi'
+import CardioFormDialog from './CardioFormDialog'
 import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
 import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { navigate } from '@reach/router'
 import { fade, makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Container from '@material-ui/core/Container'
-import TextField from '@material-ui/core/TextField'
+import CardioCard from './CardioCard'
+import {
+  Card,
+  CardContent,
+  Container,
+  TextField,
+  Grid
+} from '@material-ui/core'
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
-import Grid from '@material-ui/core/Grid'
+import ScheduleDialog from './ScheduleDialog'
+import { generateNewId } from '../ArrayUtils'
+import ProgramChooser from './ProgramChooser'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,10 +51,10 @@ const useStylesInput = makeStyles(theme => ({
     backgroundColor: theme.color1.hex,
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     '&:hover': {
-      backgroundColor: '#fff'
+      backgroundColor: '#eee'
     },
     '&$focused': {
-      backgroundColor: '#fff',
+      backgroundColor: '#eee',
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
       borderColor: theme.color3.hex
     }
@@ -63,8 +70,11 @@ const ProgramForm = props => {
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
+  const [showCardioDialog, setShowCardioDialog] = useState(false)
   const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
+  const [showProgramChooser, setShowProgramChooser] = useState(true)
 
   const toggleWorkoutModal = () => {
     setShowWorkoutModal(!showWorkoutModal)
@@ -74,8 +84,20 @@ const ProgramForm = props => {
     setShowWorkoutDialog(!showWorkoutDialog)
   }
 
+  const toggleCardioDialog = () => {
+    setShowCardioDialog(!showCardioDialog)
+  }
+
+  const toggleScheduleDialog = () => {
+    setShowScheduleDialog(!showScheduleDialog)
+  }
+
   const toggleWorkoutListDialog = () => {
     setShowWorkoutListDialog(!showWorkoutListDialog)
+  }
+
+  const toggleProgramChooser = () => {
+    setShowProgramChooser(!showProgramChooser)
   }
 
   const closeAllDialogs = () => {
@@ -103,13 +125,21 @@ const ProgramForm = props => {
 
   const addCardio = async () => {
     // await woContext.setEmptyWorkout()
-    // toggleWorkoutModal()
-    console.log('%cpretending to add cardio', 'color:#fff; background-color:navy')
+    toggleCardioDialog()
+    // console.log('%cpretending to add cardio', 'color:#fff; background-color:navy')
   }
 
   const saveWorkout = async workout => {
     console.log(`saveWorkout: ${workout}`)
     await programContext.addWorkout(workout)
+    closeAllDialogs()
+  }
+
+  const saveCardio = async cardio => {
+    console.log(`saveCardio: ${JSON.stringify(cardio)}`)
+    const id = generateNewId(programContext.program.cardio)
+    cardio.id = id
+    await programContext.addCardio(cardio)
     closeAllDialogs()
   }
 
@@ -123,6 +153,7 @@ const ProgramForm = props => {
   //TODO: make this do something else?
   const handleClose = async () => {
     await saveProgram()
+    programContext.clearProgram()
     navigate('/program-tracker')
   }
 
@@ -131,8 +162,24 @@ const ProgramForm = props => {
     console.log(`pretending to remove workout with id ${id}`)
   }
 
-  const schedule = async id => {
-    console.log(`pretending to open schedule form`)
+  const renderCardio = () => {
+    let cardios = programContext.program.cardio
+    return cardios && cardios.length > 0 ? (
+      <Fragment>
+        <label htmlFor='workouts' className={classes.label}>
+          Cardio
+        </label>
+        <Grid container spacing={1} justify='flex-start'>
+          {programContext.program.cardio.map(cardioRoutine => {
+            return (
+              <Grid item xs={12} sm={12} key={cardioRoutine.id}>
+                <CardioCard data={[cardioRoutine]} />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Fragment>
+    ) : null
   }
 
   const renderWorkouts = () => {
@@ -143,19 +190,19 @@ const ProgramForm = props => {
           Workouts
         </label>
         <Grid container spacing={1} justify='flex-start'>
-        {workouts.map(wo => {
-          return (
-            <Grid item xs={12} sm={4} key={wo.id}>
-              <WorkoutCard
-                id={wo.id}
-                item={wo}
-                selectItem={props.selectWorkout}
-                deleteItem={deleteItem}
-                disabled={false}
-              />
-            </Grid>
-          )
-        })}
+          {workouts.map(wo => {
+            return (
+              <Grid item xs={12} sm={4} key={wo.id}>
+                <WorkoutCard
+                  id={wo.id}
+                  item={wo}
+                  selectItem={props.selectWorkout}
+                  deleteItem={deleteItem}
+                  disabled={false}
+                />
+              </Grid>
+            )
+          })}
         </Grid>
       </Fragment>
     ) : null
@@ -165,12 +212,12 @@ const ProgramForm = props => {
     return (
       <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
         <Card className={classes.card} variant='outlined'>
-          <CardContent style={{overflow:'scroll'}}>
+          <CardContent style={{ overflow: 'scroll' }}>
             <CloseButton handleClose={handleClose} />
             <div style={{ marginTop: '30px' }} />
-            {/* <InputLabel shrink>Count</InputLabel> */}
             <TextField
-              InputProps={{ classes: inputClasses.root }}
+              // inputProps={{ style: { color: 'red', backgroundColor: 'yellow' }}}
+              InputProps={{ classes: inputClasses }}
               id='name'
               label='Program Name'
               defaultValue={programContext.program.name}
@@ -193,7 +240,10 @@ const ProgramForm = props => {
             <div style={{ marginTop: '10px' }} />
             <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
             <div style={{ marginTop: '10px' }} />
-            <FormButton buttonText={'Schedule'} onClick={schedule} />
+            <FormButton
+              buttonText={'Schedule'}
+              onClick={toggleScheduleDialog}
+            />
             <div style={{ marginTop: '10px' }} />
             <FormButton
               type='submit'
@@ -202,6 +252,7 @@ const ProgramForm = props => {
               onClick={saveProgram}
             />
             <div style={{ marginTop: '30px' }} />
+            {renderCardio()}
             {renderWorkouts()}
           </CardContent>
         </Card>
@@ -222,8 +273,13 @@ const ProgramForm = props => {
     }
   }
 
+  const handleWorkoutListSelect = async workout => {
+    await programContext.addWorkout(workout)
+  }
+
   return (
     <Container maxWidth='sm'>
+      {/* < */}
       <ProgramWorkoutDialog
         saveWorkout={saveWorkout}
         open={showWorkoutModal}
@@ -232,6 +288,7 @@ const ProgramForm = props => {
       />
       <WorkoutListDialog
         open={showWorkoutListDialog}
+        onSelect={handleWorkoutListSelect}
         onClose={toggleWorkoutListDialog}
       />
       <WorkoutFormDialog
@@ -239,7 +296,22 @@ const ProgramForm = props => {
         onClose={toggleWorkoutDialog}
         saveWorkout={saveWorkout}
       />
-      {renderMainForm()}
+      <CardioFormDialog
+        open={showCardioDialog}
+        onClose={toggleCardioDialog}
+        saveWorkout={saveCardio}
+      />
+      <ScheduleDialog
+        open={showScheduleDialog}
+        onClose={toggleScheduleDialog}
+        saveWorkout={saveWorkout}
+      />
+      {showProgramChooser ?
+      <ProgramChooser 
+        onClose={toggleProgramChooser}
+      />
+      :
+      renderMainForm()}
     </Container>
   )
 }

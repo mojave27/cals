@@ -75,7 +75,7 @@ const Workouts = props => {
     <React.Fragment>
       {/* TODO: change this to the dialog */}
       <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
-        <Container maxWidth={'small'}>
+        <Container>
           <WorkoutForm saveWorkout={saveWorkout} />
         </Container>
       </Modal>
@@ -92,6 +92,7 @@ const Workouts = props => {
             workouts={woContext.workouts} 
             deleteWorkout={deleteWorkout}
             editWorkout={editWorkout}
+            disabled={false}
           />
           </div>
       ) : (
