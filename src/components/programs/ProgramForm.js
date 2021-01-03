@@ -9,7 +9,7 @@ import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
 import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { navigate } from '@reach/router'
-import { fade, makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import CardioCard from './CardioCard'
 import {
   Card,
@@ -35,37 +35,48 @@ const useStyles = makeStyles(theme => ({
   card: {
     minWidth: 275,
     backgroundColor: theme.color4.hex,
-    border: `1px solid ${theme.color3.hex}`
+    border: `1px solid ${theme.color3.hex}`,
+    overflowY: 'auto'
   },
   label: {
     color: theme.color4_text.hex
   }
 }))
 
-const useStylesInput = makeStyles(theme => ({
+const useInputStyles = makeStyles((theme) => ({
   root: {
-    color: theme.color1_text.hex,
-    border: `1px solid ${theme.color3.hex}`,
-    overflow: 'hidden',
+    border: `1px solid ${theme.color5_text.rgba(.5)}`,
+    overflow: "hidden",
     borderRadius: 4,
-    backgroundColor: theme.color1.hex,
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    '&:hover': {
-      backgroundColor: '#eee'
+    backgroundColor: theme.color5.hex,
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:hover": {
+      backgroundColor: theme.color5.rgba(.5)
     },
-    '&$focused': {
-      backgroundColor: '#eee',
-      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-      borderColor: theme.color3.hex
+    "& label": {
+      color: theme.color5_text.hex
+    },
+    "&$focused": {
+      color: theme.color5_text.hex,
+      backgroundColor: theme.color5.rgba(.5),
+      borderColor: theme.color5_text.hex
     }
   },
   focused: {}
-}))
+}));
+
+const ThemedTextField = (props) => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useInputStyles(themeContext.theme);
+
+  return (
+    <TextField InputProps={{ classes, disableUnderline: true }} InputLabelProps={{ style: { color:`${themeContext.theme.color5_text.rgba(.5)}` }}} {...props} />
+  );
+}
 
 const ProgramForm = props => {
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
-  const inputClasses = useStylesInput(themeContext.theme)
 
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)
@@ -212,27 +223,25 @@ const ProgramForm = props => {
     return (
       <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
         <Card className={classes.card} variant='outlined'>
-          <CardContent style={{ overflow: 'scroll' }}>
+          <CardContent>
             <CloseButton handleClose={handleClose} />
             <div style={{ marginTop: '30px' }} />
-            <TextField
-              // inputProps={{ style: { color: 'red', backgroundColor: 'yellow' }}}
-              InputProps={{ classes: inputClasses }}
+            <div style={{ marginTop: '30px' }} />
+            <ThemedTextField
               id='name'
               label='Program Name'
               defaultValue={programContext.program.name}
               onChange={handleTextChange}
-              variant='outlined'
+              variant='filled'
               size='small'
             />
             <div style={{ marginTop: '10px' }} />
-            <TextField
-              InputProps={{ classes: inputClasses }}
+            <ThemedTextField
               id='description'
               label='Description'
               defaultValue={programContext.program.description}
               onChange={handleTextChange}
-              variant='outlined'
+              variant='filled'
               size='small'
             />
             <div style={{ marginTop: '10px' }} />
@@ -252,8 +261,10 @@ const ProgramForm = props => {
               onClick={saveProgram}
             />
             <div style={{ marginTop: '30px' }} />
-            {renderCardio()}
-            {renderWorkouts()}
+            <Container className={classes.cardContent}>
+              {renderCardio()}
+              {renderWorkouts()}
+            </Container>
           </CardContent>
         </Card>
       </form>
@@ -306,12 +317,11 @@ const ProgramForm = props => {
         onClose={toggleScheduleDialog}
         saveWorkout={saveWorkout}
       />
-      {showProgramChooser ?
-      <ProgramChooser 
-        onClose={toggleProgramChooser}
-      />
-      :
-      renderMainForm()}
+      {showProgramChooser ? (
+        <ProgramChooser onClose={toggleProgramChooser} />
+      ) : (
+        renderMainForm()
+      )}
     </Container>
   )
 }
