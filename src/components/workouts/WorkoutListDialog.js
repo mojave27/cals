@@ -75,7 +75,7 @@ const WorkoutListDialog = props => {
           </Typography>
           <Button autoFocus color='inherit' onClick={handleClose}>
             done
-          </Button>}
+          </Button>
         </Toolbar>
       </AppBar>
       <WorkoutList workouts={workouts} onClick={selectWorkout} />

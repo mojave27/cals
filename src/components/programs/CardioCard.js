@@ -30,14 +30,14 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'left'
   },
   thLeft: {
-    width: '70%'
+    // width: '70%'
   },
   td: {
     textAlign: 'left',
     color: theme.color4_text.hex
   },
   tdLeft: {
-    width: '70%'
+    // width: '70%'
   },
   cardHeader: {
     padding: '6px 16px 0px 16px'
