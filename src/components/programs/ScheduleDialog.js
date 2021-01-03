@@ -70,7 +70,7 @@ const ScheduleDialog = props => {
             {'Schedule'}
           </Typography>
           <Button autoFocus color='inherit' onClick={handleClose}>
-            save
+            done
           </Button>
         </Toolbar>
       </AppBar>

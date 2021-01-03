@@ -367,10 +367,6 @@ const WoDay = props => {
     return data
   }
 
-  // const showTimer = () => {
-  //   setShowStopWatch(!showStopWatch)
-  // }
-
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>

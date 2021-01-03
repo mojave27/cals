@@ -65,7 +65,7 @@ export const menuConfig = [
     icon: 'Edit',
     items: [
       // { to: '/programs', text: 'programs' },
-      { to: '/program-form', text: 'add program' },
+      { to: '/program-form', text: 'program form' },
       { to: '/manage/workouts', text: 'workouts' },
       { to: '/exercises', text: 'exercises' },
       { to: '/prefs/themer', text: 'theme' }
