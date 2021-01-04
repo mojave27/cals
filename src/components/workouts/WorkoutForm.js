@@ -67,7 +67,6 @@ const WorkoutForm = props => {
   }
 
   const editSet = id => {
-    console.log(id)
     let index = findIndexOfId(id, woContext.workout.exerciseGroups)
     setContext.updateSet(woContext.workout.exerciseGroups[index])
     toggleSetDialog()

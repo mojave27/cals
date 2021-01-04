@@ -20,14 +20,12 @@ export let retrieve = async () => {
 }
 
 export let addExercise = async (exercise) => {
-  console.log(`posting exercise: ${JSON.stringify(exercise)}`)
   const url = 'exercises'
   let configWithAuth = await getAxiosConfigWithAuth()
 
   return axios
     .post(url, exercise, configWithAuth)
     .then(function(response) {
-      console.log(response)
       const data = parseResponse(response)
       return data
     })

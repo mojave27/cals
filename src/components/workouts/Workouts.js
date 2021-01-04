@@ -45,11 +45,6 @@ const Workouts = props => {
   }
 
   const editWorkout = async id => {
-    console.log(id)
-    console.log(
-      `%c${id}`,
-      "color:red;background-color:#eee;font-size:1.1rem;font-weight:bold"
-    )
     await setSelectedWorkoutToContext(id)
     toggleModal()
   }

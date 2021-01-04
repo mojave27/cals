@@ -32,7 +32,6 @@ const SetCard = props => {
   const [showExerciseList, setShowExerciseList] = useState(false)
 
   useEffect(() => {
-    console.log('in useEffect')
     async function fetchData() {
       let exercises = await retrieve()
       setAllExercises(sortByName(exercises))
@@ -50,7 +49,6 @@ const SetCard = props => {
   const handleRepsChange = event => {
     event.stopPropagation()
     let { id, value } = event.target
-    console.log(id)
     let exercisesForSet = [...setContext.set.exercises]
     let index = exercisesForSet.findIndex(
       exercise => Number(exercise.id) === Number(id)

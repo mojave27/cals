@@ -51,9 +51,7 @@ export const retrieveWorkoutById = async (id) => {
 }
 
 export const addWorkout = async (workout) => {
-  console.log(`calling POST /workouts with ${JSON.stringify(workout)}`)
   let config = await getAxiosConfigWithAuth()
-  // let data = {...workout}
   return axios
     .post(URL, workout, config)
     .then(response => {

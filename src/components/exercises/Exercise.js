@@ -87,8 +87,6 @@ class Exercise extends React.Component {
 
   handleTextChange = e => {
     let { id, value } = e.target
-    console.log(id)
-    console.log(value)
     this.setState(prevState => {
       let newState = { ...prevState }
       newState[id] = value
