@@ -1,11 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
-import { AppBar, Button, Dialog, IconButton, Slide, Toolbar, Typography } from '@material-ui/core'
+import {
+  AppBar,
+  Button,
+  Dialog,
+  IconButton,
+  Slide,
+  Toolbar,
+  Typography
+} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import WoList from '../workouts/WoList'
 import ThemeContext from '../../context/ThemeContext'
-import { retrieveItemById } from '../ArrayUtils'
+import { findIndexOfId, retrieveItemById } from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -55,10 +63,20 @@ const WoListDialog = props => {
   }
 
   const selectItem = async itemId => {
-    let item = retrieveItemById(itemId, items)
-    setSelected(prevState => {
-      return [...prevState, item]
-    })
+    if (isAlreadySelected(itemId)) {
+      let updatedSelected = selected.filter(item => item.id !== itemId)
+      setSelected(updatedSelected)
+    } else {
+      let item = retrieveItemById(itemId, items)
+      setSelected(prevState => {
+        return [...prevState, item]
+      })
+    }
+  }
+
+  const isAlreadySelected = itemId => {
+    let found = findIndexOfId(itemId, selected)
+    return found > -1
   }
 
   return (
@@ -101,7 +119,7 @@ WoListDialog.propTypes = {
   items: PropTypes.array,
   retrieve: PropTypes.func,
   title: PropTypes.string
-};
+}
 
 WoListDialog.defaultProps = {
   title: ''
