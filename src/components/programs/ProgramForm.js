@@ -68,7 +68,7 @@ const useInputStyles = makeStyles(theme => ({
     }
   },
   focused: {}
-}));
+}))
 
 const ThemedTextField = props => {
   const themeContext = useContext(ThemeContext)
