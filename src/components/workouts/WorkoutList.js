@@ -56,7 +56,8 @@ WorkoutList.propTypes = {
 
 WorkoutList.defaultProps = {
   // disabled: true,
-  workouts: []
+  workouts: [],
+  selected: []
 }
 
 export default WorkoutList
