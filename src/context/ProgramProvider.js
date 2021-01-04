@@ -2,7 +2,6 @@ import React from 'react'
 import ProgramContext from './ProgramContext'
 import { generateNewId, findIndexOfId } from '../components/ArrayUtils'
 import { cloneDeep } from 'lodash'
-import { logger } from '../logging/logger'
 
 const emptyProgram = {
   id: '',
