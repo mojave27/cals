@@ -246,7 +246,8 @@ const TopNav = props => {
           </Typography>
           {/* ************************************** */}
           <Button
-            aria-controls='simple-menu'
+            color='inherit'
+            aria-controls='theme-menu'
             aria-haspopup='true'
             onClick={handleMenuClick}
           >
