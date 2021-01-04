@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { AppBar, Button, Dialog, IconButton, Slide, Toolbar, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import CardioList from '../workouts/CardioList'
-// import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
+import WoList from '../workouts/WoList'
 import ThemeContext from '../../context/ThemeContext'
-import { retrieveItemByStringId } from '../ArrayUtils'
+import { retrieveItemById } from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -23,26 +22,28 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
-const CardioListDialog = props => {
+const WoListDialog = props => {
   const theme = useContext(ThemeContext)
   const classes = useStyles(theme)
 
-  const [cardioRoutines, setCardioRoutines] = useState([])
+  const [items, setItems] = useState([])
   const [selected, setSelected] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      if (!props.cardioRoutines) {
-        // const allCardioRoutines = await retrieveCardioRoutines()
-        // setCardioRoutines(allCardioRoutines)
+      if (!props.items) {
+        console.log('no props...')
+        const allItems = await props.retrieve()
+        setItems(allItems)
       } else {
-        setCardioRoutines(props.cardioRoutines)
+        console.log('props!!')
+        setItems(props.items)
       }
     }
-
     fetchData()
     return () => {}
-  }, [props.cardioRoutines])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.items])
 
   const handleClose = () => {
     if (props.onClose) props.onClose()
@@ -52,12 +53,11 @@ const CardioListDialog = props => {
     if (props.onSave) props.onSave(selected)
   }
 
-  const selectCardio = async cardioId => {
-    let cardio = retrieveItemByStringId(cardioId, cardioRoutines)
+  const selectItem = async itemId => {
+    let item = retrieveItemById(itemId, items)
     setSelected(prevState => {
-      return [...prevState, cardio]
+      return [...prevState, item]
     })
-    // props.onSelect(cardio)
   }
 
   return (
@@ -78,7 +78,7 @@ const CardioListDialog = props => {
             <CloseIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Choose Cardio Routine(s)
+            {props.title}
           </Typography>
           <Button autoFocus color='inherit' onClick={handleSave}>
             save
@@ -88,9 +88,9 @@ const CardioListDialog = props => {
           </Button>
         </Toolbar>
       </AppBar>
-      <CardioList selected={selected} cardioRoutines={cardioRoutines} onClick={selectCardio} />
+      <WoList selected={selected} items={items} onClick={selectItem} />
     </Dialog>
   )
 }
 
-export default CardioListDialog
+export default WoListDialog

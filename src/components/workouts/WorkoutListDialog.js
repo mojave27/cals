@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import WorkoutList from '../workouts/WorkoutList'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import ThemeContext from '../../context/ThemeContext'
-import { retrieveItemByStringId } from '../ArrayUtils'
+import { retrieveItemById } from '../ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -25,10 +25,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const WorkoutListDialog = props => {
   const theme = useContext(ThemeContext)
-  // const programContext = useContext(ProgramContext)
   const classes = useStyles(theme)
 
   const [workouts, setWorkouts] = useState([])
+  const [selected, setSelected] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -48,9 +48,15 @@ const WorkoutListDialog = props => {
     if (props.onClose) props.onClose()
   }
 
+  const handleSave = () => {
+    if (props.onSave) props.onSave(selected)
+  }
+
   const selectWorkout = async workoutId => {
-    let workout = retrieveItemByStringId(workoutId, workouts)
-    props.onSelect(workout)
+    let workout = retrieveItemById(workoutId, workouts)
+    setSelected(prevState => {
+      return [...prevState, workout]
+    })
   }
 
   return (
@@ -73,12 +79,15 @@ const WorkoutListDialog = props => {
           <Typography variant='h6' className={classes.title}>
             Choose Workout(s)
           </Typography>
+          <Button autoFocus color='inherit' onClick={handleSave}>
+            save
+          </Button>
           <Button autoFocus color='inherit' onClick={handleClose}>
             done
           </Button>
         </Toolbar>
       </AppBar>
-      <WorkoutList workouts={workouts} onClick={selectWorkout} />
+      <WorkoutList selected={selected} workouts={workouts} onClick={selectWorkout} />
     </Dialog>
   )
 }

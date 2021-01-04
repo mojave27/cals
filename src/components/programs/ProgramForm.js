@@ -284,8 +284,8 @@ const ProgramForm = props => {
     }
   }
 
-  const handleWorkoutListSelect = async workout => {
-    await programContext.addWorkout(workout)
+  const handleWorkoutListSave = async workouts => {
+    await programContext.addWorkouts(workouts)
   }
 
   return (
@@ -299,7 +299,7 @@ const ProgramForm = props => {
       />
       <WorkoutListDialog
         open={showWorkoutListDialog}
-        onSelect={handleWorkoutListSelect}
+        onSave={handleWorkoutListSave}
         onClose={toggleWorkoutListDialog}
       />
       <WorkoutFormDialog
