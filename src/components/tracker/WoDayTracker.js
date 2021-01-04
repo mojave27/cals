@@ -31,6 +31,7 @@ const WoDayTracker = props => {
 
   const toggleModal = () => {
     setShowModal(!showModal)
+    window.scrollTo(0, 0)
   }
 
   const chooseWoDay = async (id) => {
