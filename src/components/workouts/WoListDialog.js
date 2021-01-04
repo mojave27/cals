@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { AppBar, Button, Dialog, IconButton, Slide, Toolbar, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
@@ -91,6 +92,19 @@ const WoListDialog = props => {
       <WoList selected={selected} items={items} onClick={selectItem} />
     </Dialog>
   )
+}
+
+WoListDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  items: PropTypes.array,
+  retrieve: PropTypes.func,
+  title: PropTypes.string
+};
+
+WoListDialog.defaultProps = {
+  title: ''
 }
 
 export default WoListDialog

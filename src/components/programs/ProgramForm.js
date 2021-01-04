@@ -3,9 +3,10 @@ import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { updateProgram, addProgram } from '../../api/programsApi'
+import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import CardioFormDialog from './CardioFormDialog'
 import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
-import WorkoutListDialog from '../workouts/WorkoutListDialog'
+import WoListDialog from '../workouts/WoListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { makeStyles } from '@material-ui/core/styles'
 import CardioCard from './CardioCard'
@@ -182,7 +183,8 @@ const ProgramForm = props => {
 
   const deleteItem = async id => {
     //remove workout from program in context.
-    console.log(`pretending to remove workout with id ${id}`)
+    console.log(`removing workout with id ${id}`)
+    await programContext.deleteWorkoutFromProgram(id)
   }
 
   const renderCardio = () => {
@@ -325,10 +327,12 @@ const ProgramForm = props => {
         onSelect={handleWorkoutDialogSelection}
         onClose={toggleWorkoutModal}
       />
-      <WorkoutListDialog
+      <WoListDialog
         open={showWorkoutListDialog}
         onSave={handleWorkoutListSave}
         onClose={toggleWorkoutListDialog}
+        title={'Choose Workouts'}
+        retrieve={retrieveWorkouts}
       />
       <WorkoutFormDialog
         open={showWorkoutDialog}
