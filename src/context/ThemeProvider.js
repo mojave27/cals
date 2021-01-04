@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ThemeContext from './ThemeContext'
-import { themes } from '../styles/main-styles'
+import { themes } from '../styles/colorThemes'
 import Cookies from 'universal-cookie'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 

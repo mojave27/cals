@@ -1,19 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import AppBar from '@material-ui/core/AppBar'
-
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import Collapse from '@material-ui/core/Collapse'
-import Divider from '@material-ui/core/Divider'
-import Drawer from '@material-ui/core/Drawer'
+import {
+  Collapse,
+  Divider,
+  Drawer,
+  Button,
+  IconButton
+} from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { Menu, MenuItem } from '@material-ui/core'
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import IconButton from '@material-ui/core/IconButton'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import MenuIcon from '@material-ui/icons/Menu'
 import HomeIcon from '@material-ui/icons/Home'
 import LockIcon from '@material-ui/icons/Lock'
@@ -22,9 +21,6 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import EditIcon from '@material-ui/icons/Edit'
 import ListAltIcon from '@material-ui/icons/ListAlt'
 import ThemeContext from '../../../context/ThemeContext'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-
 import { menuConfig } from './navMenuConfig'
 import { Link as RouterLink } from '@reach/router'
 import { Auth } from 'aws-amplify'
@@ -95,6 +91,23 @@ const TopNav = props => {
   // const [expandSection, setExpandSection] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [expandSection, setExpandSection] = React.useState({})
+
+  /* MENU LOGIC **************************************/
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleMenuClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleThemeSelect = themeName => {
+    handleClose()
+    themeContext.changeTheme(themeName)
+  }
+  /* *********************************************** */
 
   useEffect(() => {
     function setupForMenu() {
@@ -231,6 +244,26 @@ const TopNav = props => {
           <Typography variant='h6' className={classes.title}>
             wo-log
           </Typography>
+          {/* ************************************** */}
+          <Button
+            aria-controls='simple-menu'
+            aria-haspopup='true'
+            onClick={handleMenuClick}
+          >
+            Theme
+          </Button>
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={() => handleThemeSelect('snow')}>Light</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('woSheet')}>Medium</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('vader')}>Dark</MenuItem>
+          </Menu>
+          {/* ************************************** */}
           <Button color='inherit' onClick={signOut}>
             Logout
           </Button>

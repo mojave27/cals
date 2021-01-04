@@ -801,3 +801,16 @@ export const themeThree = {
 const buildRgba = (red, green, blue, alpha) => {
   return `rgba(${red},${green},${blue},${alpha})`
 }
+
+export const themes = {
+  vader: vader,
+  stormTrooper: stormTrooper,
+  stormTrooperInverse: stormTrooperInverse,
+  woSheet: woSheet,
+  siberianWinter: siberianWinter,
+  crystal: crystal,
+  bakery: bakery,
+  lake: lake,
+  snow: snow,
+  sea: sea
+}
