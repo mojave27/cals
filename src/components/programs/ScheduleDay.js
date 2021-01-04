@@ -144,7 +144,7 @@ const ScheduleDay = props => {
         onClose={toggleWorkoutList}
         items={programContext.program.workouts}
         onSave={handleWorkoutListSave}
-        title={'wo man'}
+        title={'Choose Workout(s)'}
         retrieve={retrieve}
       />
       <WoListDialog

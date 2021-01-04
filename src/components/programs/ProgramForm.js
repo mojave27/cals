@@ -1,20 +1,22 @@
-import React, { Fragment, useContext, useState } from 'react'
-import CloseButton from '../inputs/CloseButton'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import WoContext from '../../context/WoContext'
 import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import { updateProgram, addProgram } from '../../api/programsApi'
+import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import CardioFormDialog from './CardioFormDialog'
 import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
-import WorkoutListDialog from '../workouts/WorkoutListDialog'
+import WoListDialog from '../workouts/WoListDialog'
 import ProgramWorkoutDialog from './ProgramWorkoutDialog'
-import { navigate } from '@reach/router'
 import { makeStyles } from '@material-ui/core/styles'
 import CardioCard from './CardioCard'
 import {
+  Box,
+  Button,
   Card,
   CardContent,
   Container,
+  Divider,
   TextField,
   Grid
 } from '@material-ui/core'
@@ -38,40 +40,49 @@ const useStyles = makeStyles(theme => ({
     border: `1px solid ${theme.color3.hex}`,
     overflowY: 'auto'
   },
+  box: {
+    margin: theme.mobile ? theme.spacing(1) : theme.spacing(3)
+  },
   label: {
     color: theme.color4_text.hex
   }
 }))
 
-const useInputStyles = makeStyles((theme) => ({
+const useInputStyles = makeStyles(theme => ({
   root: {
-    border: `1px solid ${theme.color5_text.rgba(.5)}`,
-    overflow: "hidden",
+    border: `1px solid ${theme.color5_text.rgba(0.5)}`,
+    overflow: 'hidden',
     borderRadius: 4,
     backgroundColor: theme.color5.hex,
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    "&:hover": {
-      backgroundColor: theme.color5.rgba(.5)
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    '&:hover': {
+      backgroundColor: theme.color5.rgba(0.5)
     },
-    "& label": {
+    '& label': {
       color: theme.color5_text.hex
     },
-    "&$focused": {
+    '&$focused': {
       color: theme.color5_text.hex,
-      backgroundColor: theme.color5.rgba(.5),
+      backgroundColor: theme.color5.rgba(0.5),
       borderColor: theme.color5_text.hex
     }
   },
   focused: {}
-}));
+}))
 
-const ThemedTextField = (props) => {
+const ThemedTextField = props => {
   const themeContext = useContext(ThemeContext)
-  const classes = useInputStyles(themeContext.theme);
+  const classes = useInputStyles(themeContext.theme)
 
   return (
-    <TextField InputProps={{ classes, disableUnderline: true }} InputLabelProps={{ style: { color:`${themeContext.theme.color5_text.rgba(.5)}` }}} {...props} />
-  );
+    <TextField
+      InputProps={{ classes, disableUnderline: true }}
+      InputLabelProps={{
+        style: { color: `${themeContext.theme.color5_text.rgba(0.5)}` }
+      }}
+      {...props}
+    />
+  )
 }
 
 const ProgramForm = props => {
@@ -86,6 +97,10 @@ const ProgramForm = props => {
   const [showCardioDialog, setShowCardioDialog] = useState(false)
   const [showWorkoutListDialog, setShowWorkoutListDialog] = useState(false)
   const [showProgramChooser, setShowProgramChooser] = useState(true)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const toggleWorkoutModal = () => {
     setShowWorkoutModal(!showWorkoutModal)
@@ -161,16 +176,15 @@ const ProgramForm = props => {
     programContext.updateProgram(updatedProgram)
   }
 
-  //TODO: make this do something else?
   const handleClose = async () => {
-    await saveProgram()
     programContext.clearProgram()
-    navigate('/program-tracker')
+    setShowProgramChooser(true)
   }
 
   const deleteItem = async id => {
     //remove workout from program in context.
-    console.log(`pretending to remove workout with id ${id}`)
+    console.log(`removing workout with id ${id}`)
+    await programContext.deleteWorkoutFromProgram(id)
   }
 
   const renderCardio = () => {
@@ -224,47 +238,63 @@ const ProgramForm = props => {
       <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
         <Card className={classes.card} variant='outlined'>
           <CardContent>
-            <CloseButton handleClose={handleClose} />
+            <Box style={{ textAlign: 'right' }}>
+              <Button
+                style={{ float: 'left' }}
+                autoFocus
+                color='inherit'
+                onClick={handleClose}
+              >
+                cancel
+              </Button>
+              <Button autoFocus color='inherit' onClick={saveProgram}>
+                save
+              </Button>
+              <Button autoFocus color='inherit' onClick={handleClose}>
+                done
+              </Button>
+            </Box>
             <div style={{ marginTop: '30px' }} />
             <div style={{ marginTop: '30px' }} />
-            <ThemedTextField
-              id='name'
-              label='Program Name'
-              defaultValue={programContext.program.name}
-              onChange={handleTextChange}
-              variant='filled'
-              size='small'
-            />
-            <div style={{ marginTop: '10px' }} />
-            <ThemedTextField
-              id='description'
-              label='Description'
-              defaultValue={programContext.program.description}
-              onChange={handleTextChange}
-              variant='filled'
-              size='small'
-            />
-            <div style={{ marginTop: '10px' }} />
-            <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
-            <div style={{ marginTop: '10px' }} />
-            <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
-            <div style={{ marginTop: '10px' }} />
-            <FormButton
-              buttonText={'Schedule'}
-              onClick={toggleScheduleDialog}
-            />
-            <div style={{ marginTop: '10px' }} />
-            <FormButton
-              type='submit'
-              styleProps={{ float: 'right' }}
-              buttonText={'Save Program'}
-              onClick={saveProgram}
-            />
-            <div style={{ marginTop: '30px' }} />
-            <Container className={classes.cardContent}>
-              {renderCardio()}
-              {renderWorkouts()}
-            </Container>
+            <Box className={classes.box}>
+              <ThemedTextField
+                id='name'
+                label='Program Name'
+                defaultValue={programContext.program.name}
+                onChange={handleTextChange}
+                variant='filled'
+                size='small'
+              />
+              <div style={{ marginTop: '10px' }} />
+              <ThemedTextField
+                id='description'
+                label='Description'
+                defaultValue={programContext.program.description}
+                onChange={handleTextChange}
+                variant='filled'
+                size='small'
+              />
+            </Box>
+            <Divider />
+            <Box className={classes.box}>
+              <div style={{ marginTop: '10px' }} />
+              <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
+              <div style={{ marginTop: '10px' }} />
+              <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
+              <div style={{ marginTop: '10px' }} />
+              <FormButton
+                buttonText={'Schedule'}
+                onClick={toggleScheduleDialog}
+              />
+              <div style={{ marginTop: '30px' }} />
+            </Box>
+            <Divider />
+            {/* <Container className={classes.cardContent}> */}
+              <Box className={classes.box}>
+                {renderCardio()}
+                {renderWorkouts()}
+              </Box>
+            {/* </Container> */}
           </CardContent>
         </Card>
       </form>
@@ -297,10 +327,12 @@ const ProgramForm = props => {
         onSelect={handleWorkoutDialogSelection}
         onClose={toggleWorkoutModal}
       />
-      <WorkoutListDialog
+      <WoListDialog
         open={showWorkoutListDialog}
         onSave={handleWorkoutListSave}
         onClose={toggleWorkoutListDialog}
+        title={'Choose Workouts'}
+        retrieve={retrieveWorkouts}
       />
       <WorkoutFormDialog
         open={showWorkoutDialog}
