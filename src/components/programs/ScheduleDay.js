@@ -10,14 +10,15 @@ import {
   Container
 } from '@material-ui/core'
 import CardioCard from './CardioCard'
-import CardioListDialog from '../workouts/CardioListDialog'
+// import CardioListDialog from '../workouts/CardioListDialog'
+import WoListDialog from '../workouts/WoListDialog'
 import WorkoutCard from '../workouts/WorkoutCard'
-import WorkoutListDialog from '../workouts/WorkoutListDialog'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles } from '@material-ui/core/styles'
 import { retrieveItemById } from '../ArrayUtils'
+import { retrieve } from '../../api/workoutsApi'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -92,14 +93,16 @@ const ScheduleDay = props => {
     setShowCardioList(!showCardioList)
   }
 
-  const handleWorkoutListSelect = workout => {
+  const handleWorkoutListSave = workouts => {
     let dayId = props.item.id
-    programContext.addWorkoutToSchedule(dayId, workout.id)
+    let workoutIds = workouts.map( wo => wo.id)
+    programContext.addWorkoutsToSchedule(dayId, workoutIds)
   }
 
-  const handleCardioListSelect = cardio => {
+  const handleCardioListSelect = cardioRoutines => {
     let dayId = props.item.id
-    programContext.addCardioToSchedule(dayId, cardio.id)
+    let cardioIds = cardioRoutines.map( cardio => cardio.id)
+    programContext.addCardioRoutinesToSchedule(dayId, cardioIds)
   }
 
   const renderCardioForDay = id => {
@@ -136,17 +139,21 @@ const ScheduleDay = props => {
 
   return (
     <React.Fragment>
-      <WorkoutListDialog
+      <WoListDialog
         open={showWorkoutList}
         onClose={toggleWorkoutList}
-        workouts={programContext.program.workouts}
-        onSelect={handleWorkoutListSelect}
+        items={programContext.program.workouts}
+        onSave={handleWorkoutListSave}
+        title={'wo man'}
+        retrieve={retrieve}
       />
-      <CardioListDialog
+      <WoListDialog
         open={showCardioList}
         onClose={toggleCardioList}
-        cardioRoutines={programContext.program.cardio}
-        onSelect={handleCardioListSelect}
+        items={programContext.program.cardio}
+        onSave={handleCardioListSelect}
+        title={'Choose Cardio Routine(s)'}
+        retrieve={ () => [] }
       />
       <Card
         className={classes.root}

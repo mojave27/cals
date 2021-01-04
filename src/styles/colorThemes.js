@@ -1,6 +1,23 @@
+const highlights = {
+  lightThemeHighlightYellow: {
+      hex: '#ffff00',
+      rgba: alpha => buildRgba(255, 255, 0, alpha)
+  },
+  lightThemeHighlightGreen: {
+      hex: '#00b300',
+      rgba: alpha => buildRgba(0, 179, 0, alpha)
+  },
+  darkThemeHighlightGreen:  {
+      hex: '#00ff00',
+      rgba: alpha => buildRgba(0, 255, 0, alpha)
+  }
+}
+
 export const sea = {
   name: 'sea',
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#274469',
     rgba: alpha => buildRgba(39, 68, 105, alpha)
@@ -42,6 +59,8 @@ export const snow = {
   name: 'snow',
   palette: { type: 'light' },
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   darkText: {
     hex: '#333333',
     rgba: alpha => buildRgba(0, 0, 0, alpha)
@@ -86,6 +105,8 @@ export const snow = {
 export const seaOrig = {
   name: 'seaOrig',
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#555757',
     rgba: alpha => buildRgba(85, 87, 87, alpha)
@@ -126,6 +147,8 @@ export const seaOrig = {
 export const villa = {
   name: 'villa',
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
@@ -166,6 +189,8 @@ export const villa = {
 export const crystal = {
   name: 'crystal',
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -206,6 +231,8 @@ export const crystal = {
 export const primaries = {
   name: 'primaries',
   palette: { type: 'light' },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -250,6 +277,8 @@ export const primaries = {
 export const siberianWinter = {
   name: 'siberianWinter',
   palette: { type: 'dark' },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#FFFBFF',
     rgba: alpha => buildRgba(255, 251, 255, alpha)
@@ -290,6 +319,8 @@ export const siberianWinter = {
 export const stormTrooperInverse = {
   name: 'stormTrooperInverse',
   palette: { type: 'dark' },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color5: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -334,6 +365,8 @@ export const stormTrooperInverse = {
 export const stormTrooper = {
   name: 'stormTrooper',
   palette: { type: 'light' },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -378,6 +411,8 @@ export const stormTrooper = {
 export const vader = {
   name: 'vader',
   palette: { type: 'dark' },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#dadee0',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -422,6 +457,8 @@ export const vader = {
 export const bakery = {
   name: 'bakery',
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -466,6 +503,8 @@ export const bakery = {
 export const woSheet = {
   name: 'woSheet',
   palette: { type: 'dark' },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#FEFFFF',
     // hex: '#06FBFB',
@@ -507,6 +546,8 @@ export const woSheet = {
 export const lake = {
   name: 'lake',
   type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
@@ -546,6 +587,8 @@ export const lake = {
 
 export const book = {
   name: 'book',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#F0F2F2',
     rgba: alpha => buildRgba(239, 242, 242, alpha)
@@ -585,6 +628,8 @@ export const book = {
 
 export const dina = {
   name: 'dina',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#F2E6DF',
     rgba: alpha => buildRgba(242, 230, 223, alpha)
@@ -624,6 +669,8 @@ export const dina = {
 
 export const fordRaptor = {
   name: 'fordRaptor',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, 1)
@@ -663,6 +710,8 @@ export const fordRaptor = {
 
 export const themeOne = {
   name: 'themeOne',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
     hex: '#2D3540',
     rgba: alpha => buildRgba(45, 53, 64, alpha)
@@ -691,6 +740,8 @@ export const themeOne = {
 
 export const themeTwo = {
   name: 'themeTwo',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color4: {
     hex: '#2D3540',
     rgba: alpha => buildRgba(45, 53, 6, alpha)
@@ -719,6 +770,8 @@ export const themeTwo = {
 
 export const themeThree = {
   name: 'themeThree',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
   color4: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)

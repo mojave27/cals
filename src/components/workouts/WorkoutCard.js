@@ -110,7 +110,11 @@ const WorkoutCard = props => {
   return (
     <Card
       className={classes.root}
-      style={{maxWidth:props.maxWidth}}
+      style={{
+        maxWidth:props.maxWidth, 
+        border: props.selected ? `1px solid ${themeContext.theme.highlightGreen.hex}` : '',
+        backgroundColor: props.selected ? themeContext.theme.color3.rgba(.25) : ''
+      }}
       variant="outlined"
       onClick={handleClick}
       key={props.id}
