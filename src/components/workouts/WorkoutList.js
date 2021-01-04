@@ -1,17 +1,25 @@
 import React from 'react'
-import { Container, Grid } from '@material-ui/core'
 import WorkoutCard from '../workouts/WorkoutCard'
 import ArrayUtils from '../ArrayUtils'
 import PropTypes from 'prop-types'
+import { Container, Grid } from '@material-ui/core'
+
 
 const WorkoutList = props => {
+
   const handleClick = id => {
-    // console.log(`%cWorkoutList handleClick: ${id}`, 'color:lime;backgroundColor:navy;border:1px solid red')
     if (props.onClick) props.onClick(id)
   }
 
   const sortWorkouts = workouts => {
     return ArrayUtils.sortByStringProperty(workouts, 'name', true)
+  }
+
+  const isSelected = id => {
+    // id matches an id of a selected workout
+    let index = ArrayUtils.findIndexOfId(id, props.selected)
+    if (index > -1) return true
+    return false
   }
 
   return (
@@ -21,6 +29,7 @@ const WorkoutList = props => {
           return (
             <Grid item xs={12} sm={6} key={wo.id}>
               <WorkoutCard
+                selected={isSelected(wo.id)}
                 key={wo.id}
                 id={wo.id}
                 item={wo}
