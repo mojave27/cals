@@ -34,9 +34,7 @@ const useStyles = makeStyles(theme => ({
   cardHeader: {
     color: theme.color4_text.hex
   },
-  container: {
-    padding: '0px'
-  },
+  container: { },
   verticalTabs: {
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
@@ -130,7 +128,6 @@ const Schedule = props => {
     <div>No schedule defined BUTTON_TO_EDIT_SCHEDULE</div>
   ) : (
     <Container
-      id={'container-in-tracker'}
       classes={{ root: classes.container }}
     >
       <div className={classes.verticalTabs}>
