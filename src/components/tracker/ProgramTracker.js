@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme => ({
   cardHeader: {
     color: theme.color4_text.hex
   },
+  container: {
+    padding: '0px'
+  },
   verticalTabs: {
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
@@ -48,7 +51,12 @@ const useStyles = makeStyles(theme => ({
   tabPanel: {
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
-    margin: 'auto'
+    margin: 'auto',
+    // overrides padding of the box inside the panel.
+    padding: '0px',
+    '& .MuiBox-root': {
+      padding: '10px 0px'
+    }
   },
   closeButton: {
     float: 'right'
@@ -69,7 +77,7 @@ const ProgramTracker = props => {
   }
 
   return isEmpty(context.program) ? null : (
-    <div id={context.program.id}>
+    <React.Fragment>
       <Card className={classes.card}>
         <CardHeader
           action={
@@ -96,7 +104,7 @@ const ProgramTracker = props => {
       <AccordionWrapper label={'schedule'}>
         <Schedule program={context.program} />
       </AccordionWrapper>
-    </div>
+    </React.Fragment>
   )
 }
 
@@ -121,14 +129,17 @@ const Schedule = props => {
   return isEmpty(props.program.schedule) ? (
     <div>No schedule defined BUTTON_TO_EDIT_SCHEDULE</div>
   ) : (
-    <Container>
+    <Container
+      id={'container-in-tracker'}
+      classes={{ root: classes.container }}
+    >
       <div className={classes.verticalTabs}>
         <Tabs
-          orientation={'horizontal'}
-          variant={'scrollable'}
+          orientation='horizontal'
+          variant='scrollable'
           value={value}
           onChange={handleChange}
-          scrollButtons='auto'
+          scrollButtons="auto"
           aria-label='schedule tabs'
           className={classes.tabs}
         >
@@ -152,7 +163,11 @@ const Schedule = props => {
             index={index}
             key={`${day.id}-${index}`}
           >
-            <ScheduleDayViewer program={props.program} day={day} key={index} />
+            <ScheduleDayViewer
+              program={props.program}
+              day={day}
+              key={index}
+            />
           </TabPanel>
         )
       })}

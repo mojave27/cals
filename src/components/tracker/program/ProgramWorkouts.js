@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-// import ProgramContext from '../../../context/ProgramContext'
 import ThemeContext from '../../../context/ThemeContext'
 import WorkoutCard from '../../workouts/WorkoutCard'
 import { isEmpty } from 'lodash'
@@ -18,16 +17,21 @@ const useStyles = makeStyles(theme => ({
     color: theme.color5_text.hex,
     width:'100%'
   },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
-  },
   tab: {
     color: theme.color5_text.hex
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPanel: {
     backgroundColor: theme.color5.hex,
     color: theme.color5_text.hex,
-    margin: 'auto'
+    margin: 'auto',
+    // overrides padding of the box inside the panel.
+    padding: '0px',
+    '& .MuiBox-root': {
+      padding: '10px 0px'
+    }
   }
 }))
 
@@ -35,7 +39,6 @@ const ProgramWorkouts = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
   const [value, setValue] = useState(0)
-  // let context = useContext(ProgramContext)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -46,7 +49,6 @@ const ProgramWorkouts = props => {
     : (<Container>
       <div className={classes.verticalTabs}>
       <Tabs
-        // orientation={themeContext.theme.mobile === true ? 'horizontal' : 'vertical'}
         orientation='horizontal'
         variant='scrollable'
         value={value}

@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    margin: 'auto'
+    // margin: 'auto'
   },
   container: {
     marginBottom: '10px'

@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    margin: 'auto'
+    margin: 'auto',
   },
   container: {
     marginBottom: '10px'
@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
     padding: '6px 16px 0px 16px'
   },
   cardContent: {
-    padding: '8px 16px 0px 16px'
+    padding: '5px',
+    margin: '0px',
   }
 }))
 
@@ -47,19 +48,19 @@ const ScheduleDayViewer = props => {
 
   const renderCardio = () => {
     return props.day.routine.cardio ? (
-      <Container>
+      <React.Fragment>
         <Typography variant={'h5'} gutterBottom>{'Cardio'}</Typography>
         {props.day.routine.cardio.map(cardioId => {
           let cardioRoutine = retrieveItemById(cardioId, props.program.cardio)
           return <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
         })}
-      </Container>
+      </React.Fragment>
     ) : null
   }
 
   const renderWorkouts = () => {
     return props.day.routine.workouts.length > 0 ? (
-      <Container>
+      <React.Fragment>
         <Typography variant={'h5'} gutterBottom>{'Weights'}</Typography>
         {props.day.routine.workouts.map(workoutId => {
           let wo = retrieveItemById(workoutId, props.program.workouts)
@@ -67,18 +68,19 @@ const ScheduleDayViewer = props => {
             <WorkoutCard disabled={true} item={wo} id={wo.id} key={wo.id} />
           )
         })}
-      </Container>
+      </React.Fragment>
     ) : null
   }
 
   return (
     <Card
       className={classes.root}
-      style={{ maxWidth: props.maxWidth }}
+      // style={{ maxWidth: props.maxWidth }}
       variant='outlined'
       key={props.id}
+      id={'card'}
     >
-      <CardContent className={classes.cardContent}>
+      <CardContent className={classes.cardContent} id={'cardContent'}>
         {renderCardio()}
         {renderWorkouts()}
       </CardContent>

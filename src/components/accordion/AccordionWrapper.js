@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
     color: theme.color4_text.hex,
     borderBottom: `1px solid ${theme.color3.rgba(.5)}`
   },
+  accordionDetails: {
+    padding: '0px'
+  },
   expandIcon: {
     color: theme.color4_text.hex
   }
@@ -38,7 +41,7 @@ const AccordionWrapper = props => {
       >
         <Typography className={classes.heading}>{props.label}</Typography>
       </AccordionSummary>
-      <AccordionDetails>{props.children}</AccordionDetails>
+      <AccordionDetails classes={{ root: classes.accordionDetails}}>{props.children}</AccordionDetails>
     </Accordion>
   )
 }
