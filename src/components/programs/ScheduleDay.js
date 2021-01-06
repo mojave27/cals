@@ -7,10 +7,9 @@ import {
   CardActions,
   CardHeader,
   CardContent,
-  Container
+  Typography
 } from '@material-ui/core'
 import CardioCard from './CardioCard'
-// import CardioListDialog from '../workouts/CardioListDialog'
 import WoListDialog from '../workouts/WoListDialog'
 import WorkoutCard from '../workouts/WorkoutCard'
 import IconButton from '@material-ui/core/IconButton'
@@ -29,12 +28,9 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginBottom: '10px'
   },
-  // table: {
-  //   backgroundColor: theme.color4.hex
-  // },
   th: {
-    // backgroundColor: theme.color3.hex,
-    // color: theme.color3_text.hex,
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
     textAlign: 'left'
   },
   thLeft: {
@@ -42,7 +38,6 @@ const useStyles = makeStyles(theme => ({
   },
   td: {
     textAlign: 'left',
-    // color: theme.color4_text.hex
   },
   tdLeft: {
     width: '70%'
@@ -51,7 +46,8 @@ const useStyles = makeStyles(theme => ({
     padding: '6px 16px 0px 16px'
   },
   cardContent: {
-    padding: '8px 16px 0px 16px'
+    padding: '5px',
+    margin: '0px'
   }
 }))
 
@@ -107,8 +103,9 @@ const ScheduleDay = props => {
 
   const renderCardioForDay = id => {
     let day = retrieveItemById(id, programContext.program.schedule.days)
-    return (
-      <Container>
+    return day.routine.cardio && day.routine.cardio.length > 0 ? (
+      <React.Fragment>
+        <Typography variant={'h5'} gutterBottom>{'Cardio'}</Typography>
         {day.routine.cardio.map(cardioId => {
           let cardioRoutine = retrieveItemById(
             cardioId,
@@ -118,40 +115,43 @@ const ScheduleDay = props => {
             <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
           )
         })}
-      </Container>
-    )
+      </React.Fragment>
+    ) : null
   }
 
   const renderWorkoutsForDay = id => {
     let day = retrieveItemById(id, programContext.program.schedule.days)
-    return (
-      <Container>
+    // return (
+    return day.routine.workouts && day.routine.workouts.length > 0 ? (
+      <React.Fragment>
+        <Typography variant={'h5'} gutterBottom>{'Weights'}</Typography>
         {day.routine.workouts.map(workoutId => {
           let wo = retrieveItemById(workoutId, programContext.program.workouts)
           return (
             <WorkoutCard disabled={true} item={wo} id={wo.id} key={wo.id} />
           )
         })}
-      </Container>
-    )
+      </React.Fragment>
+    ) : null
   }
 
   return (
     <React.Fragment>
       <WoListDialog
+        title={'Choose Workout(s)'}
         open={showWorkoutList}
         onClose={toggleWorkoutList}
         items={programContext.program.workouts}
         onSave={handleWorkoutListSave}
-        title={'Choose Workout(s)'}
         retrieve={retrieve}
       />
       <WoListDialog
+        title={'Choose Cardio Routine(s)'}
         open={showCardioList}
         onClose={toggleCardioList}
         items={programContext.program.cardio}
         onSave={handleCardioListSelect}
-        title={'Choose Cardio Routine(s)'}
+        // TODO: fix this so we don't need to pass in a mock function.
         retrieve={ () => [] }
       />
       <Card
@@ -163,7 +163,7 @@ const ScheduleDay = props => {
       >
         <CardHeader
           className={classes.cardHeader}
-          title={props.item.name}
+          // title={props.item.name}
           titleTypographyProps={{ variant: 'h6' }}
           action={
             props.disabled === false ? (
@@ -184,6 +184,7 @@ const ScheduleDay = props => {
             ) : null
           }
         />
+        {props.disabled ? null : 
         <CardActions disableSpacing>
           <Button variant='outlined' onClick={addWeightsRoutine}>
             {'Add Weights'}
@@ -191,7 +192,7 @@ const ScheduleDay = props => {
           <Button variant='outlined' onClick={addCardio}>
             {'Add Cardio'}
           </Button>
-        </CardActions>
+        </CardActions>}
         <CardContent className={classes.cardContent}>
           {renderCardioForDay(props.item.id)}
           {renderWorkoutsForDay(props.item.id)}

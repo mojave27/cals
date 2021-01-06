@@ -92,10 +92,7 @@ const ProgramForm = props => {
 
   const saveProgram = async () => {
     let program = {}
-    if (
-      typeof programContext.program.id !== 'undefined' &&
-      programContext.program.id !== ''
-    ) {
+    if ( typeof programContext.program.id !== 'undefined' && programContext.program.id !== '') {
       program = await updateProgram(programContext.program)
     } else {
       program = await addProgram(programContext.program)
@@ -109,9 +106,7 @@ const ProgramForm = props => {
   }
 
   const addCardio = async () => {
-    // await woContext.setEmptyWorkout()
     toggleCardioDialog()
-    // console.log('%cpretending to add cardio', 'color:#fff; background-color:navy')
   }
 
   const saveWorkout = async workout => {

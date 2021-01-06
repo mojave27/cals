@@ -46,7 +46,7 @@ export const menuConfig = [
     icon: 'Assignment',
     items: [
       { to: '/program-tracker', text: 'program' },
-      { to: '/tracker/woday', text: 'woday' }
+      { to: '/tracker/woday', text: 'day' }
     ]
   },
   { type: 'divider'},
@@ -65,7 +65,7 @@ export const menuConfig = [
     icon: 'Edit',
     items: [
       // { to: '/programs', text: 'programs' },
-      { to: '/program-form', text: 'program form' },
+      { to: '/program-form', text: 'programs' },
       { to: '/manage/workouts', text: 'workouts' },
       { to: '/exercises', text: 'exercises' },
       { to: '/prefs/themer', text: 'theme' }

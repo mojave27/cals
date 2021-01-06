@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Box, Container } from '@material-ui/core'
 
 const TabPanel = props => {
@@ -21,6 +22,12 @@ const TabPanel = props => {
       )}
     </div>
   )
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 }
 
 export default TabPanel

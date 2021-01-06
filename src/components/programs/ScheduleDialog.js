@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import ThemeContext from '../../context/ThemeContext'
-import ScheduleDays from './ScheduleDays'
 import ProgramContext from '../../context/ProgramContext'
+import TabbedContent from '../controls/TabbedContent'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -35,12 +35,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ScheduleDialog = props => {
   const theme = useContext(ThemeContext)
   const classes = useStyles(theme)
-  const { open, onClose } = props
   let programContext = useContext(ProgramContext)
 
   const handleClose = () => {
-    onClose()
+    if (props.onClose) props.onClose()
   }
+
+  // const handleSave = () => {
+  //   if (props.onSave) props.onSave()
+  // }
 
   const addDay = async () => {
     console.log('%cAdding Day', 'color:lime;background:#333')
@@ -50,7 +53,7 @@ const ScheduleDialog = props => {
   return (
     <Dialog
       fullScreen
-      open={open}
+      open={props.open}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
@@ -67,22 +70,28 @@ const ScheduleDialog = props => {
           <Typography variant='h6' className={classes.title}>
             {'Schedule'}
           </Typography>
+          {/* <Button autoFocus color='inherit' onClick={handleSave}>
+            save
+          </Button> */}
           <Button autoFocus color='inherit' onClick={handleClose}>
             done
           </Button>
         </Toolbar>
       </AppBar>
-      <div style={{marginTop:'30px'}} />
+      <div style={{ marginTop: '30px' }} />
       <Container maxWidth='sm' className={classes.container}>
         {/* Add a day to the schedule */}
         <Button variant='outlined' onClick={addDay}>
           Add Day
         </Button>
         {/* show the 'form' for the 'day' */}
-        {programContext.program.schedule ?
-        <ScheduleDays days={programContext.program.schedule.days} />
-        : null
-        }
+        {programContext.program.schedule ? (
+          <TabbedContent
+            items={programContext.program.schedule.days}
+            type={'ScheduleDay'}
+            viewOnly={false}
+          />
+        ) : null}
       </Container>
     </Dialog>
   )

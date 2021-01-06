@@ -15,9 +15,6 @@ const useStyles = makeStyles(theme => ({
   verticalTabs: {
     width:'100%'
   },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
-  },
   tabPanel: {
     margin: 'auto',
     padding: '0px',
@@ -47,13 +44,11 @@ const ProgramWorkouts = props => {
         onChange={handleChange}
         scrollButtons="auto"
         aria-label='workout tabs'
-        className={classes.tabs}
       >
         {props.program.workouts.map((wo, index) => {
           let name = wo.name === '' ? `workout-${index}` : wo.name
           return (
             <Tab 
-              className={classes.tab} 
               label={name} 
               {...a11yProps(index)} 
               key={`tab-${index}`} 
@@ -61,6 +56,7 @@ const ProgramWorkouts = props => {
           )
         })}
       </Tabs>
+    </div>
       {props.program.workouts.map((wo, index) => {
         return (
           <TabPanel 
@@ -79,7 +75,6 @@ const ProgramWorkouts = props => {
           </TabPanel>
         )
       })}
-    </div>
     </Container>
   )
 }
