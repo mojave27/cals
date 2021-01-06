@@ -9,6 +9,8 @@ import {
   crystal,
   bakery,
   lake,
+  light,
+  dark,
   snow,
   sea
 } from './colorThemes'
@@ -22,6 +24,8 @@ export let themes = {
   crystal: crystal,
   bakery: bakery,
   lake: lake,
+light: light,
+dark: dark,
   snow: snow,
   sea: sea
 }

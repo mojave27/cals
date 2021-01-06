@@ -31,6 +31,7 @@ const useUser = () => {
 const getUserGroups = user => {
   if (user !== undefined) {
     const groups = user.signInUserSession.idToken.payload['cognito:groups']
+    console.log(`user groups: ${JSON.stringify(groups)}`)
     return groups
   } else {
     return []

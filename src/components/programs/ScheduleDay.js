@@ -29,12 +29,12 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginBottom: '10px'
   },
-  table: {
-    backgroundColor: theme.color4.hex
-  },
+  // table: {
+  //   backgroundColor: theme.color4.hex
+  // },
   th: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex,
+    // backgroundColor: theme.color3.hex,
+    // color: theme.color3_text.hex,
     textAlign: 'left'
   },
   thLeft: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
   td: {
     textAlign: 'left',
-    color: theme.color4_text.hex
+    // color: theme.color4_text.hex
   },
   tdLeft: {
     width: '70%'
@@ -115,7 +115,6 @@ const ScheduleDay = props => {
             programContext.program.cardio
           )
           return (
-            // <CardioCard disabled={true} item={cardio} id={cardio.id} key={cardio.id} />
             <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
           )
         })}

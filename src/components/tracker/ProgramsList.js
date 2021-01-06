@@ -1,18 +1,11 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import React, { useContext } from 'react'
-import { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { retrievePrograms } from '../../api/programsApi'
 import TrackerContext from '../../context/TrackerContext'
 import { isEmpty } from 'lodash'
-import { gridStyles } from '../../styles/gridStyles'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
+import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,7 +20,6 @@ const ProgramsList = props => {
   let trackerContext = useContext(TrackerContext)
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
-  let { gridContainer, gridItem } = gridStyles(themeContext.theme)
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -72,18 +64,14 @@ const ProgramsList = props => {
         </Container>
       )
     } else {
-      return <div css={gridItem}></div>
+      return <div></div>
     }
   }
 
   return trackerContext.programs.length <= 0 ? (
     <BasicSpinner show={true} />
   ) : isEmpty(program) ? (
-    <React.Fragment>
-      <div css={gridContainer}>
-        {renderPrograms(trackerContext.programs)}
-      </div>
-    </React.Fragment>
+      renderPrograms(trackerContext.programs)
   ) : (
     null
   )

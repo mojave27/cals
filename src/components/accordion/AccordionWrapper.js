@@ -16,15 +16,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   accordion: {
-    backgroundColor: theme.color4.hex,
-    color: theme.color4_text.hex,
-    borderBottom: `1px solid ${theme.color3.rgba(.5)}`
+    borderBottom: `1px solid ${theme.palette.primary.main}`
   },
   accordionDetails: {
     padding: '0px'
-  },
-  expandIcon: {
-    color: theme.color4_text.hex
   }
 }))
 
@@ -35,11 +30,11 @@ const AccordionWrapper = props => {
   return (
     <Accordion className={classes.accordion}>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon classes={{ root: classes.expandIcon }} />}
+        expandIcon={<ExpandMoreIcon />}
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <Typography className={classes.heading}>{props.label}</Typography>
+        <Typography>{props.label}</Typography>
       </AccordionSummary>
       <AccordionDetails classes={{ root: classes.accordionDetails}}>{props.children}</AccordionDetails>
     </Accordion>

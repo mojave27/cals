@@ -30,9 +30,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   toolbar: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
-    borderBottom: `1px solid ${theme.color3.hex}`
+    // backgroundColor: theme.color5.hex,
+    // color: theme.color5_text.hex,
+    // borderBottom: `1px solid ${theme.color3.hex}`
+    borderBottom: `1px solid ${theme.palette.contrastText}`
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -47,8 +48,8 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(4)
   },
   paper: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex
+    // backgroundColor: theme.color5.hex,
+    // color: theme.color5_text.hex
   },
   drawerHeader: {
     display: 'flex',
@@ -57,10 +58,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end'
   },
   icon: {
-    color: theme.color5_text.hex
+    // color: theme.color5_text.hex
   },
   divider: {
-    backgroundColor: theme.color4.hex
+    // backgroundColor: theme.color4.hex
   }
 }))
 
@@ -260,9 +261,9 @@ const TopNav = props => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={() => handleThemeSelect('snow')}>Light</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('light')}>Light</MenuItem>
             <MenuItem onClick={() => handleThemeSelect('woSheet')}>Medium</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('vader')}>Dark</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('dark')}>Dark</MenuItem>
           </Menu>
           {/* ************************************** */}
           <Button color='inherit' onClick={signOut}>

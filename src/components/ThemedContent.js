@@ -21,12 +21,13 @@ const ThemedContent = props => {
         <ProgramProvider>
           <WoProvider>
             <SetProvider>
-              <div style={{ backgroundColor: `${context.theme.color5.hex}` }}>
+              {/* <div style={{ backgroundColor: `${context.theme.color5.hex}` }}> */}
+              <div>
                 <TopNav {...props} />
                 <CssBaseline />
                 <div
                   style={{
-                    backgroundColor: `${context.theme.color5.hex}`,
+                    // backgroundColor: `${context.theme.color5.hex}`,
                     height: '300vh',
                     maxWidth: `${context.mobile === true ? '100%' : '80%'}`,
                     margin: '20px auto'

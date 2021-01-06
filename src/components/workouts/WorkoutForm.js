@@ -28,11 +28,11 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '10px'
   },
   table: {
-    backgroundColor: theme.color4.hex
+    // backgroundColor: theme.color4.hex
   },
   th: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex,
+    // backgroundColor: theme.color3.hex,
+    // color: theme.color3_text.hex,
     textAlign: 'left'
   },
   thLeft: {
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
   td: { 
     textAlign: 'left',
-    color: theme.color4_text.hex
+    // color: theme.color4_text.hex
   },
   tdLeft: { 
     width: '70%',

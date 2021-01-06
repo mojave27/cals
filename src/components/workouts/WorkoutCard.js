@@ -13,7 +13,7 @@ import Paper from '@material-ui/core/Paper'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,20 +24,16 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginBottom: '10px'
   },
-  table: {
-    backgroundColor: theme.color4.hex
-  },
   th: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex,
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
     textAlign: 'left'
   },
   thLeft: {
     width: '70%'
   },
   td: {
-    textAlign: 'left',
-    color: theme.color4_text.hex
+    textAlign: 'left'
   },
   tdLeft: {
     width: '70%'
@@ -49,6 +45,14 @@ const useStyles = makeStyles(theme => ({
     padding: '8px 16px 0px 16px'
   }
 }))
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const WorkoutCard = props => {
   let themeContext = useContext(ThemeContext)
@@ -71,23 +75,23 @@ const WorkoutCard = props => {
             className={classes.container}
             key={exGroup.id}
           >
-            <Table className={classes.table} size='small'>
+            <Table size='small'>
               <TableHead>
-                <TableRow>
+                <StyledTableRow>
                   <TableCell className={`${classes.thLeft} ${classes.th}`}>
                     {'name'}
                   </TableCell>
                   <TableCell className={classes.th}>{'reps'}</TableCell>
-                </TableRow>
+                </StyledTableRow>
               </TableHead>
               <TableBody>
                 {data.rows.map(row => (
-                  <TableRow key={row.name}>
+                  <StyledTableRow key={row.name}>
                     <TableCell className={`${classes.tdLeft} ${classes.td}`}>
                       {row.name}
                     </TableCell>
                     <TableCell className={classes.td}>{row.reps}</TableCell>
-                  </TableRow>
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
@@ -115,6 +119,7 @@ const WorkoutCard = props => {
         border: props.selected ? `1px solid ${themeContext.theme.highlightGreen.hex}` : '',
         backgroundColor: props.selected ? themeContext.theme.color3.rgba(.25) : ''
       }}
+      elevation={1}
       variant="outlined"
       onClick={handleClick}
       key={props.id}

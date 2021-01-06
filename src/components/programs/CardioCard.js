@@ -16,28 +16,17 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    // margin: 'auto'
   },
   container: {
     marginBottom: '10px'
   },
-  table: {
-    backgroundColor: theme.color4.hex
-  },
   th: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex,
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
     textAlign: 'left'
-  },
-  thLeft: {
-    // width: '70%'
   },
   td: {
     textAlign: 'left',
-    color: theme.color4_text.hex
-  },
-  tdLeft: {
-    // width: '70%'
   },
   cardHeader: {
     padding: '6px 16px 0px 16px'
@@ -57,10 +46,10 @@ const CardioCard = props => {
         component={Paper}
         key={'cardioTable'}
       >
-        <Table className={classes.table} size='small'>
+        <Table size='small'>
           <TableHead>
             <TableRow>
-              <TableCell className={`${classes.thLeft} ${classes.th}`}>
+              <TableCell className={classes.th}>
                 {'name'}
               </TableCell>
               <TableCell className={classes.th}>{'description'}</TableCell>
@@ -70,7 +59,7 @@ const CardioCard = props => {
           <TableBody>
             {rows.map(row => (
               <TableRow key={row.name}>
-                <TableCell className={`${classes.tdLeft} ${classes.td}`}>
+                <TableCell className={classes.td}>
                   {row.name}
                 </TableCell>
                 <TableCell className={classes.td}>{row.description}</TableCell>

@@ -10,19 +10,19 @@ const useStyles = makeStyles(theme => ({
 
 const useStylesInput = makeStyles(theme => ({
   root: {
-    color: theme.color1_text.hex,
-    border: `1px solid ${theme.color3.hex}`,
+    // color: theme.color1_text.hex,
+    border: `1px solid ${theme.palette.primary.light}`,
     overflow: 'hidden',
     borderRadius: 4,
-    backgroundColor: theme.color1.hex,
+    // backgroundColor: theme.color1.hex,
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     '&:hover': {
-      backgroundColor: '#eee'
+      // backgroundColor: '#eee'
     },
     '&$focused': {
-      backgroundColor: '#eee',
+      // backgroundColor: '#eee',
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-      borderColor: theme.color3.hex
+      borderColor: theme.palette.primary.light
     }
   },
   focused: {}
@@ -52,9 +52,8 @@ const CardioForm = props => {
 
   return (
     <form id={'topLevelDiv'} className={classes.root} autoComplete='off'>
-      <Card className={classes.card} variant='outlined'>
+      <Card variant='outlined'>
         <CardContent style={{ overflow: 'scroll' }}>
-          {/* <CloseButton handleClose={handleClose} /> */}
           <div style={{ marginTop: '30px' }} />
 
           <TextField

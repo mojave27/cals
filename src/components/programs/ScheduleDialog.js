@@ -17,9 +17,7 @@ import ProgramContext from '../../context/ProgramContext'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative',
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex
+    position: 'relative'
   },
   title: {
     marginLeft: theme.spacing(2),

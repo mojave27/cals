@@ -15,20 +15,16 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginBottom: '10px'
   },
-  table: {
-    backgroundColor: theme.color4.hex
-  },
   th: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex,
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.primary.contrastText,
     textAlign: 'left'
   },
   thLeft: {
     width: '70%'
   },
   td: {
-    textAlign: 'left',
-    color: theme.color4_text.hex
+    textAlign: 'left'
   },
   tdLeft: {
     width: '70%'
@@ -75,7 +71,6 @@ const ScheduleDayViewer = props => {
   return (
     <Card
       className={classes.root}
-      // style={{ maxWidth: props.maxWidth }}
       variant='outlined'
       key={props.id}
       id={'card'}

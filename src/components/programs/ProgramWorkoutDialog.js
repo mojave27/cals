@@ -10,8 +10,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import ListAltIcon from '@material-ui/icons/ListAlt'
-import { blue } from '@material-ui/core/colors';
-import { green } from '@material-ui/core/colors';
 
 import ThemeContext from '../../context/ThemeContext'
 
@@ -20,17 +18,13 @@ const NEW = 'Create New'
 
 const useStyles = makeStyles(theme => ({
   avatarExisting: {
-    backgroundColor: blue[100],
-    color: blue[600],
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText
   },
   avatarNew: {
-    backgroundColor: green[100],
-    color: green[600],
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.secondary.contrastText
   },
-  dialogBar: {
-    backgroundColor: green[100],
-    color: green[600],
-  }
 }))
 
 const ProgramWorkoutDialog = props => {
@@ -47,7 +41,7 @@ const ProgramWorkoutDialog = props => {
   }
 
   return (
-    <Dialog onClose={handleClose} open={open} style={{backgroundColor: '#333'}}>
+    <Dialog onClose={handleClose} open={open}>
       <DialogTitle id="simple-dialog-title">Choose Workout</DialogTitle>
       <List>
           <ListItem button onClick={() => handleListItemClick(EXISTING)} key={EXISTING}>

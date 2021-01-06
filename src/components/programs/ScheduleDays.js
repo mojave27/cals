@@ -11,19 +11,12 @@ const useScheduleStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   verticalTabs: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
     width: '100%'
-  },
-  tab: {
-    color: theme.color5_text.hex
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPanel: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
     margin: 'auto'
   }
 }))
@@ -53,13 +46,11 @@ const ScheduleDays = props => {
         onChange={handleChange}
         scrollButtons='auto'
         aria-label='workout tabs'
-        // className={classes.tabs}
       >
         {props.days.map((day, index) => {
           let name = day.name === '' ? `workout-${index}` : day.name
           return (
             <Tab
-              className={classes.tab}
               label={name}
               {...a11yProps(index)}
               key={`${name}-${index}`}

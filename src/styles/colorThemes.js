@@ -1,15 +1,145 @@
+/* ***************************************************
+To add a theme:
+  1. create the theme object below (copy/paste an exiting one and tweak it)
+  2. export it in the themes object at the bottom of this file
+  3. add it to the Themer.js component
+  4. for legacy support of the old theming, add it to the main-styles.js
+*************************************************** */
+
 const highlights = {
   lightThemeHighlightYellow: {
-      hex: '#ffff00',
-      rgba: alpha => buildRgba(255, 255, 0, alpha)
+    hex: '#ffff00',
+    rgba: alpha => buildRgba(255, 255, 0, alpha)
   },
   lightThemeHighlightGreen: {
-      hex: '#00b300',
-      rgba: alpha => buildRgba(0, 179, 0, alpha)
+    hex: '#00b300',
+    rgba: alpha => buildRgba(0, 179, 0, alpha)
   },
-  darkThemeHighlightGreen:  {
-      hex: '#00ff00',
-      rgba: alpha => buildRgba(0, 255, 0, alpha)
+  darkThemeHighlightGreen: {
+    hex: '#00ff00',
+    rgba: alpha => buildRgba(0, 255, 0, alpha)
+  }
+}
+
+export const light = {
+  name: 'light',
+  palette: {
+    type: 'light',
+    primary: {
+      light: '#64b5f6',
+      main: '#2196f3',
+      dark: '#1976d2',
+      contrastText: '#fff'
+    },
+    secondary: {
+      light: '#81c784',
+      main: '#4caf50',
+      dark: '#388e3c',
+      contrastText: 'rgba(0, 0, 0, 0.87)'
+    }
+  },
+  type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color4_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(234, 234, 234, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#FEFEFE',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.darkText
+  }
+}
+
+export const dark = {
+  name: 'dark',
+  palette: {
+    type: 'dark',
+    primary: {
+      light: "rgba(128, 128, 128, 1)",
+      main: "rgba(63, 63, 63, 1)",
+      dark: "rgba(0, 0, 0, 1)",
+      contrastText: "#fff"
+    },
+    secondary: {
+      light: "rgba(55, 206, 218, 1)",
+      main: "rgba(71, 119, 123, 1)",
+      dark: "rgba(53, 72, 73, 1)",
+      contrastText: "rgba(173, 247, 255, 1)"
+    },
+  },
+  type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color4_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(234, 234, 234, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#FEFEFE',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.darkText
   }
 }
 
@@ -812,5 +942,7 @@ export const themes = {
   bakery: bakery,
   lake: lake,
   snow: snow,
-  sea: sea
+  sea: sea,
+  light: light,
+  dark: dark,
 }

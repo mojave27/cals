@@ -22,39 +22,21 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     textAlign: 'center'
   },
-  accordion: {
-    backgroundColor: theme.color2.hex,
-    color: theme.color2_text.hex,
-    border: `1px solid ${theme.color3.hex}`
-  },
-  card: {
-    backgroundColor: theme.color4.hex,
-    color: theme.color4_text.hex
-  },
-  cardHeader: {
-    color: theme.color4_text.hex
-  },
-  container: { },
   verticalTabs: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
     width: '100%'
-  },
-  tab: {
-    color: theme.color5_text.hex
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPanel: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
     margin: 'auto',
-    // overrides padding of the box inside the panel.
     padding: '0px',
     '& .MuiBox-root': {
       padding: '10px 0px'
     }
+  },
+  accordion: {
+    border: `1px solid ${theme.palette.secondary.main}`
   },
   closeButton: {
     float: 'right'
@@ -76,7 +58,7 @@ const ProgramTracker = props => {
 
   return isEmpty(context.program) ? null : (
     <React.Fragment>
-      <Card className={classes.card}>
+      <Card>
         <CardHeader
           action={
             <IconButton
@@ -85,7 +67,7 @@ const ProgramTracker = props => {
               onClick={handleClose}
             >
               <CloseIcon
-                style={{ color: themeContext.theme.color4_text.hex }}
+                // style={{ color: themeContext.theme.color4_text.hex }}
                 fontSize='small'
               />
             </IconButton>
@@ -127,9 +109,7 @@ const Schedule = props => {
   return isEmpty(props.program.schedule) ? (
     <div>No schedule defined BUTTON_TO_EDIT_SCHEDULE</div>
   ) : (
-    <Container
-      classes={{ root: classes.container }}
-    >
+    <Container>
       <div className={classes.verticalTabs}>
         <Tabs
           orientation='horizontal'

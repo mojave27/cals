@@ -13,21 +13,13 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   verticalTabs: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
     width:'100%'
-  },
-  tab: {
-    color: theme.color5_text.hex
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPanel: {
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex,
     margin: 'auto',
-    // overrides padding of the box inside the panel.
     padding: '0px',
     '& .MuiBox-root': {
       padding: '10px 0px'

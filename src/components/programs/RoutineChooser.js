@@ -10,18 +10,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     textAlign: 'center'
   },
-  accordion: {
-    backgroundColor: theme.color2.hex,
-    color: theme.color2_text.hex,
-    border: `1px solid ${theme.color3.hex}`
-  },
-  card: {
-    backgroundColor: theme.color4.hex,
-    color: theme.color4_text.hex
-  },
-  cardHeader: {
-    color: theme.color4_text.hex
-  },
   verticalTabs: {
     flexGrow: 1,
     display: 'flex',
@@ -29,6 +17,9 @@ const useStyles = makeStyles(theme => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`
+  },
+  accordion: {
+    border: `1px solid ${theme.palette.secondary.main}`
   },
   closeButton: {
     float: 'right'

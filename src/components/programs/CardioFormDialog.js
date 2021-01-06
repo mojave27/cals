@@ -13,8 +13,8 @@ import CardioForm from './CardioForm'
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex
+    // backgroundColor: theme.color5.hex,
+    // color: theme.color5_text.hex
   },
   title: {
     marginLeft: theme.spacing(2),

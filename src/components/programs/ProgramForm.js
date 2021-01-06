@@ -36,54 +36,13 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     minWidth: 275,
-    backgroundColor: theme.color4.hex,
-    border: `1px solid ${theme.color3.hex}`,
+    border: '1px solid',
     overflowY: 'auto'
   },
   box: {
     margin: theme.mobile ? theme.spacing(1) : theme.spacing(3)
   },
-  label: {
-    color: theme.color4_text.hex
-  }
 }))
-
-const useInputStyles = makeStyles(theme => ({
-  root: {
-    border: `1px solid ${theme.color5_text.rgba(0.5)}`,
-    overflow: 'hidden',
-    borderRadius: 4,
-    backgroundColor: theme.color5.hex,
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    '&:hover': {
-      backgroundColor: theme.color5.rgba(0.5)
-    },
-    '& label': {
-      color: theme.color5_text.hex
-    },
-    '&$focused': {
-      color: theme.color5_text.hex,
-      backgroundColor: theme.color5.rgba(0.5),
-      borderColor: theme.color5_text.hex
-    }
-  },
-  focused: {}
-}))
-
-const ThemedTextField = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useInputStyles(themeContext.theme)
-
-  return (
-    <TextField
-      InputProps={{ classes, disableUnderline: true }}
-      InputLabelProps={{
-        style: { color: `${themeContext.theme.color5_text.rgba(0.5)}` }
-      }}
-      {...props}
-    />
-  )
-}
 
 const ProgramForm = props => {
   const themeContext = useContext(ThemeContext)
@@ -191,7 +150,7 @@ const ProgramForm = props => {
     let cardios = programContext.program.cardio
     return cardios && cardios.length > 0 ? (
       <Fragment>
-        <label htmlFor='workouts' className={classes.label}>
+        <label htmlFor='workouts'>
           Cardio
         </label>
         <Grid container spacing={1} justify='flex-start'>
@@ -247,31 +206,31 @@ const ProgramForm = props => {
               >
                 cancel
               </Button>
-              <Button autoFocus color='inherit' onClick={saveProgram}>
+              <Button autoFocus onClick={saveProgram}>
                 save
               </Button>
-              <Button autoFocus color='inherit' onClick={handleClose}>
+              <Button autoFocus onClick={handleClose}>
                 done
               </Button>
             </Box>
             <div style={{ marginTop: '30px' }} />
             <div style={{ marginTop: '30px' }} />
             <Box className={classes.box}>
-              <ThemedTextField
+              <TextField
                 id='name'
                 label='Program Name'
                 defaultValue={programContext.program.name}
                 onChange={handleTextChange}
-                variant='filled'
+                variant='outlined'
                 size='small'
               />
               <div style={{ marginTop: '10px' }} />
-              <ThemedTextField
+              <TextField
                 id='description'
                 label='Description'
                 defaultValue={programContext.program.description}
                 onChange={handleTextChange}
-                variant='filled'
+                variant='outlined'
                 size='small'
               />
             </Box>
@@ -289,12 +248,10 @@ const ProgramForm = props => {
               <div style={{ marginTop: '30px' }} />
             </Box>
             <Divider />
-            {/* <Container className={classes.cardContent}> */}
               <Box className={classes.box}>
                 {renderCardio()}
                 {renderWorkouts()}
               </Box>
-            {/* </Container> */}
           </CardContent>
         </Card>
       </form>
@@ -320,7 +277,6 @@ const ProgramForm = props => {
 
   return (
     <Container maxWidth='sm'>
-      {/* < */}
       <ProgramWorkoutDialog
         saveWorkout={saveWorkout}
         open={showWorkoutModal}
