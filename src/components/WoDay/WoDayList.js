@@ -3,10 +3,8 @@ import { retrieve } from '../../api/wodaysApi'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import Container from '@material-ui/core/Container'
+import { Grid, Card, CardHeader, Container } from '@material-ui/core'
+import CalendarView from './CalendarView'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,8 +17,6 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(1),
     textAlign: 'left',
-    color: theme.color2_text.hex,
-    backgroundColor: theme.color2.hex,
     margin: '3px'
   },
   bullet: {
@@ -70,21 +66,22 @@ const WoDayList = props => {
     return (
       <Container style={{padding:'25px'}}>
       <Grid container spacing={1}>
-        {woDays.map(woDay => {
-          let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
-            woDay.date.year
-          }`
-          return (
-            <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
-              <Card className={classes.root} onClick={() => doStuff(woDay.id)}>
-                <CardHeader
-                  title={date}
-                  subheader={woDay.wo.name ? woDay.wo.name : 'none'}
-                />
-              </Card>
-            </Grid>
-          )
-        })}
+      <CalendarView items={woDays} />
+        {/* {woDays.map(woDay => {
+           let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
+             woDay.date.year
+           }`
+           return (
+             <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
+               <Card className={classes.root} onClick={() => doStuff(woDay.id)}>
+                 <CardHeader
+                   title={date}
+                   subheader={woDay.wo.name ? woDay.wo.name : 'none'}
+                 />
+               </Card>
+             </Grid>
+           )
+         })} */}
       </Grid></Container>
     )
   }
@@ -97,7 +94,6 @@ const WoDayList = props => {
   return (
     <React.Fragment>
       <div style={{ maxWidth: '800px', margin: '0px auto' }}>
-        {/* {woDays.length === 0 ? ( */}
         {showSpinner() ? (
           <BasicSpinner show={true} />
         ) : (
