@@ -4,12 +4,13 @@ import ThemeContext from '../../context/ThemeContext'
 import { Paper, Typography } from '@material-ui/core'
 import {
   Table,
-  // TableBody,
+  TableBody,
   TableCell,
   TableContainer,
   // TableHead,
   TableRow
 } from '@material-ui/core'
+import { logger } from '../../logging/logger'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -66,6 +67,7 @@ const Year = props => {
   return (
     <TableContainer component={Paper} key={'cardioTable'}>
       <Table size='small'>
+        <TableBody>
         {months.map((month, index) => {
           return (
             <TableRow key={index}>
@@ -75,6 +77,7 @@ const Year = props => {
             </TableRow>
           )
         })}
+        </TableBody>
       </Table>
     </TableContainer>
   )
@@ -86,7 +89,11 @@ const Month = props => {
 
   const months = {
     0: { name: 'January', days: 31 },
-    1: { name: 'February', days: 28 },
+    1: { 
+      name: 'February', 
+      // days: year === 2020 || year - 2020 === 4 ? 29 : 28 
+      days: 28
+    },
     2: { name: 'March', days: 31 },
     3: { name: 'April', days: 30 },
     4: { name: 'May', days: 31 },
@@ -110,43 +117,89 @@ const Month = props => {
           {props.startDate.getFullYear()}
         </Typography>
         <TableContainer component={Paper} key={'cardioTable'}>
-          <Table size='small'>{weeksForMonth(month, props.startDate)}</Table>
+          <Table size='small'><TableBody>{weeksForMonth(month, props.startDate)}</TableBody></Table>
         </TableContainer>
       </React.Fragment>
     )
   }
 
-  const weeksForMonth = (month, startDate) => {
-    // 4 weeks + 1 week (if props.startDate.getDay() + 28 is less than month.days)
-    // 4 weeks + 2 weeks (if props.startDate.getDay() + 28 is greater than month.days)
-    let totalWeeks = 28 + startDate.getDay() < month.days ? 5 : 6
-    console.log(totalWeeks)
+  const numberOfWeeksInMonth = (month, startDate) => {
+    const day = {
+      0: 'Sunday',
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday'
+    }
+    console.log(`${month.name}, ${startDate.getFullYear()}`)
 
-    let weeks = []
     let startDayOfWeek = startDate.getDay()
-    let startDayOfMonth = startDate.getDate()
+    let week_1_days_count = 7 - startDayOfWeek
+    let number_of_middle_weeks = Math.floor((month.days - week_1_days_count) / 7)
+    let final_week_days_count =  (month.days - week_1_days_count) % 7
+    let totalWeeks = 1 + number_of_middle_weeks + (final_week_days_count > 0 ? 1 : 0)
+    console.log(`        start day name: ${day[startDate.getDay()]}`)
+    console.log(`     week_1_days_count: ${week_1_days_count}`)
+    console.log(`number_of_middle_weeks: ${number_of_middle_weeks}`)
+    console.log(` final_week_days_count: ${final_week_days_count}`)
+    console.log(`            total weeks: ${totalWeeks}`)
+    console.log('-------------------------------')
+    return totalWeeks
+  }
 
-    for (
-      let i = 1, j = startDayOfWeek, k = startDayOfMonth;
-      i <= totalWeeks;
-      i++, j += 7, k += 7
-    ) {
-      // console.log(`week ${i}`)
-      // console.log(`j: ${j}`)
-      // console.log(`k: ${k}`)
-      let isFirstWeek = i === 1 ? true : false
-      let modifier = i * 7 - 7
+  const weeksForMonth = (month, startDate) => {
+    let totalWeeks = numberOfWeeksInMonth(month, startDate)
+    let weeks = []
+
+    // numeric identifier for first day of month - only used for the first week of month
+    let startDayOfWeek = startDate.getDay() 
+    
+    // the date number shown on the first day of the week being rendered.
+    let startDateOfWeek = startDate.getDate()
+
+    let week_1_start = startDateOfWeek
+    let week_2_start = startDateOfWeek + (7 - startDayOfWeek)
+    let weekStarts = [week_1_start, week_2_start]
+    
+    for(let x = 1, j = week_2_start + 7; x <= totalWeeks - 2; x++, j += 7){
+      // if(x === 1) weekStarts.push(startDateOfWeek)
+      // if(x === 2) weekStarts.push(startDateOfWeek + (7 - startDayOfWeek))
+      // if(x > 2) weekStarts.push(j)
+      weekStarts.push(j)
+    }
+
+    for(let i = 0; i < totalWeeks; i++){
+      let isFirstWeek = i === 0 ? true : false
       weeks.push(
         <Week
-          startDayOfWeek={j}
-          startDayOfMonth={k}
           firstWeek={isFirstWeek}
-          modifier={modifier}
+          startDayOfWeek={startDayOfWeek}
+          startDateOfWeek={weekStarts[i]}
           month={month}
           key={i}
-        />
-      )
+        />)
     }
+
+    // for (
+    //   let i = 1, j = startDayOfWeek, k = startDateOfWeek;
+    //   i <= totalWeeks;
+    //   i++, j += 7, k += 7
+    // ) {
+    //   let isFirstWeek = i === 1 ? true : false
+    //   let modifier = i * 7 - 7
+    //   weeks.push(
+    //     <Week
+    //       startDayOfWeek={j}
+    //       startDateOfWeek={k}
+    //       firstWeek={isFirstWeek}
+    //       modifier={modifier}
+    //       month={month}
+    //       key={i}
+    //     />
+    //   )
+    // }
 
     return <React.Fragment>{weeks}</React.Fragment>
   }
@@ -169,11 +222,10 @@ const Week = props => {
 
   /* print 7 days, but be sure to start the 1st to match props.startDay *
    * (e.g. if startDay is Tuesday, then the 1st should be Tuesday)      */
-
-  let dayOfWeek = props.startDayOfWeek // j
-  let dayOfMonth = props.startDayOfMonth // k
-  console.log(`dayOfWeek: ${dayOfWeek}`)
-  console.log(`dayOfMonth: ${dayOfMonth}`)
+  let dayOfWeek = props.startDayOfWeek // <--- only used for the first week of month
+  let dayOfMonth = props.startDateOfWeek
+  logger.logColor('startDayOfWeek:  ', props.startDayOfWeek, 'lime')
+  logger.logColor('startDateOfWeek: ', props.startDateOfWeek, 'cyan')
 
   let days = []
   let displayDate = ''
@@ -182,11 +234,12 @@ const Week = props => {
     if (props.firstWeek) {
       if (dayOfWeek - dayNumber > 0) displayDate = ''
       if (dayOfWeek - dayNumber === 0) displayDate = dayOfMonth
-      if (dayOfWeek - dayNumber < 0)
-        displayDate = dayOfMonth + (dayNumber - dayOfWeek)
+      if (dayOfWeek - dayNumber < 0) displayDate = dayOfMonth + (dayNumber - dayOfWeek)
+  logger.logColor('display date: ', displayDate, 'pink')
     } else {
       displayDate = dayOfMonth + dayNumber
       if (displayDate > props.month.days) displayDate = ''
+  logger.logColor('display date: ', displayDate, 'pink')
     }
     days.push(
       <TableCell
