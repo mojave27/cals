@@ -41,8 +41,6 @@ const useStyles = makeStyles(theme => ({
 
 const CalendarView = props => {
   const [years, setYears] = useState({})
-  // const themeContext = useContext(ThemeContext)
-  // const classes = useStyles(themeContext)
 
   useEffect(() => {
     let years = buildYearsObject(props.items)
@@ -66,7 +64,7 @@ const CalendarView = props => {
     })
   }
 
-  return <div>{renderCalendar()}</div>
+  return (<div>{renderCalendar()}</div>)
 }
 
 CalendarView.defaultProps = {
