@@ -55,6 +55,8 @@ const CalendarView = props => {
   }, [props.items])
 
   const buildYearsObject = items => {
+    let october = items.filter( item => Number(item.date.month) === 10 )
+    console.log(JSON.stringify(october))
     let years = {}
     items.forEach(item => {
       years[item.date.year] = { ...emptyYear }
@@ -83,16 +85,16 @@ const Year = props => {
   const classes = useStyles(themeContext)
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   
-  const itemsForYear = (items, year) => {
+  const getItemsForYear = (items, year) => {
     let inScopeItems = items.filter(item => {
-      return item.date.year === year
+      return Number(item.date.year) === Number(year)
     })
     return inScopeItems
   }
 
-  const inScopeItems = (items, month) => {
-    let itemsInYear = itemsForYear(items, props.year)
-    let inScopeItems = itemsInYear.filter(item => {
+  const getItemsInScopeForYearAndMonth = (items, month) => {
+    let itemsForYear = getItemsForYear(items, props.year)
+    let inScopeItems = itemsForYear.filter(item => {
       return Number(item.date.month) === Number(month)
     })
     console.log(`%c${props.year}`, 'border:1px solid pink; color: pink')
@@ -114,7 +116,7 @@ const Year = props => {
                   <div style={{ margin: '10px 0px' }}>
                     <Month
                       startDate={new Date(props.year, month)}
-                      items={inScopeItems(props.items, month)}
+                      items={getItemsInScopeForYearAndMonth(props.items, month)}
                     />
                   </div>
                 </TableCell>
