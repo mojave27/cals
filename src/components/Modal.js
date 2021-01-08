@@ -13,8 +13,8 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto'
   },
   content: {
-    // border: '2px solid',
-    // backgroundColor: theme.color4.hex,
+    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     margin: 'auto',
     overflow: 'auto'
 

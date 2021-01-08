@@ -1,42 +1,40 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { retrieve } from '../../api/wodaysApi'
-import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../context/ThemeContext'
+// import { makeStyles } from '@material-ui/core/styles'
+// import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import { Grid, Card, CardHeader, Container } from '@material-ui/core'
+import { Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    textAlign: 'center'
-  },
-  control: {
-    padding: theme.spacing(2)
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'left',
-    margin: '3px'
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
-  },
-  title: {
-    fontSize: 14
-  },
-  pos: {
-    marginBottom: 12
-  }
-}))
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     flexGrow: 1,
+//     textAlign: 'center'
+//   },
+//   control: {
+//     padding: theme.spacing(2)
+//   },
+//   paper: {
+//     padding: theme.spacing(1),
+//     textAlign: 'left',
+//     margin: '3px'
+//   },
+//   bullet: {
+//     display: 'inline-block',
+//     margin: '0 2px',
+//     transform: 'scale(0.8)'
+//   },
+//   title: {
+//     fontSize: 14
+//   },
+//   pos: {
+//     marginBottom: 12
+//   }
+// }))
 
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
-  const [forceSpinner, setForceSpinner] = useState(false)
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const[forceSpinner, setForceSpinner] = useState(false)
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -55,11 +53,6 @@ const WoDayList = props => {
     })
     wodays.reverse()
     return wodays
-  }
-
-  const doStuff = id => {
-    setForceSpinner(true)
-    props.chooseWoDay(id)
   }
 
   const renderWoDays = woDays => {
