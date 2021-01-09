@@ -115,6 +115,7 @@ const Year = props => {
 
   const monthIsInFuture = month => {
     let skip = false
+    // eslint-disable-next-line eqeqeq
     if (today.getFullYear() == props.year && today.getMonth() < month) {
       skip = true
     }
