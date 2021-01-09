@@ -27,7 +27,7 @@ const WorkoutList = props => {
       <Grid container spacing={2} justify='flex-start'>
         {sortWorkouts(props.workouts).map(wo => {
           return (
-            <Grid item xs={12} sm={6} key={wo.id}>
+            <Grid item xs={12} sm={3} key={wo.id}>
               <WorkoutCard
                 selected={isSelected(wo.id)}
                 key={wo.id}
