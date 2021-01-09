@@ -29,11 +29,15 @@ const WoDayList = props => {
     return wodays
   }
 
+  const handleSelect = id => {
+    if (props.chooseWoDay) props.chooseWoDay(id)
+  }
+
   const renderWoDays = woDays => {
     return (
       <Container style={{ padding: '25px' }}>
         <Grid container spacing={1}>
-          <CalendarView items={woDays} />
+          <CalendarView items={woDays} onSelect={handleSelect} />
         </Grid>
       </Container>
     )

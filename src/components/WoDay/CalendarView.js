@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
   card: {
     backgroundColor: theme.palette.background.default
   },
+  blankCard: {
+    
+  },
   paper: {
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -71,7 +74,7 @@ const CalendarView = props => {
   const renderCalendar = () => {
     let keys = Object.keys(years)
     return keys.reverse().map(year => {
-      return <Year year={year} key={year} items={props.items} />
+      return <Year year={year} key={year} items={props.items} onSelect={props.onSelect} />
     })
   }
 
@@ -131,6 +134,7 @@ const Year = props => {
                     <Month
                       startDate={new Date(props.year, month)}
                       items={getItemsInScopeForYearAndMonth(props.items, month)}
+                      onSelect={props.onSelect}
                     />
                   </div>
                 </TableCell>
@@ -237,6 +241,7 @@ const Month = props => {
           month={month}
           items={props.items}
           key={i}
+          onSelect={props.onSelect}
         />
       )
     }
@@ -252,7 +257,7 @@ const Week = props => {
     let found = props.items.find(item => {
       return Number(item.date.day) === Number(displayDate)
     })
-    if (found === undefined) return null
+    if (found === undefined) return {wo: {id: -1}}
     return found
   }
 
@@ -292,11 +297,11 @@ const ItemCard = props => {
   ? ''
   : (
     <Card
-      className={classes.card}
+      className={props.item.wo.name ? classes.card : classes.blankCard }
       onClick={() => props.itemSelect(props.item.id)}
     >
       <CardHeader
-        subheader={props.item.wo.name ? props.item.wo.name : 'none'}
+        subheader={props.item.wo.name ? props.item.wo.name : ''}
       />
     </Card>
   )

@@ -38,6 +38,8 @@ export const menuConfig = [
     icon: 'Home',
     link: { to: '/', text: 'home' }
   },
+
+  // --------------------------------------------------------
   { type: 'divider'},
   {
     name: 'trackers',
@@ -49,7 +51,10 @@ export const menuConfig = [
       { to: '/tracker/woday', text: 'day' }
     ]
   },
+
+  // --------------------------------------------------------
   { type: 'divider'},
+
   {
     name: 'progress',
     type: 'button',
@@ -57,7 +62,10 @@ export const menuConfig = [
     icon: 'TrendingUp',
     link: { to: '/progress', text: 'workout progress' }
   },
+
+  // --------------------------------------------------------
   { type: 'divider'},
+
   {
     name: 'manage',
     type: 'dropdown',
@@ -71,7 +79,10 @@ export const menuConfig = [
       { to: '/prefs/themer', text: 'theme' }
     ]
   },
+
+  // --------------------------------------------------------
   { type: 'divider'},
+
   {
     name: 'calcs',
     type: 'dropdown',
@@ -79,6 +90,8 @@ export const menuConfig = [
     icon: 'ListAlt',
     items: [{ to: '1rm', text: '1 rep max' }]
   },
+
+  // --------------------------------------------------------
   { type: 'divider'},
   {
     name: 'admin',
@@ -89,9 +102,12 @@ export const menuConfig = [
     },
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
-      { to: '/admin/test', text: 'test page' }
+      { to: '/admin/test', text: 'test page' },
+      { to: '/admin/palette', text: 'palette' }
     ]
   },
+
+  // --------------------------------------------------------
   { type: 'divider'},
   {
     name: 'sign-out',

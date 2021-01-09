@@ -7,6 +7,7 @@ import ProgramForm from './programs/ProgramForm'
 import Exercises from './exercises/Exercises'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
+import MuiPalette from './Admin/MuiPalette'
 import Themer from './prefs/Themer'
 import WoDay from './WoDay/WoDay'
 import Workouts from './workouts/Workouts'
@@ -23,6 +24,7 @@ const Routes = () => {
       <Workouts path='/manage/workouts' />
       <DataConsistency path='/admin/consistency-check' />
       <Test path='/admin/test' />
+      <MuiPalette path='/admin/palette' />
       <Themer path='/prefs/themer' />
       <WoDay path='/woday' />
       <WoDayTracker path='/tracker/woday' />
