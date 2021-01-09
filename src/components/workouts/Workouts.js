@@ -1,9 +1,6 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
 import React, { useContext, useState, useEffect } from 'react'
 import { emptyWorkout } from '../../context/WoProvider'
 import WoContext from '../../context/WoContext'
-import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import {
   retrieve as retrieveWorkouts,
@@ -11,19 +8,14 @@ import {
 } from '../../api/workoutsApi'
 import Modal from '../Modal'
 import WorkoutForm from './WorkoutForm'
+import FormButton from '../inputs/FormButton'
 import { findIndexOfStringId } from '../ArrayUtils'
 import WorkoutList from './WorkoutList'
 import Container from '@material-ui/core/Container'
 
-import { styles } from '../../styles/MainStyles'
-import { styles as gridStyles } from '../../styles/GridStyles2'
-
 const Workouts = props => {
   let woContext = useContext(WoContext)
-  let themeContext = useContext(ThemeContext)
   const [showWorkoutModal, setShowWorkoutModal] = useState(false)
-  let { formButton } = styles(themeContext.theme)
-  let { gridContainer } = gridStyles(themeContext.theme)
 
   useEffect(() => {
     fetchWorkouts()
@@ -74,22 +66,14 @@ const Workouts = props => {
           <WorkoutForm saveWorkout={saveWorkout} />
         </Container>
       </Modal>
-      <button
-        css={formButton}
-        style={{ float: 'none', margin: '10px auto' }}
-        onClick={addWorkout}
-      >
-        Add Workout
-      </button>
+      <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
       {woContext.workouts.length > 0 ? (
-        <div css={gridContainer}>
           <WorkoutList 
             workouts={woContext.workouts} 
             deleteWorkout={deleteWorkout}
             editWorkout={editWorkout}
             disabled={false}
           />
-          </div>
       ) : (
         <BasicSpinner show={true} />
       )}
