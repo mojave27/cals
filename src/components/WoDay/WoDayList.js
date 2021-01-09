@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { retrieve } from '../../api/wodaysApi'
-// import { makeStyles } from '@material-ui/core/styles'
-// import ThemeContext from '../../context/ThemeContext'
+import { makeStyles } from '@material-ui/core/styles'
+import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import { Box, Grid, Container } from '@material-ui/core'
+import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    textAlign: 'center'
+  }
+}))
 
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
   const [forceSpinner, setForceSpinner] = useState(false)
+
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -37,7 +47,10 @@ const WoDayList = props => {
     return (
       <Container style={{ padding: '25px' }}>
         <Grid container spacing={1} justify='center'>
-          <CalendarView items={woDays} onSelect={handleSelect} />
+          {isMobile 
+           ? <MobileView woDays={woDays} onSelect={handleSelect} />
+           : <CalendarView items={woDays} onSelect={handleSelect} />
+          }
         </Grid>
       </Container>
     )
@@ -52,3 +65,27 @@ const WoDayList = props => {
 }
 
 export default WoDayList
+
+const MobileView = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
+
+  const handleSelect = id => {
+    if (props.onSelect) props.onSelect(id)
+  }
+  return props.woDays.map(woDay => {
+    let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
+      woDay.date.year
+    }`
+    return (
+      <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
+        <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
+          <CardHeader
+            title={date}
+            subheader={woDay.wo.name ? woDay.wo.name : 'none'}
+          />
+        </Card>
+      </Grid>
+    )
+  })
+}
