@@ -15,12 +15,20 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     textAlign: 'center'
   },
+  month: {
+    color: theme.palette.primary.contrastText,
+    textAlign: 'center',
+    paddingBottom: '15px',
+    fontWeight: '700'
+  },
   item: {
     height: '75px',
     maxWidth: '75px',
     textAlign: 'center',
     paddingTop: '25%',
-    borderRadius: 1
+    borderRadius: 1,
+    color: theme.palette.primary.contrastText,
+    fontWeight: '700'
   },
   itemWithContent: {
     backgroundColor: theme.palette.primary.light,
@@ -34,9 +42,11 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.secondary
   },
   tableContaner: {
+    color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.dark
   },
   tableHead: {
+    color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
     borderBottom: `1px solid ${theme.palette.primary.dark}`
   }
@@ -91,6 +101,8 @@ CalendarView.defaultProps = {
 }
 
 export default CalendarView
+
+// *************************************************************
 
 const Year = props => {
   const themeContext = useContext(ThemeContext)
@@ -183,7 +195,7 @@ const Month = props => {
     let month = months[props.startDate.getMonth()]
     return (
       <React.Fragment>
-        <Typography className={classes.root}>
+        <Typography className={classes.month}>
           {`${month.name} ${props.startDate.getFullYear()}`}
         </Typography>
         <TableContainer component={Paper} key={'cardioTable'}>
