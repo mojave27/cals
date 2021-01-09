@@ -1,12 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
-import { Paper, Typography, TableHead } from '@material-ui/core'
+import { Box, Paper, Typography, TableHead } from '@material-ui/core'
 import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardHeader,
   Table,
   TableBody,
   TableCell,
@@ -19,18 +15,18 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     textAlign: 'center'
   },
-  card: {
-    backgroundColor: theme.palette.background.default,
+  item: {
     height: '75px',
-    width: '75px',
-    '&:hover': {
-      color: theme.palette.primary.light,
-      textDecoration: 'none',
-      cursor: 'pointer'
-    }
+    maxWidth: '75px',
+    textAlign: 'center',
+    paddingTop: '25%',
+    borderRadius: 1
   },
-  blankCard: {
-    
+  itemWithContent: {
+    backgroundColor: theme.palette.primary.light,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main
+    }
   },
   paper: {
     padding: theme.spacing(1),
@@ -286,16 +282,26 @@ const Week = props => {
       if (displayDate > props.month.days) displayDate = ''
     }
     let itemForDay = getItemForDay(displayDate)
-    // days.push(<TableCell key={dayOfWeek + dayOfMonth}>{`${displayDate} ${itemForDay.wo.name}`}</TableCell>)
     days.push(
-      <TableCell key={dayOfWeek + dayOfMonth}>
-        {displayDate}
-        <ItemCard item={itemForDay} itemSelect={props.onSelect}/>
+      <TableCell key={dayOfWeek + dayOfMonth} style={{border: '1px solid #eee'}}>
+        {/* <div style={{minHeight: '20px'}}>{displayDate}</div> */}
+        <CalendarDay displayDate={displayDate}>
+          <ItemCard item={itemForDay} itemSelect={props.onSelect}/>
+        </CalendarDay>
       </TableCell>
     )
   }
 
   return <TableRow>{days}</TableRow>
+}
+
+const CalendarDay = props => {
+  return (
+    <Box style={{paddingBottom:'5px', minHeight:'100px', minWidth:'75px'}}>
+      <div style={{minHeight: '20px', paddingBottom:'3px'}}>{props.displayDate}</div>
+      {props.children}
+    </Box>
+  )
 }
 
 const ItemCard = props => {
@@ -305,18 +311,12 @@ const ItemCard = props => {
   return props.item === null 
   ? ''
   : (
-    <Card
-      className={props.item.wo.name ? classes.card : classes.blankCard }
+    <Paper
+      className={`${classes.item} ${props.item.wo.name ? classes.itemWithContent : '' }`}
       onClick={() => props.itemSelect(props.item.id)}
+      elevation={props.item.wo.name ? 1 : 0 }
     >
-      <CardActionArea>
-      {/* <CardHeader */}
-        {/* subheader={props.item.wo.name ? props.item.wo.name : ''} */}
-      {/* /> */}
-      <CardContent>
         {props.item.wo.name ? props.item.wo.name : ''}
-      </CardContent>
-      </CardActionArea>
-    </Card>
+    </Paper>
   )
 }

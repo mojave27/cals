@@ -49,9 +49,9 @@ const WoDayTracker = props => {
 
   return (
     <React.Fragment>
-      {/* <Modal showModal={showModal} handleClose={toggleModal}> */}
+      <Modal showModal={showModal} handleClose={toggleModal}>
         <WoDayList done={toggleModal} chooseWoDay={chooseWoDay} />
-      {/* </Modal>
+      </Modal> 
       <Container maxWidth='xs'>
         <Paper className={classes.paper} elevation={0}>
           <Grid container spacing={1}>
@@ -63,7 +63,7 @@ const WoDayTracker = props => {
             </Grid>
           </Grid>
         </Paper>
-      </Container> */}
+      </Container>
     </React.Fragment>
   )
 }
