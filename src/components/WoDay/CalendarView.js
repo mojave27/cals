@@ -4,6 +4,8 @@ import ThemeContext from '../../context/ThemeContext'
 import { Paper, Typography, TableHead } from '@material-ui/core'
 import {
   Card,
+  CardActionArea,
+  CardContent,
   CardHeader,
   Table,
   TableBody,
@@ -18,7 +20,14 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   card: {
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
+    height: '75px',
+    width: '75px',
+    '&:hover': {
+      color: theme.palette.primary.light,
+      textDecoration: 'none',
+      cursor: 'pointer'
+    }
   },
   blankCard: {
     
@@ -300,9 +309,14 @@ const ItemCard = props => {
       className={props.item.wo.name ? classes.card : classes.blankCard }
       onClick={() => props.itemSelect(props.item.id)}
     >
-      <CardHeader
-        subheader={props.item.wo.name ? props.item.wo.name : ''}
-      />
+      <CardActionArea>
+      {/* <CardHeader */}
+        {/* subheader={props.item.wo.name ? props.item.wo.name : ''} */}
+      {/* /> */}
+      <CardContent>
+        {props.item.wo.name ? props.item.wo.name : ''}
+      </CardContent>
+      </CardActionArea>
     </Card>
   )
 }

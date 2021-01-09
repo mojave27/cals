@@ -49,7 +49,7 @@ const MyModal = props => {
         aria-describedby='simple-modal-description'
         className={classes.paper}
       >
-        <div className={classes.content}>
+        <div className={classes.content} >
           <span className={classes.close} onClick={props.handleClose}>&times;</span>
           {props.children}
         </div>

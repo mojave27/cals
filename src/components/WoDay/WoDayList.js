@@ -3,7 +3,7 @@ import { retrieve } from '../../api/wodaysApi'
 // import { makeStyles } from '@material-ui/core/styles'
 // import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import { Grid, Container } from '@material-ui/core'
+import { Box, Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
 
 const WoDayList = props => {
@@ -36,7 +36,7 @@ const WoDayList = props => {
   const renderWoDays = woDays => {
     return (
       <Container style={{ padding: '25px' }}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} justify='center'>
           <CalendarView items={woDays} onSelect={handleSelect} />
         </Grid>
       </Container>
@@ -48,13 +48,7 @@ const WoDayList = props => {
     return woDays.length === 0
   }
 
-  return (
-    <React.Fragment>
-      <div style={{ maxWidth: '800px', margin: '0px auto' }}>
-        {showSpinner() ? <BasicSpinner show={true} /> : renderWoDays(woDays)}
-      </div>
-    </React.Fragment>
-  )
+  return showSpinner() ? <BasicSpinner show={true} /> : renderWoDays(woDays)
 }
 
 export default WoDayList
