@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto'
   },
   content: {
-    // backgroundColor: theme.palette.background.paper,
     backgroundColor: theme.palette.background.default,
     margin: 'auto',
     overflow: 'auto'

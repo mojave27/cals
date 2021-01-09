@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
-  const [forceSpinner, setForceSpinner] = useState(false)
 
   const isMobile = useMediaQuery('(max-width:768px)');
 
@@ -31,8 +30,10 @@ const WoDayList = props => {
 
   const sortWoDays = wodays => {
     wodays.sort(function(a, b) {
-      let aDate = new Date(`${a.date.month} ${a.date.day} ${a.date.year}`)
-      let bDate = new Date(`${b.date.month} ${b.date.day} ${b.date.year}`)
+      // let aDate = new Date(`${a.date.month} ${a.date.day} ${a.date.year}`)
+      // let bDate = new Date(`${b.date.month} ${b.date.day} ${b.date.year}`)
+      let aDate = new Date(a.date.year, a.date.month, a.date.day)
+      let bDate = new Date(b.date.year, b.date.month, b.date.day)
       return aDate - bDate
     })
     wodays.reverse()
@@ -57,7 +58,6 @@ const WoDayList = props => {
   }
 
   const showSpinner = () => {
-    if (forceSpinner) return true
     return woDays.length === 0
   }
 
