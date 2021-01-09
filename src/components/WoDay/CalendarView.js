@@ -3,18 +3,22 @@ import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import { Paper, Typography, TableHead } from '@material-ui/core'
 import {
+  Card,
+  CardHeader,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow
 } from '@material-ui/core'
-import { display } from '@material-ui/system'
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center'
+  },
+  card: {
+    backgroundColor: theme.palette.background.default
   },
   paper: {
     padding: theme.spacing(1),
@@ -55,9 +59,9 @@ const CalendarView = props => {
   }, [props.items])
 
   const buildYearsObject = items => {
-    let october = items.filter( item => Number(item.date.month) === 10 )
-    console.log(JSON.stringify(october))
     let years = {}
+
+    // TODO only render up to current month
     items.forEach(item => {
       years[item.date.year] = { ...emptyYear }
     })
@@ -84,7 +88,8 @@ const Year = props => {
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  
+  const today = new Date()
+
   const getItemsForYear = (items, year) => {
     let inScopeItems = items.filter(item => {
       return Number(item.date.year) === Number(year)
@@ -97,8 +102,15 @@ const Year = props => {
     let inScopeItems = itemsForYear.filter(item => {
       return Number(item.date.month) === Number(month)
     })
-    console.log(`%c${props.year}`, 'border:1px solid pink; color: pink')
     return inScopeItems
+  }
+
+  const monthIsInFuture = month => {
+    let skip = false
+    if (today.getFullYear() == props.year && today.getMonth() < month) {
+      skip = true
+    }
+    return skip
   }
 
   return (
@@ -110,6 +122,8 @@ const Year = props => {
       <Table size='small'>
         <TableBody>
           {months.reverse().map((month, index) => {
+            if (monthIsInFuture(months[index])) return null
+
             return (
               <TableRow key={index}>
                 <TableCell>
@@ -157,8 +171,6 @@ const Month = props => {
 
   const renderWeeks = () => {
     let month = months[props.startDate.getMonth()]
-    let wodates = props.items.map( item => item.date )
-    console.log(`${month.name} - ${JSON.stringify(wodates)}`)
     return (
       <React.Fragment>
         <Typography className={classes.root}>
@@ -236,19 +248,11 @@ const Month = props => {
 }
 
 const Week = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
-
-  const getItemForDay = (displayDate) => {
+  const getItemForDay = displayDate => {
     let found = props.items.find(item => {
-      if(Number(item.date.day) === Number(displayDate)){
-        console.log(`%c${props.month.name} ${displayDate} | workout day: ${item.date.day}`, 'border:1px solid lime; color: lime')
-      }else{
-        console.log(`%c${props.month.name} ${displayDate} | workout day: ${item.date.day}`, 'border:1px solid magenta; color: magenta')
-      }
       return Number(item.date.day) === Number(displayDate)
     })
-    if (found === undefined) return { wo: {name: ''}}
+    if (found === undefined) return null
     return found
   }
 
@@ -268,8 +272,32 @@ const Week = props => {
       if (displayDate > props.month.days) displayDate = ''
     }
     let itemForDay = getItemForDay(displayDate)
-    days.push(<TableCell key={dayOfWeek + dayOfMonth}>{`${displayDate} ${itemForDay.wo.name}`}</TableCell>)
+    // days.push(<TableCell key={dayOfWeek + dayOfMonth}>{`${displayDate} ${itemForDay.wo.name}`}</TableCell>)
+    days.push(
+      <TableCell key={dayOfWeek + dayOfMonth}>
+        {displayDate}
+        <ItemCard item={itemForDay} itemSelect={props.onSelect}/>
+      </TableCell>
+    )
   }
 
   return <TableRow>{days}</TableRow>
+}
+
+const ItemCard = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext)
+
+  return props.item === null 
+  ? ''
+  : (
+    <Card
+      className={classes.card}
+      onClick={() => props.itemSelect(props.item.id)}
+    >
+      <CardHeader
+        subheader={props.item.wo.name ? props.item.wo.name : 'none'}
+      />
+    </Card>
+  )
 }

@@ -6,35 +6,9 @@ import BasicSpinner from '../spinners/BasicSpinner'
 import { Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//     textAlign: 'center'
-//   },
-//   control: {
-//     padding: theme.spacing(2)
-//   },
-//   paper: {
-//     padding: theme.spacing(1),
-//     textAlign: 'left',
-//     margin: '3px'
-//   },
-//   bullet: {
-//     display: 'inline-block',
-//     margin: '0 2px',
-//     transform: 'scale(0.8)'
-//   },
-//   title: {
-//     fontSize: 14
-//   },
-//   pos: {
-//     marginBottom: 12
-//   }
-// }))
-
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
-  const[forceSpinner, setForceSpinner] = useState(false)
+  const [forceSpinner, setForceSpinner] = useState(false)
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -57,25 +31,11 @@ const WoDayList = props => {
 
   const renderWoDays = woDays => {
     return (
-      <Container style={{padding:'25px'}}>
-      <Grid container spacing={1}>
-      <CalendarView items={woDays} />
-        {/* {woDays.map(woDay => {
-           let date = `${Number(woDay.date.month) + 1}-${woDay.date.day}-${
-             woDay.date.year
-           }`
-           return (
-             <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
-               <Card className={classes.root} onClick={() => doStuff(woDay.id)}>
-                 <CardHeader
-                   title={date}
-                   subheader={woDay.wo.name ? woDay.wo.name : 'none'}
-                 />
-               </Card>
-             </Grid>
-           )
-         })} */}
-      </Grid></Container>
+      <Container style={{ padding: '25px' }}>
+        <Grid container spacing={1}>
+          <CalendarView items={woDays} />
+        </Grid>
+      </Container>
     )
   }
 
@@ -87,11 +47,7 @@ const WoDayList = props => {
   return (
     <React.Fragment>
       <div style={{ maxWidth: '800px', margin: '0px auto' }}>
-        {showSpinner() ? (
-          <BasicSpinner show={true} />
-        ) : (
-          renderWoDays(woDays)
-        )}
+        {showSpinner() ? <BasicSpinner show={true} /> : renderWoDays(woDays)}
       </div>
     </React.Fragment>
   )
