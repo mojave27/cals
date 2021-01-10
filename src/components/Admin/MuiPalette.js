@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box';
+import { Box, Grid } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
   secondaryMain: { backgroundColor: theme.palette.secondary.main },
   secondaryDark: { backgroundColor: theme.palette.secondary.dark },
   actionHover: { backgroundColor: theme.palette.action.hover },
-  grey50: { backgroundColor: theme.palette.grey[50] },
-  grey100: { backgroundColor: theme.palette.grey[100] },
-  grey200: { backgroundColor: theme.palette.grey[200] },
-  grey300: { backgroundColor: theme.palette.grey[300] },
+  grey50: { backgroundColor: theme.palette.grey[50], color: theme.palette.grey[900] },
+  grey100: { backgroundColor: theme.palette.grey[100], color: theme.palette.grey[900] },
+  grey200: { backgroundColor: theme.palette.grey[200], color: theme.palette.grey[900] },
+  grey300: { backgroundColor: theme.palette.grey[300], color: theme.palette.grey[900] },
   grey400: { backgroundColor: theme.palette.grey[400] },
   grey500: { backgroundColor: theme.palette.grey[500] },
   grey600: { backgroundColor: theme.palette.grey[600] },
   grey700: { backgroundColor: theme.palette.grey[700] },
   grey800: { backgroundColor: theme.palette.grey[800] },
   grey900: { backgroundColor: theme.palette.grey[900] },
-  greyA100: { backgroundColor: theme.palette.grey.A100 },
+  greyA100: { backgroundColor: theme.palette.grey.A100, color: theme.palette.grey[900] },
   greyA200: { backgroundColor: theme.palette.grey.A200 },
   greyA400: { backgroundColor: theme.palette.grey.A400 },
   greyA700: { backgroundColor: theme.palette.grey.A700 },
@@ -56,53 +56,121 @@ const MuiPalette = props => {
   let palette = context.theme.palette
 
   return (
-    <div>
-      <Box className={`${classes.box} ${classes.primaryLight}`}>primary.light</Box>
-      <Box className={`${classes.box} ${classes.primaryMain}`}>primary.main</Box>
-      <Box className={`${classes.box} ${classes.primaryDark}`}>primary.dark</Box>
-      <Box className={classes.box} style={{backgroundColor: palette.primary.contrastText, color: palette.primary.dark}}>primary.contrastText</Box>
-      <Box>{'............'}</Box>
-      <Box className={`${classes.box} ${classes.secondaryLight}`}>secondary.light</Box>
-      <Box className={`${classes.box} ${classes.secondaryMain}`}>secondary.main</Box>
-      <Box className={`${classes.box} ${classes.secondaryDark}`}>secondary.dark</Box>
-      <Box className={classes.box} style={{backgroundColor: palette.secondary.contrastText, color: palette.secondary.dark}}>secondary.contrastText</Box>
+    <div style={{width:'300px'}}>
+      <Grid container spacing={1} justify='center' direction='row' alignContent="center">
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryLight}`}>primary.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryMain}`}>primary.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryDark}`}>primary.dark</Box>
+        </Grid>
 
-      <Box>{'............'}</Box>
-      <Box className={`${classes.box} ${classes.infoLight}`}>info.light</Box>
-      <Box className={`${classes.box} ${classes.infoMain}`}>info.main</Box>
-      <Box className={`${classes.box} ${classes.infoDark}`}>info.dark</Box>
-      {/* <Box className={`${classes.box}${classes.warning}`}>warning.contrastText</Box> */}
-      <Box>{'............'}</Box>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryLight}`}>primary.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryMain}`}>primary.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryDark}`}>primary.dark</Box>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.secondaryLight}`}>secondary.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.secondaryMain}`}>secondary.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.secondaryDark}`}>secondary.dark</Box>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.infoLight}`}>info.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.infoMain}`}>info.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.infoDark}`}>info.dark</Box>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.successLight}`}>success.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.successMain}`}>success.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.successDark}`}>success.dark</Box>
-      {/* <Box className={`${classes.box}${classes.warning}`} style={{backgroundColor: palette.info.contrastText, color: palette.info.dark}}>info.contrastText</Box> */}
-      <Box>{'............'}</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.warningLight}`}>warning.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.warningMain}`}>warning.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.warningDark}`}>warning.dark</Box>
-      {/* <Box className={`${classes.box}${classes.warning}`} style={{backgroundColor: palette.success.contrastText, color: palette.success.dark}}>success.contrastText</Box> */}
-      <Box>{'............'}</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.errorLight}`}>error.light</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.errorMain}`}>error.main</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.errorDark}`}>error.dark</Box>
-      <Box>{'............'}</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.actionHover}`}>action.hover</Box>
-      <Box>{'............'}</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey50}`}>grey.50</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey100}`}>grey.100</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey200}`}>grey.200</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey300}`}>grey.300</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey400}`}>grey.400</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey500}`}>grey.500</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey600}`}>grey.600</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey700}`}>grey.700</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey800}`}>grey.800</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.grey900}`}>grey.900</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.greyA100}`}>grey.A100</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.greyA200}`}>grey.A200</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.greyA400}`}>grey.A400</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.greyA700}`}>grey.A700</Box>
+        </Grid>
+      </Grid>
     </div>
   )
 }
