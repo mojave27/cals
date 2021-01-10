@@ -37,6 +37,48 @@ export const light = {
       dark: '#388e3c',
       contrastText: 'rgba(0, 0, 0, 0.87)'
     }
+  },
+  type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color4_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(234, 234, 234, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#FEFEFE',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.darkText
   }
 }
 
@@ -56,6 +98,48 @@ export const dark = {
       dark: "rgba(53, 72, 73, 1)",
       contrastText: "rgba(173, 247, 255, 1)"
     },
+  },
+  type: 'custom',
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
+  color5: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color5_text() {
+    return this.darkText
+  },
+  color4: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color4_text() {
+    return this.darkText
+  },
+  color3: {
+    hex: '#EEEEEE',
+    rgba: alpha => buildRgba(234, 234, 234, alpha)
+  },
+  get color3_text() {
+    return this.darkText
+  },
+  color2: {
+    hex: '#FEFEFE',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color2_text() {
+    return this.darkText
+  },
+  color1: {
+    hex: '#FFFFFF',
+    rgba: alpha => buildRgba(255, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.darkText
   }
 }
 
