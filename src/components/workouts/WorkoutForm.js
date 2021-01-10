@@ -1,7 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
-// import SetCard from '../sets/SetCard'
 import SetDialog from './SetDialog'
 import {
   findIndexOfId,
@@ -39,12 +36,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginBottom: '10px'
   },
-  table: {
-    // backgroundColor: theme.color4.hex
-  },
   th: {
-    // backgroundColor: theme.color3.hex,
-    // color: theme.color3_text.hex,
     textAlign: 'left'
   },
   thLeft: {
@@ -52,7 +44,6 @@ const useStyles = makeStyles(theme => ({
   },
   td: {
     textAlign: 'left'
-    // color: theme.color4_text.hex
   },
   tdLeft: {
     width: '70%'
@@ -204,7 +195,6 @@ const WorkoutForm = props => {
   const renderSets = exGroups => {
     if (exGroups && exGroups.length > 0) {
       return exGroups.map(exGroup => {
-        // console.log(`set: ${JSON.stringify(set)}`)
         let data = {
           setId: exGroup.id,
           headers: ['name', 'reps'],
