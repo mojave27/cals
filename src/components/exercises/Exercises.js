@@ -1,52 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
+import React, { useEffect, useState } from 'react'
 import { deleteExerciseById, retrieve } from '../../api/exercisesApi'
 import Modal from '../Modal'
+import FormButton from '../inputs/FormButton'
 import Exercise from './Exercise'
 import ExercisesTable from './ExercisesTable'
 import { dynamicSort } from '../ArrayUtils'
 
-import ThemeContext from '../../context/ThemeContext'
-import { styles } from '../../styles/MainStyles'
 
 const Exercises = props => {
   const [exercises, setExercises] = useState([])
-  // const [selectedExerciseIds, setSelectedExerciseIds] = useState([])
   const [showModal, setShowModal] = useState(false)
-  const themeContext = useContext(ThemeContext)
-  let { formButton } = styles(themeContext.theme)
-
-  const columns = React.useMemo(
-    () => [
-      {
-        id: 'selection',
-        Header: ({ getToggleAllRowsSelectedProps }) => (
-          <div>
-            <input type='checkbox' {...getToggleAllRowsSelectedProps()} />
-          </div>
-        ),
-        Cell: ({ row }) => (
-          <div>
-            <input type='checkbox' {...row.getToggleRowSelectedProps()} />
-          </div>
-        )
-      },
-      {
-        Header: 'name',
-        accessor: 'name'
-      },
-      {
-        Header: 'type',
-        accessor: 'type'
-      },
-      {
-        Header: 'id',
-        accessor: 'id'
-      }
-    ],
-    []
-  )
 
   useEffect(() => {
     let didCancel = false
@@ -74,28 +37,6 @@ const Exercises = props => {
     })
   }
 
-  // const submitTable = ids => {
-  //   console.log(ids)
-  //   let exercisesToAdd = ids.map( id => {
-  //     let index = findExerciseById(id)
-  //     return exercises[index]
-  //   })
-  //   updateSelectedExercises(exercisesToAdd)
-  // }
-
-  // const findExerciseById = id => {
-  //   // let index = exercises.findIndex( exercise => Number(exercise.id) === Number(id))
-  //   let index = findIndexOfId(id, exercises)
-  //   return index
-  // }
-
-  // const updateSelectedExercises = exercisesToAdd => {
-  //   let newSelectedExerciseIds = [...selectedExerciseIds, ...exercisesToAdd]
-  //   let uniqueIds = new Set(newSelectedExerciseIds)
-  //   let updatedSelectedExerciseIds = Array.from(uniqueIds)
-  //   setSelectedExerciseIds(updatedSelectedExerciseIds)
-  // }
-
   const deleteExercises = exerciseIds => {
     let id = exerciseIds[0]
     deleteExerciseById(id).then(response => {
@@ -105,33 +46,32 @@ const Exercises = props => {
     })
   }
 
+  const editExercise = exerciseId => {
+    console.log(`TODO: edit exerciseId: ${exerciseId}`)
+  }
+
   const renderExercises = exercises => {
     let sortedExercises = [...exercises]
     sortedExercises.sort(dynamicSort('name', true))
     return (
       <ExercisesTable
         deleteExercises={deleteExercises}
+        onEdit={editExercise}
         edit={true}
-        columns={columns}
         data={sortedExercises}
       />
     )
   }
 
-  // return showModal ? (
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <Exercise done={done} />
       </Modal>
       <div style={{ maxWidth: '500px', margin: '0px auto' }}>
-        <button
-          css={formButton}
-          style={{ float: 'none', margin: '10px 10px' }}
-          onClick={toggleModal}
-        >
-          Add Exercise
-        </button>
+        <div style={{margin:'10px'}}>
+          <FormButton buttonText={'Add Exercise'} onClick={toggleModal} />
+        </div>
         {renderExercises(exercises)}
       </div>
     </React.Fragment>

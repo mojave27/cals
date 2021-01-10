@@ -32,6 +32,22 @@ const useStyles = makeStyles((theme) => ({
   secondaryLight: { backgroundColor: theme.palette.secondary.light },
   secondaryMain: { backgroundColor: theme.palette.secondary.main },
   secondaryDark: { backgroundColor: theme.palette.secondary.dark },
+  actionHover: { backgroundColor: theme.palette.action.hover },
+  grey50: { backgroundColor: theme.palette.grey[50] },
+  grey100: { backgroundColor: theme.palette.grey[100] },
+  grey200: { backgroundColor: theme.palette.grey[200] },
+  grey300: { backgroundColor: theme.palette.grey[300] },
+  grey400: { backgroundColor: theme.palette.grey[400] },
+  grey500: { backgroundColor: theme.palette.grey[500] },
+  grey600: { backgroundColor: theme.palette.grey[600] },
+  grey700: { backgroundColor: theme.palette.grey[700] },
+  grey800: { backgroundColor: theme.palette.grey[800] },
+  grey900: { backgroundColor: theme.palette.grey[900] },
+  greyA100: { backgroundColor: theme.palette.grey.A100 },
+  greyA200: { backgroundColor: theme.palette.grey.A200 },
+  greyA400: { backgroundColor: theme.palette.grey.A400 },
+  greyA700: { backgroundColor: theme.palette.grey.A700 },
+
 }));
 
 const MuiPalette = props => {
@@ -70,22 +86,23 @@ const MuiPalette = props => {
       <Box className={`${classes.box} ${classes.errorLight}`}>error.light</Box>
       <Box className={`${classes.box} ${classes.errorMain}`}>error.main</Box>
       <Box className={`${classes.box} ${classes.errorDark}`}>error.dark</Box>
-      {/*<Box>{'............'}</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[50]}}>grey.50</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[100]}}>grey.100</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[200]}}>grey.200</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[300]}}>grey.300</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[400]}}>grey.400</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[500]}}>grey.500</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[600]}}>grey.600</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[700]}}>grey.700</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[800]}}>grey.800</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey[900]}}>grey.900</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey.A100}}>grey.A100</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey.A200}}>grey.A200</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey.A400}}>grey.A400</Box>
-      <Box className={`${classes.box} style={{backgroundColor: palette.grey.A700}}>grey.A700</Box> */}
-
+      <Box>{'............'}</Box>
+      <Box className={`${classes.box} ${classes.actionHover}`}>action.hover</Box>
+      <Box>{'............'}</Box>
+      <Box className={`${classes.box} ${classes.grey50}`}>grey.50</Box>
+      <Box className={`${classes.box} ${classes.grey100}`}>grey.100</Box>
+      <Box className={`${classes.box} ${classes.grey200}`}>grey.200</Box>
+      <Box className={`${classes.box} ${classes.grey300}`}>grey.300</Box>
+      <Box className={`${classes.box} ${classes.grey400}`}>grey.400</Box>
+      <Box className={`${classes.box} ${classes.grey500}`}>grey.500</Box>
+      <Box className={`${classes.box} ${classes.grey600}`}>grey.600</Box>
+      <Box className={`${classes.box} ${classes.grey700}`}>grey.700</Box>
+      <Box className={`${classes.box} ${classes.grey800}`}>grey.800</Box>
+      <Box className={`${classes.box} ${classes.grey900}`}>grey.900</Box>
+      <Box className={`${classes.box} ${classes.greyA100}`}>grey.A100</Box>
+      <Box className={`${classes.box} ${classes.greyA200}`}>grey.A200</Box>
+      <Box className={`${classes.box} ${classes.greyA400}`}>grey.A400</Box>
+      <Box className={`${classes.box} ${classes.greyA700}`}>grey.A700</Box>
     </div>
   )
 }
