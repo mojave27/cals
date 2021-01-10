@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 const MuiPalette = props => {
   let context = useContext(ThemeContext)
   let classes = useStyles(context.theme)
-  let palette = context.theme.palette
 
   return (
     <div style={{width:'300px'}}>
