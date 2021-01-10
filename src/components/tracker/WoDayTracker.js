@@ -56,10 +56,10 @@ const WoDayTracker = props => {
         <Paper className={classes.paper} elevation={0}>
           <Grid container spacing={1}>
             <Grid item xs={6}>
-              <FormButton buttonText={'New WoDay'} onClick={newWoDay} />
+              <FormButton value={'New WoDay'} onClick={newWoDay} />
             </Grid>
             <Grid item xs={6}>
-              <FormButton onClick={toggleModal} buttonText={'Existing WoDay'}/>
+              <FormButton onClick={toggleModal} value={'Existing WoDay'}/>
             </Grid>
           </Grid>
         </Paper>

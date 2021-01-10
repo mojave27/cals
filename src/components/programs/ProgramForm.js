@@ -232,12 +232,12 @@ const ProgramForm = props => {
             <Divider />
             <Box className={classes.box}>
               <div style={{ marginTop: '10px' }} />
-              <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
+              <FormButton value={'Add Workout'} onClick={addWorkout} />
               <div style={{ marginTop: '10px' }} />
-              <FormButton buttonText={'Add Cardio'} onClick={addCardio} />
+              <FormButton value={'Add Cardio'} onClick={addCardio} />
               <div style={{ marginTop: '10px' }} />
               <FormButton
-                buttonText={'Schedule'}
+                value={'Schedule'}
                 onClick={toggleScheduleDialog}
               />
               <div style={{ marginTop: '30px' }} />

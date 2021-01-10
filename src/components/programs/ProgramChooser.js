@@ -54,10 +54,10 @@ const ProgramChooser = props => {
           <Paper className={classes.paper} elevation={0}>
             <Grid container spacing={1}>
               <Grid item xs={6}>
-                <FormButton buttonText={'New Program'} onClick={newProgram} />
+                <FormButton value={'New Program'} onClick={newProgram} />
               </Grid>
               <Grid item xs={6}>
-                <FormButton onClick={toggleModal} buttonText={'Existing Program'}/>
+                <FormButton onClick={toggleModal} value={'Existing Program'}/>
               </Grid>
             </Grid>
           </Paper>

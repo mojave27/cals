@@ -215,7 +215,7 @@ const ChangeTheme = props => {
     context.changeTheme(props.theme)
   }
   return (
-    <FormButton buttonText={props.theme} onClick={changeMyTheme} />
+    <FormButton value={props.theme} onClick={changeMyTheme} />
   )
 }
 

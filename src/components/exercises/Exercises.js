@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { deleteExerciseById, retrieve } from '../../api/exercisesApi'
 import Modal from '../Modal'
+import BasicSpinner from '../spinners/BasicSpinner'
 import FormButton from '../inputs/FormButton'
 import Exercise from './Exercise'
 import ExercisesTable from './ExercisesTable'
@@ -70,9 +71,9 @@ const Exercises = props => {
       </Modal>
       <div style={{ maxWidth: '500px', margin: '0px auto' }}>
         <div style={{margin:'10px'}}>
-          <FormButton buttonText={'Add Exercise'} onClick={toggleModal} />
+          <FormButton value={'Add Exercise'} onClick={toggleModal} />
         </div>
-        {renderExercises(exercises)}
+        {exercises.length === 0 ? <BasicSpinner show={true} /> : renderExercises(exercises)}
       </div>
     </React.Fragment>
   )

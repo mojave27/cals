@@ -68,16 +68,6 @@ const MuiPalette = props => {
         </Grid>
 
         <Grid item xs={12} sm={4}>
-          <Box className={`${classes.box} ${classes.primaryLight}`}>primary.light</Box>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Box className={`${classes.box} ${classes.primaryMain}`}>primary.main</Box>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Box className={`${classes.box} ${classes.primaryDark}`}>primary.dark</Box>
-        </Grid>
-
-        <Grid item xs={12} sm={4}>
           <Box className={`${classes.box} ${classes.secondaryLight}`}>secondary.light</Box>
         </Grid>
         <Grid item xs={12} sm={4}>

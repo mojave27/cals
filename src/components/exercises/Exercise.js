@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React from 'react'
+import React, { useState } from 'react'
 import Select from '../inputs/Select'
 import { EXERCISE_TYPES } from '../../constants'
 import { addExercise } from '../../api/exercisesApi'
@@ -20,14 +20,40 @@ const options = [
   EXERCISE_TYPES.ISOLATION
 ]
 
-class Exercise extends React.Component {
-  state = {
-    exerciseName: '',
-    exerciseType: '',
-    showWorkoutModal: false
+const Exercise = props => {
+  const [exerciseName, setExerciseName] = useState('')
+  const [exerciseType, setExerciseType] = useState('')
+
+  const addExerciseToDb = () => {
+    const exercise = {
+      name: exerciseName,
+      reps: '',
+      type: exerciseType,
+      id: ''
+    }
+    addExercise(exercise).then(response => {
+      props.done()
+    })
   }
 
-  render() {
+  const handleSelectType = e => {
+    let text = e.target.textContent
+    setExerciseType(text)
+  }
+
+  const handleTextChange = e => {
+    let { id, value } = e.target
+    switch (id) {
+      case 'exerciseName':
+        setExerciseName(value)
+        break
+      case 'exerciseType':
+        setExerciseType(value)
+        break
+      default: console.log(`no match for ${id}`)
+    }
+  }
+
     return (
       <div css={formContainer}>
         <div css={row}>
@@ -40,9 +66,9 @@ class Exercise extends React.Component {
               type='text'
               id='exerciseName'
               name='exerciseName'
-              value={this.state.exerciseName}
+              value={exerciseName}
               placeholder='exercise name..'
-              onChange={this.handleTextChange}
+              onChange={handleTextChange}
             />
           </div>
         </div>
@@ -52,7 +78,7 @@ class Exercise extends React.Component {
             <label htmlFor='country'>Type</label>
           </div>
           <div css={col75}>
-            <Select options={options} onSelect={this.handleSelectType} />
+            <Select options={options} onSelect={handleSelectType} />
           </div>
         </div>
 
@@ -61,38 +87,12 @@ class Exercise extends React.Component {
             type='submit'
             value='Submit'
             css={[basicButton, {float:'right'}]}
-            onClick={this.addExerciseToDb}
+            onClick={addExerciseToDb}
           />
         </div>
       </div>
     )
-  }
-
-  addExerciseToDb = () => {
-    const exercise = {
-      name: this.state.exerciseName,
-      reps: this.state.exerciseReps,
-      type: this.state.exerciseType,
-      id: ''
-    }
-    addExercise(exercise).then(response => {
-      this.props.done()
-    })
-  }
-
-  handleSelectType = e => {
-    let text = e.target.textContent
-    this.setState({ exerciseType: text })
-  }
-
-  handleTextChange = e => {
-    let { id, value } = e.target
-    this.setState(prevState => {
-      let newState = { ...prevState }
-      newState[id] = value
-      return { ...newState }
-    })
-  }
+  
 }
 
 export default Exercise

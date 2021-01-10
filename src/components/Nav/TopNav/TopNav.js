@@ -30,9 +30,6 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   toolbar: {
-    // backgroundColor: theme.color5.hex,
-    // color: theme.color5_text.hex,
-    // borderBottom: `1px solid ${theme.color3.hex}`
     borderBottom: `1px solid ${theme.palette.contrastText}`
   },
   menuButton: {
@@ -47,21 +44,11 @@ const useStyles = makeStyles(theme => ({
   nested: {
     paddingLeft: theme.spacing(4)
   },
-  paper: {
-    // backgroundColor: theme.color5.hex,
-    // color: theme.color5_text.hex
-  },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     justifyContent: 'flex-end'
-  },
-  icon: {
-    // color: theme.color5_text.hex
-  },
-  divider: {
-    // backgroundColor: theme.color4.hex
   }
 }))
 

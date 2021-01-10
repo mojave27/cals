@@ -14,15 +14,27 @@ import Table from '../tables/SimpleTable'
 import { setBlock } from '../../styles/program'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'
-import { styles } from '../../styles/MainStyles'
 import ThemeContext from '../../context/ThemeContext'
+import FormButton from '../inputs/FormButton'
 import { makeStyles } from '@material-ui/core/styles'
-// import { Card, CardContent, CardHeader} from '@material-ui/core'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import {
+  Box,
+  Card,
+  CardContent,
+  Divider,
+  Grid,
+  TextField,
+  Typography
+} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center'
+  },
+  box: {
+    margin: theme.mobile ? theme.spacing(1) : theme.spacing(3)
   },
   container: {
     marginBottom: '10px'
@@ -36,16 +48,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'left'
   },
   thLeft: {
-    width: '70%',
+    width: '70%'
   },
-  td: { 
-    textAlign: 'left',
+  td: {
+    textAlign: 'left'
     // color: theme.color4_text.hex
   },
-  tdLeft: { 
-    width: '70%',
+  tdLeft: {
+    width: '70%'
   },
-  cardHeader:{
+  cardHeader: {
     padding: '6px 16px 0px 16px'
   },
   cardContent: {
@@ -58,7 +70,7 @@ const WorkoutForm = props => {
   let woContext = useContext(WoContext)
   let setContext = useContext(SetContext)
   let themeContext = useContext(ThemeContext)
-  const { container, detailCard, stripe } = styles(themeContext.theme)
+  const isMobile = useMediaQuery('(max-width:768px)')
   /* eslint-disable-next-line */
   const classes = useStyles(themeContext.theme)
 
@@ -219,113 +231,75 @@ const WorkoutForm = props => {
 
   return (
     <React.Fragment>
-    {/* <Card className={classes.root} onClick={handleClick} key={props.id}>
-      <CardHeader
-      className={classes.cardHeader}
-        title={props.item.name}
-        titleTypographyProps={{ variant: 'h6' }}
-        action={
-          <React.Fragment>
-            <IconButton aria-label='Edit' onClick={() => editItem(props.item.id)}>
-              <EditIcon color='inherit' fontSize='small' />
-            </IconButton>
-            <IconButton aria-label='Delete' onClick={() => deleteItem(props.item.id)}>
-              <DeleteForeverIcon color='inherit' fontSize='small' />
-            </IconButton>
-          </React.Fragment>
-        }
-      />
-      <CardContent className={classes.cardContent}>
-        <div>{renderExerciseGroups(props.item.exerciseGroups)}</div>
-      </CardContent>
-    </Card> */}
+      <Box style={{ margin: 'auto', width: isMobile ? '100%' : '60%' }}>
+          <Card className={classes.root} variant='outlined'>
+            <CardContent className={classes.cardContent}>
+              <Box style={{ textAlign: 'right' }}>
+                <FormButton value={'Save Workout'} onClick={saveWorkout} />
+              </Box>
+              <Box className={classes.box}>
+                <Grid container justify='flex-start' spacing={2}>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      style={{ float: 'left' }}
+                      id='name'
+                      label='Workout Name'
+                      defaultValue={
+                        woContext.workout.name ? woContext.workout.name : ''
+                      }
+                      onChange={handleTextChange}
+                      variant='outlined'
+                      size='small'
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <TextField
+                      style={{ float: 'left', width: '80%' }}
+                      id='description'
+                      label='Workout Description'
+                      defaultValue={
+                        woContext.workout.description
+                          ? woContext.workout.description
+                          : ''
+                      }
+                      onChange={handleTextChange}
+                      variant='outlined'
+                      size='small'
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+              <Divider />
 
-      {/* <div css={detailCard} style={{maxWidth: '60%'}}> */}
-      <div css={detailCard}>
-        <WorkoutHeader workout={woContext.workout} onChange={handleTextChange} />
+              <Box className={classes.box}>
+                <div style={{ display: 'block', paddingBottom: '10px' }}>
+                  <Grid container justify='center' spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <Typography paragraph={true} variant={'h6'}>
+                        Exercise Groups
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormButton value={'Add Set'} onClick={showSetCard} />
+                    </Grid>
+                  </Grid>
+                  <div style={{ margin: '0px 0px 20px 0px' }} />
+                  {renderSets(woContext.workout.exerciseGroups)}
 
-        <div css={stripe} style={{ marginTop: '10px', marginBottom: '5px' }} />
+                  <div style={{ marginTop: '25px', marginBottom: '25px' }} />
 
-        <div css={container}>
-          <div style={{ display: 'block', paddingBottom: '10px' }}>
-            <div style={{ paddingBottom: '10px' }}>Sets</div>
-
-            {renderSets(woContext.workout.exerciseGroups)}
-
-            <div style={{ marginTop: '25px', marginBottom: '25px' }} />
-            <Button value='Add Set' onClick={showSetCard} />
-            <Button value='Save Workout' onClick={saveWorkout} />
-
-              <SetDialog
-                open={showExerciseGroupDialog}
-                onSave={addExerciseGroupToWorkout}
-                onClose={toggleSetDialog}
-              />
-
-          </div>
-        </div>
-      </div>
+                  <SetDialog
+                    open={showExerciseGroupDialog}
+                    onSave={addExerciseGroupToWorkout}
+                    onClose={toggleSetDialog}
+                  />
+                </div>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
     </React.Fragment>
   )
 }
 
 export default WorkoutForm
-
-const Button = props => {
-  let themeContext = useContext(ThemeContext)
-  const { formButton } = styles(themeContext.theme)
-  return (
-    <input
-      type='button'
-      value={props.value}
-      css={formButton}
-      onClick={props.onClick}
-      style={{ display: 'block' }}
-    />
-  )
-}
-
-const WorkoutHeader = props => {
-  let themeContext = useContext(ThemeContext)
-  const { container, formInput, row, col25, col75 } = styles(themeContext.theme)
-  return (
-        <div css={container}>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='workoutName'>Workout Name</label>
-            </div>
-            <div css={col75}>
-              <input
-                css={formInput}
-                type='text'
-                id='name'
-                name='name'
-                value={props.workout.name ? props.workout.name : ''}
-                placeholder='workout name..'
-                onChange={props.onChange}
-              />
-            </div>
-          </div>
-          <div css={row}>
-            <div css={col25}>
-              <label htmlFor='workoutDescription'>Workout Description</label>
-            </div>
-            <div css={col75}>
-              <input
-                css={formInput}
-                type='text'
-                id='description'
-                name='description'
-                value={
-                  props.workout.description
-                    ? props.workout.description
-                    : ' '
-                }
-                placeholder='workout description..'
-                onChange={props.onChange}
-              />
-            </div>
-          </div>
-        </div>
-  )
-}

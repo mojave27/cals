@@ -3,19 +3,15 @@ import ProgramsList from './ProgramsList'
 import ProgramContext from '../../context/ProgramContext'
 import { retrieveProgramById } from '../../api/programsApi'
 import ProgramTracker from './ProgramTracker'
-import { styles } from '../../styles/MainStyles'
 import { isEmpty } from 'lodash'
-import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import FormButton from '../inputs/FormButton'
 
 const Tracker = props => {
-  const themeContext = useContext(ThemeContext)
   const programContext = useContext(ProgramContext)
   const [showProgramList, setShowProgramList] = useState(true)
   const [showSpinner, setShowSpinner] = useState(false)
 
-  let { cardNoHover, row } = styles(themeContext.theme)
 
   const showTheSpinner = show => {
     setShowSpinner(show)
@@ -48,11 +44,11 @@ const Tracker = props => {
       ) : showProgramList ? (
         <ProgramsList select={handleProgramSelect} />
       ) : (
-        <div css={cardNoHover}>
+        <div>
           {isEmpty(programContext.program) ? (
-            <div css={row}>
+            <div>
               <FormButton 
-                buttonText='Select Program'
+                value='Select Program'
                 onClick={chooseProgram}
               />
             </div>

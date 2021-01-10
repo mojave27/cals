@@ -19,6 +19,7 @@ import {
   col75,
   selectedMiniCard
 } from '../../styles/main-styles'
+import ExercisesTable from '../exercises/ExercisesTable'
 
 // TODO: disconnect this from SetContext and just have it manage the set(s) locally, and save/update
 //       to the parent component via props
@@ -130,6 +131,7 @@ const SetCard = props => {
 
 export default SetCard
 
+
 const ExerciseGroup = props => {
   const setContext = useContext(SetContext)
 
@@ -219,18 +221,20 @@ const ExerciseList = props => {
   }
 
   const renderAllExercises = exercises => {
-    return exercises.map(exercise => {
-      return (
-        <div
-          id={exercise.id}
-          css={getClasses(exercise.id)}
-          key={exercise.id}
-          onClick={props.onSelect}
-        >
-          name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
-        </div>
-      )
-    })
+    return (
+    <div style={{margin: 'auto', width: '512px'}}><ExercisesTable data={exercises} onSelect={props.onSelect} /></div>)
+    // return exercises.map(exercise => {
+    //   return (
+    //     <div
+    //       id={exercise.id}
+    //       css={getClasses(exercise.id)}
+    //       key={exercise.id}
+    //       onClick={props.onSelect}
+    //     >
+    //       name: {exercise.name} - type: {exercise.type} - id: {exercise.id}
+    //     </div>
+    //   )
+    // })
   }
 
   return (

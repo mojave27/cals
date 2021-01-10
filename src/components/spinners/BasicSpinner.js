@@ -5,8 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import ThemeContext from '../../context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
-  bottom: {
-    // color: theme.name === 'snow' ? 'red' : theme.color1.hex,
+  spinner: {
     animationDuration: '1250ms',
     position: 'absolute',
     left: '50%',
@@ -23,7 +22,7 @@ const BasicSpinner = props => {
     show === true ?
     <Container>
       <CircularProgress
-        className={classes.bottom}
+        className={classes.spinner}
         size={40}
         thickness={4}
         value={100}

@@ -30,7 +30,7 @@ const FormButton = props => {
       onClick={props.onClick}
       size='small'
     >
-      {props.buttonText}
+      {props.value}
     </Button>
   )
 }

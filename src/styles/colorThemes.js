@@ -631,47 +631,69 @@ export const bakery = {
 }
 
 export const woSheet = {
-  name: 'woSheet',
-  palette: { type: 'dark' },
-  highlightYellow: highlights.lightThemeHighlightYellow,
-  highlightGreen: highlights.lightThemeHighlightGreen,
-  color1: {
-    hex: '#FEFFFF',
-    // hex: '#06FBFB',
-    rgba: alpha => buildRgba(254, 255, 255, alpha)
-  },
-  get color1_text() {
-    return this.color5
-  },
-  color2: {
-    hex: '#F3F2F2',
-    rgba: alpha => buildRgba(243, 242, 242, alpha)
-  },
-  get color2_text() {
-    return this.color5
-  },
-  color3: {
-    hex: '#FFD883',
-    rgba: alpha => buildRgba(255, 216, 131, alpha)
-  },
-  get color3_text() {
-    return this.color5
-  },
-  color4: {
-    hex: '#999899',
-    rgba: alpha => buildRgba(153, 152, 153, alpha)
-  },
-  get color4_text() {
-    return this.color1
-  },
-  color5: {
-    hex: '#444443',
-    rgba: alpha => buildRgba(68, 68, 67, alpha)
-  },
-  get color5_text() {
-    return this.color1
-  }
-}
+         name: 'woSheet',
+         palette: {
+           type: 'dark',
+          //  common: { black: '#000', white: '#fff' },
+           background: { paper: '#aaa', default: '#ccc' },
+           primary: {
+             light: '#F3F2F2',
+             main: '#999899',
+             dark: '#444443',
+             contrastText: '#fff'
+           },
+           secondary: {
+             light: '#FFD883',
+             main: '#D1B16B',
+             dark: '#A28953',
+             contrastText: '#FFEFC9'
+           },
+          //  text: {
+          //    primary: '#111',
+          //    secondary: '#222',
+          //    disabled: '#555',
+          //    hint: '#555'
+          //  }
+         },
+         highlightYellow: highlights.lightThemeHighlightYellow,
+         highlightGreen: highlights.lightThemeHighlightGreen,
+         color1: {
+           hex: '#FEFFFF',
+           // hex: '#06FBFB',
+           rgba: alpha => buildRgba(254, 255, 255, alpha)
+         },
+         get color1_text() {
+           return this.color5
+         },
+         color2: {
+           hex: '#F3F2F2',
+           rgba: alpha => buildRgba(243, 242, 242, alpha)
+         },
+         get color2_text() {
+           return this.color5
+         },
+         color3: {
+           hex: '#FFD883',
+           rgba: alpha => buildRgba(255, 216, 131, alpha)
+         },
+         get color3_text() {
+           return this.color5
+         },
+         color4: {
+           hex: '#999899',
+           rgba: alpha => buildRgba(153, 152, 153, alpha)
+         },
+         get color4_text() {
+           return this.color1
+         },
+         color5: {
+           hex: '#444443',
+           rgba: alpha => buildRgba(68, 68, 67, alpha)
+         },
+         get color5_text() {
+           return this.color1
+         }
+       }
 
 export const lake = {
   name: 'lake',

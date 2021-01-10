@@ -6,16 +6,14 @@ import {
   retrieve as retrieveWorkouts,
   deleteWorkout as deleteWorkoutApi
 } from '../../api/workoutsApi'
-import Modal from '../Modal'
-import WorkoutForm from './WorkoutForm'
+import WorkoutFormDialog from './WorkoutFormDialog'
 import FormButton from '../inputs/FormButton'
 import { findIndexOfStringId } from '../ArrayUtils'
 import WorkoutList from './WorkoutList'
-import Container from '@material-ui/core/Container'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
-  const [showWorkoutModal, setShowWorkoutModal] = useState(false)
+  const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
 
   useEffect(() => {
     fetchWorkouts()
@@ -27,23 +25,23 @@ const Workouts = props => {
     woContext.updateWorkouts(response)
   }
 
-  const toggleModal = () => {
-    setShowWorkoutModal(!showWorkoutModal)
+  const toggleDialog = () => {
+    setShowWorkoutDialog(!showWorkoutDialog)
   }
 
   const addWorkout = () => {
     woContext.updateWorkout(emptyWorkout)
-    toggleModal()
+    toggleDialog()
   }
 
   const editWorkout = async id => {
     await setSelectedWorkoutToContext(id)
-    toggleModal()
+    toggleDialog()
   }
 
   const saveWorkout = async workout => {
     await woContext.saveWorkoutInWorkoutsList(workout)
-    toggleModal()
+    toggleDialog()
   }
 
   const deleteWorkout = async id => {
@@ -60,13 +58,12 @@ const Workouts = props => {
 
   return (
     <React.Fragment>
-      {/* TODO: change this to the dialog */}
-      <Modal showModal={showWorkoutModal} handleClose={toggleModal}>
-        <Container>
-          <WorkoutForm saveWorkout={saveWorkout} />
-        </Container>
-      </Modal>
-      <FormButton buttonText={'Add Workout'} onClick={addWorkout} />
+      <WorkoutFormDialog
+        open={showWorkoutDialog}
+        onClose={toggleDialog}
+        saveWorkout={saveWorkout}
+      />
+      <FormButton value={'Add Workout'} onClick={addWorkout} />
       {woContext.workouts.length > 0 ? (
           <WorkoutList 
             workouts={woContext.workouts} 

@@ -89,7 +89,7 @@ const CardioForm = props => {
           <FormButton
             type='submit'
             styleProps={{ float: 'right' }}
-            buttonText={'Save'}
+            value={'Save'}
             onClick={saveCardio}
           />
           <div style={{ marginTop: '30px' }} />
