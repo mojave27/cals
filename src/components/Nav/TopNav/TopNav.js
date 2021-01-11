@@ -248,9 +248,10 @@ const TopNav = props => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={() => handleThemeSelect('light')}>Light</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('woSheet')}>Medium</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('dark')}>Dark</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('light')}>light</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('woSheet')}>medium</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('oranges')}>oranges</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('dark')}>dark</MenuItem>
           </Menu>
           {/* ************************************** */}
           <Button color='inherit' onClick={signOut}>

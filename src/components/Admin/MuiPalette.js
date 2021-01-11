@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   errorLight: { backgroundColor: theme.palette.error.light },
   errorMain: { backgroundColor: theme.palette.error.main },
   errorDark: { backgroundColor: theme.palette.error.dark },
+  errorContrastText: { backgroundColor: theme.palette.error.dark, color: theme.palette.error.contrastText },
   warningLight: { backgroundColor: theme.palette.warning.light },
   warningMain: { backgroundColor: theme.palette.warning.main },
   warningDark: { backgroundColor: theme.palette.warning.dark },
@@ -29,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
   primaryLight: { backgroundColor: theme.palette.primary.light },
   primaryMain: { backgroundColor: theme.palette.primary.main },
   primaryDark: { backgroundColor: theme.palette.primary.dark },
+  primaryContrastText: { backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText },
   secondaryLight: { backgroundColor: theme.palette.secondary.light },
   secondaryMain: { backgroundColor: theme.palette.secondary.main },
   secondaryDark: { backgroundColor: theme.palette.secondary.dark },
+  secondaryContrastText: { backgroundColor: theme.palette.secondary.dark, color: theme.palette.secondary.contrastText },
   actionHover: { backgroundColor: theme.palette.action.hover },
   grey50: { backgroundColor: theme.palette.grey[50], color: theme.palette.grey[900] },
   grey100: { backgroundColor: theme.palette.grey[100], color: theme.palette.grey[900] },
@@ -65,6 +68,16 @@ const MuiPalette = props => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <Box className={`${classes.box} ${classes.primaryDark}`}>primary.dark</Box>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.primaryContrastText}`}>primary.contrastText</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.secondaryContrastText}`}>secondary.contrastText</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.errorContrastText}`}>error.contrastText</Box>
         </Grid>
 
         <Grid item xs={12} sm={4}>

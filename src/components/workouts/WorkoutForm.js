@@ -8,7 +8,6 @@ import {
 } from '../ArrayUtils'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
-import { setBlock } from '../../styles/program'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'
 import ThemeContext from '../../context/ThemeContext'
@@ -201,9 +200,10 @@ const WorkoutForm = props => {
           rows: [...exGroup.exercises]
         }
         return (
-          <div key={exGroup.id} css={setBlock}>
+          // <div key={exGroup.id} >
             <Table
-              disabled={false}
+              key={exGroup.id}
+              disabled={true}
               data={data}
               handleSetChange={handleSetChange}
               onClick={handleRowClick}
@@ -211,7 +211,7 @@ const WorkoutForm = props => {
               deleteItem={deleteSet}
               editItem={editSet}
             />
-          </div>
+          // </div>
         )
       })
     } else {

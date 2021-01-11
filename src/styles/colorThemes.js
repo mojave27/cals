@@ -21,22 +21,41 @@ const highlights = {
   }
 }
 
+export const oranges = {
+  name: 'oranges',
+  palette: {
+    type: 'light',
+    primary: {
+      main:  '#ffa726',
+      light: '#ffd95b',
+      dark: '#c77800',
+      contrastText: '#222'
+    },
+    secondary: {
+      main: '#ffca28',
+      light: '#fffd61',
+      dark: '#c79a00',
+      contrastText: '#222'
+    },
+  },
+}
+
 export const light = {
   name: 'light',
   palette: {
     type: 'light',
     primary: {
-      light: '#64b5f6',
-      main: '#2196f3',
-      dark: '#1976d2',
+      light: '#6ec5ff',
+      main: '#2195f2',
+      dark: '#0068bf',
       contrastText: '#fff'
     },
     secondary: {
-      light: '#81c784',
-      main: '#4caf50',
-      dark: '#388e3c',
-      contrastText: 'rgba(0, 0, 0, 0.87)'
-    }
+      light: '#82f7ff',
+      main: '#40c4ff',
+      dark: '#0094cc',
+      contrastText: '#222'
+    },
   },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
@@ -87,16 +106,16 @@ export const dark = {
   palette: {
     type: 'dark',
     primary: {
-      light: "rgba(128, 128, 128, 1)",
-      main: "rgba(63, 63, 63, 1)",
-      dark: "rgba(0, 0, 0, 1)",
+      light: "8e8e8e",
+      main: "#616161",
+      dark: "#373737",
       contrastText: "#fff"
     },
     secondary: {
-      light: "rgba(55, 206, 218, 1)",
-      main: "rgba(71, 119, 123, 1)",
-      dark: "rgba(53, 72, 73, 1)",
-      contrastText: "rgba(173, 247, 255, 1)"
+      light: "#efefef",
+      main: "#bdbdbd",
+      dark: "#8d8d8d",
+      contrastText: "#222"
     },
   },
   type: 'custom',
@@ -963,6 +982,7 @@ export const themes = {
   crystal: crystal,
   bakery: bakery,
   lake: lake,
+  oranges: oranges,
   snow: snow,
   sea: sea,
   light: light,

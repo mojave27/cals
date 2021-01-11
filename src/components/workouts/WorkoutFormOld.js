@@ -1,13 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useContext, useState } from 'react'
-import SetCard from '../sets/SetCard'
 import {
   findIndexOfId,
   retrieveItemById,
   updateItemById,
   generateNewId
 } from '../ArrayUtils'
+import ExerciseGroupCard from '../sets/ExerciseGroupCard'
 import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import Table from '../tables/WorkoutTable'
 import { setBlock } from '../../styles/program'
@@ -204,7 +204,7 @@ const WorkoutForm = props => {
             <Button value='Save Workout' onClick={saveWorkout} />
 
             {showExerciseGroupDialog ? (
-              <SetCard
+              <ExerciseGroupCard
                 saveSet={addExerciseGroupToWorkout}
                 done={toggleSetDialog}
               />

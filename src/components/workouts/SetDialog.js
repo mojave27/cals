@@ -9,14 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import ThemeContext from '../../context/ThemeContext'
-import SetCard from '../sets/SetCard'
+import ExerciseGroupCard from '../sets/ExerciseGroupCard'
 import SetContext from '../../context/SetContext'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
-    backgroundColor: theme.color5.hex,
-    color: theme.color5_text.hex
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -58,7 +56,7 @@ const FullScreenDialog = props => {
           </Toolbar>
         </AppBar>
 
-        <SetCard saveSet={onSave} done={handleClose} />
+        <ExerciseGroupCard saveSet={onSave} done={handleClose} />
 
       </Dialog>
   );

@@ -5,8 +5,8 @@ import TrackerContext from '../../context/TrackerContext'
 import { topRight } from '../../styles/buttonStyles'
 import { col25, col75, container, detailCard, formButton, formInput, row, stripe } from '../../styles/main-styles'
 import { setBlock } from '../../styles/program'
-import SetCard from '../sets/SetCard'
 import Table from '../tables/SimpleTable'
+import ExerciseGroupCard from '../sets/ExerciseGroupCard'
 
 const WorkoutAddForm = props => {
   let context = useContext(TrackerContext)
@@ -190,7 +190,7 @@ const WorkoutAddForm = props => {
               style={{ display: 'block' }}
             />
             {showSetDialog ? (
-              <SetCard saveSet={addSetToWorkout} done={toggleSetDialog} />
+              <ExerciseGroupCard saveSet={addSetToWorkout} done={toggleSetDialog} />
             ) : null}
           </div>
         </div>

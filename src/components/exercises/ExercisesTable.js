@@ -201,7 +201,8 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    border:`1px solid ${theme.palette.secondary.light}`
   },
   table: {},
   visuallyHidden: {
@@ -219,7 +220,7 @@ const useStyles = makeStyles(theme => ({
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.grey[500],
+    backgroundColor: theme.palette.secondary.main,
     color: theme.palette.common.white
   },
   body: {
