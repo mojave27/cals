@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '10px'
   },
   th: {
-    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main,
     // color: theme.palette.primary.contrastText,
     textAlign: 'left'
   },
