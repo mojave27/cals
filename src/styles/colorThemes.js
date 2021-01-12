@@ -26,7 +26,7 @@ export const oranges = {
   palette: {
     type: 'light',
     primary: {
-      main:  '#ffa726',
+      main: '#ffa726',
       light: '#ffd95b',
       dark: '#c77800',
       contrastText: '#222'
@@ -36,8 +36,8 @@ export const oranges = {
       light: '#fffd61',
       dark: '#c79a00',
       contrastText: '#222'
-    },
-  },
+    }
+  }
 }
 
 export const light = {
@@ -45,17 +45,17 @@ export const light = {
   palette: {
     type: 'light',
     primary: {
-      light: '#6ec5ff',
-      main: '#2195f2',
-      dark: '#0068bf',
+      main: '#6ec5ff',
+      light: '#a5f8ff',
+      dark: '#3095cc',
       contrastText: '#fff'
     },
     secondary: {
-      light: '#82f7ff',
-      main: '#40c4ff',
-      dark: '#0094cc',
+      main: '#f5d165',
+      light: '#ffff95',
+      dark: '#c0a035',
       contrastText: '#222'
-    },
+    }
   },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
@@ -102,79 +102,79 @@ export const light = {
 }
 
 export const woSheet = {
-         name: 'woSheet',
-         palette: {
-           type: 'light',
-           background: { paper: '#aaa', default: '#ccc' },
-           primary: {
-             light: '#F3F2F2',
-             main: '#999899',
-             dark: '#444443',
-             contrastText: '#fff'
-           },
-           secondary: {
-             light: '#FFD883',
-             main: '#D1B16B',
-             dark: '#A28953',
-             contrastText: '#FFEFC9'
-           },
-         },
-         highlightYellow: highlights.lightThemeHighlightYellow,
-         highlightGreen: highlights.lightThemeHighlightGreen,
-         color1: {
-           hex: '#FEFFFF',
-           // hex: '#06FBFB',
-           rgba: alpha => buildRgba(254, 255, 255, alpha)
-         },
-         get color1_text() {
-           return this.color5
-         },
-         color2: {
-           hex: '#F3F2F2',
-           rgba: alpha => buildRgba(243, 242, 242, alpha)
-         },
-         get color2_text() {
-           return this.color5
-         },
-         color3: {
-           hex: '#FFD883',
-           rgba: alpha => buildRgba(255, 216, 131, alpha)
-         },
-         get color3_text() {
-           return this.color5
-         },
-         color4: {
-           hex: '#999899',
-           rgba: alpha => buildRgba(153, 152, 153, alpha)
-         },
-         get color4_text() {
-           return this.color1
-         },
-         color5: {
-           hex: '#444443',
-           rgba: alpha => buildRgba(68, 68, 67, alpha)
-         },
-         get color5_text() {
-           return this.color1
-         }
-       }
+  name: 'woSheet',
+  palette: {
+    type: 'light',
+    background: { paper: '#aaa', default: '#ccc' },
+    primary: {
+      light: '#FFFFFF',
+      main: '#cecece',
+      dark: '#9d9d9d',
+      contrastText: '#222'
+    },
+    secondary: {
+      light: '#ffffb4',
+      main: '#FFD883',
+      dark: '#caa754',
+      contrastText: '#353535'
+    }
+  },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+  color1: {
+    hex: '#FEFFFF',
+    // hex: '#06FBFB',
+    rgba: alpha => buildRgba(254, 255, 255, alpha)
+  },
+  get color1_text() {
+    return this.color5
+  },
+  color2: {
+    hex: '#F3F2F2',
+    rgba: alpha => buildRgba(243, 242, 242, alpha)
+  },
+  get color2_text() {
+    return this.color5
+  },
+  color3: {
+    hex: '#FFD883',
+    rgba: alpha => buildRgba(255, 216, 131, alpha)
+  },
+  get color3_text() {
+    return this.color5
+  },
+  color4: {
+    hex: '#999899',
+    rgba: alpha => buildRgba(153, 152, 153, alpha)
+  },
+  get color4_text() {
+    return this.color1
+  },
+  color5: {
+    hex: '#444443',
+    rgba: alpha => buildRgba(68, 68, 67, alpha)
+  },
+  get color5_text() {
+    return this.color1
+  }
+}
 
 export const dark = {
   name: 'dark',
   palette: {
     type: 'dark',
     primary: {
-      light: "8e8e8e",
-      main: "#616161",
-      dark: "#373737",
-      contrastText: "#fff"
+      light: '8e8e8e',
+      main: '#616161',
+      dark: '#373737',
+      contrastText: '#fff'
     },
     secondary: {
-      light: "#efefef",
-      main: "#bdbdbd",
-      dark: "#8d8d8d",
-      contrastText: "#222"
-    },
+      light: '#efefef',
+      main: '#bdbdbd',
+      dark: '#8d8d8d',
+      contrastText: '#222'
+    }
   },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
@@ -979,5 +979,5 @@ export const themes = {
   snow: snow,
   sea: sea,
   light: light,
-  dark: dark,
+  dark: dark
 }
