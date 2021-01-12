@@ -27,11 +27,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     paddingTop: '25%',
     borderRadius: 1,
-    color: theme.palette.primary.contrastText,
     fontWeight: '700'
   },
   itemWithContent: {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.secondary.main
     }
