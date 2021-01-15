@@ -105,7 +105,7 @@ export const woSheet = {
   name: 'woSheet',
   palette: {
     type: 'light',
-    background: { paper: '#aaa', default: '#ccc' },
+    background: { paper: '#aaa', default: '#9d9d9d' },
     primary: {
       light: '#FFFFFF',
       main: '#cecece',
@@ -113,7 +113,8 @@ export const woSheet = {
       contrastText: '#222'
     },
     secondary: {
-      light: '#ffffb4',
+      // light: '#ffffb4',
+      light: '#ffffff',
       main: '#FFD883',
       dark: '#caa754',
       contrastText: '#353535'

@@ -1,9 +1,6 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
 import React from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from 'react-datepicker'
-
 
 const DateInput = props => {
   return (

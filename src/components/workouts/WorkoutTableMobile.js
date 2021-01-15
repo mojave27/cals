@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   accordion: {
     // backgroundColor: theme.color2.hex,
     // color: theme.color2_text.hex,
-    border: '1px solid'
+    border: `1px solid ${theme.palette.grey[300]}`
   },
   expandIcon: {
     // color: theme.color2_text.hex

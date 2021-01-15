@@ -1,56 +1,44 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { get } from 'lodash'
-import { woDayStyles } from '../../styles/WoDayStyles'
+import { Box, Slider, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 
-const styles = {
-  label: {
-    textAlign: 'right',
-    paddingRight: '30px',
-    display: 'inline-block',
-    fontWeight: '700',
-    float:'left',
-    padding:'5px 10px',
-    width:'75px'
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: 300,
+    margin: 'auto'
   },
-  input: {
-    display: 'inline-block',
-    lineHeight:'23px'
+  margin: {
+    height: theme.spacing(3)
   }
-}
+}))
 
 const RangeSliderInput = props => {
-  let context = useContext(ThemeContext)
+  let themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
 
-  let { slider } = woDayStyles(context.theme)
-
-  const getCss = () => {
-    let returnCss = [slider]
-    let jssClass = get(props, 'jssClass', null)
-    returnCss.push(jssClass)
-    return returnCss
+  function valuetext(value) {
+    return `${value}`
   }
 
   return (
     <React.Fragment>
-      <div style={styles.label}>
-        <label htmlFor={props.value}>{props.label}</label>
-      </div>
-      <div style={styles.input}>
-      <input
-        type='range'
-        min={get(props, 'min', '0')}
-        max={get(props, 'max', '10')}
-        value={props.value}
-        onChange={props.onChange}
-        css={getCss()}
-        id={props.id}
-      />
-      <label style={{marginLeft: '5px'}}>{props.value}</label>
-      </div>
+      <Box className={classes.root}>
+        <Typography gutterBottom>{props.label}</Typography>
+        <Slider
+          id={props.id}
+          value={props.value}
+          onChange={props.onChange}
+          getAriaValueText={valuetext}
+          aria-labelledby={props.id}
+          step={1}
+          marks
+          min={props.min}
+          max={props.max}
+          valueLabelDisplay='on'
+        />
+      </Box>
     </React.Fragment>
   )
 }
