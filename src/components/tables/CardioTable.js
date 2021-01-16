@@ -1,8 +1,7 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { camelCase, get } from 'lodash'
-import { woDayStyles } from '../../styles/WoDayStyles'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import {
   Button,
@@ -14,6 +13,7 @@ import {
   TextField
 } from '@material-ui/core'
 import ThemeContext from '../../context/ThemeContext'
+import MobileCardioTable from './MobileCardioTable'
 
 const useStyles = makeStyles(context => ({
   root: {
@@ -37,10 +37,8 @@ const StyledTableRow = withStyles(theme => ({
   }
 }))(TableRow)
 
-
 const CardioTable = props => {
   let themeContext = useContext(ThemeContext)
-  let { woTable } = woDayStyles(themeContext.theme)
   let classes = useStyles(themeContext)
 
   //TODO: can this be cleaned up and refactored?
@@ -56,89 +54,15 @@ const CardioTable = props => {
     return rows
   }
 
-  const renderMobileRows = row => {
-    let id = get(row, 'id', 0)
-    return (
-      <React.Fragment key={`fragment-${row.id}`}>
-        <tr id={`${id}-header`}>
-          <th colSpan={2}>Cardio Exercise</th>
-        </tr>
-        <tr id={`${id}-row-type`}>
-          <td>{'type'}</td>
-          <td>
-            <Input
-              id={`${row.id}-${'type'}`}
-              name={'type'}
-              data={row.type}
-              onChange={handleCellChange}
-              disabled={props.disabled}
-            />
-          </td>
-        </tr>
-        <tr id={`${id}-row-distance`}>
-          <td>{'distance'}</td>
-          <td>
-            <Input
-              id={`${row.id}-distance`}
-              name={'distance'}
-              data={row.distance}
-              onChange={handleCellChange}
-              disabled={props.disabled}
-            />
-          </td>
-        </tr>
-        <tr id={`${id}-row-duration`}>
-          <td>{'duration'}</td>
-          <td>
-            <Input
-              id={`${row.id}-duration`}
-              name={'duration'}
-              data={row.duration}
-              onChange={handleCellChange}
-              disabled={props.disabled}
-            />
-          </td>
-        </tr>
-        <tr id={`${id}-row-heartRate`}>
-          <td>{'heart rate'}</td>
-          <td>
-            <Input
-              id={`${row.id}-heartRate`}
-              name={'heartRate'}
-              data={row.heartRate}
-              onChange={handleCellChange}
-              disabled={props.disabled}
-            />
-          </td>
-        </tr>
-      </React.Fragment>
-    )
-  }
-
-  const renderHeaders = headers => {
-    return (
-      <tr key={headers}>
-        {headers.map((header, index) => (
-          <th key={`${header}-${index}`}>{header}</th>
-        ))}
-      </tr>
-    )
-  }
-
   const renderRow = (row, headers) => {
     let tds = []
     let j = 1
     // add the delete button
     tds.push(
       <TableCell key={`${row.id}-delete`}>
-        <Button
-          id={`${row.id}-${j}`}
-          size='small'
-          onClick={props.deleteRow}
-          variant='contained'
-        >
-          {'delete'}
-        </Button>
+        <IconButton aria-label='Delete' onClick={() => props.deleteRow(row.id)}>
+          <DeleteForeverIcon color='inherit' fontSize='small' />
+        </IconButton>
       </TableCell>
     )
 
@@ -171,20 +95,6 @@ const CardioTable = props => {
     })
   }
 
-  const renderMobile = props => {
-    return props.data.rows.map((row, index) => {
-      return (
-        <table
-          style={{ paddingBottom: '10px' }}
-          css={woTable}
-          key={`table-${index}`}
-        >
-          <tbody id={props.id}>{renderMobileRows(row)}</tbody>
-        </table>
-      )
-    })
-  }
-
   return (
     <React.Fragment>
       <Button
@@ -195,7 +105,7 @@ const CardioTable = props => {
         {'Add Exercise'}
       </Button>
       {themeContext.mobile === true ? (
-        renderMobile(props)
+        <MobileCardioTable {...props} />
       ) : (
         <Table>
           <TableHead>

@@ -490,7 +490,6 @@ const WoDay = props => {
               <Box className={classes.section}>
                 <Typography component={'h6'}>{'Cardio'}</Typography>
                 <CardioTable
-                  // jssClass={[woTable]}
                   id={0}
                   data={convertCardioForTable()}
                   deleteRow={event => console.log(event)}
