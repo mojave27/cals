@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
+import BasicSpinner from '../spinners/BasicSpinner'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
 import {
   Table,
@@ -53,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 const CalendarView = props => {
   const [years, setYears] = useState({})
+  const [showSpinner, setShowSpinner] = useState(false)
 
   const emptyYear = {
     January: {},
@@ -75,6 +77,15 @@ const CalendarView = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.items])
 
+  const toggleSpinner = () => {
+    setShowSpinner(!showSpinner)
+  }
+
+  const handleSelect = (id) => {
+    toggleSpinner()
+    props.onSelect(id)
+  }
+
   const buildYearsObject = items => {
     let years = {}
 
@@ -88,11 +99,16 @@ const CalendarView = props => {
   const renderCalendar = () => {
     let keys = Object.keys(years)
     return keys.reverse().map(year => {
-      return <Year year={year} key={year} items={props.items} onSelect={props.onSelect} />
+      return <Year year={year} key={year} items={props.items} onSelect={handleSelect} />
     })
   }
 
-  return <div>{renderCalendar()}</div>
+  return (
+    <React.Fragment>
+      <BasicSpinner show={showSpinner} />
+      <div>{renderCalendar()}</div>
+    </React.Fragment>
+  )
 }
 
 CalendarView.defaultProps = {

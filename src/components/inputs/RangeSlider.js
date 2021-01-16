@@ -6,8 +6,9 @@ import ThemeContext from '../../context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 300,
-    margin: 'auto'
+    // width: 300,
+    margin: 'auto',
+    padding: '20px'
   },
   margin: {
     height: theme.spacing(3)

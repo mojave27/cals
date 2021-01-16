@@ -22,6 +22,7 @@ const BasicSpinner = props => {
     show === true ?
     <Container>
       <CircularProgress
+        color={'secondary'}
         className={classes.spinner}
         size={40}
         thickness={4}
