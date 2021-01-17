@@ -75,6 +75,7 @@ const removeItemById = (id, list) => {
 }
 
 const retrieveItemById = (id, list) => {
+  // console.log(`%c${id}`, 'background-color: yellow; color: black')
   if (isNumeric(id)) {
     return retrieveItemByNumericId(id, list)
   } 

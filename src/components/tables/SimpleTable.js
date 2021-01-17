@@ -95,11 +95,11 @@ const SimpleTable = props => {
     let tableHead = renderHeaders(blockHeader, data.headers)
 
     let tableBody = (
-      <TableBody key={Math.random()}>
+      <TableBody key={data.setId}>
         {data.rows.map((row, index) => {
           let id = typeof row.id === 'undefined' ? index : row.id
           return (
-            <StyledTableRow id={id} data-setid={data.setId} key={index}>
+            <StyledTableRow id={id} data-setid={data.setId} key={`${row.id}`}>
               {renderRow(row, data.headers)}
             </StyledTableRow>
           )
@@ -128,8 +128,7 @@ const SimpleTable = props => {
 
   // todo: need to give the exercise id
   const handleSetChange = event => {
-    // get setId from tr (parentNode/td > parentNode/tr)
-    let setId = event.target.parentNode.parentNode.dataset['setid']
+    let setId = event.target.dataset.setid
     let id = event.target.id
     let name = event.target.name
     let value = event.target.value
@@ -137,13 +136,12 @@ const SimpleTable = props => {
   }
 
   const renderRow = (row, headers) => {
-    // TODO: if props.disabled = false, then add delete icon (extra <td>)
     let tds = []
     if (!props.disabled) {
       tds.push(
         <TableCell
           className={`${classes.tdLeft} ${classes.td}`}
-          key={Math.random()}
+          key={`${row.id}-${row.name}-delete`}>
         >
           <IconButton id={row.id} aria-label='Delete' onClick={props.deleteRow}>
             <DeleteForeverIcon color='inherit' fontSize='small' />
@@ -154,8 +152,9 @@ const SimpleTable = props => {
 
     for (let i = 0; i < headers.length; i++) {
       tds.push(
-        <TableCell className={classes.td} key={i}>
+        <TableCell className={classes.td} key={`${row.id}-${i}`}>
           <Input
+            setid={props.data.setId}
             id={row.id}
             name={headers[i]}
             data={row[headers[i]]}
@@ -182,9 +181,6 @@ const useStylesInput = makeStyles(theme => ({
     overflow: 'hidden',
     borderRadius: 4,
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // '&:hover': {
-    //   backgroundColor: theme.palette.primary.light
-    // },
     '&$focused': {
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
     }
@@ -197,14 +193,15 @@ const Input = props => {
   const inputClasses = useStylesInput(themeContext.theme)
   return (
     <TextField
+      inputProps={{'data-setid': props.setid}}
       id={props.id}
       name={props.name}
-      value={props.data ? props.data : ''}
+      label={props.name}
+      defaultValue={props.data ? props.data : ''}
       type='text'
       InputProps={{ classes: inputClasses }}
       InputLabelProps={{
-        shrink: true,
-        color: 'inherit'
+        shrink: true
       }}
       variant='outlined'
       onChange={props.onChange}

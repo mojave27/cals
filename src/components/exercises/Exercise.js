@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Select from '../inputs/Select'
 import { EXERCISE_TYPES } from '../../constants'
 import { addExercise } from '../../api/exercisesApi'

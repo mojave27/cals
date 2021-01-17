@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { get } from 'lodash'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
+import ThemeContext from '../../context/ThemeContext'
 import {
   Table,
   TableBody,
@@ -11,14 +12,13 @@ import {
   TableRow,
   TextField
 } from '@material-ui/core'
-import ThemeContext from '../../context/ThemeContext'
 
-const useStyles = makeStyles(context => ({
-  root: {
-    flexGrow: 1,
-    width: `${context.mobile === true ? '100%' : 'auto'}`
-  }
-}))
+// const useStyles = makeStyles(context => ({
+//   root: {
+//     flexGrow: 1,
+//     width: `${context.mobile === true ? '100%' : 'auto'}`
+  // }
+// }))
 
 const StyledHeaderRow = withStyles(theme => ({
   root: {
@@ -36,8 +36,8 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow)
 
 const MobileCardioTable = props => {
-  let themeContext = useContext(ThemeContext)
-  let classes = useStyles(themeContext)
+  // let themeContext = useContext(ThemeContext)
+  // let classes = useStyles(themeContext)
 
   const renderMobileRows = row => {
     let id = get(row, 'id', 0)

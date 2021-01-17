@@ -5,7 +5,8 @@ import ThemeProvider from './context/ThemeProvider'
 import { AmplifyAuthenticator } from '@aws-amplify/ui-react'
 import Amplify, { Auth } from 'aws-amplify'
 import awsconfig from './aws-exports'
-Amplify.configure(awsconfig)
+// Amplify.configure(awsconfig)
+Amplify.configure({ ...awsconfig, ssr: true });
 
 const useUser = () => {
   return Auth.currentAuthenticatedUser({
