@@ -11,8 +11,8 @@ import {
   row,
   col25,
   col75,
-  formInput
 } from '../../styles/main-styles'
+import TextInput from '../inputs/TextInputMui'
 
 const options = [
   'Select type:',
@@ -61,15 +61,12 @@ const Exercise = props => {
             <label htmlFor='exerciseName'>Exercise Name</label>
           </div>
           <div css={col75}>
-            <input
-              css={formInput}
-              type='text'
-              id='exerciseName'
-              name='exerciseName'
-              value={exerciseName}
-              placeholder='exercise name..'
-              onChange={handleTextChange}
-            />
+          <TextInput
+            id='exerciseName'
+            name='exerciseName'
+            data={exerciseName}
+            onChange={handleTextChange}
+          />
           </div>
         </div>
 
