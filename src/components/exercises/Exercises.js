@@ -3,7 +3,7 @@ import { deleteExerciseById, retrieve } from '../../api/exercisesApi'
 import Modal from '../Modal'
 import BasicSpinner from '../spinners/BasicSpinner'
 import FormButton from '../inputs/FormButton'
-import Exercise from './Exercise'
+import ExerciseForm from './ExerciseForm'
 import ExercisesTable from './ExercisesTable'
 import { dynamicSort } from '../ArrayUtils'
 
@@ -67,7 +67,7 @@ const Exercises = props => {
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
-        <Exercise done={done} />
+        <ExerciseForm done={done} />
       </Modal>
       <div style={{ maxWidth: '500px', margin: '0px auto' }}>
         <div style={{margin:'10px'}}>
