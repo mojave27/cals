@@ -1,12 +1,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { findIndexOfId, sortByStringProperty } from '../ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
 import { updateSet } from '../../api/setsApi'
-import { miniCard } from '../../styles/main-styles'
 import SetContext from '../../context/SetContext'
 import FormButton from '../inputs/FormButton'
+import { makeStyles } from '@material-ui/core/styles'
+import Tooltip from '@material-ui/core/Tooltip'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { formInput } from '../../styles/main-styles'
+import ExercisesTable from '../exercises/ExercisesTable'
+import ThemeContext from '../../context/ThemeContext'
 import {
   Box,
   Card,
@@ -16,13 +21,6 @@ import {
   IconButton,
   Typography
 } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import Tooltip from '@material-ui/core/Tooltip'
-import DeleteIcon from '@material-ui/icons/Delete'
-import ThemeContext from '../../context/ThemeContext'
-
-import { formInput } from '../../styles/main-styles'
-import ExercisesTable from '../exercises/ExercisesTable'
 
 const useStyles = makeStyles((theme, styles) => ({
   root: { flexGrow: 1 },
@@ -36,8 +34,8 @@ const useStyles = makeStyles((theme, styles) => ({
 // TODO: disconnect this from SetContext and just have it manage the set(s) locally, and save/update
 //       to the parent component via props
 const ExerciseGroupCard = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  // let themeContext = useContext(ThemeContext)
+  // const classes = useStyles(themeContext.theme)
   let setContext = useContext(SetContext)
   const [allExercises, setAllExercises] = useState([])
   const [selectedExercises, setSelectedExercises] = useState([])
@@ -63,7 +61,7 @@ const ExerciseGroupCard = props => {
     let { id, value } = event.target
     let exercisesForSet = [...setContext.set.exercises]
     let index = exercisesForSet.findIndex(
-      exercise => Number(exercise.id) === Number(id)
+      exercise => exercise.id === id
     )
     exercisesForSet[index].reps = value
     setContext.updateExercisesForSet(exercisesForSet)
