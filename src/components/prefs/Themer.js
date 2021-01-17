@@ -143,12 +143,9 @@ const Themer = props => {
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
               <TextInput
-                label={'Duration'}
-                name={'duration'}
                 id={'duration'}
-                placeholder={'workout duration...'}
-                value={'0'}
-                styles={{ width: '50%' }}
+                name={'duration'}
+                data={'0'}
                 onChange={() => {}}
               />
             </Paper>
@@ -156,12 +153,9 @@ const Themer = props => {
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
               <TextInput
-                label={'Goals'}
-                name={'goals'}
                 id={'goals'}
-                placeholder={'enter goals here'}
-                value={'some goals'}
-                styles={{ width: '100%' }}
+                name={'goals'}
+                data={'some goals'}
                 onChange={() => {}}
               />
             </Paper>
@@ -169,12 +163,9 @@ const Themer = props => {
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
               <TextInput
-                label={'Weight'}
-                name={'weight'}
                 id={'weight'}
-                value={'0'}
-                placeholder={'enter weight'}
-                styles={{ width: '100%' }}
+                name={'weight'}
+                data={'0'}
                 onChange={() => {}}
               />
             </Paper>

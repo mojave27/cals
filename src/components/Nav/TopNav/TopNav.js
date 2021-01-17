@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   toolbar: {
-    borderBottom: `1px solid ${theme.palette.contrastText}`
+    borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
+    color: theme.palette.primary.contrastText
   },
   menuButton: {
     marginRight: theme.spacing(2)
