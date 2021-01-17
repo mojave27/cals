@@ -1,5 +1,8 @@
 # wolog-ui
 
+## PartiQL queries
+`select * from wodays where wo.name = '123 DELETE';`
+
 ## Ad Hoc daily workouts
 Define your workout as you go.  Just start a new day, add the exercises and targets you want for that day, and start lifting!
 
