@@ -6,13 +6,11 @@ import {
   updateItemById,
   generateNewId
 } from '../ArrayUtils'
-import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 import Table from '../tables/SimpleTable'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'
 import ThemeContext from '../../context/ThemeContext'
 import FormButton from '../inputs/FormButton'
-import BasicSpinner from '../spinners/BasicSpinner'
 import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import {
@@ -59,7 +57,6 @@ const useStyles = makeStyles(theme => ({
 
 const WorkoutForm = props => {
   const [showExerciseGroupDialog, setShowExerciseGroupDialog] = useState(false)
-  const [showSpinner, setShowSpinner] = useState(false)
   let woContext = useContext(WoContext)
   let setContext = useContext(SetContext)
   let themeContext = useContext(ThemeContext)
@@ -71,10 +68,6 @@ const WorkoutForm = props => {
     setShowExerciseGroupDialog(!showExerciseGroupDialog)
   }
 
-  const toggleSpinner = () => {
-    setShowSpinner(!showSpinner)
-  }
-
   const editSet = id => {
     let index = findIndexOfId(id, woContext.workout.exerciseGroups)
     setContext.updateSet(woContext.workout.exerciseGroups[index])
@@ -84,23 +77,6 @@ const WorkoutForm = props => {
   const showSetCard = () => {
     setContext.clearSet()
     toggleSetDialog()
-  }
-
-  const saveWorkout = async () => {
-    toggleSpinner()
-    let response = {}
-    if (woContext.workout.id) {
-      response = await updateWorkout(woContext.workout)
-    } else {
-      response = await addWorkout(woContext.workout)
-    }
-    // update context because addWorkout will have added an id
-    await woContext.updateWorkout(response)
-
-    if (props.saveWorkout) {
-      props.saveWorkout(response)
-    }
-    toggleSpinner()
   }
 
   const handleTextChange = event => {
@@ -151,12 +127,7 @@ const WorkoutForm = props => {
 
   // lots of changes going on here...
   const handleSetChange = update => {
-    // console.log(`%c${JSON.stringify(update)}`, 'background-color: yellow; color: black')
-    // console.log(`%c${JSON.stringify(woContext.workout.sets)}`, 'background-color: yellow; color: black')
-    // get set with matching id
     let set = { ...retrieveItemById(update.setId, woContext.workout.exerciseGroups) }
-
-    // console.log(`%c${JSON.stringify(set)}`, 'border: 1px solid pink; color: pink')
 
     // find exercise with matching id
     let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
@@ -196,7 +167,7 @@ const WorkoutForm = props => {
       // delete the set
       exGroups.splice(index, 1)
       woContext.updateExerciseGroupsForWorkout(exGroups)
-      updateWorkout(woContext.workout)
+      // updateWorkout(woContext.workout)
     } else {
       console.log(
         `set with id ${id} not found in woContext.workout.exerciseGroups`
@@ -213,18 +184,16 @@ const WorkoutForm = props => {
           rows: [...exGroup.exercises]
         }
         return (
-          // <div key={exGroup.id} >
-            <Table
-              key={exGroup.id}
-              disabled={true}
-              data={data}
-              handleSetChange={handleSetChange}
-              onClick={handleRowClick}
-              deleteRow={deleteExercise}
-              deleteItem={deleteSet}
-              editItem={editSet}
-            />
-          // </div>
+          <Table
+            key={exGroup.id}
+            disabled={true}
+            data={data}
+            handleSetChange={handleSetChange}
+            onClick={handleRowClick}
+            deleteRow={deleteExercise}
+            deleteItem={deleteSet}
+            editItem={editSet}
+          />
         )
       })
     } else {
@@ -235,12 +204,11 @@ const WorkoutForm = props => {
   return (
     <React.Fragment>
       <Box style={{ margin: 'auto', width: isMobile ? '100%' : '60%' }}>
-          <BasicSpinner show={showSpinner} />
           <Card className={classes.root} variant='outlined'>
             <CardContent className={classes.cardContent}>
-              <Box style={{ textAlign: 'right' }}>
+              {/* <Box style={{ textAlign: 'right' }}>
                 <FormButton value={'Save Workout'} onClick={saveWorkout} />
-              </Box>
+              </Box> */}
               <Box className={classes.box}>
                 <Grid container justify='flex-start' spacing={2}>
                   <Grid item xs={12} sm={12}>

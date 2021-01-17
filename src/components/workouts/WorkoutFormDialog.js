@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import ThemeContext from '../../context/ThemeContext'
+import WoContext from '../../context/WoContext'
 import WorkoutForm from '../workouts/WorkoutForm'
+import { addWorkout, updateWorkout } from '../../api/workoutsApi'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -27,16 +29,28 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const WorkoutFormDialog = props => {
   const theme = useContext(ThemeContext)
+  const woContext = useContext(WoContext)
   const classes = useStyles(theme);
-  const { open, onClose, saveWorkout } = props
+  const { open, onClose } = props
 
-  const handleSave = workout => {
-    saveWorkout(workout)
-  };
+  const handleSave = async () => {
+    let response = {}
+    if (woContext.workout.id) {
+      response = await updateWorkout(woContext.workout)
+    } else {
+      response = await addWorkout(woContext.workout)
+    }
+    // update context because addWorkout will have added an id
+    await woContext.updateWorkout(response)
+
+    if (props.saveWorkout) {
+      props.saveWorkout(response)
+    }
+  }
 
   const handleClose = () => {
     onClose()
-  };
+  }
 
   return (
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
