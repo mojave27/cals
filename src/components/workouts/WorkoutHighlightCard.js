@@ -1,6 +1,9 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 import WorkoutCard from './WorkoutCard'
+import IconButton from '@material-ui/core/IconButton'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import {
   Card,
   CardHeader,
@@ -49,6 +52,14 @@ const WorkoutHighlightCard = props => {
     setAnchorEl(null)
   }
 
+  const editItem = id => {
+    if (props.editItem) props.editItem(id)
+  }
+
+  const deleteItem = id => {
+    if (props.deleteItem) props.deleteItem(id)
+  }
+
   return (
     <Card
       className={classes.root}
@@ -72,6 +83,24 @@ const WorkoutHighlightCard = props => {
         className={classes.cardHeader}
         title={props.item.name}
         titleTypographyProps={{ variant: 'h6' }}
+        action={
+          props.disabled === false ? (
+            <React.Fragment>
+              <IconButton
+                aria-label='Edit'
+                onClick={() => editItem(props.item.id)}
+              >
+                <EditIcon color='inherit' fontSize='small' />
+              </IconButton>
+              <IconButton
+                aria-label='Delete'
+                onClick={() => deleteItem(props.item.id)}
+              >
+                <DeleteForeverIcon color='inherit' fontSize='small' />
+              </IconButton>
+            </React.Fragment>
+          ) : null
+        }
       />
       <CardContent className={classes.cardContent}>
         <Popover
@@ -93,7 +122,7 @@ const WorkoutHighlightCard = props => {
           onClose={handleHoverClose}
           disableRestoreFocus
         >
-          <WorkoutCard {...props} />
+          <WorkoutCard {...props} disabled={true} />
         </Popover>
       </CardContent>
     </Card>
