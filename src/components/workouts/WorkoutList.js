@@ -1,5 +1,5 @@
 import React from 'react'
-import WorkoutCard from '../workouts/WorkoutCard'
+import WorkoutHighlightCard from '../workouts/WorkoutHighlightCard'
 import ArrayUtils from '../ArrayUtils'
 import PropTypes from 'prop-types'
 import { Container, Grid } from '@material-ui/core'
@@ -28,7 +28,9 @@ const WorkoutList = props => {
         {sortWorkouts(props.workouts).map(wo => {
           return (
             <Grid item xs={12} sm={3} key={wo.id}>
-              <WorkoutCard
+              {/* on hover show details */}
+              <WorkoutHighlightCard
+              // props to be passed to WorkoutCard
                 selected={isSelected(wo.id)}
                 key={wo.id}
                 id={wo.id}
