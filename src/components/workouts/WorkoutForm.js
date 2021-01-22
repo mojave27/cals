@@ -6,7 +6,7 @@ import {
   updateItemById,
   generateNewId
 } from '../ArrayUtils'
-import Table from '../tables/SimpleTable'
+import ExerciseGroupTable from '../tables/ExerciseGroupTable'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'
 import ThemeContext from '../../context/ThemeContext'
@@ -184,7 +184,7 @@ const WorkoutForm = props => {
           rows: [...exGroup.exercises]
         }
         return (
-          <Table
+          <ExerciseGroupTable
             key={exGroup.id}
             disabled={true}
             data={data}
