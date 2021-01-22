@@ -1,6 +1,7 @@
 import React from 'react'
 import WoContext from './WoContext'
 import { findIndexOfStringId, updateItemById } from '../components/ArrayUtils'
+import { cloneDeep } from 'lodash'
 
 export const emptyWorkout = {
     id: '',
@@ -21,6 +22,12 @@ class WoProvider extends React.Component {
       <WoContext.Provider
         value={{
           workout: this.state.workout,
+          copyWorkout: id => {
+            let wo = this.state.workouts.find(wo => wo.id == id)
+            let copiedWorkout = cloneDeep(wo)
+            copiedWorkout.id = ''
+            this.setState({ workout:copiedWorkout })
+          },
           updateWorkout: workout => {
             this.setState({ workout })
           },

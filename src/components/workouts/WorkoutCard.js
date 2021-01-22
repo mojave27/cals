@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    margin: 'auto'
+    margin: 'auto',
+    // width: '200px'
   },
   container: {
     marginBottom: '10px'
@@ -117,7 +118,8 @@ const WorkoutCard = props => {
       style={{
         maxWidth:props.maxWidth, 
         border: props.selected ? `1px solid ${themeContext.theme.highlightGreen.hex}` : '',
-        backgroundColor: props.selected ? themeContext.theme.color3.rgba(.25) : ''
+        backgroundColor: props.selected ? themeContext.theme.color3.rgba(.25) : '',
+        width:props.width
       }}
       elevation={1}
       variant="outlined"
