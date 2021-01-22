@@ -22,7 +22,9 @@ const useStyles = makeStyles(theme => ({
     padding: '8px 16px 0px 16px'
   },
   popover: {
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    // overflowY: 'scroll',
+    // maxHeight: '550px'
   },
   paper: {
     padding: theme.spacing(1)
@@ -110,7 +112,6 @@ const WorkoutHighlightCard = props => {
       />
       <CardContent className={classes.cardContent}>
         <Popover
-          className={classes.miniPopover}
           classes={{
             paper: classes.paper
           }}
