@@ -38,6 +38,7 @@ const WorkoutList = props => {
                 onClick={() => handleClick(wo.id)}
                 deleteItem={props.deleteWorkout}
                 editItem={props.editWorkout}
+                copyItem={props.copyWorkout}
                 disabled={props.disabled}
               />
             </Grid>

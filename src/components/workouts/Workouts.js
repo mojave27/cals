@@ -34,6 +34,11 @@ const Workouts = props => {
     toggleDialog()
   }
 
+  const copyWorkout = async id => {
+    woContext.copyWorkout(id)
+    toggleDialog()
+  }
+
   const editWorkout = async id => {
     await setSelectedWorkoutToContext(id)
     toggleDialog()
@@ -69,6 +74,7 @@ const Workouts = props => {
             workouts={woContext.workouts} 
             deleteWorkout={deleteWorkout}
             editWorkout={editWorkout}
+            copyWorkout={copyWorkout}
             disabled={false}
           />
       ) : (
