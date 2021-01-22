@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { config } from '../config/axiosConfig'
 import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
 
-export let retrieve = async () => {
+export let retrieveExercises = async () => {
   const url = 'exercises'
   let configWithAuth = await getAxiosConfigWithAuth()
   return axios
@@ -45,10 +44,12 @@ export let deleteExercisesById = ids => {
   return responses
 }
 
-export let deleteExerciseById = id => {
-  const url = `exercises/${id}`
+export let deleteExerciseById = async (id) => {
+  let config = await getAxiosConfigWithAuth()
+  const url = `exercises`
+  let data = { id: id }
   return axios
-    .delete(url, config)
+    .delete(url, data, config)
     .then(function(response) {
       const data = parseResponse(response)
       return data

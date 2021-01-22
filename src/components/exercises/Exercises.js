@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { deleteExerciseById, retrieve } from '../../api/exercisesApi'
+import { deleteExercisesById, retrieveExercises } from '../../api/exercisesApi'
 import Modal from '../Modal'
 import BasicSpinner from '../spinners/BasicSpinner'
 import FormButton from '../inputs/FormButton'
@@ -15,7 +15,7 @@ const Exercises = props => {
   useEffect(() => {
     let didCancel = false
     async function fetchMyAPI() {
-      const response = await retrieve()
+      const response = await retrieveExercises()
       if (!didCancel) {
         setExercises(response)
       }
@@ -32,18 +32,18 @@ const Exercises = props => {
   }
 
   const done = () => {
-    retrieve().then(exercises => {
+    retrieveExercises().then(exercises => {
       setExercises(exercises)
       setShowModal(false)
     })
   }
 
-  const deleteExercises = exerciseIds => {
-    let id = exerciseIds[0]
-    deleteExerciseById(id).then(response => {
-      retrieve().then(response => {
-        setExercises(response)
-      })
+  const deleteExercises = async (exercises) => {
+    console.log(`deleting: ${JSON.stringify(exercises)}`)
+    let exerciseIds = exercises.map( ex => ex.id)
+    await deleteExercisesById(exerciseIds)
+    retrieveExercises().then(response => {
+      setExercises(response)
     })
   }
 
@@ -57,6 +57,7 @@ const Exercises = props => {
     return (
       <ExercisesTable
         deleteExercises={deleteExercises}
+        onDelete={deleteExercises}
         onEdit={editExercise}
         edit={true}
         data={sortedExercises}

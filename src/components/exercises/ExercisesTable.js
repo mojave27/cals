@@ -19,6 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import FilterListIcon from '@material-ui/icons/FilterList'
+import { findIndexOfId } from '../ArrayUtils'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -261,11 +262,11 @@ const ExercisesTable = props => {
   }
 
   const handleClick = (event, name, id) => {
-    const selectedIndex = selected.indexOf(name)
+    const selectedIndex = findIndexOfId(id, selected) //selected.indexOf(name)
     let newSelected = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name)
+      newSelected = newSelected.concat(selected, {name, id})
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
@@ -295,9 +296,13 @@ const ExercisesTable = props => {
 
   const handleDelete = () => {
     console.log(`pretending to delete: ${JSON.stringify(selected)}`)
+    if (props.onDelete) props.onDelete(selected)
   }
 
-  const isSelected = name => selected.indexOf(name) !== -1
+  const isSelected = row => {
+    return findIndexOfId(row.id, selected) !== -1
+    // selected.indexOf(row.id) !== -1
+  }
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, props.data.length - page * rowsPerPage)
@@ -329,7 +334,7 @@ const ExercisesTable = props => {
               {stableSort(props.data, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name)
+                  const isItemSelected = isSelected(row)
                   const labelId = `enhanced-table-checkbox-${index}`
 
                   return (

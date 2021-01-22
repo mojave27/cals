@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
 import { findIndexOfId, sortByStringProperty } from '../ArrayUtils'
-import { retrieve } from '../../api/exercisesApi'
+import { retrieveExercises } from '../../api/exercisesApi'
 import { updateSet } from '../../api/setsApi'
 import SetContext from '../../context/SetContext'
 import FormButton from '../inputs/FormButton'
@@ -43,7 +43,7 @@ const ExerciseGroupCard = props => {
 
   useEffect(() => {
     async function fetchData() {
-      let exercises = await retrieve()
+      let exercises = await retrieveExercises()
       setAllExercises(sortByName(exercises))
     }
 
