@@ -39,12 +39,10 @@ const Exercises = props => {
   }
 
   const deleteExercises = async (exercises) => {
-    console.log(`deleting: ${JSON.stringify(exercises)}`)
     let exerciseIds = exercises.map( ex => ex.id)
     await deleteExercisesById(exerciseIds)
-    retrieveExercises().then(response => {
-      setExercises(response)
-    })
+    let latestExercises = await retrieveExercises()
+    setExercises(latestExercises)
   }
 
   const editExercise = exerciseId => {

@@ -38,6 +38,7 @@ export let addExercise = async (exercise) => {
 export let deleteExercisesById = ids => {
   let responses = []
   ids.forEach( async id => {
+    console.log(`deleting ex id: ${id}`)
     let response = await deleteExerciseById(id)
     responses.push(response)
   })
@@ -45,11 +46,11 @@ export let deleteExercisesById = ids => {
 }
 
 export let deleteExerciseById = async (id) => {
-  let config = await getAxiosConfigWithAuth()
-  const url = `exercises`
-  let data = { id: id }
+  let configWithAuth = await getAxiosConfigWithAuth()
+  const url = `exercises/${id}`
+
   return axios
-    .delete(url, data, config)
+    .delete(url, configWithAuth)
     .then(function(response) {
       const data = parseResponse(response)
       return data

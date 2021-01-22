@@ -295,13 +295,11 @@ const ExercisesTable = props => {
   }
 
   const handleDelete = () => {
-    console.log(`pretending to delete: ${JSON.stringify(selected)}`)
     if (props.onDelete) props.onDelete(selected)
   }
 
   const isSelected = row => {
     return findIndexOfId(row.id, selected) !== -1
-    // selected.indexOf(row.id) !== -1
   }
 
   const emptyRows =
