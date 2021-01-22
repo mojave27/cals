@@ -1,21 +1,8 @@
-// __tests__/fetch.test.js
 import React from 'react'
-// import { rest } from 'msw'
-// import { setupServer } from 'msw/node'
-import { render, fireEvent, waitFor, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import WorkoutCard from './WorkoutCard'
 import { workouts } from './workout_test_data'
-
-// const server = setupServer(
-//   rest.get('/greeting', (req, res, ctx) => {
-//     return res(ctx.json({ greeting: 'hello there' }))
-//   })
-// )
-
-// beforeAll(() => server.listen())
-// afterEach(() => server.resetHandlers())
-// afterAll(() => server.close())
 
 const workout = {
   ...workouts[0]
@@ -40,9 +27,7 @@ test('loads and displays greeting', async () => {
   screen.getByLabelText('Edit')
   screen.getByLabelText('Delete')
 
-  debug()
+  // debug()
 
-  // await waitFor(() => screen.getByRole('heading'))
   // expect(screen.getByRole('heading')).toHaveTextContent('hello there')
-  // expect(screen.getByRole('button')).toHaveAttribute('disabled')
 })
