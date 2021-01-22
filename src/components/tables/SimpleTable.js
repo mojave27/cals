@@ -193,6 +193,7 @@ const Input = props => {
   const inputClasses = useStylesInput(themeContext.theme)
   return (
     <TextField
+      disabled={props.disabled}
       inputProps={{'data-setid': props.setid}}
       id={props.id}
       name={props.name}
