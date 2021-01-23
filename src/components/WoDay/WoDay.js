@@ -18,6 +18,12 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
+} from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import WorkoutChooser from '../workouts/WorkoutChooser'
 import WoDayAppBar from './WoDayAppBar'
 import { findIndexOfId, generateNewId } from '../ArrayUtils'
@@ -31,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     borderRadius: '2px',
-    border: `1px solid ${theme.palette.grey[400]}`,
+    border: `1px solid ${theme.palette.grey[400]}`
   },
   section: {
     borderRadius: '2px',
@@ -44,6 +50,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     textAlign: 'left',
     margin: '3px'
+  },
+  accordion: {
+    // backgroundColor: theme.color2.hex,
+    // color: theme.color2_text.hex,
+    border: `1px solid ${theme.palette.grey[300]}`
   }
 }))
 
@@ -113,6 +124,9 @@ const WoDay = props => {
       case 'goals':
         setGoals(value)
         break
+      case 'notes':
+        setNotes(value)
+        break
       default:
         console.log('Sorry, no match for ' + id)
     }
@@ -180,6 +194,12 @@ const WoDay = props => {
   const setWeight = weight => {
     let woday = woDayContext.copyWoDay()
     woday.weight = weight
+    woDayContext.updateWoDay(woday)
+  }
+
+  const setNotes = notes => {
+    let woday = woDayContext.copyWoDay()
+    woday.notes = notes
     woDayContext.updateWoDay(woday)
   }
 
@@ -483,6 +503,36 @@ const WoDay = props => {
                     </Paper>
                   </Grid>
                 </Grid>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+              {/* --- section: NOTES ------------------------------------------ */}
+              <Box className={classes.section}>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary
+                    expandIcon={
+                      <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
+                    }
+                    aria-controls='panel1a-content'
+                    id='panel1a-header'
+                  >
+                    <Typography className={classes.heading}>
+                      {'Notes'}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <TextField
+                      id='notes'
+                      label='Multiline'
+                      fullWidth
+                      multiline
+                      rows={4}
+                      defaultValue={woDayContext.woday.notes}
+                      onChange={handleTextChange}
+                      variant='outlined'
+                    />
+                  </AccordionDetails>
+                </Accordion>
               </Box>
             </Grid>
             <Grid item xs={12} sm={12}>

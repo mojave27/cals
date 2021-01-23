@@ -51,8 +51,8 @@ const WoDayList = props => {
 
   return (
     <Container style={{ padding: '25px' }}>
-      <BasicSpinner show={show()} />
       <Grid container spacing={1} justify='center'>
+        <BasicSpinner show={show()} />
         {isMobile ? (
           <MobileView woDays={woDays} onSelect={handleSelect} />
         ) : (
