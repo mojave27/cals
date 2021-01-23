@@ -98,5 +98,6 @@ export const deleteWorkout = async id => {
 }
 
 const parseResponse = response => {
+  // for lambdas which return a json body response
   return JSON.parse(response.data.body)
 }
