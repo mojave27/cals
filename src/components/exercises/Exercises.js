@@ -51,9 +51,9 @@ const Exercises = props => {
       })
       return found
     })
-    cleanedExercises.forEach(ex => {
-      console.log(ex.name)
-    })
+    // cleanedExercises.forEach(ex => {
+    //   console.log(ex.name)
+    // })
     setExercises(cleanedExercises)
     setShowSpinner(false)
   }
