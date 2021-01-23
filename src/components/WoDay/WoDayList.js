@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayList = props => {
   const [woDays, setWoDays] = useState([])
-
-  const isMobile = useMediaQuery('(max-width:768px)');
+  const [showSpinner, setShowSpinner] = useState(false)
+  const isMobile = useMediaQuery('(max-width:768px)')
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -39,27 +39,28 @@ const WoDayList = props => {
   }
 
   const handleSelect = id => {
+    setShowSpinner(true)
     if (props.chooseWoDay) props.chooseWoDay(id)
   }
 
-  const renderWoDays = woDays => {
-    return (
-      <Container style={{ padding: '25px' }}>
-        <Grid container spacing={1} justify='center'>
-          {isMobile 
-           ? <MobileView woDays={woDays} onSelect={handleSelect} />
-           : <CalendarView items={woDays} onSelect={handleSelect} />
-          }
-        </Grid>
-      </Container>
-    )
+  const show = () => {
+    if (woDays.length === 0) return true
+    if (showSpinner) return true
+    return false
   }
 
-  const showSpinner = () => {
-    return woDays.length === 0
-  }
-
-  return showSpinner() ? <BasicSpinner show={true} /> : renderWoDays(woDays)
+  return (
+    <Container style={{ padding: '25px' }}>
+      <BasicSpinner show={show()} />
+      <Grid container spacing={1} justify='center'>
+        {isMobile ? (
+          <MobileView woDays={woDays} onSelect={handleSelect} />
+        ) : (
+          <CalendarView items={woDays} onSelect={handleSelect} />
+        )}
+      </Grid>
+    </Container>
+  )
 }
 
 export default WoDayList
@@ -76,7 +77,7 @@ const MobileView = props => {
       woDay.date.year
     }`
     return (
-      <Grid item xs={12} sm={4} key={`${date}-${woDay.id}`}>
+      <Grid item xs={12} key={`${date}-${woDay.id}`}>
         <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
           <CardHeader
             title={date}
