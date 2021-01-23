@@ -170,6 +170,7 @@ const SetEditor = props => {
     // exercises from the db don't have a reps property.
     // so we add the reps prop with an empty value here.
     let tempExercises = [...selectedExercises]
+    console.log(`tempExercises: ${JSON.stringify(tempExercises)}`)
     let modifiedExercises = tempExercises.map(exercise => {
       exercise.reps = ''
       return exercise
