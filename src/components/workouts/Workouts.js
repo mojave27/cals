@@ -14,6 +14,7 @@ import WorkoutList from './WorkoutList'
 const Workouts = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
+  const [showSpinner, setShowSpinner] = useState(false)
 
   useEffect(() => {
     fetchWorkouts()
@@ -27,6 +28,10 @@ const Workouts = props => {
 
   const toggleDialog = () => {
     setShowWorkoutDialog(!showWorkoutDialog)
+  }
+
+  const toggleSpinner = () => {
+    setShowSpinner(!showSpinner)
   }
 
   const addWorkout = () => {
@@ -50,8 +55,10 @@ const Workouts = props => {
   }
 
   const deleteWorkout = async id => {
+    setShowSpinner(true)
     await deleteWorkoutApi(id)
     await fetchWorkouts()
+    setShowSpinner(false)
   }
 
   const setSelectedWorkoutToContext = workoutId => {
@@ -68,6 +75,7 @@ const Workouts = props => {
         onClose={toggleDialog}
         saveWorkout={saveWorkout}
       />
+      <BasicSpinner show={showSpinner} />
       <FormButton value={'Add Workout'} onClick={addWorkout} />
       {woContext.workouts.length > 0 ? (
           <WorkoutList 
