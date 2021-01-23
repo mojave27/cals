@@ -100,6 +100,7 @@ const WoDay = props => {
 
   const done = () => {
     setShowModal(false)
+    window.scrollTo(0, 0)
   }
 
   const home = () => {
@@ -126,6 +127,9 @@ const WoDay = props => {
         break
       case 'notes':
         setNotes(value)
+        break
+      case 'date':
+        setDate(value)
         break
       default:
         console.log('Sorry, no match for ' + id)
@@ -203,6 +207,14 @@ const WoDay = props => {
     woDayContext.updateWoDay(woday)
   }
 
+  const setDate = date => {
+    let upDate = new Date(date)
+    let woday = woDayContext.copyWoDay()
+    //TODO: figure out why we have to add '1' to the day for it to be accurate.
+    woday.date = { day: upDate.getDate() +1, month: upDate.getMonth(), year: upDate.getFullYear()}
+    woDayContext.updateWoDay(woday)
+  }
+
   const setDuration = duration => {
     let woday = woDayContext.copyWoDay()
     woday.duration = duration
@@ -227,24 +239,16 @@ const WoDay = props => {
     woDayContext.updateWoDay(woday)
   }
 
-  const setDate = async jsDate => {
-    let woday = woDayContext.copyWoDay()
-    woday.date = {
-      day: jsDate.getDate(),
-      month: jsDate.getMonth(),
-      year: jsDate.getFullYear()
-    }
-    await woDayContext.updateWoDay(woday)
-  }
-
   const getStartDate = () => {
     let date = woDayContext.woday.date
     let startDate = new Date(date.year, date.month, date.day)
-    return startDate
+    let month = startDate.getMonth() + 1 < 10 ? `0${startDate.getMonth() + 1}` : startDate.getMonth() + 1
+    let day = startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate()
+    let dateString = `${startDate.getFullYear()}-${month}-${day}`
+    return dateString
   }
 
   const handleSliderChange = (event, value) => {
-    // console.log(event.target)
     let id = event.target.id
     switch (id) {
       case 'energyRange':
@@ -427,10 +431,17 @@ const WoDay = props => {
                 <Grid container spacing={1} justify='flex-start'>
                   <Grid item xs={12} sm={6}>
                     <Paper className={classes.paper}>
-                      <DateInput
-                        startDate={getStartDate()}
-                        setStartDate={setDate}
-                        label={'Date'}
+                      <TextField
+                        id='date'
+                        label='Date'
+                        type='date'
+                        defaultValue={getStartDate()}
+                        onChange={handleTextChange}
+                        className={classes.textField}
+                        variant={'outlined'}
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                       />
                     </Paper>
                   </Grid>
