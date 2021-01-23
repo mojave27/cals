@@ -23,6 +23,7 @@ class WoProvider extends React.Component {
         value={{
           workout: this.state.workout,
           copyWorkout: id => {
+            // eslint-disable-next-line eqeqeq
             let wo = this.state.workouts.find(wo => wo.id == id)
             let copiedWorkout = cloneDeep(wo)
             copiedWorkout.id = ''
