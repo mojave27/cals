@@ -81,12 +81,15 @@ export const updateWorkout = async (workout) => {
   //   })
 }
 
-export const deleteWorkout = id => {
+export const deleteWorkout = async id => {
+  let config = await getAxiosConfigWithAuth()
   const url = `${URL}/${id}`
   return axios
     .delete(url, config)
     .then(response => {
-      return parseResponse(response)
+      if (response.status !== 200){
+        throw new Error('response status not 200')
+      }
     })
     .catch(error => {
       console.log(`workouts api - deleteWorkout error: ${error}`)

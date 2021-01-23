@@ -51,7 +51,7 @@ const Workouts = props => {
 
   const deleteWorkout = async id => {
     await deleteWorkoutApi(id)
-    fetchWorkouts()
+    await fetchWorkouts()
   }
 
   const setSelectedWorkoutToContext = workoutId => {
