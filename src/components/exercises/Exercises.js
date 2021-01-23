@@ -11,6 +11,7 @@ import { dynamicSort } from '../ArrayUtils'
 const Exercises = props => {
   const [exercises, setExercises] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const [showSpinner, setShowSpinner] = useState(false)
 
   useEffect(() => {
     let didCancel = false
@@ -39,10 +40,22 @@ const Exercises = props => {
   }
 
   const deleteExercises = async (exercises) => {
+    setShowSpinner(true)
     let exerciseIds = exercises.map( ex => ex.id)
     await deleteExercisesById(exerciseIds)
     let latestExercises = await retrieveExercises()
-    setExercises(latestExercises)
+    let cleanedExercises = latestExercises.filter(ex => {
+      let found = false
+      exerciseIds.forEach(id => {
+        if (ex.id != id) found = true
+      })
+      return found
+    })
+    // cleanedExercises.forEach(ex => {
+    //   console.log(ex.name)
+    // })
+    setExercises(cleanedExercises)
+    setShowSpinner(false)
   }
 
   const editExercise = exerciseId => {
@@ -63,6 +76,12 @@ const Exercises = props => {
     )
   }
 
+  const show = () => {
+    if (showSpinner) return true
+    if (exercises.length === 0) return true
+    return false
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
@@ -72,7 +91,8 @@ const Exercises = props => {
         <div style={{margin:'10px'}}>
           <FormButton value={'Add Exercise'} onClick={toggleModal} />
         </div>
-        {exercises.length === 0 ? <BasicSpinner show={true} /> : renderExercises(exercises)}
+        <BasicSpinner show={show()} />
+        {renderExercises(exercises)}
       </div>
     </React.Fragment>
   )
