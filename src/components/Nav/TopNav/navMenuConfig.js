@@ -103,7 +103,8 @@ export const menuConfig = [
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
       { to: '/admin/test', text: 'test page' },
-      { to: '/admin/palette', text: 'palette' }
+      { to: '/admin/palette', text: 'palette' },
+      { to: '/meal', text: 'meal' }
     ]
   },
 

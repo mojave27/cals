@@ -5,6 +5,7 @@ import Login from './Auth/Login'
 import Tracker from './tracker/Tracker'
 import ProgramForm from './programs/ProgramForm'
 import Exercises from './exercises/Exercises'
+import Meal from './cals-and-macros/meal/Meal'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
 import MuiPalette from './Admin/MuiPalette'
@@ -29,6 +30,7 @@ const Routes = () => {
       <WoDay path='/woday' />
       <WoDayTracker path='/tracker/woday' />
       <Login path='/login' />
+      <Meal path='/meal' />
     </Router>
   )
 }
