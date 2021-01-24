@@ -91,11 +91,11 @@ const FoodSearch = props => {
     return sorted
   }
 
-  const handleKeyPress = e => {
-    if (e.key === 'Enter') {
-      handleClick()
-    }
-  }
+  // const handleKeyPress = e => {
+  //   if (e.key === 'Enter') {
+  //     handleClick()
+  //   }
+  // }
 
   const show = () => {
     if (foodList.length <= 0) return true
@@ -108,24 +108,12 @@ const FoodSearch = props => {
       <BasicSpinner show={show()} />
       <Grid container spacing={1}>
         <Grid item xs={12}>
-        <TextInput
-                id='search'
-                name='search'
-                // data={this.state.meal.name}
-                onChange={handleInputChange}
-              />
-          {/* <Input
-            loading={loading}
-            icon='search'
-            iconPosition='left'
-            placeholder='search...'
-            value={searchValue}
+          <TextInput
+            id='search'
+            name='search'
+            // data={this.state.meal.name}
             onChange={handleInputChange}
-            className={styles.searchInput}
-            onKeyPress={handleKeyPress}
-            size='large'
-            disabled={true}
-          /> */}
+          />
         </Grid>
         <Grid item xs={12} sm={2}>
           <FormButton value={'search'} onClick={handleClick} />

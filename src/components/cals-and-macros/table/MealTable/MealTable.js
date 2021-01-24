@@ -38,14 +38,14 @@ const MealTable = props => {
           <StyledHeaderRow>
             <TableCell />
             <TableCell>description</TableCell>
-            <TableCell>Qty</TableCell>
-            <TableCell>Unit</TableCell>
-            <TableCell>Cals</TableCell>
-            <TableCell>Protein Grams</TableCell>
-            <TableCell>Carb Grams</TableCell>
-            <TableCell>Fiber Grams</TableCell>
-            <TableCell>Net Carb Grams</TableCell>
-            <TableCell>Fat Grams</TableCell>
+            <TableCell>qty</TableCell>
+            <TableCell>unit</TableCell>
+            <TableCell>cals</TableCell>
+            <TableCell>protein <i>g</i></TableCell>
+            <TableCell>carb <i>g</i></TableCell>
+            <TableCell>fiber <i>g</i></TableCell>
+            <TableCell>net carb <i>g</i></TableCell>
+            <TableCell>fat <i>g</i></TableCell>
           </StyledHeaderRow>
         </TableHead>
 

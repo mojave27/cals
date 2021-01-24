@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Input } from 'semantic-ui-react'
-import { TableCell, TableRow } from '@material-ui/core'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { withStyles } from '@material-ui/core/styles'
+// import TextInput from '../../../inputs/TextInput'
+import { Grid, TableCell, TableRow } from '@material-ui/core'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import ThemeContext from '../../../../context/ThemeContext'
 
 const buttonStyle = {
   backgroundColor: '#4CAF50',
@@ -12,13 +14,28 @@ const buttonStyle = {
   textAlign: 'center',
   textDecoration: 'none',
   display: 'inline-block',
-  fontSize: '16px',
-  width: '1.2em',
+  fontSize: '12px',
+  width: '1em',
   fontWeight: '700',
   lineHeight: '1em',
-  margin: '4px 4px',
+  margin: '2px 2px',
   borderRadius: '50%'
 }
+
+const useStyles = makeStyles(theme => ({
+  tableContainer: {
+    border: `1px solid`
+  },
+  cell: {
+    border: '1px solid'
+  },
+  leadCell: {
+    maxWidth: '25px'
+  },
+  qtyCell: {
+    maxWidth: '200px'
+  }
+}))
 
 const StyledTableRow = withStyles(theme => ({
   root: {
@@ -29,6 +46,8 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow)
 
 const FoodRow = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
   let [units, setUnits] = useState('grams')
 
   const rowDelete = e => {
@@ -81,7 +100,6 @@ const FoodRow = props => {
           >
             -
           </button>
-          {'tweak'}
           <button
             data-rowid={props.rowData.id}
             style={buttonStyle}
@@ -95,36 +113,46 @@ const FoodRow = props => {
   }
 
   const renderLeadCell = viewOnly => {
-      return viewOnly ? (
-        <TableCell />
-      ) : (
-        <TableCell id={props.rowData.id} onClick={rowDelete}>
-          <DeleteForeverIcon />
-        </TableCell>
-      )
+    return viewOnly ? (
+      <TableCell />
+    ) : (
+      <TableCell id={props.rowData.id} onClick={rowDelete}>
+        <DeleteForeverIcon />
+      </TableCell>
+    )
   }
 
   return (
     // <TableRow active={props.rowData.active}>
-    <StyledTableRow >
+    <StyledTableRow>
       {renderLeadCell(props.viewOnly)}
-      <TableCell>{props.rowData.description}</TableCell>
-      <TableCell>
+      <TableCell className={classes.cell}>
+        {props.rowData.description}
+      </TableCell>
+      <TableCell className={classes.qtyCell}>
+        <Grid container >
+        <Grid item xs={8} sm={8}>
         <Input
           value={calcDefaultValue(props.rowData.quantity)}
           onChange={handleQtyChange}
           id={props.rowData.id}
           disabled={props.viewOnly}
         />
-        {renderTweakButtons(props.viewOnly)}
+        </Grid>
+        <Grid item xs={4} sm={4}>
+          {renderTweakButtons(props.viewOnly)}
+        </Grid>
+        </Grid>
       </TableCell>
-      <TableCell>{props.rowData.unit}</TableCell>
-      <TableCell>{props.rowData.calories}</TableCell>
-      <TableCell>{props.rowData.proteinGrams}</TableCell>
-      <TableCell>{props.rowData.carbGrams}</TableCell>
-      <TableCell>{0}</TableCell>
-      <TableCell>{0}</TableCell>
-      <TableCell>{props.rowData.fatGrams}</TableCell>
+      <TableCell className={classes.cell}>{props.rowData.unit}</TableCell>
+      <TableCell className={classes.cell}>{props.rowData.calories}</TableCell>
+      <TableCell className={classes.cell}>
+        {props.rowData.proteinGrams}
+      </TableCell>
+      <TableCell className={classes.cell}>{props.rowData.carbGrams}</TableCell>
+      <TableCell className={classes.cell}>{0}</TableCell>
+      <TableCell className={classes.cell}>{0}</TableCell>
+      <TableCell className={classes.cell}>{props.rowData.fatGrams}</TableCell>
     </StyledTableRow>
   )
 }

@@ -34,7 +34,6 @@ class Meal extends Component {
         Number(updatedMeal.foodList[index].quantity)
 
       let foodItem = cloneDeep(updatedMeal.foodList[index])
-
       foodItem.quantity = Number(foodItem.quantity) + 1
 
       let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
