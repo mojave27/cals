@@ -7,6 +7,7 @@ const retrieveFoodList = searchTerm => {
   return axiosFood
     .get(url)
     .then(function(response) {
+      // console.log(response)
       return response.data
     })
     .catch(function(error) {

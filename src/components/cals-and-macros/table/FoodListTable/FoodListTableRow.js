@@ -19,7 +19,8 @@ const FoodListTableRow = props => {
   };
 
   return (
-    <StyledTableRow active={props.rowData.active}>
+    // <StyledTableRow active={props.rowData.active}>
+    <StyledTableRow>
       <TableCell onClick={rowClick}><AddIcon /></TableCell>
       <TableCell>{props.rowData.description}</TableCell>
       <TableCell>{props.rowData.quantity}</TableCell>

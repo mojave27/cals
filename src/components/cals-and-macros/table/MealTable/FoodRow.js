@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Input, Table } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
+import { TableCell, TableRow } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { withStyles } from '@material-ui/core/styles'
 
 const buttonStyle = {
   backgroundColor: '#4CAF50',
@@ -17,6 +19,14 @@ const buttonStyle = {
   margin: '4px 4px',
   borderRadius: '50%'
 }
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
+}))(TableRow)
 
 const FoodRow = props => {
   let [units, setUnits] = useState('grams')
@@ -86,19 +96,20 @@ const FoodRow = props => {
 
   const renderLeadCell = viewOnly => {
       return viewOnly ? (
-        <Table.Cell />
+        <TableCell />
       ) : (
-        <Table.Cell id={props.rowData.id} onClick={rowDelete}>
+        <TableCell id={props.rowData.id} onClick={rowDelete}>
           <DeleteForeverIcon />
-        </Table.Cell>
+        </TableCell>
       )
   }
 
   return (
-    <Table.Row active={props.rowData.active}>
+    // <TableRow active={props.rowData.active}>
+    <StyledTableRow >
       {renderLeadCell(props.viewOnly)}
-      <Table.Cell>{props.rowData.description}</Table.Cell>
-      <Table.Cell>
+      <TableCell>{props.rowData.description}</TableCell>
+      <TableCell>
         <Input
           value={calcDefaultValue(props.rowData.quantity)}
           onChange={handleQtyChange}
@@ -106,15 +117,15 @@ const FoodRow = props => {
           disabled={props.viewOnly}
         />
         {renderTweakButtons(props.viewOnly)}
-      </Table.Cell>
-      <Table.Cell>{props.rowData.unit}</Table.Cell>
-      <Table.Cell>{props.rowData.calories}</Table.Cell>
-      <Table.Cell>{props.rowData.proteinGrams}</Table.Cell>
-      <Table.Cell>{props.rowData.carbGrams}</Table.Cell>
-      <Table.Cell>{0}</Table.Cell>
-      <Table.Cell>{0}</Table.Cell>
-      <Table.Cell>{props.rowData.fatGrams}</Table.Cell>
-    </Table.Row>
+      </TableCell>
+      <TableCell>{props.rowData.unit}</TableCell>
+      <TableCell>{props.rowData.calories}</TableCell>
+      <TableCell>{props.rowData.proteinGrams}</TableCell>
+      <TableCell>{props.rowData.carbGrams}</TableCell>
+      <TableCell>{0}</TableCell>
+      <TableCell>{0}</TableCell>
+      <TableCell>{props.rowData.fatGrams}</TableCell>
+    </StyledTableRow>
   )
 }
 

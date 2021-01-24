@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { Divider, Input } from 'semantic-ui-react'
 import { Button } from '@material-ui/core'
 import MealTable from '../table/MealTable/MealTable'
 import ReusableFoodSearch from '../food/search/ReusableFoodSearch'
 import saveMeal from '../../../api/cals-and-macros/saveMeal'
-import styles from './Meal.module.css'
 import { findIndexOfId } from 'list-utils'
 import { cloneDeep } from 'lodash'
 
+import TextInput from '../../inputs/TextInput'
+import { Box, Divider, Grid } from '@material-ui/core'
+// import { makeStyles } from '@material-ui/core/styles'
 
 class Meal extends Component {
   state = {
@@ -28,12 +29,14 @@ class Meal extends Component {
     this.setState(prevState => {
       let updatedMeal = prevState.meal
       const index = findIndexOfId(id, updatedMeal.foodList)
-      let multiplier = (Number(updatedMeal.foodList[index].quantity) + 1) / Number(updatedMeal.foodList[index].quantity)
+      let multiplier =
+        (Number(updatedMeal.foodList[index].quantity) + 1) /
+        Number(updatedMeal.foodList[index].quantity)
 
       let foodItem = cloneDeep(updatedMeal.foodList[index])
 
       foodItem.quantity = Number(foodItem.quantity) + 1
-  
+
       let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
       updatedMeal.foodList[index] = updatedFoodItem
       return { meal: updatedMeal }
@@ -44,12 +47,14 @@ class Meal extends Component {
     this.setState(prevState => {
       let updatedMeal = prevState.meal
       const index = findIndexOfId(id, updatedMeal.foodList)
-      let multiplier = (Number(updatedMeal.foodList[index].quantity) - 1) / Number(updatedMeal.foodList[index].quantity)
+      let multiplier =
+        (Number(updatedMeal.foodList[index].quantity) - 1) /
+        Number(updatedMeal.foodList[index].quantity)
 
       let foodItem = cloneDeep(updatedMeal.foodList[index])
 
       foodItem.quantity = Number(foodItem.quantity) - 1
-  
+
       let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
       updatedMeal.foodList[index] = updatedFoodItem
       return { meal: updatedMeal }
@@ -64,7 +69,6 @@ class Meal extends Component {
       return { selectedFoodItems }
     })
   }
-
 
   /* ******************************************************** */
 
@@ -162,36 +166,51 @@ class Meal extends Component {
 
   render() {
     return (
-      <div className={styles.container}>
-        <Input
-          label={'meal name'}
-          value={this.state.meal.name}
-          onChange={this.handleInputChange}
-        />
-        <MealTable
-          foodList={this.state.meal.foodList}
-          rowClick={this.handleRowSelect}
-          rowSelect={this.selectFoodItem}
-          rowDelete={this.deleteRow}
-          onQuantityChange={this.handleQuantityChange}
-          tweakUp={this.tweakRowUp}
-          tweakDown={this.tweakRowDown}
-        />
-        <Button size={'small'} variant={'outlined'} onClick={this.saveTheMeal}>
-          Save Meal
-        </Button>
+      <div style={{ border: '1px solid #eee', padding: '10px' }}>
+        <Box style={{ padding: '10px' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextInput
+                id='mealName'
+                name='meal name'
+                data={this.state.meal.name}
+                onChange={this.handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              {this.state.meal.foodList.length > 0 ? (
+                <MealTable
+                  foodList={this.state.meal.foodList}
+                  rowClick={this.handleRowSelect}
+                  rowSelect={this.selectFoodItem}
+                  rowDelete={this.deleteRow}
+                  onQuantityChange={this.handleQuantityChange}
+                  tweakUp={this.tweakRowUp}
+                  tweakDown={this.tweakRowDown}
+                />
+              ) : null}
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                size={'small'}
+                variant={'outlined'}
+                onClick={this.saveTheMeal}
+              >
+                Save Meal
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
 
         <Divider />
 
-        {/* {this.state.showSearch ? ( */}
-          <ReusableFoodSearch
-            onClose={this.toggleSearch}
-            rowSelect={this.addToMeal}
-            setActiveFood={this.setActiveFood}
-            activeFood={this.state.activeFood}
-            activeFoodDetails={this.state.activeFoodDetails}
-          />
-        {/* ) : null} */}
+        <ReusableFoodSearch
+          onClose={this.toggleSearch}
+          rowSelect={this.addToMeal}
+          setActiveFood={this.setActiveFood}
+          activeFood={this.state.activeFood}
+          activeFoodDetails={this.state.activeFoodDetails}
+        />
       </div>
     )
   }

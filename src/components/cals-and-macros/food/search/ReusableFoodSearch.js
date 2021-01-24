@@ -1,16 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Confirm, Input } from 'semantic-ui-react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Confirm } from 'semantic-ui-react'
 import retrieveFoodList from '../../../../api/cals-and-macros/retrieveFoodList'
 import FoodListTable from '../../table/FoodListTable/FoodListTable'
-import styles from './FoodSearch.module.css'
 import { sortByStringProperty } from 'list-utils'
 
+import FormButton from '../../../inputs/FormButton'
+import TextInput from '../../../inputs/TextInput'
+import { Box, Grid } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import BasicSpinner from '../../../spinners/BasicSpinner'
+import ThemeContext from '../../../../context/ThemeContext'
+
+const useStyles = makeStyles(theme => ({
+  box: {
+    flexGrow: 1,
+    padding: '10px'
+  }
+}))
+
 const FoodSearch = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
   const [foodList, setFoodList] = useState([])
-  const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [searchValue, setSearchValue] = useState('')
   const [showConfirm, setShowConfirm] = useState(false)
+  const [showSpinner, setShowSpinner] = useState(true)
 
   useEffect(() => {
     retrieve()
@@ -28,7 +43,7 @@ const FoodSearch = props => {
   }
 
   const handleClick = () => {
-    setLoading(true)
+    setShowSpinner(true)
     retrieve()
   }
 
@@ -61,7 +76,7 @@ const FoodSearch = props => {
         }
 
         setFoodList(foodList)
-        setLoading(false)
+        setShowSpinner(false)
         setShowConfirm(error)
         setMessage(message)
       })
@@ -82,49 +97,58 @@ const FoodSearch = props => {
     }
   }
 
+  const show = () => {
+    if (foodList.length <= 0) return true
+    if (showSpinner) return true
+    return false
+  }
+
   return (
-    <div className={styles.container}>
-      <Input
-        loading={loading}
-        icon='search'
-        iconPosition='left'
-        placeholder='search...'
-        value={searchValue}
-        onChange={handleInputChange}
-        className={styles.searchInput}
-        onKeyPress={handleKeyPress}
-        size='large'
-        disabled={true}
-      />
-      {/* <br /> */}
-      <Button
-        color='orange'
-        onClick={handleClick}
-        disabled={false}
-        style={{ marginLeft: '15px' }}
-      >
-        search
-      </Button>
-      <Button color='red' onClick={props.onClose} style={{ float: 'right' }}>
-        close
-      </Button>
-      <br />
-      {foodList.length > 0 ? (
-        <React.Fragment>
-          <FoodListTable
-            foodList={foodList}
-            rowClick={handleRowSelect}
-          />
-        </React.Fragment>
-      ) : null}
-      <Confirm
-        open={showConfirm}
-        onCancel={handleModalCancel}
-        onConfirm={handleModalConfirm}
-        content={message}
-        size='tiny'
-      />
-    </div>
+    <Box className={classes.box}>
+      <BasicSpinner show={show()} />
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+        <TextInput
+                id='search'
+                name='search'
+                // data={this.state.meal.name}
+                onChange={handleInputChange}
+              />
+          {/* <Input
+            loading={loading}
+            icon='search'
+            iconPosition='left'
+            placeholder='search...'
+            value={searchValue}
+            onChange={handleInputChange}
+            className={styles.searchInput}
+            onKeyPress={handleKeyPress}
+            size='large'
+            disabled={true}
+          /> */}
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          <FormButton value={'search'} onClick={handleClick} />
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          <FormButton onClick={props.onClose} value={'close'} />
+        </Grid>
+        <Grid item xs={12}>
+          {foodList.length > 0 ? (
+            <React.Fragment>
+              <FoodListTable foodList={foodList} rowClick={handleRowSelect} />
+            </React.Fragment>
+          ) : null}
+        </Grid>
+        <Confirm
+          open={showConfirm}
+          onCancel={handleModalCancel}
+          onConfirm={handleModalConfirm}
+          content={message}
+          size='tiny'
+        />
+      </Grid>
+    </Box>
   )
 }
 
