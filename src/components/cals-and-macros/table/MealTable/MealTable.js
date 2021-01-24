@@ -1,6 +1,6 @@
-import React from 'react'
-// import { Table } from 'semantic-ui-react'
+import React, {useContext} from 'react'
 import {
+  Paper,
   Table,
   TableCell,
   TableContainer,
@@ -9,15 +9,33 @@ import {
   TableRow,
   TableFooter
 } from '@material-ui/core'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 import FoodRow from './FoodRow'
 import { calsPerGram } from '../../constants/nutrients'
+import ThemeContext from '../../../../context/ThemeContext'
+
+const StyledHeaderRow = withStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText
+  }
+}))(TableRow)
+
+const useStyles = makeStyles(theme => ({
+  tableContainer: {
+    border: `1px solid`
+  }
+}))
 
 const MealTable = props => {
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
+
   return (
-    <TableContainer>
+    <TableContainer component={Paper}>
       <Table size={'small'}>
         <TableHead>
-          <TableRow>
+          <StyledHeaderRow>
             <TableCell />
             <TableCell>description</TableCell>
             <TableCell>Qty</TableCell>
@@ -28,7 +46,7 @@ const MealTable = props => {
             <TableCell>Fiber Grams</TableCell>
             <TableCell>Net Carb Grams</TableCell>
             <TableCell>Fat Grams</TableCell>
-          </TableRow>
+          </StyledHeaderRow>
         </TableHead>
 
         <TableBody>{renderFoodRows(props)}</TableBody>
@@ -70,25 +88,17 @@ const SummaryRow = props => {
       <TableCell>{sumIt('calories', props.foodList)}</TableCell>
       <TableCell>{sumIt('proteinGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('carbGrams', props.foodList)}</TableCell>
-      <TableCell>{'0'}</TableCell>
-      {/* <TableCell>{'0'}</TableCell> */}
-      <TableCell>{calcNetCarbs(props.foodList)}</TableCell>
+      <TableCell>{sumIt('fiberGrams', props.foodList)}</TableCell>
+      <TableCell>{sumIt('netCarbGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('fatGrams', props.foodList)}</TableCell>
     </TableRow>
   )
-}
-
-const calcNetCarbs = foodList => {
-  let carbs = sumIt('carbGrams', foodList)
-  let fiber = sumIt('fiberGrams', foodList)
-  return (Number(carbs) - Number(fiber)).toFixed(1)
 }
 
 const sumIt = (nutrientName, foodList) => {
   let allVals = foodList.map(foodItem => {
     return foodItem[nutrientName]
   })
-
   var sum = allVals.reduce(function(accumulator, currentValue) {
     return Number(accumulator) + Number(currentValue)
   }, 0)
@@ -107,14 +117,8 @@ const MacrosRow = props => {
       let tempSum = Number(accumulator) + Number(currentValue)
       return Number(tempSum)
     }, 0)
-    // 
-    const percentage =
-      (sum.toFixed(2) * calsPerGram.get(nutrientName)) / totalCals
-    if(nutrientName === 'fiberGrams') {
-      console.log(allVals)
-      console.log(sum)
-      console.log(percentage)
-    }
+    //percentage
+    const percentage = (sum.toFixed(2) * calsPerGram.get(nutrientName)) / totalCals
     return isNaN(percentage)
       ? 0
       : Number.parseFloat(percentage * 100).toFixed(2)
@@ -129,9 +133,8 @@ const MacrosRow = props => {
         </span>
       </TableCell>
       <TableCell>{percentIt('carbGrams')} %</TableCell>
-      <TableCell>0 %</TableCell>
       <TableCell>{percentIt('fiberGrams')} %</TableCell>
-      {/* <TableCell>{'0'} %</TableCell> */}
+      <TableCell>{percentIt('netCarbGrams')} %</TableCell>
       <TableCell>
         <span style={{ fontWeight: 'bold', color: 'red' }}>
           {percentIt('fatGrams')} %

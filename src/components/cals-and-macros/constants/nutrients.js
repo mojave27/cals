@@ -3,6 +3,7 @@ const calsPerGram = new Map([
   ['proteinGrams', 4],
   ['carbohydrate', 4],
   ['carbGrams', 4],
+  ['netCarbGrams', 4],
   ['fiberGrams', 0],
   ['fat', 9],
   ['fatGrams', 9],
