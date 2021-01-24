@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Divider, Input } from 'semantic-ui-react'
+import { Divider, Input } from 'semantic-ui-react'
+import { Button } from '@material-ui/core'
 import MealTable from '../table/MealTable/MealTable'
 import ReusableFoodSearch from '../food/search/ReusableFoodSearch'
 import saveMeal from '../../../api/cals-and-macros/saveMeal'
@@ -176,7 +177,7 @@ class Meal extends Component {
           tweakUp={this.tweakRowUp}
           tweakDown={this.tweakRowDown}
         />
-        <Button color='orange' onClick={this.saveTheMeal}>
+        <Button size={'small'} variant={'outlined'} onClick={this.saveTheMeal}>
           Save Meal
         </Button>
 

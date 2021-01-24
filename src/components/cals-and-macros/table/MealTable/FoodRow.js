@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Input, Table } from 'semantic-ui-react'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const buttonStyle = {
   backgroundColor: '#4CAF50',
@@ -24,12 +25,6 @@ const FoodRow = props => {
     e.stopPropagation()
     props.rowDelete(e)
   }
-
-  // const handleDropdownChange = event => {
-  //   console.log(event.target.value)
-  //   let newUnits = event.target.value
-  //   setUnits(newUnits)
-  // }
 
   const calcDefaultValue = qty => {
     if (typeof qty === undefined) {
@@ -94,7 +89,7 @@ const FoodRow = props => {
         <Table.Cell />
       ) : (
         <Table.Cell id={props.rowData.id} onClick={rowDelete}>
-          {'X'}
+          <DeleteForeverIcon />
         </Table.Cell>
       )
   }

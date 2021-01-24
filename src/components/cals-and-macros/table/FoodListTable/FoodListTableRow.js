@@ -1,5 +1,16 @@
 import React from 'react'
-import { Icon, Table } from 'semantic-ui-react'
+// import { Icon, Table } from 'semantic-ui-react'
+import {TableCell, TableRow} from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add';
+import { withStyles } from '@material-ui/core/styles'
+
+const StyledTableRow = withStyles(theme => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
+}))(TableRow)
 
 const FoodListTableRow = props => {
   const rowClick = e => {
@@ -7,27 +18,18 @@ const FoodListTableRow = props => {
     onRowClick(rowId, e)
   };
 
-  // const renderSelected = selected => {
-  //   if (selected === 'true') {
-  //     return (<span style={{fontWeight:'bold', color:'green'}}>{selected}</span>)
-  //   }
-  //   return (<span>{selected}</span>)
-  // }
-
   return (
-    <Table.Row active={props.rowData.active}>
-      {/* <Table.Cell selectable textAlign='center' ><Icon name='add' onClick={rowClick} /></Table.Cell> */}
-      <Table.Cell selectable textAlign='center' onClick={rowClick} ><Icon name='add' /></Table.Cell>
-      <Table.Cell>{props.rowData.description}</Table.Cell>
-      <Table.Cell>{props.rowData.quantity}</Table.Cell>
-      <Table.Cell>{props.rowData.unit}</Table.Cell>
-      <Table.Cell>{props.rowData.calories}</Table.Cell>
-      <Table.Cell>{props.rowData.proteinGrams}</Table.Cell>
-      <Table.Cell>{props.rowData.carbGrams}</Table.Cell>
-      <Table.Cell>{0}</Table.Cell>
-      <Table.Cell>{props.rowData.fatGrams}</Table.Cell>
-      {/* <Table.Cell selectable={false}><Checkbox className={'checkbox'} toggle onClick={props.onSelect} checked={props.selected} /></Table.Cell> */}
-    </Table.Row>
+    <StyledTableRow active={props.rowData.active}>
+      <TableCell onClick={rowClick}><AddIcon /></TableCell>
+      <TableCell>{props.rowData.description}</TableCell>
+      <TableCell>{props.rowData.quantity}</TableCell>
+      <TableCell>{props.rowData.unit}</TableCell>
+      <TableCell>{props.rowData.calories}</TableCell>
+      <TableCell>{props.rowData.proteinGrams}</TableCell>
+      <TableCell>{props.rowData.carbGrams}</TableCell>
+      <TableCell>{0}</TableCell>
+      <TableCell>{props.rowData.fatGrams}</TableCell>
+    </StyledTableRow>
   );
 };
 

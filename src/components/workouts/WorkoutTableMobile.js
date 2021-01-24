@@ -21,43 +21,32 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: '80%',
-    // backgroundColor: theme.color2.hex,
-    // color: theme.color2_text.hex
   },
   tableCell: {
     padding: '5px',
-    // backgroundColor: theme.color3.rgba(0.2),
     color: theme.color3_text.hex,
     border: 0
   },
   tableHeaderCell: {
     padding: '5px',
-    // backgroundColor: theme.color5.rgba(0.8),
-    // color: theme.color5_text.hex
   },
   input: {
     font: 'inherit',
-    // color: theme.color1_text.hex,
     width: '100%',
-    // border: `1px solid ${theme.color3.hex}`,
     height: '1.1876em',
     margin: 0,
     display: 'block',
     padding: '6px 0 7px',
     minWidth: 0,
-    // backgroundColor: theme.color1.hex,
     boxSizing: 'content-box',
     letterSpacing: 'inherit',
     animationDuration: '10ms',
     textAlign: 'center'
   },
   accordion: {
-    // backgroundColor: theme.color2.hex,
-    // color: theme.color2_text.hex,
     border: `1px solid ${theme.palette.grey[300]}`
   },
   expandIcon: {
-    // color: theme.color2_text.hex
   }
 }))
 
