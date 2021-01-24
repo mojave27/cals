@@ -45,9 +45,9 @@ export const light = {
   palette: {
     type: 'light',
     primary: {
-      main: '#6ec5ff',
-      light: '#a5f8ff',
-      dark: '#3095cc',
+      main: '#2196f3',
+      light: '#64b5f6',
+      dark: '#1976d2',
       contrastText: '#fff'
     },
     secondary: {
