@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import DayView from '../programs/DayView'
+import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
-import { isEmpty } from 'lodash'
 import TabbedContent from '../controls/TabbedContent'
 import AccordionWrapper from '../accordion/AccordionWrapper'
+import CloseIcon from '@material-ui/icons/Close'
 import {
   Card,
   CardHeader,
@@ -14,9 +16,7 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
-import ProgramContext from '../../context/ProgramContext'
-// import BasicSpinner from '../spinners/BasicSpinner'
+import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
   },
   closeButton: {
     float: 'right'
+  },
+  bordered: {
+    border: `1px solid #eee`
   }
 }))
 
@@ -83,7 +86,7 @@ const ProgramTracker = props => {
       </AccordionWrapper>
 
       {/* too wide for mobile view */}
-      {themeContext.theme.mobile === false ? (
+      {/* {themeContext.theme.mobile === false ? (
         <AccordionWrapper label={'schedule - week view'}>
           {isEmpty(context.program.schedule) ? null : (
             <Table>
@@ -102,8 +105,8 @@ const ProgramTracker = props => {
                 <TableRow>
                   {context.program.schedule.days.map(day => {
                     return (
-                      <TableCell>
-                        {day.id}-{day.name}
+                      <TableCell className={classes.bordered}>
+                        <DayView item={day} />
                       </TableCell>
                     )
                   })}
@@ -112,7 +115,7 @@ const ProgramTracker = props => {
             </Table>
           )}
         </AccordionWrapper>
-      ) : null}
+      ) : null} */}
     </React.Fragment>
   )
 }

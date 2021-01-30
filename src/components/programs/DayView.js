@@ -53,19 +53,16 @@ const useStyles = makeStyles(theme => ({
     padding: '6px 16px 0px 16px'
   },
   cardContent: {
-    padding: '5px',
+    // padding: '5px',
     margin: '0px'
   }
 }))
 
-const ScheduleDay = props => {
+const DayView = props => {
   let programContext = useContext(ProgramContext)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
-
-  const [showWorkoutList, setShowWorkoutList] = useState(false)
-  const [showCardioList, setShowCardioList] = useState(false)
 
   const handleClick = () => {
     if (props.onClick) props.onClick(props.id)
@@ -77,36 +74,6 @@ const ScheduleDay = props => {
 
   const deleteItem = id => {
     if (props.deleteItem) props.deleteItem(id)
-  }
-
-  const addWeightsRoutine = () => {
-    console.log('add weights workout clicked')
-    toggleWorkoutList()
-  }
-
-  const addCardio = () => {
-    console.log('add weights workout clicked')
-    toggleCardioList()
-  }
-
-  const toggleWorkoutList = () => {
-    setShowWorkoutList(!showWorkoutList)
-  }
-
-  const toggleCardioList = () => {
-    setShowCardioList(!showCardioList)
-  }
-
-  const handleWorkoutListSave = workouts => {
-    let dayId = props.item.id
-    let workoutIds = workouts.map(wo => wo.id)
-    programContext.addWorkoutsToSchedule(dayId, workoutIds)
-  }
-
-  const handleCardioListSelect = cardioRoutines => {
-    let dayId = props.item.id
-    let cardioIds = cardioRoutines.map(cardio => cardio.id)
-    programContext.addCardioRoutinesToSchedule(dayId, cardioIds)
   }
 
   const launchWoDay = async id => {
@@ -121,6 +88,7 @@ const ScheduleDay = props => {
       let wo = programContext.program.workouts.find(ex => ex.id == id)
       workouts.push(wo)
     })
+
     await woDayContext.setEmptyWoDay() 
     let woday = woDayContext.copyWoDay()
     woday.cardio.exercises = cardio
@@ -150,7 +118,6 @@ const ScheduleDay = props => {
 
   const renderWorkoutsForDay = id => {
     let day = retrieveItemById(id, programContext.program.schedule.days)
-    // return (
     return day.routine.workouts && day.routine.workouts.length > 0 ? (
       <React.Fragment>
         <Typography variant={'h5'} gutterBottom>
@@ -168,25 +135,7 @@ const ScheduleDay = props => {
 
   return (
     <React.Fragment>
-      <WoListDialog
-        title={'Choose Workout(s)'}
-        open={showWorkoutList}
-        onClose={toggleWorkoutList}
-        items={programContext.program.workouts}
-        onSave={handleWorkoutListSave}
-        retrieve={retrieve}
-      />
-      <WoListDialog
-        title={'Choose Cardio Routine(s)'}
-        open={showCardioList}
-        onClose={toggleCardioList}
-        items={programContext.program.cardio}
-        onSave={handleCardioListSelect}
-        // TODO: fix this so we don't need to pass in a mock function.
-        retrieve={() => []}
-      />
-      <Container>
-        <Grid container direction={'row'} justify={'center'} alignItems={'flex-start'}>
+        <Grid container direction={'column'} justify={'center'} alignItems={'flex-start'}>
           {props.disabled === true ? (
           <Grid item>
             <Box style={{ padding: '10px' }}>
@@ -206,7 +155,6 @@ const ScheduleDay = props => {
             >
               <CardHeader
                 className={classes.cardHeader}
-                // title={props.item.name}
                 titleTypographyProps={{ variant: 'h6' }}
                 action={
                   props.disabled === false ? (
@@ -227,16 +175,6 @@ const ScheduleDay = props => {
                   ) : null
                 }
               />
-              {props.disabled ? null : (
-                <CardActions disableSpacing>
-                  <Button variant='outlined' onClick={addWeightsRoutine}>
-                    {'Add Weights'}
-                  </Button>
-                  <Button variant='outlined' onClick={addCardio}>
-                    {'Add Cardio'}
-                  </Button>
-                </CardActions>
-              )}
               <CardContent className={classes.cardContent}>
                 <Box style={{ padding: '10px' }}>
                   {renderCardioForDay(props.item.id)}
@@ -247,12 +185,9 @@ const ScheduleDay = props => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item>
-          </Grid>
         </Grid>
-      </Container>
     </React.Fragment>
   )
 }
 
-export default ScheduleDay
+export default DayView
