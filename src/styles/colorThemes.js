@@ -57,6 +57,9 @@ export const light = {
       contrastText: '#222'
     }
   },
+  shape :{
+    borderRadius: '1'
+  },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
@@ -120,6 +123,9 @@ export const woSheet = {
       contrastText: '#353535'
     }
   },
+  shape :{
+    borderRadius: '1'
+  },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
@@ -176,6 +182,9 @@ export const dark = {
       dark: '#8d8d8d',
       contrastText: '#222'
     }
+  },
+  shape :{
+    borderRadius: '1'
   },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
