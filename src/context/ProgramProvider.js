@@ -130,8 +130,8 @@ class ProgramProvider extends React.Component {
             let workouts = program.workouts.filter(wo => wo.id !== workoutId)
             let workoutIds = program.workoutIds.filter(woId => woId !== workoutId)
             let updatedSchedule = program.schedule.days.map(day => {
-              let workouts = day.routines.workouts.filter(woId => woId !== workoutId)
-              day.routines.workouts = workouts
+              let workouts = day.routine.workouts.filter(woId => woId !== workoutId)
+              day.routine.workouts = workouts
               return day
             })
             let updatedProgram = {
