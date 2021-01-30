@@ -189,6 +189,7 @@ const ScheduleDay = props => {
       />
       <Container>
         <Grid container direction={'row'} justify={'center'} alignItems={'flex-start'}>
+          {props.disabled === true ? (
           <Grid item>
             <Box style={{ padding: '10px' }}>
               <FormButton
@@ -196,7 +197,7 @@ const ScheduleDay = props => {
                 onClick={() => launchWoDay(props.item.id)}
               />
             </Box>
-          </Grid>
+          </Grid>) : null}
           <Grid item xs={12} sm={6}>
             <Card
               className={classes.root}
