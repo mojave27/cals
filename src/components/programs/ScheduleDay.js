@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react'
+import { convertTemplateToActiveWorkout } from '../workouts/workoutTemplateConverter'
 import ThemeContext from '../../context/ThemeContext'
 import ProgramContext from '../../context/ProgramContext'
+import WoDayContext from '../../context/WoDayContext'
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardHeader,
   CardContent,
+  Container,
+  Grid,
   Typography
 } from '@material-ui/core'
 import CardioCard from './CardioCard'
@@ -18,6 +23,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles } from '@material-ui/core/styles'
 import { retrieveItemById } from '../ArrayUtils'
 import { retrieve } from '../../api/workoutsApi'
+import FormButton from '../inputs/FormButton'
+import { navigate } from '@reach/router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     width: '70%'
   },
   td: {
-    textAlign: 'left',
+    textAlign: 'left'
   },
   tdLeft: {
     width: '70%'
@@ -53,6 +60,7 @@ const useStyles = makeStyles(theme => ({
 
 const ScheduleDay = props => {
   let programContext = useContext(ProgramContext)
+  let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
 
@@ -91,29 +99,51 @@ const ScheduleDay = props => {
 
   const handleWorkoutListSave = workouts => {
     let dayId = props.item.id
-    let workoutIds = workouts.map( wo => wo.id)
+    let workoutIds = workouts.map(wo => wo.id)
     programContext.addWorkoutsToSchedule(dayId, workoutIds)
   }
 
   const handleCardioListSelect = cardioRoutines => {
     let dayId = props.item.id
-    let cardioIds = cardioRoutines.map( cardio => cardio.id)
+    let cardioIds = cardioRoutines.map(cardio => cardio.id)
     programContext.addCardioRoutinesToSchedule(dayId, cardioIds)
+  }
+
+  const launchWoDay = async id => {
+    let cardio = []
+    let workouts = []
+    props.item.routine.cardio.forEach(id => {
+      let cardioEx = programContext.program.cardio.find(ex => ex.id == id)
+      cardio.push(cardioEx)
+    })
+    props.item.routine.workouts.forEach(id => {
+      let wo = programContext.program.workouts.find(ex => ex.id == id)
+      workouts.push(wo)
+    })
+    console.log(JSON.stringify(cardio))
+    console.log(JSON.stringify(workouts))
+    await woDayContext.setEmptyWoDay() 
+    let woday = woDayContext.copyWoDay()
+    woday.cardio.exercises = cardio
+    let newWo = convertTemplateToActiveWorkout(workouts[0])
+    woday.wo = newWo
+    woDayContext.updateWoDay(woday)
+    navigate("/woday")  
   }
 
   const renderCardioForDay = id => {
     let day = retrieveItemById(id, programContext.program.schedule.days)
     return day.routine.cardio && day.routine.cardio.length > 0 ? (
       <React.Fragment>
-        <Typography variant={'h5'} gutterBottom>{'Cardio'}</Typography>
+        <Typography variant={'h5'} gutterBottom>
+          {'Cardio'}
+        </Typography>
         {day.routine.cardio.map(cardioId => {
           let cardioRoutine = retrieveItemById(
             cardioId,
             programContext.program.cardio
           )
-          return (
-            <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
-          )
+          return <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
         })}
       </React.Fragment>
     ) : null
@@ -124,7 +154,9 @@ const ScheduleDay = props => {
     // return (
     return day.routine.workouts && day.routine.workouts.length > 0 ? (
       <React.Fragment>
-        <Typography variant={'h5'} gutterBottom>{'Weights'}</Typography>
+        <Typography variant={'h5'} gutterBottom>
+          {'Weights'}
+        </Typography>
         {day.routine.workouts.map(workoutId => {
           let wo = retrieveItemById(workoutId, programContext.program.workouts)
           return (
@@ -152,52 +184,73 @@ const ScheduleDay = props => {
         items={programContext.program.cardio}
         onSave={handleCardioListSelect}
         // TODO: fix this so we don't need to pass in a mock function.
-        retrieve={ () => [] }
+        retrieve={() => []}
       />
-      <Card
-        className={classes.root}
-        style={{ maxWidth: props.maxWidth }}
-        variant='outlined'
-        onClick={handleClick}
-        key={props.id}
-      >
-        <CardHeader
-          className={classes.cardHeader}
-          // title={props.item.name}
-          titleTypographyProps={{ variant: 'h6' }}
-          action={
-            props.disabled === false ? (
-              <React.Fragment>
-                <IconButton
-                  aria-label='Edit'
-                  onClick={() => editItem(props.item.id)}
-                >
-                  <EditIcon color='inherit' fontSize='small' />
-                </IconButton>
-                <IconButton
-                  aria-label='Delete'
-                  onClick={() => deleteItem(props.item.id)}
-                >
-                  <DeleteForeverIcon color='inherit' fontSize='small' />
-                </IconButton>
-              </React.Fragment>
-            ) : null
-          }
-        />
-        {props.disabled ? null : 
-        <CardActions disableSpacing>
-          <Button variant='outlined' onClick={addWeightsRoutine}>
-            {'Add Weights'}
-          </Button>
-          <Button variant='outlined' onClick={addCardio}>
-            {'Add Cardio'}
-          </Button>
-        </CardActions>}
-        <CardContent className={classes.cardContent}>
-          {renderCardioForDay(props.item.id)}
-          {renderWorkoutsForDay(props.item.id)}
-        </CardContent>
-      </Card>
+      <Container>
+        <Grid container direction={'row'} justify={'center'} alignItems={'flex-start'}>
+          <Grid item>
+            <Box style={{ padding: '10px' }}>
+              <FormButton
+                value={'do it'}
+                onClick={() => launchWoDay(props.item.id)}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card
+              className={classes.root}
+              style={{ maxWidth: props.maxWidth }}
+              variant='outlined'
+              onClick={handleClick}
+              key={props.id}
+            >
+              <CardHeader
+                className={classes.cardHeader}
+                // title={props.item.name}
+                titleTypographyProps={{ variant: 'h6' }}
+                action={
+                  props.disabled === false ? (
+                    <React.Fragment>
+                      <IconButton
+                        aria-label='Edit'
+                        onClick={() => editItem(props.item.id)}
+                      >
+                        <EditIcon color='inherit' fontSize='small' />
+                      </IconButton>
+                      <IconButton
+                        aria-label='Delete'
+                        onClick={() => deleteItem(props.item.id)}
+                      >
+                        <DeleteForeverIcon color='inherit' fontSize='small' />
+                      </IconButton>
+                    </React.Fragment>
+                  ) : null
+                }
+              />
+              {props.disabled ? null : (
+                <CardActions disableSpacing>
+                  <Button variant='outlined' onClick={addWeightsRoutine}>
+                    {'Add Weights'}
+                  </Button>
+                  <Button variant='outlined' onClick={addCardio}>
+                    {'Add Cardio'}
+                  </Button>
+                </CardActions>
+              )}
+              <CardContent className={classes.cardContent}>
+                <Box style={{ padding: '10px' }}>
+                  {renderCardioForDay(props.item.id)}
+                </Box>
+                <Box style={{ padding: '10px' }}>
+                  {renderWorkoutsForDay(props.item.id)}
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item>
+          </Grid>
+        </Grid>
+      </Container>
     </React.Fragment>
   )
 }

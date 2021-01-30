@@ -12,11 +12,6 @@ const Tracker = props => {
   const [showProgramList, setShowProgramList] = useState(true)
   const [showSpinner, setShowSpinner] = useState(false)
 
-
-  const showTheSpinner = show => {
-    setShowSpinner(show)
-  }
-
   const toggleShowProgramList = () => {
     setShowProgramList(!showProgramList)
   }
@@ -27,10 +22,11 @@ const Tracker = props => {
   }
 
   const handleProgramSelect = async id => {
+    setShowSpinner(true)
     toggleShowProgramList()
     let program = await retrieveProgramById(id)
     await programContext.updateProgram(program)
-    showTheSpinner(false)
+    setShowSpinner(false)
   }
 
   const clearProgram = () => {

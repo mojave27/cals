@@ -3,14 +3,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import ThemeContext from '../../context/ThemeContext'
 import { isEmpty } from 'lodash'
 import TabbedContent from '../controls/TabbedContent'
-import {
-  Card,
-  CardHeader,
-  IconButton,
-} from '@material-ui/core'
+import { Card, CardHeader, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import AccordionWrapper from '../accordion/AccordionWrapper'
 import ProgramContext from '../../context/ProgramContext'
+import BasicSpinner from '../spinners/BasicSpinner'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,9 +45,7 @@ const ProgramTracker = props => {
               aria-label='Close'
               onClick={handleClose}
             >
-              <CloseIcon
-                fontSize='small'
-              />
+              <CloseIcon fontSize='small' />
             </IconButton>
           }
           title={context.program.name}
@@ -71,10 +66,10 @@ const ProgramTracker = props => {
           <div>{'button to add schedule'}</div>
         ) : (
           <TabbedContent
-          items={context.program.schedule.days}
-          type={'scheduleday'}
-          viewOnly={true}
-        />
+            items={context.program.schedule.days}
+            type={'scheduleday'}
+            viewOnly={true}
+          />
         )}
       </AccordionWrapper>
     </React.Fragment>

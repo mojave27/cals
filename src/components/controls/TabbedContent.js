@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   verticalTabs: {
-    width:'100%'
+    width: '100%'
   },
   tabPanel: {
     margin: 'auto',
@@ -45,58 +45,59 @@ const TabbedContent = props => {
   const renderItem = (itemType, item) => {
     switch (itemType.toLowerCase()) {
       case 'workoutcard':
-        return <WorkoutCard 
-        key={item.id}
-        id={item.id}
-        item={item}
-        maxWidth={'375px'}
-        disabled={props.viewOnly}
-        />
+        return (
+          <WorkoutCard
+            key={item.id}
+            id={item.id}
+            item={item}
+            maxWidth={'375px'}
+            disabled={props.viewOnly}
+          />
+        )
 
       case 'scheduleday':
-        return <ScheduleDay 
-        key={item.id}
-        id={item.id}
-        item={item}
-        maxWidth={'375px'}
-        disabled={props.viewOnly}
-        />
+        return (
+          <ScheduleDay
+            key={item.id}
+            id={item.id}
+            item={item}
+            maxWidth={'375px'}
+            disabled={props.viewOnly}
+          />
+        )
 
       default:
-        return <div className="no_item_type" />
+        return <div className='no_item_type' />
     }
   }
 
-  return isEmpty(props.items) 
-    ? <Spinner /> 
-    : (<Container>
+  return isEmpty(props.items) ? (
+    <Spinner />
+  ) : (
+    <Container>
       <div className={classes.verticalTabs}>
-      <Tabs
-        orientation='horizontal'
-        variant='scrollable'
-        value={value}
-        onChange={handleChange}
-        scrollButtons="auto"
-        aria-label='tabs'
-      >
-        {props.items.map((item, index) => {
-          let name = item.name === '' ? `item-${index}` : item.name
-          return (
-            <Tab 
-              label={name} 
-              {...a11yProps(index)} 
-              key={`tab-${index}`} 
-            />
-          )
-        })}
-      </Tabs>
-    </div>
+        <Tabs
+          orientation='horizontal'
+          variant='scrollable'
+          value={value}
+          onChange={handleChange}
+          scrollButtons='auto'
+          aria-label='tabs'
+        >
+          {props.items.map((item, index) => {
+            let name = item.name === '' ? `item-${index}` : item.name
+            return (
+              <Tab label={name} {...a11yProps(index)} key={`tab-${index}`} />
+            )
+          })}
+        </Tabs>
+      </div>
       {props.items.map((item, index) => {
         return (
-          <TabPanel 
-            className={classes.tabPanel} 
-            value={value} 
-            index={index} 
+          <TabPanel
+            className={classes.tabPanel}
+            value={value}
+            index={index}
             key={`tabpanel-${index}`}
           >
             {renderItem(props.type, item)}
@@ -118,4 +119,3 @@ TabbedContent.defaultProps = {
 }
 
 export default TabbedContent
-

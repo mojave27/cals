@@ -20,7 +20,7 @@ const BasicSpinner = props => {
 
   return (
     show === true ?
-    <Container>
+    <Container >
       <CircularProgress
         color={'secondary'}
         className={classes.spinner}

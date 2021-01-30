@@ -103,6 +103,8 @@ const WorkoutTableMobile = props => {
       let matchingSetExGroup = set.exerciseGroups.find(
         setExGrp => setExGrp.id === exGroup.id
       )
+      console.log(exGroup.id)
+      console.log(matchingSetExGroup)
       return (
         <TableRow
           key={`${set.id}-${exGroup.id}`}
