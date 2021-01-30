@@ -129,7 +129,7 @@ class ProgramProvider extends React.Component {
             const program = this.copyProgramFromState()
             let workouts = program.workouts.filter(wo => wo.id !== workoutId)
             let workoutIds = program.workoutIds.filter(woId => woId !== workoutId)
-            let updatedSchedule = program.schedule.days.map(day => {
+            let updatedDays = program.schedule.days.map(day => {
               let workouts = day.routine.workouts.filter(woId => woId !== workoutId)
               day.routine.workouts = workouts
               return day
@@ -138,7 +138,7 @@ class ProgramProvider extends React.Component {
               ...program,
               workouts,
               workoutIds,
-              schedule: updatedSchedule
+              schedule: { days: updatedDays }
             }
             this.setState({ program: updatedProgram })
           },
