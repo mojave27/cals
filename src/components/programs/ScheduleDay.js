@@ -114,6 +114,7 @@ const ScheduleDay = props => {
     let workouts = []
     props.item.routine.cardio.forEach(id => {
       let cardioEx = programContext.program.cardio.find(ex => ex.id == id)
+      cardioEx.type = cardioEx.name
       cardio.push(cardioEx)
     })
     props.item.routine.workouts.forEach(id => {
