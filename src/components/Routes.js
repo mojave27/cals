@@ -20,7 +20,7 @@ const Routes = () => {
       <Home path='/' />
       <Tracker path='/program-tracker' />
       <ProgramForm path='/program-form' />
-      <ProgramForm path='/program-form/:programId' />
+      {/* <ProgramForm path='/program-form/:programId' /> */}
       <Exercises path='/exercises' />
       <Workouts path='/manage/workouts' />
       <DataConsistency path='/admin/consistency-check' />
