@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { deleteExercisesById, retrieveExercises } from '../../api/exercisesApi'
-import Modal from '../Modal'
+import Modal from '../modules/common/components/Modal'
 import BasicSpinner from '../spinners/BasicSpinner'
 import FormButton from '../inputs/FormButton'
 import ExerciseForm from './ExerciseForm'
 import ExercisesTable from './ExercisesTable'
-import { dynamicSort } from '../ArrayUtils'
+import { dynamicSort } from '../modules/common/utilties/ArrayUtils'
 
 
 const Exercises = props => {

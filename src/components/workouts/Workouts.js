@@ -8,7 +8,7 @@ import {
 } from '../../api/workoutsApi'
 import WorkoutFormDialog from './WorkoutFormDialog'
 import FormButton from '../inputs/FormButton'
-import { findIndexOfStringId } from '../ArrayUtils'
+import { findIndexOfStringId } from '../modules/common/utilties/ArrayUtils'
 import WorkoutList from './WorkoutList'
 
 const Workouts = props => {

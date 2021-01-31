@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
-import { findIndexOfId, sortByStringProperty } from '../ArrayUtils'
+import { findIndexOfId, sortByStringProperty } from '../modules/common/utilties/ArrayUtils'
 import { retrieveExercises } from '../../api/exercisesApi'
 import { updateSet } from '../../api/setsApi'
 import SetContext from '../../context/SetContext'

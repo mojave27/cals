@@ -5,7 +5,7 @@ import {
   retrieveItemById,
   updateItemById,
   generateNewId
-} from '../ArrayUtils'
+} from '../modules/common/utilties/ArrayUtils'
 import ExerciseGroupTable from '../tables/ExerciseGroupTable'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'

@@ -1,6 +1,6 @@
 import React from 'react'
 import WoContext from './WoContext'
-import { findIndexOfStringId, updateItemById } from '../components/ArrayUtils'
+import { findIndexOfStringId, updateItemById } from '../components/modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
 
 export const emptyWorkout = {

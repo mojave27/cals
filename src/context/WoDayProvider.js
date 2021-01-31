@@ -1,6 +1,6 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
-import { findIndexOfStringId, updateItemById } from '../components/ArrayUtils'
+import { findIndexOfStringId, updateItemById } from '../components/modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
 import {
   retrieve as fetchWoDays,

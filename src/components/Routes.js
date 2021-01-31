@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import Home from './Home/Home'
+import Home from './modules/home/Home'
 import Login from './Auth/Login'
 import Tracker from './tracker/Tracker'
 import ProgramForm from './programs/ProgramForm'

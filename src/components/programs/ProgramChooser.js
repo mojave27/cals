@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import Modal from '../Modal'
+import Modal from '../modules/common/components/Modal'
 import ProgramsList from '../tracker/ProgramsList'
 import ThemeContext from '../../context/ThemeContext'
 import { retrieveProgramById } from '../../api/programsApi'

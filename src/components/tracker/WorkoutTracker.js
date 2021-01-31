@@ -4,10 +4,10 @@ import React, { useContext, useState } from 'react'
 import Spinner from '../Spinner'
 import TrackerContext from '../../context/TrackerContext'
 import SetEditor from './SetEditor'
-import Modal from '../Modal'
+import Modal from '../modules/common/components/Modal'
 import SetTable from '../tables/SetTable'
 import ExerciseTable from '../tables/ExerciseTable'
-import { generateNewId } from '../ArrayUtils'
+import { generateNewId } from '../modules/common/utilties/ArrayUtils''
 import { cloneDeep, isEmpty, isUndefined } from 'lodash'
 
 

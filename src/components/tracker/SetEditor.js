@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useEffect, useState } from 'react'
-import { /*compareByName,*/ findIndexOfId } from '../ArrayUtils'
+import { /*compareByName,*/ findIndexOfId } from '../modules/common/utilties/ArrayUtils'
 import { retrieve } from '../../api/exercisesApi'
 import { miniCard } from '../../styles/main-styles'
 import { isUndefined } from 'lodash'

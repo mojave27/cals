@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import CardioList from '../workouts/CardioList'
 // import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
 import ThemeContext from '../../context/ThemeContext'
-import { retrieveItemByStringId } from '../ArrayUtils'
+import { retrieveItemByStringId } from '../modules/common/utilties/ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   appBar: {

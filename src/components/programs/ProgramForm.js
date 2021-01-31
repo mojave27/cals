@@ -23,7 +23,7 @@ import {
 import FormButton from '../inputs/FormButton'
 import WorkoutCard from '../workouts/WorkoutCard'
 import ScheduleDialog from './ScheduleDialog'
-import { generateNewId } from '../ArrayUtils'
+import { generateNewId } from '../modules/common/utilties/ArrayUtils'
 import ProgramChooser from './ProgramChooser'
 
 const useStyles = makeStyles(theme => ({

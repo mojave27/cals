@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
-import { retrieveItemByStringId } from '../components/ArrayUtils'
+import { retrieveItemByStringId } from '../components/modules/common/utilties/ArrayUtils'
 
 const URL = 'programs'
 const NAME = 'programsApi'

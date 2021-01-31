@@ -21,7 +21,7 @@ import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles } from '@material-ui/core/styles'
-import { retrieveItemById } from '../ArrayUtils'
+import { retrieveItemById } from '../modules/common/utilties/ArrayUtils'
 import { retrieve } from '../../api/workoutsApi'
 import FormButton from '../inputs/FormButton'
 import { navigate } from '@reach/router';

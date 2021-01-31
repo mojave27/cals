@@ -1,6 +1,6 @@
 import React from 'react'
 import ProgramContext from './ProgramContext'
-import { generateNewId, findIndexOfId } from '../components/ArrayUtils'
+import { generateNewId, findIndexOfId } from '../components/modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
 
 const emptyProgram = {

@@ -1,6 +1,6 @@
 import React from 'react'
 import WorkoutHighlightCard from '../workouts/WorkoutHighlightCard'
-import ArrayUtils from '../ArrayUtils'
+import ArrayUtils from '../modules/common/utilties/ArrayUtils'
 import PropTypes from 'prop-types'
 import { Container, Grid } from '@material-ui/core'
 
