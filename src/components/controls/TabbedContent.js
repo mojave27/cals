@@ -115,7 +115,8 @@ TabbedContent.propTypes = {
 }
 
 TabbedContent.defaultProps = {
-  viewOnly: true
+  viewOnly: true,
+  items: []
 }
 
 export default TabbedContent
