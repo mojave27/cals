@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import TopNav from './Nav/TopNav/TopNav'
+// import TopNav from './Nav/TopNav/TopNav'
+import TopNav from 'components/modules/nav/TopNav'
 import TrackerProvider from '../context/TrackerProvider'
 import ProgramProvider from '../context/ProgramProvider'
 import SetProvider from '../context/SetProvider'
@@ -21,13 +22,11 @@ const ThemedContent = props => {
         <ProgramProvider>
           <WoProvider>
             <SetProvider>
-              {/* <div style={{ backgroundColor: `${context.theme.color5.hex}` }}> */}
               <div>
-                <TopNav {...props} />
                 <CssBaseline />
+                <TopNav {...props} />
                 <div
                   style={{
-                    // backgroundColor: `${context.theme.color5.hex}`,
                     height: '300vh',
                     maxWidth: `${context.mobile === true ? '100%' : '80%'}`,
                     margin: '20px auto'
