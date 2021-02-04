@@ -8,8 +8,9 @@ import RangeSlider from '../inputs/RangeSlider'
 import Workout from '../workouts/Workout'
 import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import { fade, makeStyles } from '@material-ui/core/styles'
+import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import {
+  Badge,
   Box,
   Container,
   Grid,
@@ -25,7 +26,10 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import WorkoutChooser from '../workouts/WorkoutChooser'
 import WoDayAppBar from './WoDayAppBar'
-import { findIndexOfId, generateNewId } from '../modules/common/utilties/ArrayUtils'
+import {
+  findIndexOfId,
+  generateNewId
+} from '../modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
@@ -77,6 +81,15 @@ const useStylesInput = makeStyles(theme => ({
   },
   focused: {}
 }))
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -5,
+    top: 5,
+    border: `2px solid ${theme.palette.success.light}`,
+    backgroundColor: theme.palette.success.light
+  },
+}))(Badge)
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
@@ -211,7 +224,11 @@ const WoDay = props => {
     let upDate = new Date(date)
     let woday = woDayContext.copyWoDay()
     //TODO: figure out why we have to add '1' to the day for it to be accurate.
-    woday.date = { day: upDate.getDate() +1, month: upDate.getMonth(), year: upDate.getFullYear()}
+    woday.date = {
+      day: upDate.getDate() + 1,
+      month: upDate.getMonth(),
+      year: upDate.getFullYear()
+    }
     woDayContext.updateWoDay(woday)
   }
 
@@ -242,8 +259,12 @@ const WoDay = props => {
   const getStartDate = () => {
     let date = woDayContext.woday.date
     let startDate = new Date(date.year, date.month, date.day)
-    let month = startDate.getMonth() + 1 < 10 ? `0${startDate.getMonth() + 1}` : startDate.getMonth() + 1
-    let day = startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate()
+    let month =
+      startDate.getMonth() + 1 < 10
+        ? `0${startDate.getMonth() + 1}`
+        : startDate.getMonth() + 1
+    let day =
+      startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate()
     let dateString = `${startDate.getFullYear()}-${month}-${day}`
     return dateString
   }
@@ -501,7 +522,9 @@ const WoDay = props => {
                     id='panel1a-header'
                   >
                     <Typography className={classes.heading}>
-                      {'Notes'}
+                      <StyledBadge variant='dot' invisible={woDayContext.woday.notes.length === 0}>
+                        {'Notes'}
+                      </StyledBadge>
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
