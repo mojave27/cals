@@ -33,15 +33,10 @@
 
 /* Dropdown button */
 .dropdown .dropbtn {
-  font-size: 16px; 
-  border: none;
-  outline: none;
+  /* font-size: 16px;  */
   color: white;
   padding: 10px 16px;
-  background-color: inherit;
-  font-family: inherit; /* Important for vertical align on mobile phones */
-  margin: 0; /* Important for vertical align on mobile phones */
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 /* Add a red background color to navbar links on hover */

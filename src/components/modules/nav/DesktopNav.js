@@ -1,99 +1,211 @@
-import React, { Component } from "react";
-import { Link } from "@reach/router";
-import { menuConfig } from './navMenuConfig';
-// import { menuConfig } from './topNavMenuConfig';
+import React, { useContext, useState } from 'react'
+import { Link } from '@reach/router'
+import { AppBar, Button, Menu, MenuItem, Popover, Toolbar, Typography } from '@material-ui/core'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { menuConfig } from './navMenuConfig'
+import ThemeContext from 'context/ThemeContext'
 
-import "./TopNav.css";
+import './TopNav.css'
 
-class TopNav extends Component {
-  state = {
-    display: {}
+const useStyles = makeStyles(theme => ({
+  // root: {
+  //   flexGrow: 1
+  // },
+  appbar: {
+    padding: '0px'
+  },
+  toolbar: {
+    borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
+    color: theme.palette.primary.contrastText
+  },
+  popover: {
+    pointerEvents: 'none',
+  },
+  // menuButton: {
+  //   marginRight: theme.spacing(2)
+  // },
+  // title: {
+  //   flexGrow: 1
+  // },
+  // list: {
+  //   width: 250
+  // },
+  // nested: {
+  //   paddingLeft: theme.spacing(4)
+  // },
+  // drawerHeader: {
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   padding: theme.spacing(0, 1),
+  //   justifyContent: 'flex-end'
+  // }
+}))
+
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+))
+
+const DesktopNav = props => {
+  const [display, setDisplay] = useState({})
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext.theme)
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const open = Boolean(anchorEl)
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    console.log('handleClose')
+    setAnchorEl(null)
+  }
+
+  // const handleClick = event => {
+  //   toggleDisplay(event, 'none')
+  // }
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  handleClick = event => {
-    this.toggleDisplay(event, "none");
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
   };
 
-  mouseOver = event => {
-    this.toggleDisplay(event, "block");
-  };
+  // const mouseEnter = event => {
+  //   console.log(`%c mouse enter`,'border:1px solid cyan; color:cyan')
+  //   // setAnchorEl(event.currentTarget)
+  // }
 
-  mouseOut = event => {
-    this.toggleDisplay(event, "none");
-  };
+  // const mouseLeave = event => {
+  //   console.log(`%c mouse leave`,'border:1px solid pink; color:pink')
+  //   // setAnchorEl(null)
+  // }
 
-  toggleDisplay = (event, displayType) => {
-    const menuName = event.target.getAttribute("menu-name");
-    let display = this.state.display;
-    display[menuName] = displayType;
-    this.setState({ display: display });
-  };
+  // const mouseOver = event => {
+  //   console.log(`%c mouse over`,'border:1px solid lime; color:lime')
+  //   setAnchorEl(event.currentTarget)
+  // }
 
-  renderDropDownMenu = (dropDown, index) => {
-    let menuName = dropDown.name;
-    return (
-      <div key={index} className="dropdown">
-        <button
-          onMouseOver={this.mouseOver}
-          onMouseOut={this.mouseOut}
-          menu-name={menuName}
-          className="dropbtn"
-        >
-          {menuName}
-          <i className="fa fa-caret-down" />
-        </button>
-        <div
-          style={{ display: this.state.display[menuName] }}
-          menu-name={menuName}
-          onClick={this.handleClick}
-          onMouseOver={this.mouseOver}
-          onMouseOut={this.mouseOut}
-          className="dropdown-content"
-        >
-        {dropDown.items.map( (menuItem, index) => {
-          return (<Link key={index} menu-name={menuName} to={menuItem.to}>{menuItem.text}</Link>)
-        })}
-        </div>
-      </div>
-    );
-  };
+  // const mouseOut = event => {
+  //   console.log(`%c mouse out`,'border:1px solid red; color:red')
+  //   setAnchorEl(null)
+  // }
 
-  renderMenuItem = (item, index) => {
+  const renderMenuItem = (item, index) => {
     switch (item.type) {
       case 'button':
-        console.log('render a button')
-        return this.renderButton(item, index)
+        return renderButton(item, index)
       case 'dropdown':
-        console.log('render a dropdown')
-        return this.renderDropDownMenu(item, index)
+        return renderDropDownMenu(item, index)
       case 'functionButton':
-        console.log('render a function button')
-        break;
+        break
       default:
         console.log('unknown menu item type')
     }
   }
 
-  renderButton = (item, index) => {
-    console.log(JSON.stringify(item))
-    return <Link to={item.link.to}>{item.link.text}</Link>
+  const renderButton = (item, index) => {
+    return (
+      <Button key={`${index}-${item.text}`} component={Link} to={item.link.to}>
+        {item.link.text}
+      </Button>
+    )
   }
 
-  render() {
+  const renderDropDownMenu = (dropDown, index) => {
+    let menuName = dropDown.name
     return (
-      <div style={{marginBottom: '30px'}}>
-        <div className="navbar">
-          {/* <Link to="/">home</Link> */}
-          {/* <a href="https://fdc.nal.usda.gov/" target={'_blank'}>usda-db</a> */}
-          { menuConfig.map( (menu, index) => {
-            // return this.renderDropDownMenu(menu, index)
-            return this.renderMenuItem(menu, index)
-            })
-          }
-        </div>
+      <div key={index} className='dropdown'>
+        <Button
+          menu-name={menuName}
+          color={'inherit'}
+          className='dropbtn'
+          // onClick={handleClick}
+          // onMouseOver={mouseOver}
+          // onMouseEnter={mouseEnter}
+          // onMouseOut={mouseOut}
+          // onMouseLeave={mouseLeave}
+          aria-owns={open ? 'mouse-over-popover' : undefined}
+          aria-haspopup="true"
+          onMouseEnter={handlePopoverOpen}
+          onMouseLeave={handlePopoverClose}
+        >
+          {menuName}
+        </Button>
+        <Popover
+        id="mouse-over-popover"
+        className={classes.popover}
+        classes={{
+          paper: classes.paper,
+        }}
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        onClose={handleClose}
+        disableRestoreFocus
+      >
+          <Typography>I use Popover.</Typography>
+          {/* {dropDown.items.map( (item, index) => { */}
+            {/* return <MenuItem key={`${index}-${item.text}`} onClick={handleClose} component={Link} to={item.to}>{item.text}</MenuItem> */}
+          {/* })} */}
+      </Popover>
+        {/* <StyledMenu
+          id='simple-menu'
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          MenuListProps={{ onMouseLeave: handleClose }}
+        >
+          {dropDown.items.map( (item, index) => {
+            return <MenuItem key={`${index}-${item.text}`} onClick={handleClose} component={Link} to={item.to}>{item.text}</MenuItem>
+          })}
+        </StyledMenu> */}
       </div>
-    );
+    )
   }
+
+  return (
+    <div style={{ marginBottom: '30px' }}>
+      <AppBar
+        position='sticky'
+        elevation={0}
+        className={classes.appbar}
+        style={{ marginBottom: '30px' }}
+      >
+        <Toolbar variant={'dense'} className={classes.toolbar}>
+          {menuConfig.map((menu, index) => {
+            return renderMenuItem(menu, index)
+          })}
+        </Toolbar>
+      </AppBar>
+    </div>
+  )
 }
 
-export default TopNav;
+export default DesktopNav
