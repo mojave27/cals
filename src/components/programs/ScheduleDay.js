@@ -1,8 +1,19 @@
 import React, { useContext, useState } from 'react'
-import { convertTemplateToActiveWorkout } from '../workouts/workoutTemplateConverter'
-import ThemeContext from '../../context/ThemeContext'
-import ProgramContext from '../../context/ProgramContext'
-import WoDayContext from '../../context/WoDayContext'
+import { navigate } from '@reach/router';
+import { makeStyles } from '@material-ui/core/styles'
+import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
+import ThemeContext from 'context/ThemeContext'
+import ProgramContext from 'context/ProgramContext'
+import WoDayContext from 'context/WoDayContext'
+import CardioCard from './CardioCard'
+import WoListDialog from 'components/workouts/WoListDialog'
+import WorkoutCard from 'components/workouts/WorkoutCard'
+import IconButton from '@material-ui/core/IconButton'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import { retrieveItemById } from 'components/modules/common/utilties/ArrayUtils'
+import { retrieve } from 'api/workoutsApi'
+import FormButton from 'components/inputs/FormButton'
 import {
   Box,
   Button,
@@ -14,17 +25,7 @@ import {
   Grid,
   Typography
 } from '@material-ui/core'
-import CardioCard from './CardioCard'
-import WoListDialog from '../workouts/WoListDialog'
-import WorkoutCard from '../workouts/WorkoutCard'
-import IconButton from '@material-ui/core/IconButton'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import { makeStyles } from '@material-ui/core/styles'
-import { retrieveItemById } from '../modules/common/utilties/ArrayUtils'
-import { retrieve } from '../../api/workoutsApi'
-import FormButton from '../inputs/FormButton'
-import { navigate } from '@reach/router';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -113,11 +114,13 @@ const ScheduleDay = props => {
     let cardio = []
     let workouts = []
     props.item.routine.cardio.forEach(id => {
+      // eslint-disable-next-line eqeqeq
       let cardioEx = programContext.program.cardio.find(ex => ex.id == id)
       cardioEx.type = cardioEx.name
       cardio.push(cardioEx)
     })
     props.item.routine.workouts.forEach(id => {
+      // eslint-disable-next-line eqeqeq
       let wo = programContext.program.workouts.find(ex => ex.id == id)
       workouts.push(wo)
     })

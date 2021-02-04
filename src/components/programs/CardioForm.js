@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import { fade, makeStyles } from '@material-ui/core/styles'
-import FormButton from '../inputs/FormButton'
+import FormButton from 'components/inputs/FormButton'
 import { Card, CardContent, TextField } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({

@@ -1,29 +1,24 @@
-import React, { useContext, useState } from 'react'
-import { convertTemplateToActiveWorkout } from '../workouts/workoutTemplateConverter'
-import ThemeContext from '../../context/ThemeContext'
-import ProgramContext from '../../context/ProgramContext'
-import WoDayContext from '../../context/WoDayContext'
+import React, { useContext } from 'react'
+import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
+import ThemeContext from 'context/ThemeContext'
+import ProgramContext from 'context/ProgramContext'
+import WoDayContext from 'context/WoDayContext'
 import {
   Box,
-  Button,
   Card,
-  CardActions,
   CardHeader,
   CardContent,
-  Container,
   Grid,
   Typography
 } from '@material-ui/core'
-import CardioCard from './CardioCard'
-import WoListDialog from '../workouts/WoListDialog'
-import WorkoutCard from '../workouts/WorkoutCard'
+import CardioCard from 'components/programs/CardioCard'
+import WorkoutCard from 'components/workouts/WorkoutCard'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles } from '@material-ui/core/styles'
-import { retrieveItemById } from '../modules/common/utilties/ArrayUtils'
-import { retrieve } from '../../api/workoutsApi'
-import FormButton from '../inputs/FormButton'
+import { retrieveItemById } from 'components/modules/common/utilties/ArrayUtils'
+import FormButton from 'components/inputs/FormButton'
 import { navigate } from '@reach/router';
 
 const useStyles = makeStyles(theme => ({

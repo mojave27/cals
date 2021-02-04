@@ -1,19 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Dialog, DialogTitle } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import ListAltIcon from '@material-ui/icons/ListAlt'
 import { blue } from '@material-ui/core/colors';
 import { green } from '@material-ui/core/colors';
 
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 
 const EXISTING = 'Choose Existing'
 const NEW = 'Create New'

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { retrievePrograms } from '../../api/programsApi'
-import TrackerContext from '../../context/TrackerContext'
+import { retrievePrograms } from 'api/programsApi'
+import TrackerContext from 'context/TrackerContext'
 import { isEmpty } from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../context/ThemeContext'
-import BasicSpinner from '../spinners/BasicSpinner'
+import ThemeContext from 'context/ThemeContext'
+import BasicSpinner from 'components/spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({

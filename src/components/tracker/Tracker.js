@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
-import ProgramsList from './ProgramsList'
-import ProgramContext from '../../context/ProgramContext'
-import { retrieveProgramById } from '../../api/programsApi'
-import ProgramTracker from './ProgramTracker'
+import ProgramsList from 'components/tracker/ProgramsList'
+import ProgramContext from 'context/ProgramContext'
+import { retrieveProgramById } from 'api/programsApi'
+import ProgramTracker from 'components/tracker/ProgramTracker'
 import { isEmpty } from 'lodash'
-import BasicSpinner from '../spinners/BasicSpinner'
-import FormButton from '../inputs/FormButton'
+import BasicSpinner from 'components/spinners/BasicSpinner'
+import FormButton from 'components/inputs/FormButton'
 
 const Tracker = props => {
   const programContext = useContext(ProgramContext)

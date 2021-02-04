@@ -1,5 +1,4 @@
-// import { css } from '@emotion/core'
-import { activeTheme } from '../../styles/main-styles'
+import { activeTheme } from 'styles/main-styles'
 
 
 /*the container must be positioned relative:*/

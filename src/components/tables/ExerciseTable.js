@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core'
 import React, { useContext } from 'react'
 import { get, isUndefined } from 'lodash'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import {
   dateHeader,
   setHeader,
@@ -10,7 +10,7 @@ import {
   tableInput,
   dayLeftCell,
   dayRightCell
-} from '../../styles/table'
+} from 'styles/table'
 // import { activeTheme } from '../../styles/main-styles'
 
 const Table = props => {

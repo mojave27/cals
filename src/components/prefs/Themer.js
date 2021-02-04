@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
-import DateInput from '../inputs/DateInput'
-import TextInput from '../inputs/TextInput'
-import RangeSlider from '../inputs/RangeSlider'
-import ThemeContext from '../../context/ThemeContext'
-import FormButton from '../inputs/FormButton'
+import DateInput from 'components/inputs/DateInput'
+import TextInput from 'components/inputs/TextInput'
+import RangeSlider from 'components/inputs/RangeSlider'
+import ThemeContext from 'context/ThemeContext'
+import FormButton from 'components/inputs/FormButton'
 
 const useStyles = makeStyles(theme => ({
   root: {

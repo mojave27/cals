@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { Fragment } from 'react'
-import { formContainer, row } from '../../styles/main-styles'
+import { formContainer, row } from 'styles/main-styles'
 
 const Test = props => {
   // const [reportData, setReportData] = useState({})

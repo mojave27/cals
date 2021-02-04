@@ -30,10 +30,6 @@ const Workouts = props => {
     setShowWorkoutDialog(!showWorkoutDialog)
   }
 
-  const toggleSpinner = () => {
-    setShowSpinner(!showSpinner)
-  }
-
   const addWorkout = () => {
     woContext.updateWorkout(emptyWorkout)
     toggleDialog()

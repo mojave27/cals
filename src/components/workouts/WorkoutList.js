@@ -22,8 +22,13 @@ const WorkoutList = props => {
     return false
   }
 
+  const doNothing = () => {
+    console.log(JSON.stringify(props.workouts))
+  }
+
   return (
     <Container style={{ padding: '25px' }}>
+      <div>{doNothing()}</div>
       <Grid container spacing={2} justify='flex-start'>
         {sortWorkouts(props.workouts).map(wo => {
           return (
@@ -54,7 +59,8 @@ WorkoutList.propTypes = {
   disabled: PropTypes.bool,
   deleteWorkout: PropTypes.func,
   editWorkout: PropTypes.func,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  selected: PropTypes.array
 }
 
 WorkoutList.defaultProps = {

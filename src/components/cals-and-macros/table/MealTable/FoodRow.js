@@ -48,6 +48,7 @@ const StyledTableRow = withStyles(theme => ({
 const FoodRow = props => {
   const themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
+  // eslint-disable-next-line no-unused-vars
   let [units, setUnits] = useState('grams')
 
   const rowDelete = e => {

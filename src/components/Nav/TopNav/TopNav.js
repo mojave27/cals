@@ -250,7 +250,7 @@ const TopNav = props => {
             onClose={handleClose}
           >
             <MenuItem onClick={() => handleThemeSelect('light')}>light</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('woSheet')}>medium</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('medium')}>medium</MenuItem>
             {/* <MenuItem onClick={() => handleThemeSelect('oranges')}>oranges</MenuItem> */}
             <MenuItem onClick={() => handleThemeSelect('dark')}>dark</MenuItem>
           </Menu>

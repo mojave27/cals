@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import {
   Table,

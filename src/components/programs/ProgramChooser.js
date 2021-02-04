@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react'
-import Modal from '../modules/common/components/Modal'
-import ProgramsList from '../tracker/ProgramsList'
-import ThemeContext from '../../context/ThemeContext'
-import { retrieveProgramById } from '../../api/programsApi'
+import Modal from 'components/modules/common/components/Modal'
+import ProgramsList from 'components/tracker/ProgramsList'
+import ThemeContext from 'context/ThemeContext'
+import { retrieveProgramById } from 'api/programsApi'
 import { makeStyles } from '@material-ui/core/styles'
-import { basicButton } from '../../styles/Styles'
 import { Container, Grid, Paper } from '@material-ui/core'
 
-import FormButton from '../inputs/FormButton'
-import ProgramContext from '../../context/ProgramContext'
+import FormButton from 'components/inputs/FormButton'
+import ProgramContext from 'context/ProgramContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,8 +17,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     textAlign: 'left',
     margin: '3px'
-  },
-  basicButton: basicButton(theme)
+  }
 }))
 
 const ProgramChooser = props => {

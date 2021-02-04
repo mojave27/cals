@@ -166,6 +166,32 @@ export const woSheet = {
   }
 }
 
+export const medium = {
+  name: 'medium',
+  palette: {
+    type: 'light',
+    background: { paper: '#aaa', default: '#9d9d9d' },
+    primary: {
+      light: '#dbdbdb',
+      main: '#8F8F8F',
+      dark: '#4f4f4f',
+      contrastText: '#fff'
+    },
+    secondary: {
+      // light: '#ffffb4',
+      light: '#b7c4d1',
+      main: '#808991',
+      dark: '#484ds2',
+      contrastText: '#fff'
+    }
+  },
+  shape :{
+    borderRadius: '1'
+  },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+}
+
 export const dark = {
   name: 'dark',
   palette: {
@@ -989,5 +1015,6 @@ export const themes = {
   snow: snow,
   sea: sea,
   light: light,
+  medium: medium,
   dark: dark
 }

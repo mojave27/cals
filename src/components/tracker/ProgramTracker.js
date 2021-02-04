@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import DayView from '../programs/DayView'
 import ProgramContext from '../../context/ProgramContext'
 import ThemeContext from '../../context/ThemeContext'
 import TabbedContent from '../controls/TabbedContent'
@@ -9,12 +8,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import {
   Card,
   CardHeader,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow
+  IconButton
 } from '@material-ui/core'
 import { isEmpty } from 'lodash'
 

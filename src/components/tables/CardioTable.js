@@ -12,8 +12,8 @@ import {
   TableRow,
   TextField
 } from '@material-ui/core'
-import ThemeContext from '../../context/ThemeContext'
-import MobileCardioTable from './MobileCardioTable'
+import ThemeContext from 'context/ThemeContext'
+import MobileCardioTable from 'components/tables/MobileCardioTable'
 
 // const useStyles = makeStyles(context => ({
 //   root: {

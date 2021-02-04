@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import { AppBar, Box, Container, Tab, Tabs } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import WorkoutList from '../workouts/WorkoutList'
+import WorkoutList from 'components/workouts/WorkoutList'
 
 const useStyles = makeStyles(theme => ({
   root: {

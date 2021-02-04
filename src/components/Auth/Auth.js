@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import { config as awsConfig } from '../../config/lambdaConfig'
+import { config as awsConfig } from 'config/lambdaConfig'
 
 export const getSessionJwt = async () => {
   const user = await Auth.currentAuthenticatedUser();

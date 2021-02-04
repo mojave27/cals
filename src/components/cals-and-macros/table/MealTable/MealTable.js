@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 const MealTable = props => {
   const themeContext = useContext(ThemeContext)
+  // eslint-disable-next-line no-unused-vars
   const classes = useStyles(themeContext.theme)
 
   return (

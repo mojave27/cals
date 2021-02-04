@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import ThemeContext from '../../../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 

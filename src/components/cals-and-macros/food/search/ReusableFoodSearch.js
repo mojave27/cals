@@ -29,6 +29,7 @@ const FoodSearch = props => {
 
   useEffect(() => {
     retrieve()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleModalCancel = () => {
