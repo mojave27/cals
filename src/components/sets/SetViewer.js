@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
-import Table from '../tables/SimpleTable'
+import Table from 'components/tables/SimpleTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { row, card } from '../../styles/main-styles'
-import { gridItem } from '../../styles/gridStyles'
-import { blockHeader } from '../../styles/program'
+import { row, card } from 'styles/main-styles'
+import { gridItem } from 'styles/gridStyles'
+import { blockHeader } from 'styles/program'
 
 const SetViewer = props => {
 

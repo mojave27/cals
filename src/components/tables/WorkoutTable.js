@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { table } from '../../styles/table'
-import BlockHeader from '../BlockHeader'
+import { table } from 'styles/table'
+import BlockHeader from 'components/BlockHeader'
 
 //TODO: update this table to use context instead of passing the props/data all around it.
 class Table extends React.Component {

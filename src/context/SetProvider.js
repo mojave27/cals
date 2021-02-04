@@ -1,6 +1,6 @@
 import React from 'react'
 import SetContext from './SetContext'
-import { findIndexOfId, updateItemById } from '../components/ArrayUtils'
+import { findIndexOfId, updateItemById } from '../components/modules/common/utilties/ArrayUtils'
 
 let emptySet = {
   exercises: []

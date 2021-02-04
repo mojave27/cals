@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   spinner: {
@@ -20,7 +20,7 @@ const BasicSpinner = props => {
 
   return (
     show === true ?
-    <Container>
+    <Container >
       <CircularProgress
         color={'secondary'}
         className={classes.spinner}

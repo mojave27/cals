@@ -1,17 +1,17 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
-import { findIndexOfId, sortByStringProperty } from '../ArrayUtils'
-import { retrieveExercises } from '../../api/exercisesApi'
-import { updateSet } from '../../api/setsApi'
-import SetContext from '../../context/SetContext'
-import FormButton from '../inputs/FormButton'
+import { findIndexOfId, sortByStringProperty } from 'components/modules/common/utilties/ArrayUtils'
+import { retrieveExercises } from 'api/exercisesApi'
+import { updateSet } from 'api/setsApi'
+import SetContext from 'context/SetContext'
+import FormButton from 'components/inputs/FormButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { formInput } from '../../styles/main-styles'
-import ExercisesTable from '../exercises/ExercisesTable'
-import ThemeContext from '../../context/ThemeContext'
+import { formInput } from 'styles/main-styles'
+import ExercisesTable from 'components/exercises/ExercisesTable'
+import ThemeContext from 'context/ThemeContext'
 import {
   Box,
   Card,

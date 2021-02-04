@@ -43,7 +43,11 @@ const useStyles = makeStyles(theme => ({
   },
   tableContaner: {
     color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.dark
+    backgroundColor: theme.palette.primary.dark,
+    '& .MuiTableContainer-root': {
+      width: '100%',
+      overflowX: 'visible',
+    }
   },
   tableHead: {
     color: theme.palette.primary.contrastText,

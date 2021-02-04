@@ -1,10 +1,11 @@
 import React from 'react'
 import { Router } from '@reach/router'
-import Home from './Home/Home'
+import Home from './modules/home/Home'
 import Login from './Auth/Login'
 import Tracker from './tracker/Tracker'
 import ProgramForm from './programs/ProgramForm'
 import Exercises from './exercises/Exercises'
+import Meal from './cals-and-macros/meal/Meal'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
 import MuiPalette from './Admin/MuiPalette'
@@ -19,7 +20,7 @@ const Routes = () => {
       <Home path='/' />
       <Tracker path='/program-tracker' />
       <ProgramForm path='/program-form' />
-      <ProgramForm path='/program-form/:programId' />
+      {/* <ProgramForm path='/program-form/:programId' /> */}
       <Exercises path='/exercises' />
       <Workouts path='/manage/workouts' />
       <DataConsistency path='/admin/consistency-check' />
@@ -29,6 +30,7 @@ const Routes = () => {
       <WoDay path='/woday' />
       <WoDayTracker path='/tracker/woday' />
       <Login path='/login' />
+      <Meal path='/meal' />
     </Router>
   )
 }

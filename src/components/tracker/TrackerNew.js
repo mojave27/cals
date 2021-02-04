@@ -8,7 +8,7 @@ import ProgramTracker from './ProgramTracker'
 import { get } from 'lodash'
 // import ThemeContext from '../../context/ThemeContext'
 import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-import { retrieveItemByStringId } from '../ArrayUtils'
+import { retrieveItemByStringId } from '../modules/common/utilties/ArrayUtils'
 import BasicSpinner from '../spinners/BasicSpinner'
 
 const Tracker = props => {

@@ -10,7 +10,7 @@ import WorkoutCard from './WorkoutCard'
 import { makeStyles } from '@material-ui/core/styles'
 import { basicButton } from '../../styles/Styles'
 import { Container, Grid, Paper } from '@material-ui/core'
-import ArrayUtils from '../ArrayUtils'
+import ArrayUtils from '../modules/common/utilties/ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   root: {

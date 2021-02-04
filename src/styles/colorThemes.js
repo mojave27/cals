@@ -45,9 +45,9 @@ export const light = {
   palette: {
     type: 'light',
     primary: {
-      main: '#6ec5ff',
-      light: '#a5f8ff',
-      dark: '#3095cc',
+      main: '#2196f3',
+      light: '#64b5f6',
+      dark: '#1976d2',
       contrastText: '#fff'
     },
     secondary: {
@@ -56,6 +56,9 @@ export const light = {
       dark: '#c0a035',
       contrastText: '#222'
     }
+  },
+  shape :{
+    borderRadius: '1'
   },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
@@ -120,6 +123,9 @@ export const woSheet = {
       contrastText: '#353535'
     }
   },
+  shape :{
+    borderRadius: '1'
+  },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
   color1: {
@@ -160,6 +166,32 @@ export const woSheet = {
   }
 }
 
+export const medium = {
+  name: 'medium',
+  palette: {
+    type: 'light',
+    background: { paper: '#aaa', default: '#9d9d9d' },
+    primary: {
+      light: '#dbdbdb',
+      main: '#8F8F8F',
+      dark: '#4f4f4f',
+      contrastText: '#fff'
+    },
+    secondary: {
+      // light: '#ffffb4',
+      light: '#b7c4d1',
+      main: '#808991',
+      dark: '#484ds2',
+      contrastText: '#fff'
+    }
+  },
+  shape :{
+    borderRadius: '1'
+  },
+  highlightYellow: highlights.lightThemeHighlightYellow,
+  highlightGreen: highlights.lightThemeHighlightGreen,
+}
+
 export const dark = {
   name: 'dark',
   palette: {
@@ -176,6 +208,9 @@ export const dark = {
       dark: '#8d8d8d',
       contrastText: '#222'
     }
+  },
+  shape :{
+    borderRadius: '1'
   },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
@@ -980,5 +1015,6 @@ export const themes = {
   snow: snow,
   sea: sea,
   light: light,
+  medium: medium,
   dark: dark
 }

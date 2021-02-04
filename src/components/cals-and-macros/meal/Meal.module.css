@@ -1,0 +1,41 @@
+.flexContainer {
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    margin:10px;
+    padding:10px;
+    border:1px solid lightgrey;
+}
+
+.cell {
+    width:200px;
+    height:30px;
+    border:1px solid lightgrey;
+    text-align: center;
+    line-height: 25px;
+    /* margin: 10px; */
+    font-size: 1.1em;
+    padding:3px;
+    overflow: hidden;
+}
+
+.leadCell {
+    composes: cell;
+    font-weight: bold;
+}
+
+.titleBar {
+    border-top:2px solid lightgrey;
+    border-bottom:2px solid lightgrey;
+    text-align: center;
+    font-weight:bold;
+    font-size: 1.2em;
+}
+
+.divider {
+    border:3px solid darkgrey;
+}

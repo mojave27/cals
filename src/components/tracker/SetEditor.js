@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React, { useEffect, useState } from 'react'
-import { /*compareByName,*/ findIndexOfId } from '../ArrayUtils'
-import { retrieve } from '../../api/exercisesApi'
-import { miniCard } from '../../styles/main-styles'
+import { /*compareByName,*/ findIndexOfId } from 'components/modules/common/utilties/ArrayUtils'
+import { retrieve } from 'api/exercisesApi'
+import { miniCard } from 'styles/main-styles'
 import { isUndefined } from 'lodash'
-import BlockHeader from '../BlockHeader'
+import BlockHeader from 'components/BlockHeader'
 
 import {
   basicButton,

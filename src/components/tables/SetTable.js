@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import React from 'react'
-import { setHeader, table, setLeadCell } from '../../styles/table'
-import { editIcon } from '../../styles/main-styles'
+import { setHeader, table, setLeadCell } from 'styles/table'
+import { editIcon } from 'styles/main-styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy, faEdit } from '@fortawesome/free-solid-svg-icons'
 

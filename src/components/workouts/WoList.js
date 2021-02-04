@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Grid } from '@material-ui/core'
 import WorkoutCard from '../workouts/WorkoutCard'
-import ArrayUtils from '../ArrayUtils'
+import ArrayUtils from '../modules/common/utilties/ArrayUtils'
 import PropTypes from 'prop-types'
 
 const WoList = props => {

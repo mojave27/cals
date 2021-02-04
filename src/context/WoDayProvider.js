@@ -1,6 +1,6 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
-import { findIndexOfStringId, updateItemById } from '../components/ArrayUtils'
+import { findIndexOfStringId, updateItemById } from '../components/modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
 import {
   retrieve as fetchWoDays,
@@ -26,7 +26,7 @@ export const emptyWoDay = {
   energy: 10,
   sleep: 10,
   cardio: {
-    headers: ['delete', 'type', 'duration', 'distance', 'heart rate'],
+    headers: ['delete', 'type', 'targets', 'duration', 'distance', 'heart rate'],
     exercises: []
   },
   wo: {

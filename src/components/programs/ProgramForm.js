@@ -1,15 +1,20 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
-import WoContext from '../../context/WoContext'
-import ProgramContext from '../../context/ProgramContext'
-import ThemeContext from '../../context/ThemeContext'
-import { updateProgram, addProgram } from '../../api/programsApi'
-import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-import CardioFormDialog from './CardioFormDialog'
-import WorkoutFormDialog from '../workouts/WorkoutFormDialog'
-import WoListDialog from '../workouts/WoListDialog'
-import ProgramWorkoutDialog from './ProgramWorkoutDialog'
 import { makeStyles } from '@material-ui/core/styles'
-import CardioCard from './CardioCard'
+import WoContext from 'context/WoContext'
+import ProgramContext from 'context/ProgramContext'
+import ThemeContext from 'context/ThemeContext'
+import { updateProgram, addProgram } from 'api/programsApi'
+import { retrieve as retrieveWorkouts } from 'api/workoutsApi'
+import { generateNewId } from 'components/modules/common/utilties/ArrayUtils'
+import WorkoutFormDialog from 'components/workouts/WorkoutFormDialog'
+import WoListDialog from 'components/workouts/WoListDialog'
+import WorkoutCard from 'components/workouts/WorkoutCard'
+import FormButton from 'components/inputs/FormButton'
+import ProgramWorkoutDialog from 'components/programs/ProgramWorkoutDialog'
+import CardioFormDialog from 'components/programs/CardioFormDialog'
+import ScheduleDialog from 'components/programs/ScheduleDialog'
+import CardioCard from 'components/programs/CardioCard'
+import ProgramChooser from 'components/programs/ProgramChooser'
 import {
   Box,
   Button,
@@ -17,14 +22,10 @@ import {
   CardContent,
   Container,
   Divider,
+  Grid,
   TextField,
-  Grid
+  Typography,
 } from '@material-ui/core'
-import FormButton from '../inputs/FormButton'
-import WorkoutCard from '../workouts/WorkoutCard'
-import ScheduleDialog from './ScheduleDialog'
-import { generateNewId } from '../ArrayUtils'
-import ProgramChooser from './ProgramChooser'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -145,9 +146,9 @@ const ProgramForm = props => {
     let cardios = programContext.program.cardio
     return cardios && cardios.length > 0 ? (
       <Fragment>
-        <label htmlFor='workouts'>
-          Cardio
-        </label>
+        <Typography variant={'button'} gutterBottom>
+          {'Cardio'}
+        </Typography>
         <Grid container spacing={1} justify='flex-start'>
           {programContext.program.cardio.map(cardioRoutine => {
             return (
@@ -165,9 +166,9 @@ const ProgramForm = props => {
     let workouts = programContext.program.workouts
     return workouts && workouts.length > 0 ? (
       <Fragment>
-        <label htmlFor='workouts' className={classes.label}>
-          Workouts
-        </label>
+        <Typography variant={'button'} gutterBottom>
+          {'Workouts'}
+        </Typography>
         <Grid container spacing={1} justify='flex-start'>
           {workouts.map(wo => {
             return (

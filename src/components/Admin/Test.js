@@ -1,18 +1,8 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import { useContext, useState } from 'react'
-import { styles } from '../../styles/MainStyles'
-import ThemeContext from '../../context/ThemeContext'
-import { makeStyles } from '@material-ui/core/styles'
-
-import React from 'react';
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-
+import { makeStyles } from '@material-ui/core/styles'
+import ThemeContext from 'context/ThemeContext'
+import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,12 +17,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Test = props => {
-  let context = useContext(ThemeContext)
-  let { formContainer, row } = styles(context.theme)
-
   return (
-    <div css={formContainer}>
-      <div css={row}>Test Page</div>
+    <div> 
+      <div>Test Page</div>
       <SimpleTabs />
       <VerticalTabs />
     </div>

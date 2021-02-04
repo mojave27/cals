@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { navigate } from '@reach/router'
 import { retrieveWorkoutById } from '../../api/workoutsApi'
-import Modal from '../Modal'
+import Modal from '../modules/common/components/Modal'
 import WoDayContext from '../../context/WoDayContext'
 import CardioTable from '../tables/CardioTable'
 import RangeSlider from '../inputs/RangeSlider'
@@ -25,10 +25,11 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import WorkoutChooser from '../workouts/WorkoutChooser'
 import WoDayAppBar from './WoDayAppBar'
-import { findIndexOfId, generateNewId } from '../ArrayUtils'
+import { findIndexOfId, generateNewId } from '../modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/datePicker.css'
+import { convertTemplateToActiveWorkout } from '../workouts/workoutTemplateConverter'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -317,33 +318,6 @@ const WoDay = props => {
     updatedWoDay.wo = workout
     woDayContext.updateWoDay(updatedWoDay)
     toggleModal()
-  }
-
-  const convertTemplateToActiveWorkout = woTemplate => {
-    console.log(`converting workout template to active workout`)
-    let newExGroups = woTemplate.exerciseGroups.map(exGroup => {
-      let newExercises = exGroup.exercises.map(exercise => {
-        let newExercise = cloneDeep(exercise)
-        delete newExercise.type
-        newExercise.weight = ''
-        newExercise.reps = ''
-        return newExercise
-      })
-      let newExGroup = {}
-      newExGroup.id = exGroup.id
-      newExGroup.exercises = newExercises
-      return newExGroup
-    })
-
-    let sets = [
-      {
-        id: 0,
-        exerciseGroups: newExGroups
-      }
-    ]
-    let workout = cloneDeep(woTemplate)
-    workout.sets = sets
-    return workout
   }
 
   const showWorkoutChooser = () => {

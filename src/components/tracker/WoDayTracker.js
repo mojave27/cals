@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Modal from '../Modal'
+import Modal from '../modules/common/components/Modal'
 import WoDayList from '../WoDay/WoDayList'
 import WoDayContext from '../../context/WoDayContext'
 import { retrieveWoDayById } from '../../api/wodaysApi'

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { deleteExercisesById, retrieveExercises } from '../../api/exercisesApi'
-import Modal from '../Modal'
-import BasicSpinner from '../spinners/BasicSpinner'
-import FormButton from '../inputs/FormButton'
-import ExerciseForm from './ExerciseForm'
-import ExercisesTable from './ExercisesTable'
-import { dynamicSort } from '../ArrayUtils'
+import { deleteExercisesById, retrieveExercises } from 'api/exercisesApi'
+import Modal from 'components/modules/common/components/Modal'
+import BasicSpinner from 'components/spinners/BasicSpinner'
+import FormButton from 'components/inputs/FormButton'
+import ExerciseForm from 'components/exercises/ExerciseForm'
+import ExercisesTable from 'components/exercises/ExercisesTable'
+import { dynamicSort } from 'components/modules/common/utilties/ArrayUtils'
 
 
 const Exercises = props => {
@@ -47,6 +47,7 @@ const Exercises = props => {
     let cleanedExercises = latestExercises.filter(ex => {
       let found = false
       exerciseIds.forEach(id => {
+        // eslint-disable-next-line eqeqeq
         if (ex.id != id) found = true
       })
       return found

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../../context/ThemeContext'
-import WorkoutCard from '../../workouts/WorkoutCard'
+import ThemeContext from 'context/ThemeContext'
+import WorkoutCard from 'workouts/WorkoutCard'
 import { isEmpty } from 'lodash'
-import Spinner from '../../Spinner'
+import Spinner from 'Spinner'
 import PropTypes from 'prop-types'
 import { Box, Container, Tab, Tabs } from '@material-ui/core'
 

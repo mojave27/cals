@@ -33,7 +33,7 @@ const ThemeProvider = props => {
   return (
     <ThemeContext.Provider
       value={{
-        theme: activeTheme,
+        theme: props.theme ? props.theme : activeTheme,
         mobile: mobile,
         changeTheme: themeName => {
           console.log(`provider changing theme to ${themeName}`)

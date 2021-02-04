@@ -42,15 +42,35 @@ export const menuConfig = [
   // --------------------------------------------------------
   { type: 'divider'},
   {
-    name: 'trackers',
-    type: 'dropdown',
+    name: 'woday',
+    type: 'button',
     auth: false,
     icon: 'Assignment',
-    items: [
-      { to: '/program-tracker', text: 'program' },
-      { to: '/tracker/woday', text: 'day' }
-    ]
+    link: { to: '/tracker/woday', text: 'day' }
   },
+
+  // --------------------------------------------------------
+  { type: 'divider'},
+  {
+    name: 'programs',
+    type: 'button',
+    auth: false,
+    icon: 'Assignment',
+    link: { to: '/program-tracker', text: 'program' },
+  },
+
+  // --------------------------------------------------------
+  // { type: 'divider'},
+  // {
+  //   name: 'trackers',
+  //   type: 'dropdown',
+  //   auth: false,
+  //   icon: 'Assignment',
+  //   items: [
+  //     { to: '/program-tracker', text: 'program' },
+  //     { to: '/tracker/woday', text: 'day' }
+  //   ]
+  // },
 
   // --------------------------------------------------------
   { type: 'divider'},
@@ -103,7 +123,8 @@ export const menuConfig = [
     items: [
       { to: '/admin/consistency-check', text: 'data check' },
       { to: '/admin/test', text: 'test page' },
-      { to: '/admin/palette', text: 'palette' }
+      { to: '/admin/palette', text: 'palette' },
+      { to: '/meal', text: 'meal' }
     ]
   },
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Grid } from '@material-ui/core';
 

@@ -3,7 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { get } from 'lodash'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import {
   Table,
   TableBody,

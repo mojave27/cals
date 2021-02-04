@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
 import { useContext, useEffect, useState } from 'react'
-import { retrieveDataConsistencyReport as retrieve } from '../../api/adminApi'
+import { retrieveDataConsistencyReport as retrieve } from 'api/adminApi'
 import { isEmpty } from 'lodash'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 
-import { formContainer, row } from '../../styles/main-styles'
+import { formContainer, row } from 'styles/main-styles'
 
 
 const DataConsistency = props => {

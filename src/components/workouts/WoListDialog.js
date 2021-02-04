@@ -13,7 +13,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import WoList from '../workouts/WoList'
 import ThemeContext from '../../context/ThemeContext'
-import { findIndexOfId, retrieveItemById } from '../ArrayUtils'
+import { findIndexOfId, retrieveItemById } from '../modules/common/utilties/ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
