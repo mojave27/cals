@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link } from '@reach/router'
-import { AppBar, Button, Menu, MenuItem, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { menuConfig } from './navMenuConfig'
 import ThemeContext from 'context/ThemeContext'
