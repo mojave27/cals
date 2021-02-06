@@ -5,6 +5,8 @@ import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { menuConfig } from './navMenuConfig'
 import ThemeContext from 'context/ThemeContext'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
+import ThemeMenu from 'components/modules/nav/ThemeMenu'
+import { Auth } from 'aws-amplify'
 
 import './TopNav.css'
 
@@ -41,6 +43,14 @@ const StyledMenu = withStyles({
     {...props}
   />
 ))
+
+const signOut = async () => {
+  try {
+    await Auth.signOut()
+  } catch (error) {
+    console.log('error signing out: ', error)
+  }
+}
 
 const DesktopNav = props => {
   const themeContext = useContext(ThemeContext)
@@ -126,6 +136,10 @@ const DesktopNav = props => {
           {menuConfig.map((menu, index) => {
             return renderMenuItem(menu, index)
           })}
+          <ThemeMenu />
+          <Button color='inherit' onClick={signOut}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
