@@ -21,25 +21,25 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-// const StyledMenu = withStyles({
-//   paper: {
-//     border: '1px solid #d3d4d5',
-//   },
-// })((props) => (
-//   <Menu
-//     elevation={0}
-//     getContentAnchorEl={null}
-//     anchorOrigin={{
-//       vertical: 'bottom',
-//       horizontal: 'center',
-//     }}
-//     transformOrigin={{
-//       vertical: 'top',
-//       horizontal: 'center',
-//     }}
-//     {...props}
-//   />
-// ))
+const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+))
 
 const DesktopNav = props => {
   const themeContext = useContext(ThemeContext)
@@ -93,12 +93,12 @@ const DesktopNav = props => {
           aria-owns={anchorEl ? menuName + "-" + index : undefined}
           aria-haspopup="true"
           onClick={handleClick}
-          onMouseOver={handleClick}
+          // onMouseOver={handleClick}
         >
           {menuName}
         </Button>
-        {/* <StyledMenu */}
-        <Menu
+        <StyledMenu
+        // <Menu 
           id={`${menuName}-${index}`}
           anchorEl={anchorEl}
           keepMounted
@@ -111,8 +111,8 @@ const DesktopNav = props => {
             console.log(`%c item.text: ${item.text}`, 'border:1px solid yellow;color: yellow')
             return <MenuItem key={`${index}-${item.text}`} onClick={handleClose} component={Link} to={item.to}>{item.text}</MenuItem>
           })}
-        </Menu>
-        {/* </StyledMenu> */}
+        {/* </Menu> */}
+        </StyledMenu>
       </div>
     )
   }
