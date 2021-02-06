@@ -53,6 +53,7 @@ const WoListDialog = props => {
   }, [props.items])
 
   const handleClose = () => {
+    setSelected([])
     if (props.onClose) props.onClose()
   }
 
