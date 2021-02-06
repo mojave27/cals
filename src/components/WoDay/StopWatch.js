@@ -4,10 +4,11 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 class Stopwatch extends Component {
   state = {
+    anchorEl: null,
+    showMenu: false,
     timerOn: false,
     timerStart: 0,
-    timerTime: 0,
-    anchorEl: null
+    timerTime: 0
   }
 
   startTimer = () => {
@@ -25,8 +26,8 @@ class Stopwatch extends Component {
 
   stopTimer = () => {
     this.setState({
-      timerOn: false
-      // anchorEl: null // closes menu
+      timerOn: false,
+      showMenu: false
     })
     clearInterval(this.timer)
   }
@@ -52,19 +53,13 @@ class Stopwatch extends Component {
   }
 
   handleMenuClick = event => {
-    this.setAnchor('anchorEl', event.currentTarget)
+    // this.setAnchor('anchorEl', event.currentTarget)
+    this.setState({anchorEl: event.currentTarget, showMenu: true})
   }
 
   handleMenuClose = () => {
-    this.setAnchor('anchorEl', null)
-  }
-
-  setAnchor = (name, value) => {
-    this.setState(prevState => {
-      let newState = { ...prevState }
-      newState[name] = value
-      return newState
-    })
+    // this.setAnchor('anchorEl', null)
+    this.setState({showMenu: false})
   }
 
   render() {
@@ -100,7 +95,8 @@ class Stopwatch extends Component {
               //   paper: classes.paper
               // }}
               anchorEl={this.state.anchorEl}
-              open={Boolean(this.state.anchorEl)}
+              // open={Boolean(this.state.anchorEl)}
+              open={this.state.showMenu}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'left'
