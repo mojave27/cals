@@ -31,8 +31,7 @@ const WoDayAppBar = props => {
               {'Stopwatch'}
             </Button>
           </div>
-        ) : null}
-        {show === true ? <StopWatch onClose={toggleShow} /> : null}
+        ) : <StopWatch onClose={toggleShow} onSaveToDuration={props.onSaveToDuration} /> }
         <div>
           <Button color={'inherit'} onClick={props.onSave}>
             {'Save'}

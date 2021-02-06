@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, IconButton, Popover } from '@material-ui/core'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import EditIcon from '@material-ui/icons/Edit'
+import FileCopyIcon from '@material-ui/icons/FileCopy'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 
 class Stopwatch extends Component {
   state = {
     timerOn: false,
     timerStart: 0,
-    timerTime: 0
+    timerTime: 0,
+    anchorEl: null
   }
 
   startTimer = () => {
@@ -32,6 +37,40 @@ class Stopwatch extends Component {
     })
   }
 
+  saveToDuration = () => {
+    if (this.props.onSaveToDuration) {
+    const { timerTime } = this.state
+    let centiseconds = ('0' + (Math.floor(timerTime / 10) % 100)).slice(-2)
+    let seconds = ('0' + (Math.floor(timerTime / 1000) % 60)).slice(-2)
+    let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2)
+    let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2)
+    let duration = `${hours}:${minutes}:${seconds}:${centiseconds}`
+    console.log(`saving to duration: ${duration}`)
+    this.props.onSaveToDuration(duration)
+   }
+  }
+
+  handleMoreClick = event => {
+    this.setAnchor('anchorEl', null)
+    this.setAnchor('anchorEl2', event.currentTarget)
+  }
+
+  setAnchor = (name, value) => {
+    this.setState(prevState => {
+      let newState = {...prevState}
+      newState[name] = value
+      return newState
+    })
+  }
+
+  handleHoverOpen = event => {
+    this.setAnchor('anchorEl', event.currentTarget)
+  }
+
+  handleMoreClose = () => {
+    this.setAnchor('anchorEl2', null)
+  }
+
   render() {
     const { timerTime } = this.state
     let centiseconds = ('0' + (Math.floor(timerTime / 10) % 100)).slice(-2)
@@ -42,6 +81,54 @@ class Stopwatch extends Component {
         <div style={{ fontSize: 'calc(3vw + 30px)', flexGrow: 1 }}>
           {hours}:{minutes}:{seconds}
           <span style={{ fontSize: '0.5em' }}>:{centiseconds}</span>
+          <div><IconButton aria-label='More' onClick={this.handleMoreClick}>
+                <MoreVertIcon color={'inherit'} />
+              </IconButton>
+                    <Popover
+                    // classes={{
+                    //   paper: classes.paper
+                    // }}
+                    anchorEl={this.state.anchorEl2}
+                    open={Boolean(this.state.anchorEl2)}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left'
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left'
+                    }}
+                    onClose={this.handleMoreClose}
+                    disableRestoreFocus
+                  >
+                    <React.Fragment>
+                      <div>
+                      <IconButton
+                        aria-label='Copy'
+                        onClick={() => {} }
+                      >
+                        <FileCopyIcon color='inherit' fontSize='small' />
+                      </IconButton>
+                      </div>
+                      <div>
+                      <IconButton
+                        aria-label='Edit'
+                        onClick={() => {} }
+                      >
+                        <EditIcon color='inherit' fontSize='small' />
+                      </IconButton>
+                      </div>
+                      <div>
+                      <IconButton
+                        aria-label='Delete'
+                        onClick={() => {} }
+                      >
+                        <DeleteForeverIcon color='inherit' fontSize='small' />
+                      </IconButton>
+                      </div>
+                    </React.Fragment>
+                  </Popover>
+              </div>
           {this.state.timerOn === false && this.state.timerTime === 0 && (
             <Button color={'inherit'} onClick={this.startTimer}>
               {'Start'}
@@ -60,6 +147,11 @@ class Stopwatch extends Component {
           {this.state.timerOn === false && this.state.timerTime > 0 && (
             <Button color={'inherit'} onClick={this.resetTimer}>
               {'Reset'}
+            </Button>
+          )}
+          {this.state.timerTime > 0 && (
+            <Button color={'inherit'} onClick={this.saveToDuration}>
+              {'Save to Duration'}
             </Button>
           )}
             <Button color={'inherit'} onClick={this.props.onClose}>

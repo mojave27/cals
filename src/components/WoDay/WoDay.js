@@ -410,13 +410,17 @@ const WoDay = props => {
     return data
   }
 
+  const saveToDuration = value => {
+    setDuration(value)
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
 
-      <WoDayAppBar onSave={saveWoDay} onClose={home} />
+      <WoDayAppBar onSave={saveWoDay} onClose={home} onSaveToDuration={saveToDuration} />
       {woDayLoaded() ? (
         <Container className={classes.container}>
           <Grid container justify='flex-start'>
