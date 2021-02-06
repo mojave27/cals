@@ -34,10 +34,6 @@ const StyledMenu = withStyles({
       vertical: 40,
       horizontal: 60
     }}
-    // anchorOrigin={{
-    //   vertical: 'bottom',
-    //   horizontal: 'center',
-    // }}
     transformOrigin={{
       vertical: 'top',
       horizontal: 'center',
@@ -81,7 +77,7 @@ const DesktopNav = props => {
 
   const renderButton = (item, index) => {
     return (
-      <Button key={`${index}-${item.text}`} component={Link} to={item.link.to}>
+      <Button color={'inherit'} key={`${index}-${item.text}`} component={Link} to={item.link.to}>
         {item.link.text}
       </Button>
     )
