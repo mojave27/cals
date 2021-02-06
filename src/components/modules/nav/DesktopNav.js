@@ -29,10 +29,15 @@ const StyledMenu = withStyles({
   <Menu
     elevation={0}
     getContentAnchorEl={null}
+    elevation={0}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
+      vertical: 40,
+      horizontal: 60
     }}
+    // anchorOrigin={{
+    //   vertical: 'bottom',
+    //   horizontal: 'center',
+    // }}
     transformOrigin={{
       vertical: 'top',
       horizontal: 'center',
