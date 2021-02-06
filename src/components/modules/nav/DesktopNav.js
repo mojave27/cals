@@ -4,6 +4,7 @@ import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { menuConfig } from './navMenuConfig'
 import ThemeContext from 'context/ThemeContext'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
 import './TopNav.css'
 
@@ -29,7 +30,6 @@ const StyledMenu = withStyles({
   <Menu
     elevation={0}
     getContentAnchorEl={null}
-    elevation={0}
     anchorOrigin={{
       vertical: 40,
       horizontal: 60
@@ -85,7 +85,6 @@ const DesktopNav = props => {
 
   const renderDropDownMenu = (dropDown, index) => {
     let menuName = dropDown.name
-    console.log(`%c menuName: ${menuName}`, 'border:1px solid orange;color: orange')
     return (
       <div key={index} className='dropdown'>
         <Button
@@ -96,10 +95,9 @@ const DesktopNav = props => {
           onClick={handleClick}
           // onMouseOver={handleClick}
         >
-          {menuName}
+          {menuName} <ArrowDropDownIcon />
         </Button>
         <StyledMenu
-        // <Menu 
           id={`${menuName}-${index}`}
           anchorEl={anchorEl}
           keepMounted
@@ -109,10 +107,8 @@ const DesktopNav = props => {
           MenuListProps={{ onMouseLeave: handleClose }}
         >
           {dropDown.items.map( (item, index) => {
-            console.log(`%c item.text: ${item.text}`, 'border:1px solid yellow;color: yellow')
             return <MenuItem key={`${index}-${item.text}`} onClick={handleClose} component={Link} to={item.to}>{item.text}</MenuItem>
           })}
-        {/* </Menu> */}
         </StyledMenu>
       </div>
     )
