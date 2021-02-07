@@ -87,11 +87,7 @@ class Stopwatch extends Component {
               <MoreVertIcon />
             </IconButton>
             <Popover
-              // classes={{
-              //   paper: classes.paper
-              // }}
               anchorEl={this.state.anchorEl}
-              // open={Boolean(this.state.anchorEl)}
               open={this.state.showMenu}
               anchorOrigin={{
                 vertical: 'top',
@@ -105,13 +101,6 @@ class Stopwatch extends Component {
               disableRestoreFocus
             >
               <React.Fragment>
-                {/* {this.state.timerOn === false && this.state.timerTime === 0 && (
-                <div>
-                  <Button color={'inherit'} onClick={this.startTimer}>
-                    {'Start'}
-                  </Button>
-                </div>
-                )} */}
               {this.state.timerOn === true && (
                 <div>
                   <Button color={'inherit'} onClick={this.stopTimer}>
@@ -134,7 +123,6 @@ class Stopwatch extends Component {
                   </div>
                 )}
                 {this.state.timerOn === false && this.state.timerTime > 0 && (
-                  // {this.state.timerTime > 0 && (
                   <div>
                     <Button color={'inherit'} onClick={this.saveToDuration}>
                       {'Save to Duration'}
