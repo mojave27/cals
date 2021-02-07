@@ -450,7 +450,7 @@ const WoDay = props => {
                         id={'duration'}
                         name={'duration'}
                         label={'Duration'}
-                        defaultValue={woDayContext.woday.duration}
+                        value={woDayContext.woday.duration}
                         onChange={handleTextChange}
                         variant='outlined'
                         size='small'
