@@ -7,10 +7,10 @@ export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' }
 }
 
-const currentTheme = createMuiTheme(themes.light)
+// const currentTheme = createMuiTheme(themes.light)
 // const currentTheme = createMuiTheme(themes.medium)
 // const currentTheme = createMuiTheme(themes.woSheet)
-// const currentTheme = createMuiTheme(themes.dark)
+const currentTheme = createMuiTheme(themes.dark)
 
 export const decorators = [
   Story => (

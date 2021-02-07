@@ -15,7 +15,6 @@ class Stopwatch extends Component {
     this.setState({
       timerOn: true,
       timerStart: Date.now() - this.state.timerTime
-      // anchorEl: null // closes menu
     })
     this.timer = setInterval(() => {
       this.setState({
@@ -36,7 +35,6 @@ class Stopwatch extends Component {
     this.setState({
       timerStart: 0,
       timerTime: 0
-      // anchorEl: null // closes menu
     })
   }
 
@@ -53,12 +51,10 @@ class Stopwatch extends Component {
   }
 
   handleMenuClick = event => {
-    // this.setAnchor('anchorEl', event.currentTarget)
     this.setState({anchorEl: event.currentTarget, showMenu: true})
   }
 
   handleMenuClose = () => {
-    // this.setAnchor('anchorEl', null)
     this.setState({showMenu: false})
   }
 
@@ -87,8 +83,8 @@ class Stopwatch extends Component {
         </Button>
         {this.state.timerOn === false && this.state.timerTime > 0 && (
           <div style={{ display: 'inline-block' }}>
-            <IconButton aria-label='More' onClick={this.handleMenuClick}>
-              <MoreVertIcon color={'inherit'} />
+            <IconButton color={'inherit'} aria-label='More' onClick={this.handleMenuClick}>
+              <MoreVertIcon />
             </IconButton>
             <Popover
               // classes={{
