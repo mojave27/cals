@@ -67,15 +67,15 @@ class Stopwatch extends Component {
     let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2)
     let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2)
     return (
-      <Grid container direction={'row'} style={{border:'1px solid red'}}i spacing={2}>
-        <Grid item style={{border:'1px solid blue'}}>
+      <Grid container direction={'row'} spacing={2}>
+        <Grid item >
           <div style={{ fontSize: 'calc(3vw + 30px)', flexGrow: 1 }}>
             {hours}:{minutes}:{seconds}
             <span style={{ fontSize: '0.5em' }}>:{centiseconds}</span>
           </div>
         </Grid>
-        <Grid item style={{border:'1px solid green'}}>
-          <Grid container direction={'column'} style={{border:'1px solid orange'}}>
+        <Grid item >
+          <Grid container direction={'column'} >
             {this.state.timerOn === false && this.state.timerTime === 0 && (
               <Grid item>
                 <Button color={'inherit'} onClick={this.startTimer}>
@@ -96,7 +96,6 @@ class Stopwatch extends Component {
               </Button>
             </Grid>
             {this.state.timerOn === false && this.state.timerTime > 0 && (
-              // <div style={{ display: 'inline-block' }}>
               <div style={{textAlign: 'center'}}>
                 <IconButton
                   color={'inherit'}
