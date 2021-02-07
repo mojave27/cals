@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
   },
   tableCell: {
     padding: '5px',
-    color: theme.color3_text.hex,
     border: 0
   },
   tableHeaderCell: {

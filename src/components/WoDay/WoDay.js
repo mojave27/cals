@@ -1,15 +1,29 @@
 import React, { useContext, useState } from 'react'
 import { navigate } from '@reach/router'
-import { retrieveWorkoutById } from '../../api/workoutsApi'
-import Modal from '../modules/common/components/Modal'
-import WoDayContext from '../../context/WoDayContext'
-import CardioTable from '../tables/CardioTable'
-import RangeSlider from '../inputs/RangeSlider'
-import Workout from '../workouts/Workout'
-import ThemeContext from '../../context/ThemeContext'
-import BasicSpinner from '../spinners/BasicSpinner'
+import { cloneDeep } from 'lodash'
+import 'react-datepicker/dist/react-datepicker.css'
+import 'styles/datePicker.css'
+import { retrieveWorkoutById } from 'api/workoutsApi'
+import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
+import Modal from 'components/modules/common/components/Modal'
+import WoDayContext from 'context/WoDayContext'
+import CardioTable from 'components/tables/CardioTable'
+import RangeSlider from 'components/inputs/RangeSlider'
+import Workout from 'components/workouts/Workout'
+import ThemeContext from 'context/ThemeContext'
+import BasicSpinner from 'components/spinners/BasicSpinner'
+import WorkoutChooser from 'components/workouts/WorkoutChooser'
+import WoDayAppBar from 'components/WoDay/WoDayAppBar'
+import {
+  findIndexOfId,
+  generateNewId
+} from 'components/modules/common/utilties/ArrayUtils'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Badge,
   Box,
   Container,
@@ -18,22 +32,6 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails
-} from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import WorkoutChooser from '../workouts/WorkoutChooser'
-import WoDayAppBar from './WoDayAppBar'
-import {
-  findIndexOfId,
-  generateNewId
-} from '../modules/common/utilties/ArrayUtils'
-import { cloneDeep } from 'lodash'
-import 'react-datepicker/dist/react-datepicker.css'
-import '../../styles/datePicker.css'
-import { convertTemplateToActiveWorkout } from '../workouts/workoutTemplateConverter'
 
 const useStyles = makeStyles(theme => ({
   root: {

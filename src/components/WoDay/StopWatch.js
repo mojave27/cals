@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Grid, IconButton, Popover } from '@material-ui/core'
-// import MoreVertIcon from '@material-ui/icons/MoreVert'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import ThemeContext from 'context/ThemeContext'
 
 class Stopwatch extends Component {
   state = {
