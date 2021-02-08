@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
   },
   tableCell: {
     padding: '5px',
-    color: theme.color3_text.hex,
     border: 0
   },
   tableHeaderCell: {
@@ -103,8 +102,6 @@ const WorkoutTableMobile = props => {
       let matchingSetExGroup = set.exerciseGroups.find(
         setExGrp => setExGrp.id === exGroup.id
       )
-      console.log(exGroup.id)
-      console.log(matchingSetExGroup)
       return (
         <TableRow
           key={`${set.id}-${exGroup.id}`}

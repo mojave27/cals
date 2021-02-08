@@ -1,14 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import StopWatch from './StopWatch'
 import { AppBar, Button, Toolbar } from '@material-ui/core'
 import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    backgroundColor: theme.color3.hex,
-    color: theme.color3_text.hex
-  }
+  appBar: { }
 }))
 
 const WoDayAppBar = props => {
@@ -18,21 +15,40 @@ const WoDayAppBar = props => {
 
   const toggleShow = () => setShow(!show)
 
+  const isMobile = () => themeContext.mobile
+
   return (
     <AppBar position='sticky' className={classes.appBar}>
       <Toolbar>
         {show === false ? (
-          <div style={{ flexGrow: 1, float: 'left' }}>
-            <Button
-              color={'inherit'}
-              onClick={toggleShow}
-              style={{ flexGrow: 1, float: 'left' }}
-            >
-              {'Stopwatch'}
-            </Button>
-          </div>
-        ) : null}
-        {show === true ? <StopWatch onClose={toggleShow} /> : null}
+          <Fragment>
+            <div style={{ flexGrow: 1, float: 'left' }}>
+              <Button
+                color={'inherit'}
+                onClick={toggleShow}
+                style={{ flexGrow: 1, float: 'left' }}
+              >
+                {'Stopwatch'}
+              </Button>
+            </div>
+            {isMobile() ?
+            <div>
+              <Button color={'inherit'} onClick={props.onSave}>
+                {'Save'}
+              </Button>
+              <Button color={'inherit'} onClick={props.onClose}>
+                {'Close'}
+              </Button>
+            </div>
+            : null}
+          </Fragment>
+        ) : (
+          <StopWatch
+            onClose={toggleShow}
+            onSaveToDuration={props.onSaveToDuration}
+          />
+        )}
+        {isMobile() === false ?
         <div>
           <Button color={'inherit'} onClick={props.onSave}>
             {'Save'}
@@ -40,7 +56,7 @@ const WoDayAppBar = props => {
           <Button color={'inherit'} onClick={props.onClose}>
             {'Close'}
           </Button>
-        </div>
+        </div> : null}
       </Toolbar>
     </AppBar>
   )

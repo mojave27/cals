@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TablePagination from '@material-ui/core/TablePagination'
-import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
-import Checkbox from '@material-ui/core/Checkbox'
-import IconButton from '@material-ui/core/IconButton'
-import Tooltip from '@material-ui/core/Tooltip'
+import TextInput from 'components/inputs/TextInput'
+import {
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Toolbar,
+  Paper,
+  Checkbox,
+  Tooltip,
+  Typography
+} from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
-import FilterListIcon from '@material-ui/icons/FilterList'
 import { findIndexOfId } from 'components/modules/common/utilties/ArrayUtils'
 
 function descendingComparator(a, b, orderBy) {
@@ -133,9 +135,13 @@ const useToolbarStyles = makeStyles(theme => ({
   }
 }))
 
-const EnhancedTableToolbar = props => {
+const TitleBar = props => {
   const classes = useToolbarStyles()
   const { numSelected } = props
+
+  const handleInputChange = event => {
+    if (props.onChange) props.onChange(event.target.value)
+  }
 
   return (
     <Toolbar
@@ -182,12 +188,77 @@ const EnhancedTableToolbar = props => {
           ) : null}
         </React.Fragment>
       ) : (
-        <Tooltip title='Filter list'>
-          <IconButton aria-label='filter list'>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <TextInput
+          id='search'
+          name='search'
+          // data={this.state.meal.name}
+          onChange={handleInputChange}
+        />
+        //             <Tooltip title='Filter list'>
+        //   <IconButton aria-label='filter list'>
+        //     <FilterListIcon />
+        //   </IconButton>
+        // </Tooltip>
       )}
+    </Toolbar>
+  )
+}
+
+const EnhancedTableToolbar = props => {
+  const classes = useToolbarStyles()
+  const { numSelected } = props
+
+  return (
+    <Toolbar
+      className={clsx(classes.root, {
+        [classes.highlight]: numSelected > 0
+      })}
+    >
+      {numSelected > 0 ? (
+        <Typography
+          className={classes.title}
+          color='inherit'
+          variant='subtitle1'
+          component='div'
+        >
+          {numSelected} selected
+        </Typography>
+      ) : null
+      // <Typography
+      //   className={classes.title}
+      //   variant='h6'
+      //   id='tableTitle'
+      //   component='div'
+      // >
+      //   {'Exercises'}
+      // </Typography>
+      }
+
+      {numSelected > 0 ? (
+        <React.Fragment>
+          {props.onDelete ? (
+            <Tooltip title='Delete'>
+              <IconButton aria-label='delete' onClick={props.onDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          ) : null}
+
+          {props.onEdit ? (
+            <Tooltip title='Edit'>
+              <IconButton aria-label='edit' onClick={props.onEdit}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          ) : null}
+        </React.Fragment>
+      ) : null
+      // <Tooltip title='Filter list'>
+      //   <IconButton aria-label='filter list'>
+      //     <FilterListIcon />
+      //   </IconButton>
+      // </Tooltip>
+      }
     </Toolbar>
   )
 }
@@ -203,7 +274,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
-    border:`1px solid ${theme.palette.secondary.light}`
+    border: `1px solid ${theme.palette.secondary.light}`
   },
   table: {},
   visuallyHidden: {
@@ -240,11 +311,12 @@ const StyledTableRow = withStyles(theme => ({
 // ******************************************************************************
 const ExercisesTable = props => {
   const classes = useStyles()
-  const [order, setOrder] = React.useState('asc')
-  const [orderBy, setOrderBy] = React.useState('calories')
-  const [selected, setSelected] = React.useState([])
-  const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(25)
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('calories')
+  const [selected, setSelected] = useState([])
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(25)
+  const [searchValue, setSearchValue] = useState('')
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -266,7 +338,7 @@ const ExercisesTable = props => {
     let newSelected = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, {name, id})
+      newSelected = newSelected.concat(selected, { name, id })
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
@@ -280,7 +352,7 @@ const ExercisesTable = props => {
 
     // allows reporting selections 'up' the component tree, if needed
     console.log(name)
-    if (props.onSelect) props.onSelect({target: { id }})
+    if (props.onSelect) props.onSelect({ target: { id } })
 
     setSelected(newSelected)
   }
@@ -302,16 +374,34 @@ const ExercisesTable = props => {
     return findIndexOfId(row.id, selected) !== -1
   }
 
+  const handleInputChange = value => {
+    setSearchValue(value)
+  }
+
+  const filterItems = () => {
+    // eslint-disable-next-line array-callback-return
+    return props.data.map(item => {
+      if (searchValue == null) return item
+      else if ( item.name.toLowerCase().includes(searchValue.toLowerCase())
+      ) {
+        return item
+      }
+    })
+  }
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, props.data.length - page * rowsPerPage)
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          onDelete={handleDelete}
-        />
+        <TitleBar onChange={handleInputChange} />
+        {selected.length > 0 ? (
+          <EnhancedTableToolbar
+            numSelected={selected.length}
+            onDelete={handleDelete}
+          />
+        ) : null}
         <TableContainer>
           <Table
             className={classes.table}
@@ -329,7 +419,10 @@ const ExercisesTable = props => {
               rowCount={props.data.length}
             />
             <TableBody>
-              {stableSort(props.data, getComparator(order, orderBy))
+              {stableSort(
+                filterItems(props.data),
+                getComparator(order, orderBy)
+              )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row)

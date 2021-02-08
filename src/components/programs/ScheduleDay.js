@@ -199,7 +199,7 @@ const ScheduleDay = props => {
               />
             </Box>
           </Grid>) : null}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <Card
               className={classes.root}
               style={{ maxWidth: props.maxWidth }}
