@@ -379,10 +379,10 @@ const ExercisesTable = props => {
   }
 
   const filterItems = () => {
-    return props.data.filter(item => {
+    // eslint-disable-next-line array-callback-return
+    return props.data.map(item => {
       if (searchValue == null) return item
-      else if (
-        item.name.toLowerCase().includes(searchValue.toLowerCase())
+      else if ( item.name.toLowerCase().includes(searchValue.toLowerCase())
       ) {
         return item
       }
