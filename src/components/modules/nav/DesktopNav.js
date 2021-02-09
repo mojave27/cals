@@ -13,11 +13,12 @@ import './TopNav.css'
 const useStyles = makeStyles(theme => ({
 
   appbar: {
-    padding: '0px'
+    padding: '0px',
+    // backgroundColor: 'transparent'
   },
   toolbar: {
     borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
   },
   popover: {
     pointerEvents: 'none',
