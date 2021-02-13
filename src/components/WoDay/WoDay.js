@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { autoSaveInterval } from 'config/appConfig'
 import { navigate } from '@reach/router'
 import { cloneDeep } from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -80,21 +81,36 @@ const useStylesInput = makeStyles(theme => ({
   focused: {}
 }))
 
-const StyledBadge = withStyles((theme) => ({
+const StyledBadge = withStyles(theme => ({
   badge: {
     right: -5,
     top: 5,
     border: `2px solid ${theme.palette.success.light}`,
     backgroundColor: theme.palette.success.light
-  },
+  }
 }))(Badge)
 
 const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
+  let [savingInProgress, setSavingInProgress] = useState(false)
+  let [userTriggeredSave, setUserTriggeredSave] = useState(false)
   let woDayContext = useContext(WoDayContext)
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext)
   const inputClasses = useStylesInput(themeContext)
+
+  // useEffect(() => {
+  //   setInterval(function() {
+  //     autoSave()
+  //   }, autoSaveInterval)
+  // })
+  useEffect(() => {
+    const timer = setInterval(() => {
+      autoSave()
+    }, autoSaveInterval);
+               // clearing interval
+    return () => clearInterval(timer);
+  });
 
   const woDayLoaded = () => {
     return true
@@ -118,9 +134,19 @@ const WoDay = props => {
     navigate('/')
   }
 
+  const autoSave = () => {
+    if (userTriggeredSave && savingInProgress === false) {
+      console.log(`auto saving woday: ${Date.now()}`)
+      saveWoDay()
+    }
+  }
+
   const saveWoDay = async () => {
     // saves the woday which is held by woDayContext - which should be this one :)
+    setUserTriggeredSave(true)
+    setSavingInProgress(true)
     await woDayContext.saveWoDay()
+    setSavingInProgress(false)
   }
 
   const handleTextChange = event => {
@@ -418,7 +444,11 @@ const WoDay = props => {
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
 
-      <WoDayAppBar onSave={saveWoDay} onClose={home} onSaveToDuration={saveToDuration} />
+      <WoDayAppBar
+        onSave={saveWoDay}
+        onClose={home}
+        onSaveToDuration={saveToDuration}
+      />
       {woDayLoaded() ? (
         <Container className={classes.container}>
           <Grid container justify='flex-start'>
@@ -524,7 +554,10 @@ const WoDay = props => {
                     id='panel1a-header'
                   >
                     <Typography className={classes.heading}>
-                      <StyledBadge variant='dot' invisible={woDayContext.woday.notes.length === 0}>
+                      <StyledBadge
+                        variant='dot'
+                        invisible={woDayContext.woday.notes.length === 0}
+                      >
                         {'Notes'}
                       </StyledBadge>
                     </Typography>
