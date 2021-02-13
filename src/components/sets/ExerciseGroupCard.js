@@ -1,7 +1,8 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import { useContext, useEffect, useState } from 'react'
-import { findIndexOfId, sortByStringProperty } from 'components/modules/common/utilties/ArrayUtils'
+import React, { useContext, useEffect, useState } from 'react'
+import {
+  findIndexOfId,
+  sortByStringProperty
+} from 'components/modules/common/utilties/ArrayUtils'
 import { retrieveExercises } from 'api/exercisesApi'
 import { updateSet } from 'api/setsApi'
 import SetContext from 'context/SetContext'
@@ -9,7 +10,7 @@ import FormButton from 'components/inputs/FormButton'
 import { makeStyles } from '@material-ui/core/styles'
 import Tooltip from '@material-ui/core/Tooltip'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { formInput } from 'styles/main-styles'
+import TextInput from 'components/inputs/TextInput'
 import ExercisesTable from 'components/exercises/ExercisesTable'
 import ThemeContext from 'context/ThemeContext'
 import {
@@ -34,8 +35,6 @@ const useStyles = makeStyles((theme, styles) => ({
 // TODO: disconnect this from SetContext and just have it manage the set(s) locally, and save/update
 //       to the parent component via props
 const ExerciseGroupCard = props => {
-  // let themeContext = useContext(ThemeContext)
-  // const classes = useStyles(themeContext.theme)
   let setContext = useContext(SetContext)
   const [allExercises, setAllExercises] = useState([])
   const [selectedExercises, setSelectedExercises] = useState([])
@@ -60,9 +59,7 @@ const ExerciseGroupCard = props => {
     event.stopPropagation()
     let { id, value } = event.target
     let exercisesForSet = [...setContext.set.exercises]
-    let index = exercisesForSet.findIndex(
-      exercise => exercise.id === id
-    )
+    let index = exercisesForSet.findIndex(exercise => exercise.id === id)
     exercisesForSet[index].reps = value
     setContext.updateExercisesForSet(exercisesForSet)
   }
@@ -145,39 +142,39 @@ const ExerciseGroup = props => {
 
   const renderExercisesForSet = exercises => {
     return (
-      <Grid container spacing={1} direction={'column'} >
-      {exercises.map(exercise => {
-      return (
-        <Grid item xs={12} sm={4} key={exercise.id}>
-          <Card variant='outlined' className={classes.card}>
-            <CardHeader
-              title={exercise.name}
-              subheader={exercise.type ? exercise.type : ' '}
-              styles={{ borderBottom: '1px solid red' }}
-              action={
-                <Tooltip title='Delete'>
-                  <IconButton aria-label='delete' onClick={() => props.onDelete(exercise.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
-            <CardContent>
-              <input
-                css={[formInput, { width: '100px' }]}
-                type='text'
-                id={exercise.id}
-                name='exerciseReps'
-                value={exercise.reps}
-                placeholder='exercise reps..'
-                onChange={props.onChange}
-              />
-            </CardContent>
-          </Card>
+      <Grid container spacing={1} direction={'column'}>
+        {exercises.map(exercise => {
+          return (
+            <Grid item xs={12} sm={4} key={exercise.id}>
+              <Card variant='outlined' className={classes.card}>
+                <CardHeader
+                  title={exercise.name}
+                  subheader={exercise.type ? exercise.type : ' '}
+                  styles={{ borderBottom: '1px solid red' }}
+                  action={
+                    <Tooltip title='Delete'>
+                      <IconButton
+                        aria-label='delete'
+                        onClick={() => props.onDelete(exercise.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  }
+                />
+                <CardContent>
+                  <TextInput
+                    id={exercise.id}
+                    name={'exerciseReps'}
+                    data={exercise.reps}
+                    onChange={props.onChange}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          )
+        })}
       </Grid>
-      )}
-    )}
-    </Grid>
     )
   }
 

@@ -1,14 +1,11 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import { Fragment } from 'react'
-import { formContainer, row } from 'styles/main-styles'
+import React, { Fragment } from 'react'
 
 const Test = props => {
   // const [reportData, setReportData] = useState({})
 
   return (
-    <div css={formContainer}>
-      <div css={row}>Test Page</div>
+    <div >
+      <div >Test Page</div>
       <Table />
     </div>
   )

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles'
+import { filterItemsByNameProperty as filterItems } from 'components/modules/common/utilties/ArrayUtils'
 import TextInput from 'components/inputs/TextInput'
 import {
   IconButton,
@@ -191,14 +192,8 @@ const TitleBar = props => {
         <TextInput
           id='search'
           name='search'
-          // data={this.state.meal.name}
           onChange={handleInputChange}
         />
-        //             <Tooltip title='Filter list'>
-        //   <IconButton aria-label='filter list'>
-        //     <FilterListIcon />
-        //   </IconButton>
-        // </Tooltip>
       )}
     </Toolbar>
   )
@@ -378,17 +373,6 @@ const ExercisesTable = props => {
     setSearchValue(value)
   }
 
-  const filterItems = () => {
-    // eslint-disable-next-line array-callback-return
-    return props.data.map(item => {
-      if (searchValue == null) return item
-      else if ( item.name.toLowerCase().includes(searchValue.toLowerCase())
-      ) {
-        return item
-      }
-    })
-  }
-
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, props.data.length - page * rowsPerPage)
 
@@ -420,7 +404,7 @@ const ExercisesTable = props => {
             />
             <TableBody>
               {stableSort(
-                filterItems(props.data),
+                filterItems(searchValue, props.data),
                 getComparator(order, orderBy)
               )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

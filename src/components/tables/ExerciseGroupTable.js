@@ -63,7 +63,7 @@ const SubHeaderTableRow = withStyles(theme => ({
 }))(TableRow)
 
 //TODO: update table to use context instead of passing the props/data all around it.
-const SimpleTable = props => {
+const ExerciseGroupTable = props => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles(themeContext.theme)
 
@@ -211,4 +211,4 @@ const Input = props => {
   )
 }
 
-export default SimpleTable
+export default ExerciseGroupTable

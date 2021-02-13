@@ -1,12 +1,8 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { retrieveDataConsistencyReport as retrieve } from 'api/adminApi'
 import { isEmpty } from 'lodash'
 import ThemeContext from 'context/ThemeContext'
-
-import { formContainer, row } from 'styles/main-styles'
-
+import { Container } from '@material-ui/core'
 
 const DataConsistency = props => {
   const [reportData, setReportData] = useState({})
@@ -44,27 +40,25 @@ const DataConsistency = props => {
 
 
   return (
-    <div css={formContainer}>
-      <div css={row}>
+    <Container>
+      <div>
         data consistency report
       </div>
-      <div css={row}>
+      <div>
         <h3>Programs</h3>
         {isEmpty(reportData)
          ? null
-        //  : renderProgramReport()
          : renderItemReport('programs')
          }
       </div>
-      <div css={row} style={{marginTop: '30px', borderTop: `1px solid ${context.theme.color2.hex}`}}>
+      <div style={{marginTop: '30px', borderTop: `1px solid ${context.theme.color2.hex}`}}>
         <h3>Sets</h3>
         {isEmpty(reportData)
          ? null
-        //  : renderProgramReport()
          : renderItemReport('sets')
          }
       </div>
-    </div>
+    </Container>
   )
 
 }
