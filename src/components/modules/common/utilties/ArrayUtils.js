@@ -45,7 +45,7 @@ const removeItemFromArrayByIndex = (index, list) => {
 const findIndexOfId = (id, list) => {
   if (isNumeric(id)) {
     return findIndexOfNumericId(id, list)
-  } 
+  }
   if (isString(id)) {
     return findIndexOfStringId(id, list)
   }
@@ -67,6 +67,17 @@ const findIndexOfStringId = (id, list) => {
   return index
 }
 
+const filterItemsByNameProperty = (searchValue, items) => {
+  // eslint-disable-next-line array-callback-return
+  let filteredItems = items.filter(item => {
+    if (searchValue == null) return item
+    else if (item.name.toLowerCase().includes(searchValue.toLowerCase())) {
+      return item
+    }
+  })
+  return filteredItems
+}
+
 const removeItemById = (id, list) => {
   validateIdAndListArgs(id, list)
   const index = findIndexOfId(id, list)
@@ -78,7 +89,7 @@ const retrieveItemById = (id, list) => {
   // console.log(`%c${id}`, 'background-color: yellow; color: black')
   if (isNumeric(id)) {
     return retrieveItemByNumericId(id, list)
-  } 
+  }
   if (isString(id)) {
     return retrieveItemByStringId(id, list)
   }
@@ -96,7 +107,7 @@ const retrieveItemByNumericId = (id, list) => {
 }
 
 const retrieveItemByStringId = (id, list) => {
-  const stringId = id.toString()// validateIdAndListArgs(id, list)
+  const stringId = id.toString() // validateIdAndListArgs(id, list)
   let index = findIndexOfStringId(stringId, list)
   if (index > -1) {
     return list[index]
@@ -106,21 +117,21 @@ const retrieveItemByStringId = (id, list) => {
 }
 
 /* takes an updated item, id, and list.               *
-* calls the appropriate update function based on the  *
-* type of id.  returns updated list.                  */
+ * calls the appropriate update function based on the  *
+ * type of id.  returns updated list.                  */
 const updateItemById = (update, id, list) => {
-  if(isNumeric(id)) {
+  if (isNumeric(id)) {
     return updateItemByNumericId(update, id, list)
   }
-  if(isString(id)) {
+  if (isString(id)) {
     return updateItemByStringId(update, id, list)
   }
   throw new Error(`argument 'id', ${id}, is neither number or string`)
 }
 
 /* takes an updated item, Number id, and list.          *
-* overwrites the item in the list with the matching id. *
-* returns the updated list.                             */
+ * overwrites the item in the list with the matching id. *
+ * returns the updated list.                             */
 const updateItemByNumericId = (update, id, list) => {
   validateIdAndListArgs(id, list)
   let index = findIndexOfId(id, list)
@@ -155,11 +166,11 @@ const removeItem = (id, list) => {
 
 /**
  * please note this function sorts the results
- * @param {} list 
+ * @param {} list
  */
 const getUniqueIds = list => {
   validateIsList(list)
-  if(list.length === 0) return []
+  if (list.length === 0) return []
 
   let ids = Array.from(list, item => item.id)
   let cleanedIds = removeInvalidValuesFromList(ids)
@@ -180,10 +191,10 @@ const removeInvalidValuesFromList = list => {
 
 const generateNewId = list => {
   if (list.length === 0) return 0
-  if( isNumeric(list[0].id) ) {
+  if (isNumeric(list[0].id)) {
     return generateNewNumericId(list)
   }
-  if( isString(list[0].id) ) {
+  if (isString(list[0].id)) {
     throw new Error('support for string ids not implemented')
   }
 }
@@ -210,29 +221,29 @@ const validateIdAndListArgs = (id, list) => {
 }
 
 const validateIsList = list => {
-  if(!Array.isArray(list)) {
+  if (!Array.isArray(list)) {
     throw new Error(`list argument is not a list: ${typeof list}`)
   }
 }
 
 const validateIsNumber = num => {
-  if(typeof num !== 'number'){
+  if (typeof num !== 'number') {
     throw new Error(`argument is not a number: ${num}`)
   }
 }
 
 const validateIsString = arg => {
-  if(typeof arg !== 'string'){
+  if (typeof arg !== 'string') {
     throw new Error(`argument is not a string: ${arg}`)
   }
 }
 
 const isNumeric = arg => {
-  return typeof arg === "number"
+  return typeof arg === 'number'
 }
 
 const isString = arg => {
-  return typeof arg === "string"
+  return typeof arg === 'string'
 }
 
 exports.compareByName = compareByName
@@ -259,3 +270,4 @@ exports.updateItemByStringId = updateItemByStringId
 exports.validateIsList = validateIsList
 exports.validateIsNumber = validateIsNumber
 exports.validateIsString = validateIsString
+exports.filterItemsByNameProperty = filterItemsByNameProperty

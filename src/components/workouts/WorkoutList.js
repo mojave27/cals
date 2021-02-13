@@ -1,11 +1,13 @@
-import React from 'react'
-import WorkoutHighlightCard from '../workouts/WorkoutHighlightCard'
-import ArrayUtils from '../modules/common/utilties/ArrayUtils'
+import React, { useState } from 'react'
+import WorkoutHighlightCard from 'components/workouts/WorkoutHighlightCard'
+import ArrayUtils, { filterItemsByNameProperty as filterItems } from 'components/modules/common/utilties/ArrayUtils'
+import TextInput from 'components/inputs/TextInput'
 import PropTypes from 'prop-types'
 import { Container, Grid } from '@material-ui/core'
 
 
 const WorkoutList = props => {
+  const [searchValue, setSearchValue] = useState(null)
 
   const handleClick = id => {
     if (props.onClick) props.onClick(id)
@@ -23,14 +25,26 @@ const WorkoutList = props => {
   }
 
   const doNothing = () => {
-    console.log(JSON.stringify(props.workouts))
+    // console.log(JSON.stringify(props.workouts))
+  }
+  
+  const handleInputChange = event => {
+    setSearchValue(event.target.value)
   }
 
   return (
     <Container style={{ padding: '25px' }}>
       <div>{doNothing()}</div>
       <Grid container spacing={2} justify='flex-start'>
-        {sortWorkouts(props.workouts).map(wo => {
+        <Grid item xs={12} sm={12} >
+        <TextInput
+          id='search'
+          name='search'
+          onChange={handleInputChange}
+        />
+        </Grid>
+        {sortWorkouts(filterItems(searchValue, props.workouts)).map(wo => {
+          console.log(wo)
           return (
             <Grid item xs={12} sm={3} key={wo.id}>
               {/* on hover show details */}
