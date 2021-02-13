@@ -3,7 +3,6 @@ import { retrievePrograms } from 'api/programsApi'
 import TrackerContext from 'context/TrackerContext'
 import { isEmpty } from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 import BasicSpinner from 'components/spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 
@@ -18,8 +17,7 @@ const ProgramsList = props => {
   const [program, setProgram] = useState({})
 
   let trackerContext = useContext(TrackerContext)
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   useEffect(() => {
     async function fetchMyAPI() {

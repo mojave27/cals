@@ -1,7 +1,5 @@
 import React from 'react'
-import { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme, styles) => ({
@@ -11,8 +9,7 @@ const useStyles = makeStyles((theme, styles) => ({
 }))
 
 const FormButton = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme, props.styleProps)
+  const classes = useStyles(props.styleProps)
 
   return (
     <Button

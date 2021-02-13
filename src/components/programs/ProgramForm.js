@@ -2,7 +2,6 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import WoContext from 'context/WoContext'
 import ProgramContext from 'context/ProgramContext'
-import ThemeContext from 'context/ThemeContext'
 import { updateProgram, addProgram } from 'api/programsApi'
 import { retrieve as retrieveWorkouts } from 'api/workoutsApi'
 import { generateNewId } from 'components/modules/common/utilties/ArrayUtils'
@@ -46,8 +45,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProgramForm = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   let programContext = useContext(ProgramContext)
   let woContext = useContext(WoContext)

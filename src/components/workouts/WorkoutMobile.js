@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { basicButton, basicButtonSmall } from '../../styles/Styles'
 import WorkoutTableMobile from './WorkoutTableMobile'
@@ -14,8 +13,7 @@ const useStyles = makeStyles(context => ({
 }))
 
 const WorkoutMobile = props => {
-  let context = useContext(ThemeContext)
-  const classes = useStyles(context)
+  const classes = useStyles()
 
   const addSet = () => {
     props.addSet()

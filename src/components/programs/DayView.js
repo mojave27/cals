@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
-import ThemeContext from 'context/ThemeContext'
 import ProgramContext from 'context/ProgramContext'
 import WoDayContext from 'context/WoDayContext'
 import {
@@ -56,8 +55,7 @@ const useStyles = makeStyles(theme => ({
 const DayView = props => {
   let programContext = useContext(ProgramContext)
   let woDayContext = useContext(WoDayContext)
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
 
   const handleClick = () => {
     if (props.onClick) props.onClick(props.id)

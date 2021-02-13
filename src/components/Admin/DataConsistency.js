@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
+import ThemeContext from 'context/ThemeContext'
 import { retrieveDataConsistencyReport as retrieve } from 'api/adminApi'
 import { isEmpty } from 'lodash'
-import ThemeContext from 'context/ThemeContext'
 import { Container } from '@material-ui/core'
 
 const DataConsistency = props => {
   const [reportData, setReportData] = useState({})
-  let context = useContext(ThemeContext)
+  const context = useContext(ThemeContext)
 
   useEffect(() => {
 

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import FoodListTableRow from './FoodListTableRow'
+import FoodListTableRow from 'modules/cals-and-macros/table/FoodListTable/FoodListTableRow'
 import {
   Table,
   TableBody,
@@ -10,7 +10,6 @@ import {
   TableRow
 } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
-import ThemeContext from '../../../../context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -35,8 +34,7 @@ const useStyles = makeStyles(theme => ({
 // }))(TableRow)
 
 const FoodListTable = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   return (
     <TableContainer component={Paper}>

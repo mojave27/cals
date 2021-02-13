@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Button } from '@material-ui/core'
-import MealTable from '../table/MealTable/MealTable'
-import ReusableFoodSearch from '../food/search/ReusableFoodSearch'
-import saveMeal from '../../../api/cals-and-macros/saveMeal'
+// import MealTable from 'modules/cals-and-macros/table/MealTable/MealTable'
+import MealCard from 'modules/cals-and-macros/meal/MealCard'
+import ReusableFoodSearch from 'modules/cals-and-macros/food/search/ReusableFoodSearch'
+import saveMeal from 'api/cals-and-macros/saveMeal'
 import { findIndexOfId } from 'list-utils'
 import { cloneDeep } from 'lodash'
 
-import TextInput from '../../inputs/TextInput'
+import TextInput from 'components/inputs/TextInput'
 import { Box, Divider, Grid } from '@material-ui/core'
 // import { makeStyles } from '@material-ui/core/styles'
 
@@ -178,8 +179,8 @@ class Meal extends Component {
             </Grid>
             <Grid item xs={12}>
               {this.state.meal.foodList.length > 0 ? (
-                <MealTable
-                  foodList={this.state.meal.foodList}
+                <MealCard
+                  item={this.state.meal}
                   rowClick={this.handleRowSelect}
                   rowSelect={this.selectFoodItem}
                   rowDelete={this.deleteRow}

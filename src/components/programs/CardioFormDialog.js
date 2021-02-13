@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import ThemeContext from 'context/ThemeContext'
 import CardioForm from 'components/programs/CardioForm'
 
 const useStyles = makeStyles((theme) => ({
@@ -25,8 +24,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CardioFormDialog = props => {
-  const theme = useContext(ThemeContext)
-  const classes = useStyles(theme);
+  const classes = useStyles();
   const { open, onClose, saveWorkout } = props
 
   const handleSave = workout => {

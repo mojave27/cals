@@ -59,10 +59,9 @@ const WorkoutForm = props => {
   const [showExerciseGroupDialog, setShowExerciseGroupDialog] = useState(false)
   let woContext = useContext(WoContext)
   let setContext = useContext(SetContext)
-  let themeContext = useContext(ThemeContext)
   const isMobile = useMediaQuery('(max-width:768px)')
   /* eslint-disable-next-line */
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   const toggleSetDialog = () => {
     setShowExerciseGroupDialog(!showExerciseGroupDialog)

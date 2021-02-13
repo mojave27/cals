@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import ThemeContext from 'context/ThemeContext'
 import { AppBar, Box, Container, Tab, Tabs } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import WorkoutList from 'components/workouts/WorkoutList'
@@ -34,8 +33,7 @@ function a11yProps(index) {
 }
 
 const RoutineChooser = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {

@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 
 import {
   Accordion,
@@ -24,8 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AccordionWrapper = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   return (
     <Accordion className={classes.accordion}>

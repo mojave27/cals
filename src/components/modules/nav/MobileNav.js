@@ -76,7 +76,7 @@ const icon = iconName => {
 
 const TopNav = props => {
   const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   // const [expandSection, setExpandSection] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [expandSection, setExpandSection] = React.useState({})

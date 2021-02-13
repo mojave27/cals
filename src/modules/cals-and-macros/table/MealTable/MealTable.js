@@ -1,4 +1,5 @@
 import React, {useContext} from 'react'
+import PropTypes from 'prop-types'
 import {
   Paper,
   Table,
@@ -10,9 +11,8 @@ import {
   TableFooter
 } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import FoodRow from './FoodRow'
-import { calsPerGram } from '../../constants/nutrients'
-import ThemeContext from '../../../../context/ThemeContext'
+import FoodRow from 'modules/cals-and-macros/table/MealTable/FoodRow'
+import { calsPerGram } from 'modules/cals-and-macros/constants/nutrients'
 
 const StyledHeaderRow = withStyles(theme => ({
   root: {
@@ -22,18 +22,18 @@ const StyledHeaderRow = withStyles(theme => ({
 }))(TableRow)
 
 const useStyles = makeStyles(theme => ({
-  tableContainer: {
-    border: `1px solid`
-  }
+  tableContainer: props => ({
+    width: props.width === '100%' ? '100%' : props.width,
+    border: `1px solid ${theme.palette.primary.main}`,
+  })
 }))
 
 const MealTable = props => {
-  const themeContext = useContext(ThemeContext)
   // eslint-disable-next-line no-unused-vars
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles(props)
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.tableContainer}>
       <Table size={'small'}>
         <TableHead>
           <StyledHeaderRow>
@@ -143,6 +143,14 @@ const MacrosRow = props => {
       </TableCell>
     </TableRow>
   )
+}
+
+MealTable.propTypes = {
+  width: PropTypes.string
+}
+
+MealTable.defaultProps = {
+  width: '100%'
 }
 
 export default MealTable

@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 const Themer = props => {
   let context = useContext(ThemeContext)
-  let classes = useStyles(context)
+  let classes = useStyles()
 
   useEffect(() => {
     window.scrollTo(0, 0)

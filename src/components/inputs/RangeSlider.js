@@ -1,12 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Box, Slider, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // width: 300,
     margin: 'auto',
     padding: '20px'
   },
@@ -16,8 +14,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const RangeSliderInput = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   function valuetext(value) {
     return `${value}`

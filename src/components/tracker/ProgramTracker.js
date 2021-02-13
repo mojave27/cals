@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ProgramContext from '../../context/ProgramContext'
-import ThemeContext from '../../context/ThemeContext'
 import TabbedContent from '../controls/TabbedContent'
 import AccordionWrapper from '../accordion/AccordionWrapper'
 import CloseIcon from '@material-ui/icons/Close'
@@ -29,8 +28,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProgramTracker = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   let context = useContext(ProgramContext)
 
   useEffect(() => {

@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from '@reach/router'
 import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { menuConfig } from './navMenuConfig'
-import ThemeContext from 'context/ThemeContext'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ThemeMenu from 'components/modules/nav/ThemeMenu'
 import { Auth } from 'aws-amplify'
@@ -11,7 +10,6 @@ import { Auth } from 'aws-amplify'
 import './TopNav.css'
 
 const useStyles = makeStyles(theme => ({
-
   appbar: {
     padding: '0px',
     // backgroundColor: 'transparent'
@@ -57,8 +55,7 @@ const signOut = async () => {
 }
 
 const DesktopNav = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [activeMenu, setActiveMenu] = useState(null);
 

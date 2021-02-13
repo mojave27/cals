@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayAppBar = props => {
   let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
   let [show, setShow] = useState(false)
 
   const toggleShow = () => setShow(!show)

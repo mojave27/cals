@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Confirm } from 'semantic-ui-react'
-import retrieveFoodList from '../../../../api/cals-and-macros/retrieveFoodList'
-import FoodListTable from '../../table/FoodListTable/FoodListTable'
+import retrieveFoodList from 'api/cals-and-macros/retrieveFoodList'
+import FoodListTable from 'modules/cals-and-macros/table/FoodListTable/FoodListTable'
 import { sortByStringProperty } from 'list-utils'
 
-import FormButton from '../../../inputs/FormButton'
-import TextInput from '../../../inputs/TextInput'
+import FormButton from 'components/inputs/FormButton'
+import TextInput from 'components/inputs/TextInput'
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import BasicSpinner from '../../../spinners/BasicSpinner'
-import ThemeContext from '../../../../context/ThemeContext'
+import BasicSpinner from 'components/spinners/BasicSpinner'
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -19,8 +18,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const FoodSearch = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const [foodList, setFoodList] = useState([])
   const [message, setMessage] = useState('')
   const [searchValue, setSearchValue] = useState('')

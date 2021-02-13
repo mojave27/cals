@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { navigate } from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles'
 import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
-import ThemeContext from 'context/ThemeContext'
 import ProgramContext from 'context/ProgramContext'
 import WoDayContext from 'context/WoDayContext'
 import CardioCard from './CardioCard'
@@ -62,8 +61,7 @@ const useStyles = makeStyles(theme => ({
 const ScheduleDay = props => {
   let programContext = useContext(ProgramContext)
   let woDayContext = useContext(WoDayContext)
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
 
   const [showWorkoutList, setShowWorkoutList] = useState(false)
   const [showCardioList, setShowCardioList] = useState(false)

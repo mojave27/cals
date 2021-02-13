@@ -136,8 +136,7 @@ const ExerciseGroupCard = props => {
 export default ExerciseGroupCard
 
 const ExerciseGroup = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const setContext = useContext(SetContext)
 
   const renderExercisesForSet = exercises => {
@@ -219,7 +218,7 @@ const ExerciseGroup = props => {
 
 const ExerciseList = props => {
   let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   const renderAllExercises = exercises => {
     return <ExercisesTable data={exercises} onSelect={props.onSelect} />

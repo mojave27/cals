@@ -57,7 +57,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const WorkoutCard = props => {
   let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
 
   const handleClick = () => {
     if (props.onClick) props.onClick(props.id)

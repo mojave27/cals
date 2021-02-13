@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import ThemeContext from '../../context/ThemeContext'
 import ExerciseGroupCard from '../sets/ExerciseGroupCard'
 import SetContext from '../../context/SetContext'
 
@@ -27,9 +26,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const FullScreenDialog = props => {
-  const theme = useContext(ThemeContext)
   const setContext = useContext(SetContext)
-  const classes = useStyles(theme);
+  const classes = useStyles();
   const { open, onClose, onSave } = props
 
   const handleClose = () => {

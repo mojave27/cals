@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import ThemeContext from 'context/ThemeContext'
+import React from 'react'
 import Modal from '@material-ui/core/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -37,8 +36,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const MyModal = props => {
-  let context = useContext(ThemeContext)
-  const classes = useStyles(context.theme)
+  const classes = useStyles()
 
   return props.showModal ? (
       <Modal

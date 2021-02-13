@@ -12,7 +12,6 @@ import { retrieveItemByStringId } from '../modules/common/utilties/ArrayUtils'
 import BasicSpinner from '../spinners/BasicSpinner'
 
 const Tracker = props => {
-  // const themeContext = useContext(ThemeContext)
   const context = useContext(TrackerContext)
   const [routeKey, setRouteKey] = useState(0)
   const [showProgramList, setShowProgramList] = useState(true)

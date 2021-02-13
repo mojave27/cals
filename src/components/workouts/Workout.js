@@ -14,7 +14,7 @@ const useStyles = makeStyles(context => ({
 
 const Workout = props => {
   let context = useContext(ThemeContext)
-  const classes = useStyles(context)
+  const classes = useStyles()
 
   const addSet = () => {
     props.addSet()

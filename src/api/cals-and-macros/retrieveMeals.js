@@ -1,4 +1,4 @@
-import { axiosFood } from '../config/apiConfig';
+import { axiosFood } from 'config/apiConfig';
 
 const retrieveMeals = searchTerm => {
   const url = 'meals'

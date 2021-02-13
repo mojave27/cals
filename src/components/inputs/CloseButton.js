@@ -1,7 +1,5 @@
 import React from 'react'
-import { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,8 +29,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CloseButton = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   return (
     <span className={classes.root} onClick={props.handleClose}>

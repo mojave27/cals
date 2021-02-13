@@ -11,7 +11,6 @@ import WoDayContext from 'context/WoDayContext'
 import CardioTable from 'components/tables/CardioTable'
 import RangeSlider from 'components/inputs/RangeSlider'
 import Workout from 'components/workouts/Workout'
-import ThemeContext from 'context/ThemeContext'
 import BasicSpinner from 'components/spinners/BasicSpinner'
 import WorkoutChooser from 'components/workouts/WorkoutChooser'
 import WoDayAppBar from 'components/WoDay/WoDayAppBar'
@@ -95,9 +94,8 @@ const WoDay = props => {
   let [savingInProgress, setSavingInProgress] = useState(false)
   let [userTriggeredSave, setUserTriggeredSave] = useState(false)
   let woDayContext = useContext(WoDayContext)
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
-  const inputClasses = useStylesInput(themeContext)
+  const classes = useStyles()
+  const inputClasses = useStylesInput()
 
   // useEffect(() => {
   //   setInterval(function() {

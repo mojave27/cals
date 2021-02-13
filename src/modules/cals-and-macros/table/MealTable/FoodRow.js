@@ -1,10 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Input } from 'semantic-ui-react'
-// import TextInput from '../../../inputs/TextInput'
 import { Grid, TableCell, TableRow } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../../../context/ThemeContext'
 
 const buttonStyle = {
   backgroundColor: '#4CAF50',
@@ -46,8 +44,7 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow)
 
 const FoodRow = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   // eslint-disable-next-line no-unused-vars
   let [units, setUnits] = useState('grams')
 

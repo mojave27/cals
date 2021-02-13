@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Modal from 'components/modules/common/components/Modal'
 import ProgramsList from 'components/tracker/ProgramsList'
-import ThemeContext from 'context/ThemeContext'
 import { retrieveProgramById } from 'api/programsApi'
 import { makeStyles } from '@material-ui/core/styles'
 import { Container, Grid, Paper } from '@material-ui/core'
@@ -22,8 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 const ProgramChooser = props => {
   let programContext = useContext(ProgramContext)
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
   let [showModal, setShowModal] = useState(false)
 
   const toggleModal = () => {

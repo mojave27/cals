@@ -114,6 +114,22 @@ export const menuConfig = [
   // --------------------------------------------------------
   { type: 'divider'},
   {
+    name: 'nutrition',
+    type: 'dropdown',
+    // auth: false,
+    auth: {
+      groups: ['wolog-admin']
+    },
+    icon: 'ListAlt',
+    items: [
+      { to: '/meal', text: 'meal form' },
+      { to: '/meals', text: 'view meals' },
+    ]
+  },
+
+  // --------------------------------------------------------
+  { type: 'divider'},
+  {
     name: 'admin',
     type: 'dropdown',
     icon: 'Lock',

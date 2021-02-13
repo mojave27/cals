@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 import { AppBar, Box, Tab, Tabs, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -124,8 +123,7 @@ TabPanel.propTypes = {
 
 
 const SimpleTabs = () => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme);
+  const classes = useStyles()
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {

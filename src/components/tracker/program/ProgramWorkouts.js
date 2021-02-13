@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 import WorkoutCard from 'workouts/WorkoutCard'
 import { isEmpty } from 'lodash'
 import Spinner from 'Spinner'
@@ -25,8 +24,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProgramWorkouts = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {

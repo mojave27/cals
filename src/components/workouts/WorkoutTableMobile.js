@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -50,8 +49,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const WorkoutTableMobile = props => {
-  let context = useContext(ThemeContext)
-  const classes = useStyles(context)
+  const classes = useStyles()
 
   const renderTableOneHeaderRowsMobile = exGroup => {
     let headerCells = []

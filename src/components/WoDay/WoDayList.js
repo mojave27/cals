@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { retrieve } from '../../api/wodaysApi'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
@@ -66,8 +65,7 @@ const WoDayList = props => {
 export default WoDayList
 
 const MobileView = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   const handleSelect = id => {
     if (props.onSelect) props.onSelect(id)

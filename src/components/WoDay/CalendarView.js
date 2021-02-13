@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from '../../context/ThemeContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
 import {
@@ -124,8 +123,7 @@ export default CalendarView
 // *************************************************************
 
 const Year = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   const today = new Date()
 
@@ -185,8 +183,7 @@ const Year = props => {
 }
 
 const Month = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
 
   const months = {
     0: { name: 'January', days: 31 },
@@ -337,8 +334,7 @@ const CalendarDay = props => {
 }
 
 const ItemCard = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
 
   return props.item === null 
   ? ''

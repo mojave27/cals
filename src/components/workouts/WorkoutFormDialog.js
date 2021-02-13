@@ -8,10 +8,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import ThemeContext from '../../context/ThemeContext'
-import WoContext from '../../context/WoContext'
-import WorkoutForm from '../workouts/WorkoutForm'
-import { addWorkout, updateWorkout } from '../../api/workoutsApi'
+import WoContext from 'context/WoContext'
+import WorkoutForm from 'components/workouts/WorkoutForm'
+import { addWorkout, updateWorkout } from 'api/workoutsApi'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -28,9 +27,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const WorkoutFormDialog = props => {
-  const theme = useContext(ThemeContext)
   const woContext = useContext(WoContext)
-  const classes = useStyles(theme);
+  const classes = useStyles();
   const { open, onClose } = props
 
   const handleSave = async () => {

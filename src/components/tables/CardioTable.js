@@ -15,12 +15,6 @@ import {
 import ThemeContext from 'context/ThemeContext'
 import MobileCardioTable from 'components/tables/MobileCardioTable'
 
-// const useStyles = makeStyles(context => ({
-//   root: {
-//     flexGrow: 1,
-//     width: `${context.mobile === true ? '100%' : 'auto'}`
-//   }
-// }))
 
 const StyledHeaderRow = withStyles(theme => ({
   root: {
@@ -39,7 +33,6 @@ const StyledTableRow = withStyles(theme => ({
 
 const CardioTable = props => {
   let themeContext = useContext(ThemeContext)
-  // let classes = useStyles(themeContext)
 
   //TODO: can this be cleaned up and refactored?
   const renderRows = data => {

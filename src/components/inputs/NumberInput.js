@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import ThemeContext from 'context/ThemeContext'
+import React from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import { TextField } from '@material-ui/core'
 
@@ -16,8 +15,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const TextInput = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   return (
     <TextField
       id={props.id}

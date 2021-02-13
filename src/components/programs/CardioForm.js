@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react'
-import ThemeContext from 'context/ThemeContext'
+import React, { useState } from 'react'
 import { fade, makeStyles } from '@material-ui/core/styles'
 import FormButton from 'components/inputs/FormButton'
 import { Card, CardContent, TextField } from '@material-ui/core'
@@ -29,9 +28,8 @@ const useStylesInput = makeStyles(theme => ({
 }))
 
 const CardioForm = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
-  const inputClasses = useStylesInput(themeContext.theme)
+  const classes = useStyles()
+  const inputClasses = useStylesInput()
 
   const [workout, setWorkout] = useState({name:'', description: '', targets: ''})
 

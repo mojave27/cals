@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -11,7 +11,6 @@ import Dialog from '@material-ui/core/Dialog';
 import AddIcon from '@material-ui/icons/Add';
 import ListAltIcon from '@material-ui/icons/ListAlt'
 
-import ThemeContext from 'context/ThemeContext'
 
 const EXISTING = 'Choose Existing'
 const NEW = 'Create New'
@@ -28,8 +27,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProgramWorkoutDialog = props => {
-  const themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const { onClose, onSelect, open } = props;
 
   const handleClose = () => {

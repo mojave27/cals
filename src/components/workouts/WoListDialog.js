@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import {
@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import WoList from '../workouts/WoList'
-import ThemeContext from '../../context/ThemeContext'
 import { findIndexOfId, retrieveItemById } from '../modules/common/utilties/ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
@@ -30,8 +29,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 })
 
 const WoListDialog = props => {
-  const theme = useContext(ThemeContext)
-  const classes = useStyles(theme)
+  const classes = useStyles()
 
   const [items, setItems] = useState([])
   const [selected, setSelected] = useState([])

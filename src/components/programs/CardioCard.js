@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 import { Card, CardContent } from '@material-ui/core'
 import {
   Paper,
@@ -37,8 +36,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CardioCard = props => {
-  let themeContext = useContext(ThemeContext)
-  let classes = useStyles(themeContext)
+  let classes = useStyles()
 
   const renderTable = rows => {
     return (

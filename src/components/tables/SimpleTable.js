@@ -64,8 +64,7 @@ const SubHeaderTableRow = withStyles(theme => ({
 
 //TODO: update table to use context instead of passing the props/data all around it.
 const SimpleTable = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
 
   const setupBlockHeader = (colCount, id, deleteItem, editItem) => {
     let item = { id: id, name: `exerciseGroup ${id}` }
@@ -189,8 +188,7 @@ const useStylesInput = makeStyles(theme => ({
 }))
 
 const Input = props => {
-  const themeContext = useContext(ThemeContext)
-  const inputClasses = useStylesInput(themeContext.theme)
+  const inputClasses = useStylesInput()
   return (
     <TextField
       disabled={props.disabled}

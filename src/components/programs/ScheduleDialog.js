@@ -11,7 +11,6 @@ import {
   Typography
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import ThemeContext from '../../context/ThemeContext'
 import ProgramContext from '../../context/ProgramContext'
 import TabbedContent from '../controls/TabbedContent'
 
@@ -33,8 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 })
 
 const ScheduleDialog = props => {
-  const theme = useContext(ThemeContext)
-  const classes = useStyles(theme)
+  const classes = useStyles()
   let programContext = useContext(ProgramContext)
 
   const handleClose = () => {

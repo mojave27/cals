@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { AppBar, Button, Dialog, IconButton, Slide, Toolbar, Typography } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import CardioList from '../workouts/CardioList'
-// import { retrieve as retrieveWorkouts } from '../../api/workoutsApi'
-import ThemeContext from '../../context/ThemeContext'
 import { retrieveItemByStringId } from '../modules/common/utilties/ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
@@ -24,8 +22,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 })
 
 const CardioListDialog = props => {
-  const theme = useContext(ThemeContext)
-  const classes = useStyles(theme)
+  const classes = useStyles()
 
   const [cardioRoutines, setCardioRoutines] = useState([])
   const [selected, setSelected] = useState([])

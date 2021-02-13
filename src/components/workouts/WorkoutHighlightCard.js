@@ -22,9 +22,7 @@ const useStyles = makeStyles(theme => ({
     padding: '8px 16px 0px 16px'
   },
   popover: {
-    pointerEvents: 'none',
-    // overflowY: 'scroll',
-    // maxHeight: '550px'
+    pointerEvents: 'none'
   },
   paper: {
     padding: theme.spacing(1)
@@ -33,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 const WorkoutHighlightCard = props => {
   let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext)
+  const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [anchorEl2, setAnchorEl2] = React.useState(null)
 

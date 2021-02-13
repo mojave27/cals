@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { get } from 'lodash'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
-import ThemeContext from 'context/ThemeContext'
 import {
   Table,
   TableBody,
@@ -36,8 +35,6 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow)
 
 const MobileCardioTable = props => {
-  // let themeContext = useContext(ThemeContext)
-  // let classes = useStyles(themeContext)
 
   const renderMobileRows = row => {
     let id = get(row, 'id', 0)
@@ -155,8 +152,7 @@ const useStylesInput = makeStyles(theme => ({
 }))
 
 const Input = props => {
-  const themeContext = useContext(ThemeContext)
-  const inputClasses = useStylesInput(themeContext.theme)
+  const inputClasses = useStylesInput()
   return (
     <TextField
       id={props.id}

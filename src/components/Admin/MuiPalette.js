@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import ThemeContext from 'context/ThemeContext'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Grid } from '@material-ui/core';
 
@@ -54,8 +53,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MuiPalette = props => {
-  let context = useContext(ThemeContext)
-  let classes = useStyles(context.theme)
+  let classes = useStyles()
 
   return (
     <div style={{width:'300px'}}>

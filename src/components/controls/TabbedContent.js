@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react'
-import ThemeContext from 'context/ThemeContext'
+import React, { useState } from 'react'
 import WorkoutCard from 'components/workouts/WorkoutCard'
 import ScheduleDay from 'components/programs/ScheduleDay'
 import TabPanel from 'components/controls/TabPanel'
@@ -34,8 +33,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const TabbedContent = props => {
-  let themeContext = useContext(ThemeContext)
-  const classes = useStyles(themeContext.theme)
+  const classes = useStyles()
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
