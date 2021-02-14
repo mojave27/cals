@@ -62,7 +62,6 @@ const DesktopNav = props => {
 
   const handleClick = event => {
     if (anchorEl !== event.currentTarget) {
-      console.log(event.currentTarget)
       setAnchorEl(event.currentTarget)
       setActiveMenu(event.currentTarget.id)
     }
@@ -104,7 +103,6 @@ const DesktopNav = props => {
           aria-owns={anchorEl ? menuName + "-" + index : undefined}
           aria-haspopup="true"
           onClick={handleClick}
-          // onMouseOver={handleClick}
         >
           {menuName} <ArrowDropDownIcon />
         </Button>
@@ -112,7 +110,6 @@ const DesktopNav = props => {
           id={`${menuName}-${index}`}
           anchorEl={anchorEl}
           keepMounted
-          // open={Boolean(anchorEl)}
           open={activeMenu === menuName}
           onClose={handleClose}
           MenuListProps={{ onMouseLeave: handleClose }}

@@ -24,17 +24,12 @@ const WorkoutList = props => {
     return false
   }
 
-  const doNothing = () => {
-    // console.log(JSON.stringify(props.workouts))
-  }
-  
   const handleInputChange = event => {
     setSearchValue(event.target.value)
   }
 
   return (
     <Container style={{ padding: '25px' }}>
-      <div>{doNothing()}</div>
       <Grid container spacing={2} justify='flex-start'>
         <Grid item xs={12} sm={12} >
         <TextInput
@@ -44,7 +39,6 @@ const WorkoutList = props => {
         />
         </Grid>
         {sortWorkouts(filterItems(searchValue, props.workouts)).map(wo => {
-          console.log(wo)
           return (
             <Grid item xs={12} sm={3} key={wo.id}>
               {/* on hover show details */}

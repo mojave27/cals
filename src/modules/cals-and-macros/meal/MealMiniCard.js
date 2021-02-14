@@ -8,18 +8,13 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
-        maxWidth: props.maxWidth,
-        border: props.selected
-          ? `1px solid ${theme.highlightGreen.hex}`
-          : '',
-        backgroundColor: props.selected
-          ? theme.palette.primary.main
-          : '',
-        width: props.width,
+    maxWidth: props.maxWidth,
+    border: props.selected ? `1px solid ${theme.highlightGreen.hex}` : '',
+    backgroundColor: props.selected ? theme.palette.primary.main : '',
+    width: props.width,
     flexGrow: 1,
     textAlign: 'center',
     margin: 'auto'
-    // width: '200px'
   }),
   container: {
     marginBottom: '10px'

@@ -23,7 +23,7 @@ const StyledHeaderRow = withStyles(theme => ({
 
 const useStyles = makeStyles(theme => ({
   tableContainer: props => ({
-    width: props.width === '100%' ? '100%' : props.width,
+    width: props.width,
     border: `1px solid ${theme.palette.primary.main}`,
   })
 }))

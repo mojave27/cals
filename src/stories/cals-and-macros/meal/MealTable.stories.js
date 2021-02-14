@@ -11,7 +11,8 @@ export default {
 
 const Template = (args) => <MealTable {...args} />
 
-export const OneFoodItem = Template.bind({});
+export const Width50 = Template.bind({});
+export const Width100 = Template.bind({});
 
 const foodListOneItem = [
         {
@@ -27,7 +28,12 @@ const foodListOneItem = [
         }
       ]
 
-OneFoodItem.args = {
+Width50.args = {
   foodList: foodListOneItem,
   width: '50%'
+}
+
+Width100.args = {
+  foodList: foodListOneItem,
+  width: '100%'
 }

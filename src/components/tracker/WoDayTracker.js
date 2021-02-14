@@ -30,8 +30,8 @@ const WoDayTracker = props => {
   const classes = useStyles()
 
   const toggleModal = () => {
-    setShowModal(!showModal)
     window.scrollTo(0, 0)
+    setShowModal(!showModal)
   }
 
   const chooseWoDay = async (id) => {

@@ -1,15 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { emptyWorkout } from '../../context/WoProvider'
-import WoContext from '../../context/WoContext'
-import BasicSpinner from '../spinners/BasicSpinner'
+import { emptyWorkout } from 'context/WoProvider'
+import WoContext from 'context/WoContext'
+import BasicSpinner from 'components/spinners/BasicSpinner'
 import {
   retrieve as retrieveWorkouts,
   deleteWorkout as deleteWorkoutApi
 } from '../../api/workoutsApi'
-import WorkoutFormDialog from './WorkoutFormDialog'
-import FormButton from '../inputs/FormButton'
-import { findIndexOfStringId } from '../modules/common/utilties/ArrayUtils'
-import WorkoutList from './WorkoutList'
+import WorkoutFormDialog from 'components/workouts/WorkoutFormDialog'
+import FormButton from 'components/inputs/FormButton'
+import { findIndexOfStringId } from 'components/modules/common/utilties/ArrayUtils'
+import WorkoutList from 'components/workouts/WorkoutList'
+
+import { Grid } from '@material-ui/core'
+import TextInput from 'components/inputs/TextInput'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
@@ -72,7 +75,17 @@ const Workouts = props => {
         saveWorkout={saveWorkout}
       />
       <BasicSpinner show={showSpinner} />
+      <Grid container >
+        <Grid item xs={12} sm={6}>
       <FormButton value={'Add Workout'} onClick={addWorkout} />
+      </Grid>
+        <Grid item xs={12} sm={6} >
+        <TextInput
+          id='search'
+          name='search'
+          // onChange={handleInputChange}
+        />
+        </Grid>
       {woContext.workouts.length > 0 ? (
           <WorkoutList 
             workouts={woContext.workouts} 
@@ -84,6 +97,7 @@ const Workouts = props => {
       ) : (
         <BasicSpinner show={true} />
       )}
+      </Grid>
     </React.Fragment>
   )
 }
