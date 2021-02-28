@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router } from '@reach/router'
 import Home from './modules/home/Home'
-import DbEntryForm from 'modules/cals-and-macros/database/DbEntryForm'
+import DbManage from 'modules/cals-and-macros/database/DbManage'
 import Login from './Auth/Login'
 import Tracker from './tracker/Tracker'
 import ProgramForm from './programs/ProgramForm'
@@ -34,7 +34,7 @@ const Routes = () => {
       <Login path='/login' />
       <MealForm path='/meal' />
       <MealViewer path='/meals' />
-      <DbEntryForm path='/manage/food-db' />
+      <DbManage path='/manage/food-db' />
     </Router>
   )
 }
