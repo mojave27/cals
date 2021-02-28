@@ -9,7 +9,6 @@ import {
 import ExerciseGroupTable from '../tables/ExerciseGroupTable'
 import WoContext from '../../context/WoContext'
 import SetContext from '../../context/SetContext'
-import ThemeContext from '../../context/ThemeContext'
 import FormButton from '../inputs/FormButton'
 import { makeStyles } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'

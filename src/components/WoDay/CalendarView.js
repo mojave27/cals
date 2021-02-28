@@ -313,7 +313,6 @@ const Week = props => {
     let itemForDay = getItemForDay(displayDate)
     days.push(
       <TableCell key={dayOfWeek + dayOfMonth} style={{border: '1px solid #eee'}}>
-        {/* <div style={{minHeight: '20px'}}>{displayDate}</div> */}
         <CalendarDay displayDate={displayDate}>
           <ItemCard item={itemForDay} itemSelect={props.onSelect}/>
         </CalendarDay>
@@ -344,7 +343,7 @@ const ItemCard = props => {
       onClick={() => props.itemSelect(props.item.id)}
       elevation={props.item.wo.name ? 1 : 0 }
     >
-        {props.item.wo.name ? props.item.wo.name : ''}
+        {props.item.wo.name ?? ''}
     </Paper>
   )
 }
