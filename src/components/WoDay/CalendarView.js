@@ -332,6 +332,11 @@ const CalendarDay = props => {
   )
 }
 
+const cardio = ({item}) => {
+  let length = item.cardio ? item.cardio.exercises.length : 0
+  return length === 0 ? '' : 'C'
+}
+
 const ItemCard = props => {
   const classes = useStyles()
 
@@ -344,6 +349,7 @@ const ItemCard = props => {
       elevation={props.item.wo.name ? 1 : 0 }
     >
         {props.item.wo.name ?? ''}
+        <div style={{color:'yellow'}}>{cardio(props)}</div>
     </Paper>
   )
 }

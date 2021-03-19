@@ -436,12 +436,16 @@ const WoDay = props => {
     setDuration(value)
   }
 
+  const doStuff = () => {
+    console.log(JSON.stringify(woDayContext.woday))
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
-
+      {doStuff()}
       <WoDayAppBar
         onSave={saveWoDay}
         onClose={home}

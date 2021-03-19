@@ -10,9 +10,7 @@ import WorkoutFormDialog from 'components/workouts/WorkoutFormDialog'
 import FormButton from 'components/inputs/FormButton'
 import { findIndexOfStringId } from 'components/modules/common/utilties/ArrayUtils'
 import WorkoutList from 'components/workouts/WorkoutList'
-
 import { Grid } from '@material-ui/core'
-import TextInput from 'components/inputs/TextInput'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
@@ -67,6 +65,10 @@ const Workouts = props => {
     }
   }
 
+  const doStuff = () => {
+    console.log(JSON.stringify(woContext.workout))
+  }
+
   return (
     <React.Fragment>
       <WorkoutFormDialog
@@ -74,18 +76,12 @@ const Workouts = props => {
         onClose={toggleDialog}
         saveWorkout={saveWorkout}
       />
+      {doStuff()}
       <BasicSpinner show={showSpinner} />
       <Grid container >
         <Grid item xs={12} sm={6}>
       <FormButton value={'Add Workout'} onClick={addWorkout} />
       </Grid>
-        <Grid item xs={12} sm={6} >
-        <TextInput
-          id='search'
-          name='search'
-          // onChange={handleInputChange}
-        />
-        </Grid>
       {woContext.workouts.length > 0 ? (
           <WorkoutList 
             workouts={woContext.workouts} 

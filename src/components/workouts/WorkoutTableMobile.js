@@ -59,7 +59,7 @@ const WorkoutTableMobile = props => {
       headerCells.push(
         <TableCell
           key={`${exercise.id}-header`}
-          colSpan={2}
+          colSpan={3}
           classes={{ root: classes.tableHeaderCell }}
           align={'center'}
           // style={{ borderRight: '1px solid grey' }}
@@ -70,6 +70,12 @@ const WorkoutTableMobile = props => {
 
       secondRowHeaderCells.push(
         <React.Fragment key={`${exercise.id}-weight`}>
+          <TableCell
+            classes={{ root: classes.tableHeaderCell }}
+            align={'center'}
+          >
+            {''}
+          </TableCell>
           <TableCell
             classes={{ root: classes.tableHeaderCell }}
             align={'center'}
@@ -95,6 +101,11 @@ const WorkoutTableMobile = props => {
     )
   }
 
+  const disableIt = (event) => {
+    console.log(event)
+    alert('disable')
+  }
+
   const renderRows = (exGroup, index) => {
     return props.wo.sets.map(set => {
       let matchingSetExGroup = set.exerciseGroups.find(
@@ -109,6 +120,9 @@ const WorkoutTableMobile = props => {
           {matchingSetExGroup.exercises.map(ex => {
             return (
               <React.Fragment key={`${set.id}-${ex.id}`}>
+                <TableCell classes={{ root: classes.tableCell }}>
+                  <span onClick={disableIt}>{'disable'}</span>
+                </TableCell>
                 <TableCell classes={{ root: classes.tableCell }}>
                   <input
                     data-setid={set.id}

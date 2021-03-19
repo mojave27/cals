@@ -39,6 +39,7 @@
     "react-table": "^7.0.0-beta.15",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
+    "storybook-react-context": "^0.2.4",
     "uikit": "^3.5.9",
     "universal-cookie": "^4.0.4"
   },
