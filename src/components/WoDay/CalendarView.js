@@ -30,12 +30,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '700',
     margin: 'auto',
   },
-  itemWithContent: {
+  itemWithWo: {
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.primary.contrastText
     },
     margin: 'auto',
+  },
+  itemWithCardio: {
+    backgroundColor: theme.palette.secondary.dark,
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.light,
+      color: theme.palette.secondary.contrastText
+    },
+    margin: 'auto',
+  },
+  cardioBadge: {
+    color: theme.palette.secondary.light,
+    '&:hover': {
+      color: theme.palette.secondary.contrastText
+    },
   },
   paper: {
     padding: theme.spacing(1),
@@ -389,11 +404,9 @@ const ItemCard = (props) => {
     <div>
       {hasWorkout() ? (
         <Paper
-          className={`${classes.item} ${
-            hasContent() ? classes.itemWithContent : ''
-          }`}
+          className={`${classes.item} ${classes.itemWithWo}`}
           onClick={() => props.itemSelect(props.item.id)}
-          elevation={hasWorkout() ? 1 : 0}
+          elevation={1}
         >
           {props.item.wo.name}
         </Paper>
@@ -401,13 +414,11 @@ const ItemCard = (props) => {
       <div style={{height:'10px'}} />
       {hasCardio() ? (
         <Paper
-          className={`${classes.item} ${
-            hasContent() ? classes.itemWithContent : ''
-          }`}
+          className={`${classes.item} ${classes.itemWithCardio}`}
           onClick={() => props.itemSelect(props.item.id)}
-          elevation={hasWorkout() ? 1 : 0}
+          elevation={1}
         >
-          <div style={{color:'yellow'}}>{cardioBadge(props)}</div>
+          <div className={classes.cardioBadge}>{cardioBadge(props)}</div>
         </Paper>
       ) : null}
     </div>
