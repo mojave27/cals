@@ -1,12 +1,12 @@
 // YourComponent.stories.js
 
 import React from 'react'
-import WorkoutCard from '../components/workouts/WorkoutCard'
-import { workout_1_exGroup, workout_4_exGroups, workout_empty, workout_extra_data, workout_no_sets  } from '../test-data/workouts-individual'
+import WorkoutCard from 'components/workouts/WorkoutCard'
+import { workout_1_exGroup, workout_4_exGroups, workout_empty, workout_extra_data, workout_no_sets  } from 'test-data/workouts-individual'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'WorkoutCard',
+  title: 'Workouts/WorkoutCard',
   component: WorkoutCard,
 };
 

@@ -97,11 +97,6 @@ const WoDay = props => {
   const classes = useStyles()
   const inputClasses = useStylesInput()
 
-  // useEffect(() => {
-  //   setInterval(function() {
-  //     autoSave()
-  //   }, autoSaveInterval)
-  // })
   useEffect(() => {
     const timer = setInterval(() => {
       autoSave()
@@ -295,11 +290,11 @@ const WoDay = props => {
     let id = event.target.id
     switch (id) {
       case 'energyRange':
-        console.log('energyRange update.')
+        // console.log('energyRange update.')
         setEnergyRange(value)
         break
       case 'sleepRange':
-        console.log('sleepRange update.')
+        // console.log('sleepRange update.')
         setSleepRange(value)
         break
       default:
@@ -437,7 +432,7 @@ const WoDay = props => {
   }
 
   const doStuff = () => {
-    console.log(JSON.stringify(woDayContext.woday))
+    // console.log(JSON.stringify(woDayContext.woday))
   }
 
   return (

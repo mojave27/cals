@@ -5,7 +5,7 @@ import MealMiniCard from 'modules/cals-and-macros/meal/MealMiniCard'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'MealMiniCard',
+  title: 'Cals-And-Macros/MealMiniCard',
   component: MealMiniCard,
 };
 

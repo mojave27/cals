@@ -27,13 +27,15 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     paddingTop: '25%',
     borderRadius: 1,
-    fontWeight: '700'
+    fontWeight: '700',
+    margin: 'auto'
   },
   itemWithContent: {
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.secondary.main
-    }
+    },
+    margin: 'auto'
   },
   paper: {
     padding: theme.spacing(1),
@@ -332,7 +334,7 @@ const CalendarDay = props => {
   )
 }
 
-const cardio = ({item}) => {
+const cardioBadge = ({item}) => {
   let length = item.cardio ? item.cardio.exercises.length : 0
   return length === 0 ? '' : 'C'
 }
@@ -340,16 +342,41 @@ const cardio = ({item}) => {
 const ItemCard = props => {
   const classes = useStyles()
 
+  const hasContent = () => {
+    if (undefined === props.item.date) return false
+    let hasWoOrCardio = hasCardio() || hasWorkout()
+    console.log('-----------------')
+    console.log('date: ' + props.item.date.month + "/" + props.item.date.day)
+    console.log('has cardio: ' + hasCardio())
+    console.log('has workout: ' + hasWorkout())
+    console.log('has cardio or workout: ' + hasWoOrCardio)
+    return hasWoOrCardio
+  }
+
+  const hasCardio = () => {
+    if (props.item.cardio === undefined) return false
+    let exercises = props.item.cardio.exercises ?? []
+    if (exercises.length > 0) return true
+    return false
+  }
+
+  const hasWorkout = () => {
+    if (props.item.wo === undefined) return false
+    if (props.item.wo.exerciseGroups === undefined) return false
+    if (props.item.wo.exerciseGroups && props.item.wo.exerciseGroups[0].exercises.length === 0) return false
+    return true
+  }
+
   return props.item === null 
   ? ''
   : (
     <Paper
-      className={`${classes.item} ${props.item.wo.name ? classes.itemWithContent : '' }`}
+      className={`${classes.item} ${ hasContent() ? classes.itemWithContent : '' }`}
       onClick={() => props.itemSelect(props.item.id)}
-      elevation={props.item.wo.name ? 1 : 0 }
+      elevation={hasWorkout() ? 1 : 0 }
     >
-        {props.item.wo.name ?? ''}
-        <div style={{color:'yellow'}}>{cardio(props)}</div>
+        {hasWorkout() ? props.item.wo.name : ''}
+        <div style={{color:'yellow'}}>{cardioBadge(props)}</div>
     </Paper>
   )
 }

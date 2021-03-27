@@ -5,7 +5,7 @@ import FormButton from 'components/inputs/FormButton'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'FormButton',
+  title: 'Common/Inputs/FormButton',
   component: FormButton,
 };
 

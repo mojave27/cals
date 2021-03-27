@@ -5,7 +5,7 @@ import DesktopNav from 'components/modules/nav/DesktopNav'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'DesktopNav',
+  title: 'Nav/DesktopNav',
   component: DesktopNav,
 };
 

@@ -1,12 +1,12 @@
 // YourComponent.stories.js
 
 import React from 'react'
-import WorkoutList from '../components/workouts/WorkoutList'
-import { workouts } from '../test-data/workouts-all'
+import WorkoutList from 'components/workouts/WorkoutList'
+import { workouts } from 'test-data/workouts-all'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'WorkoutList',
+  title: 'Workouts/WorkoutList',
   component: WorkoutList,
 };
 

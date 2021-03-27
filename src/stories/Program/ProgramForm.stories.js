@@ -1,10 +1,10 @@
 import React from 'react'
-import ProgramForm from '../components/programs/ProgramForm'
-import { workouts } from '../test-data/workouts-all'
-import ProgramProvider from '../context/ProgramProvider'
+import ProgramForm from 'components/programs/ProgramForm'
+import { workouts } from 'test-data/workouts-all'
+import ProgramProvider from 'context/ProgramProvider'
 
 export default {
-  title: 'ProgramForm',
+  title: 'Program/ProgramForm',
   component: ProgramForm,
   decorators: [story => <ProgramProvider>{story()}</ProgramProvider>]
 };

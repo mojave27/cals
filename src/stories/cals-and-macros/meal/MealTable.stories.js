@@ -5,7 +5,7 @@ import MealTable from 'modules/cals-and-macros/table/MealTable/MealTable'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'MealTable',
+  title: 'Cals-And-Macros/MealTable',
   component: MealTable,
 };
 

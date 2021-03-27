@@ -329,3 +329,202 @@ export const workout_no_sets =
   "name": "8x8 U1",
   "type": ""
 }
+
+export const real_workout_1 = {
+  name: '5x5 LEGS & DELTS - SQUAT',
+  description: 'superset mania',
+  id: '3eaa4910-8776-11eb-8e32-0d0677686d93',
+  sets: [
+    {
+      exerciseGroups: [
+        {
+          exercises: [
+            { name: 'shrugs', weight: '120', id: '12', reps: '10' },
+            { name: 'lat raise', weight: '25', id: '2', reps: '10' },
+            { name: 'leg curl', weight: '25', id: '10', reps: '12' },
+          ],
+          id: 0,
+        },
+        {
+          exercises: [
+            {
+              name: 'OHP, BB',
+              weight: '16',
+              reps: '10',
+              id: 'f4749640-609f-11eb-abc8-4152269e8437',
+            },
+            { name: 'rear delt raises', weight: '23.75', id: '17', reps: '10' },
+            { name: 'leg-ext', weight: '55', id: '16', reps: '0' },
+          ],
+          id: 1,
+        },
+        {
+          exercises: [
+            { name: 'ab roller', weight: 'leg raise - 0', id: '18', reps: '8' },
+            { name: 'squat', weight: '120', id: '4', reps: '5' },
+          ],
+          id: 2,
+        },
+      ],
+      id: 0,
+    },
+    {
+      exerciseGroups: [
+        {
+          exercises: [
+            { weight: '120', id: '12', reps: '10' },
+            { weight: '25', id: '2', reps: '10' },
+            { weight: '25', id: '10', reps: '12' },
+          ],
+          id: 0,
+        },
+        {
+          exercises: [
+            {
+              weight: '20',
+              id: 'f4749640-609f-11eb-abc8-4152269e8437',
+              reps: '5',
+            },
+            { weight: '23.75', id: '17', reps: '10' },
+            { weight: '55', id: '16', reps: '0' },
+          ],
+          id: 1,
+        },
+        {
+          exercises: [
+            { weight: 'leg raise - 0', id: '18', reps: '8' },
+            { weight: '120', id: '4', reps: '5' },
+          ],
+          id: 2,
+        },
+      ],
+      id: 1,
+    },
+    {
+      exerciseGroups: [
+        {
+          exercises: [
+            { weight: '120', id: '12', reps: '10' },
+            { weight: '25', id: '2', reps: '10' },
+            { weight: '25', id: '10', reps: '12' },
+          ],
+          id: 0,
+        },
+        {
+          exercises: [
+            {
+              weight: '25',
+              id: 'f4749640-609f-11eb-abc8-4152269e8437',
+              reps: '5',
+            },
+            { weight: '23.75', id: '17', reps: '10' },
+            { weight: '55', id: '16', reps: '0' },
+          ],
+          id: 1,
+        },
+        {
+          exercises: [
+            { weight: 'leg raise - 0', id: '18', reps: '8' },
+            { weight: '120', id: '4', reps: '5' },
+          ],
+          id: 2,
+        },
+      ],
+      id: 2,
+    },
+    {
+      exerciseGroups: [
+        {
+          exercises: [
+            { weight: '120', id: '12', reps: '10' },
+            { weight: '25', id: '2', reps: '10' },
+            { weight: '25', id: '10', reps: '12' },
+          ],
+          id: 0,
+        },
+        {
+          exercises: [
+            {
+              weight: '25',
+              id: 'f4749640-609f-11eb-abc8-4152269e8437',
+              reps: '5',
+            },
+            { weight: '23.75', id: '17', reps: '10' },
+            { weight: '55', id: '16', reps: '0' },
+          ],
+          id: 1,
+        },
+        {
+          exercises: [
+            { weight: '0', id: '18', reps: '0' },
+            { weight: '120', id: '4', reps: '5' },
+          ],
+          id: 2,
+        },
+      ],
+      id: 3,
+    },
+    {
+      exerciseGroups: [
+        {
+          exercises: [
+            { weight: '120', id: '12', reps: '10' },
+            { weight: '25', id: '2', reps: '10' },
+            { weight: '0', id: '10', reps: '0' },
+          ],
+          id: 0,
+        },
+        {
+          exercises: [
+            {
+              weight: '30',
+              id: 'f4749640-609f-11eb-abc8-4152269e8437',
+              reps: '5',
+            },
+            { weight: '23.75', id: '17', reps: '10' },
+            { weight: '0', id: '16', reps: '0' },
+          ],
+          id: 1,
+        },
+        {
+          exercises: [
+            { weight: '0', id: '18', reps: '0' },
+            { weight: '120', id: '4', reps: '5' },
+          ],
+          id: 2,
+        },
+      ],
+      id: 4,
+    },
+  ],
+  exerciseGroups: [
+    {
+      exercises: [
+        { name: 'shrugs', id: '12', reps: '5x10', type: 'isolation' },
+        { name: 'lat raise', id: '2', reps: '5x10', type: 'isolation' },
+        { name: 'leg curl', id: '10', reps: '4x12', type: 'isolation' },
+      ],
+      id: 0,
+    },
+    {
+      exercises: [
+        {
+          name: 'OHP, BB',
+          reps: '5x5',
+          id: 'f4749640-609f-11eb-abc8-4152269e8437',
+          type: 'compound',
+        },
+        { name: 'rear delt raises', id: '17', reps: '5x10', type: 'isolation' },
+        { name: 'leg-ext', id: '16', reps: '4x12', type: 'isolation' },
+      ],
+      id: 1,
+    },
+    {
+      exercises: [
+        { name: 'ab roller', id: '18', reps: '4xMAX', type: 'isolation' },
+        { name: 'squat', id: '4', reps: '5x5', type: 'compound' },
+      ],
+      id: 2,
+    },
+  ],
+}

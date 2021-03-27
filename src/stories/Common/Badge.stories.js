@@ -25,7 +25,7 @@ const BadgeExample = props => {
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'BadgeExample',
+  title: 'Common/BadgeExample',
   component: BadgeExample
 }
 

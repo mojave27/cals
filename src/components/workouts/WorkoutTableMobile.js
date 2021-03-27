@@ -62,7 +62,6 @@ const WorkoutTableMobile = props => {
           colSpan={3}
           classes={{ root: classes.tableHeaderCell }}
           align={'center'}
-          // style={{ borderRight: '1px solid grey' }}
         >
           {exercise.name}
         </TableCell>
@@ -84,7 +83,6 @@ const WorkoutTableMobile = props => {
           </TableCell>
           <TableCell
             classes={{ root: classes.tableHeaderCell }}
-            // style={{ borderRight: '1px solid grey' }}
             align={'center'}
           >
             {'reps'}
@@ -140,7 +138,6 @@ const WorkoutTableMobile = props => {
 
                 <TableCell
                   classes={{ root: classes.tableCell }}
-                  // style={{ borderRight: '1px solid grey' }}
                 >
                   <input
                     data-setid={set.id}
@@ -182,7 +179,6 @@ const WorkoutTableMobile = props => {
             <TableContainer component={Paper}>
               <Table
                 className={classes.table}
-                // size='small'
                 aria-label='a dense table'
               >
                 {renderTableOneHeaderRowsMobile(exGroup)}

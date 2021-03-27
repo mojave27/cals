@@ -29,7 +29,7 @@ const Workout = props => {
   }
 
   const doStuff = () => {
-    console.log(JSON.stringify(props.wo))
+    // console.log(JSON.stringify(props.wo))
   }
 
   return (

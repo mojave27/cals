@@ -5,7 +5,7 @@ import Modal from 'components/modules/common/components/Modal'
 
 // This default export determines where your story goes in the story list
 export default {
-  title: 'Modal',
+  title: 'Common/Modal',
   component: Modal,
 };
 
