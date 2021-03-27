@@ -7,40 +7,40 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow
+  TableRow,
 } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   month: {
     color: theme.palette.primary.contrastText,
     textAlign: 'center',
     paddingBottom: '15px',
-    fontWeight: '700'
+    fontWeight: '700',
   },
   item: {
-    height: '75px',
+    height: '50',
     maxWidth: '75px',
     textAlign: 'center',
-    paddingTop: '25%',
+    padding: '5px 0px',
     borderRadius: 1,
     fontWeight: '700',
-    margin: 'auto'
+    margin: 'auto',
   },
   itemWithContent: {
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main
+      backgroundColor: theme.palette.secondary.main,
     },
-    margin: 'auto'
+    margin: 'auto',
   },
   paper: {
     padding: theme.spacing(1),
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   tableContaner: {
     color: theme.palette.primary.contrastText,
@@ -48,16 +48,16 @@ const useStyles = makeStyles(theme => ({
     '& .MuiTableContainer-root': {
       width: '100%',
       overflowX: 'visible',
-    }
+    },
   },
   tableHead: {
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.primary.main,
-    borderBottom: `1px solid ${theme.palette.primary.dark}`
-  }
+    borderBottom: `1px solid ${theme.palette.primary.dark}`,
+  },
 }))
 
-const CalendarView = props => {
+const CalendarView = (props) => {
   const [years, setYears] = useState({})
   const [showSpinner, setShowSpinner] = useState(false)
 
@@ -73,7 +73,7 @@ const CalendarView = props => {
     September: {},
     October: {},
     November: {},
-    December: {}
+    December: {},
   }
 
   useEffect(() => {
@@ -91,11 +91,11 @@ const CalendarView = props => {
     props.onSelect(id)
   }
 
-  const buildYearsObject = items => {
+  const buildYearsObject = (items) => {
     let years = {}
 
     // TODO only render up to current month
-    items.forEach(item => {
+    items.forEach((item) => {
       years[item.date.year] = { ...emptyYear }
     })
     return years
@@ -103,8 +103,15 @@ const CalendarView = props => {
 
   const renderCalendar = () => {
     let keys = Object.keys(years)
-    return keys.reverse().map(year => {
-      return <Year year={year} key={year} items={props.items} onSelect={handleSelect} />
+    return keys.reverse().map((year) => {
+      return (
+        <Year
+          year={year}
+          key={year}
+          items={props.items}
+          onSelect={handleSelect}
+        />
+      )
     })
   }
 
@@ -117,20 +124,20 @@ const CalendarView = props => {
 }
 
 CalendarView.defaultProps = {
-  items: []
+  items: [],
 }
 
 export default CalendarView
 
 // *************************************************************
 
-const Year = props => {
+const Year = (props) => {
   const classes = useStyles()
   const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   const today = new Date()
 
   const getItemsForYear = (items, year) => {
-    let inScopeItems = items.filter(item => {
+    let inScopeItems = items.filter((item) => {
       return Number(item.date.year) === Number(year)
     })
     return inScopeItems
@@ -138,13 +145,13 @@ const Year = props => {
 
   const getItemsInScopeForYearAndMonth = (items, month) => {
     let itemsForYear = getItemsForYear(items, props.year)
-    let inScopeItems = itemsForYear.filter(item => {
+    let inScopeItems = itemsForYear.filter((item) => {
       return Number(item.date.month) === Number(month)
     })
     return inScopeItems
   }
 
-  const monthIsInFuture = month => {
+  const monthIsInFuture = (month) => {
     let skip = false
     // eslint-disable-next-line eqeqeq
     if (today.getFullYear() == props.year && today.getMonth() < month) {
@@ -184,7 +191,7 @@ const Year = props => {
   )
 }
 
-const Month = props => {
+const Month = (props) => {
   const classes = useStyles()
 
   const months = {
@@ -195,7 +202,7 @@ const Month = props => {
         props.startDate.getFullYear() === 2020 ||
         props.startDate.getFullYear() - 2020 === 4
           ? 29
-          : 28
+          : 28,
     },
     2: { name: 'March', days: 31 },
     3: { name: 'April', days: 30 },
@@ -206,7 +213,7 @@ const Month = props => {
     8: { name: 'September', days: 30 },
     9: { name: 'October', days: 31 },
     10: { name: 'November', days: 30 },
-    11: { name: 'December', days: 31 }
+    11: { name: 'December', days: 31 },
   }
 
   const renderWeeks = () => {
@@ -288,12 +295,12 @@ const Month = props => {
   return renderWeeks()
 }
 
-const Week = props => {
-  const getItemForDay = displayDate => {
-    let found = props.items.find(item => {
+const Week = (props) => {
+  const getItemForDay = (displayDate) => {
+    let found = props.items.find((item) => {
       return Number(item.date.day) === Number(displayDate)
     })
-    if (found === undefined) return {wo: {id: -1}}
+    if (found === undefined) return { wo: { id: -1 } }
     return found
   }
 
@@ -314,9 +321,12 @@ const Week = props => {
     }
     let itemForDay = getItemForDay(displayDate)
     days.push(
-      <TableCell key={dayOfWeek + dayOfMonth} style={{border: '1px solid #eee'}}>
+      <TableCell
+        key={dayOfWeek + dayOfMonth}
+        style={{ border: '1px solid #eee' }}
+      >
         <CalendarDay displayDate={displayDate}>
-          <ItemCard item={itemForDay} itemSelect={props.onSelect}/>
+          <ItemCard item={itemForDay} itemSelect={props.onSelect} />
         </CalendarDay>
       </TableCell>
     )
@@ -325,28 +335,30 @@ const Week = props => {
   return <TableRow>{days}</TableRow>
 }
 
-const CalendarDay = props => {
+const CalendarDay = (props) => {
   return (
-    <Box style={{paddingBottom:'5px', minHeight:'100px', minWidth:'75px'}}>
-      <div style={{minHeight: '20px', paddingBottom:'3px'}}>{props.displayDate}</div>
+    <Box style={{ paddingBottom: '5px', minHeight: '100px', minWidth: '75px' }}>
+      <div style={{ minHeight: '20px', paddingBottom: '3px' }}>
+        {props.displayDate}
+      </div>
       {props.children}
     </Box>
   )
 }
 
-const cardioBadge = ({item}) => {
+const cardioBadge = ({ item }) => {
   let length = item.cardio ? item.cardio.exercises.length : 0
   return length === 0 ? '' : 'C'
 }
 
-const ItemCard = props => {
+const ItemCard = (props) => {
   const classes = useStyles()
 
   const hasContent = () => {
     if (undefined === props.item.date) return false
     let hasWoOrCardio = hasCardio() || hasWorkout()
     console.log('-----------------')
-    console.log('date: ' + props.item.date.month + "/" + props.item.date.day)
+    console.log('date: ' + props.item.date.month + '/' + props.item.date.day)
     console.log('has cardio: ' + hasCardio())
     console.log('has workout: ' + hasWorkout())
     console.log('has cardio or workout: ' + hasWoOrCardio)
@@ -363,20 +375,41 @@ const ItemCard = props => {
   const hasWorkout = () => {
     if (props.item.wo === undefined) return false
     if (props.item.wo.exerciseGroups === undefined) return false
-    if (props.item.wo.exerciseGroups && props.item.wo.exerciseGroups[0].exercises.length === 0) return false
+    if (
+      props.item.wo.exerciseGroups &&
+      props.item.wo.exerciseGroups[0].exercises.length === 0
+    )
+      return false
     return true
   }
 
-  return props.item === null 
-  ? ''
-  : (
-    <Paper
-      className={`${classes.item} ${ hasContent() ? classes.itemWithContent : '' }`}
-      onClick={() => props.itemSelect(props.item.id)}
-      elevation={hasWorkout() ? 1 : 0 }
-    >
-        {hasWorkout() ? props.item.wo.name : ''}
-        <div style={{color:'yellow'}}>{cardioBadge(props)}</div>
-    </Paper>
+  return props.item === null ? (
+    ''
+  ) : (
+    <div>
+      {hasWorkout() ? (
+        <Paper
+          className={`${classes.item} ${
+            hasContent() ? classes.itemWithContent : ''
+          }`}
+          onClick={() => props.itemSelect(props.item.id)}
+          elevation={hasWorkout() ? 1 : 0}
+        >
+          {props.item.wo.name}
+        </Paper>
+      ) : null}
+      <div style={{height:'10px'}} />
+      {hasCardio() ? (
+        <Paper
+          className={`${classes.item} ${
+            hasContent() ? classes.itemWithContent : ''
+          }`}
+          onClick={() => props.itemSelect(props.item.id)}
+          elevation={hasWorkout() ? 1 : 0}
+        >
+          <div style={{color:'yellow'}}>{cardioBadge(props)}</div>
+        </Paper>
+      ) : null}
+    </div>
   )
 }
