@@ -22,10 +22,12 @@ const useStyles = makeStyles(theme => ({
     minWidth: '80%',
   },
   tableCell: {
+    fontSize: '16px',
     padding: '5px',
     border: 0
   },
   tableHeaderCell: {
+    fontSize: '16px',
     padding: '5px',
   },
   input: {
