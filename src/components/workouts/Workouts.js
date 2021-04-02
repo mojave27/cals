@@ -65,9 +65,9 @@ const Workouts = props => {
     }
   }
 
-  const doStuff = () => {
-    console.log(JSON.stringify(woContext.workout))
-  }
+  // const doStuff = () => {
+  //   console.log(JSON.stringify(woContext.workout))
+  // }
 
   return (
     <React.Fragment>
@@ -76,7 +76,7 @@ const Workouts = props => {
         onClose={toggleDialog}
         saveWorkout={saveWorkout}
       />
-      {doStuff()}
+      {/* {doStuff()} */}
       <BasicSpinner show={showSpinner} />
       <Grid container >
         <Grid item xs={12} sm={6}>

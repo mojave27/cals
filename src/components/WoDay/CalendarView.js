@@ -369,17 +369,6 @@ const cardioBadge = ({ item }) => {
 const ItemCard = (props) => {
   const classes = useStyles()
 
-  const hasContent = () => {
-    if (undefined === props.item.date) return false
-    let hasWoOrCardio = hasCardio() || hasWorkout()
-    console.log('-----------------')
-    console.log('date: ' + props.item.date.month + '/' + props.item.date.day)
-    console.log('has cardio: ' + hasCardio())
-    console.log('has workout: ' + hasWorkout())
-    console.log('has cardio or workout: ' + hasWoOrCardio)
-    return hasWoOrCardio
-  }
-
   const hasCardio = () => {
     if (props.item.cardio === undefined) return false
     let exercises = props.item.cardio.exercises ?? []
