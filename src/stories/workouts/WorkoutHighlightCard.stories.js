@@ -25,7 +25,7 @@ const DEFAULT_ARGS = {
 HappyPath.args = {
   ...DEFAULT_ARGS,
   disabled: false,
-  selected: true,
+  selected: false,
   item: workout_3_exGroups,
   key: workout_3_exGroups.id,
   id: workout_3_exGroups.id,

@@ -9,27 +9,33 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import { Card, CardHeader, CardContent, Popover } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
-    margin: 'auto'
+    margin: 'auto',
   },
   cardHeader: {
-    padding: '6px 16px 0px 16px'
+    padding: '6px 16px 0px 16px',
   },
   cardContent: {
-    padding: '8px 16px 0px 16px'
+    padding: '8px 16px 0px 16px',
   },
   popover: {
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+
+    position: 'fixed',
+    top: '-20px',
+    right: '5px',
+    zIndex: '10',
+    overflow:'none'
   },
   paper: {
-    padding: theme.spacing(1)
-  }
+    padding: theme.spacing(1),
+  },
 }))
 
-const WorkoutHighlightCard = props => {
+const WorkoutHighlightCard = (props) => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -39,19 +45,20 @@ const WorkoutHighlightCard = props => {
   const id = openCard ? 'popper' : undefined
   const openButtons = Boolean(anchorEl2)
 
-  const handleClick = () => {
+  const handleClick = event => {
+    handleHoverOpen(event)
     if (props.onClick) props.onClick(props.id)
   }
 
-  const handleHoverOpen = event => {
+  const handleHoverOpen = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleHoverClose = event => {
+  const handleHoverClose = (event) => {
     setAnchorEl(null)
   }
 
-  const handleMoreClick = event => {
+  const handleMoreClick = (event) => {
     setAnchorEl(null)
     setAnchorEl2(event.currentTarget)
   }
@@ -60,17 +67,17 @@ const WorkoutHighlightCard = props => {
     setAnchorEl2(null)
   }
 
-  const editItem = id => {
+  const editItem = (id) => {
     handleMoreClose()
     if (props.editItem) props.editItem(id)
   }
 
-  const deleteItem = id => {
+  const deleteItem = (id) => {
     handleMoreClose()
     if (props.deleteItem) props.deleteItem(id)
   }
 
-  const copyItem = id => {
+  const copyItem = (id) => {
     handleMoreClose()
     if (props.copyItem) props.copyItem(id)
   }
@@ -85,13 +92,13 @@ const WorkoutHighlightCard = props => {
           : '',
         backgroundColor: props.selected
           ? themeContext.theme.color3.rgba(0.25)
-          : ''
+          : '',
       }}
       elevation={1}
       variant='outlined'
       onClick={handleClick}
       key={props.id}
-      onMouseEnter={handleHoverOpen}
+      // onMouseEnter={handleHoverOpen}
       onMouseLeave={handleHoverClose}
     >
       <CardHeader
@@ -111,64 +118,65 @@ const WorkoutHighlightCard = props => {
       <CardContent className={classes.cardContent}>
         <Popover
           classes={{
-            paper: classes.paper
+            paper: classes.paper,
           }}
           anchorEl={anchorEl2}
           open={openButtons}
           id={id}
           anchorOrigin={{
             vertical: 'top',
-            horizontal: 'left'
+            horizontal: 'left',
           }}
           transformOrigin={{
             vertical: 'top',
-            horizontal: 'left'
+            horizontal: 'left',
           }}
           onClose={handleMoreClose}
           disableRestoreFocus
         >
           <React.Fragment>
             <div>
-            <IconButton
-              aria-label='Copy'
-              onClick={() => copyItem(props.item.id)}
-            >
-              <FileCopyIcon color='inherit' fontSize='small' />
-            </IconButton>
+              <IconButton
+                aria-label='Copy'
+                onClick={() => copyItem(props.item.id)}
+              >
+                <FileCopyIcon color='inherit' fontSize='small' />
+              </IconButton>
             </div>
             <div>
-            <IconButton
-              aria-label='Edit'
-              onClick={() => editItem(props.item.id)}
-            >
-              <EditIcon color='inherit' fontSize='small' />
-            </IconButton>
+              <IconButton
+                aria-label='Edit'
+                onClick={() => editItem(props.item.id)}
+              >
+                <EditIcon color='inherit' fontSize='small' />
+              </IconButton>
             </div>
             <div>
-            <IconButton
-              aria-label='Delete'
-              onClick={() => deleteItem(props.item.id)}
-            >
-              <DeleteForeverIcon color='inherit' fontSize='small' />
-            </IconButton>
+              <IconButton
+                aria-label='Delete'
+                onClick={() => deleteItem(props.item.id)}
+              >
+                <DeleteForeverIcon color='inherit' fontSize='small' />
+              </IconButton>
             </div>
           </React.Fragment>
         </Popover>
         <Popover
+          // container={this.CardContent}
           className={classes.popover}
           classes={{
-            paper: classes.paper
+            paper: classes.paper,
           }}
           anchorEl={anchorEl}
           open={openCard}
           id={id}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left'
+            horizontal: 'left',
           }}
           transformOrigin={{
             vertical: 'top',
-            horizontal: 'left'
+            horizontal: 'left',
           }}
           onClose={handleHoverClose}
           disableRestoreFocus
