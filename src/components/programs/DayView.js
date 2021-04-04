@@ -73,11 +73,13 @@ const DayView = props => {
     let cardio = []
     let workouts = []
     props.item.routine.cardio.forEach(id => {
+      // eslint-disable-next-line eqeqeq
       let cardioEx = programContext.program.cardio.find(ex => ex.id == id)
       cardioEx.type = cardioEx.name
       cardio.push(cardioEx)
     })
     props.item.routine.workouts.forEach(id => {
+      // eslint-disable-next-line eqeqeq
       let wo = programContext.program.workouts.find(ex => ex.id == id)
       workouts.push(wo)
     })
