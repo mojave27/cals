@@ -87,9 +87,9 @@ const ProgramTracker = (props) => {
 
       {/* too wide for mobile view */}
       {isMobile === false ? (
-        <AccordionWrapper label={'schedule - week view'}>
+        <AccordionWrapper label={'schedule - single view'}>
           {isEmpty(context.program.schedule) ? null : (
-            <div style={{maxWidth:'900px', border: '1px solid red', overflow:'scroll', margin:'auto'}}>
+            <div style={{maxWidth:'900px', overflow:'scroll', margin:'auto'}}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -107,7 +107,7 @@ const ProgramTracker = (props) => {
                   {context.program.schedule.days.map((day) => {
                     return (
                       <TableCell key={day.id} className={classes.bordered}>
-                        <DayView item={day} />
+                        <DayView item={day} disabled={true} />
                       </TableCell>
                     )
                   })}

@@ -1,17 +1,18 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
 import ProgramContext from 'context/ProgramContext'
 import WoDayContext from 'context/WoDayContext'
+import WorkoutHighlightCard from 'components/workouts/WorkoutHighlightCard'
 import {
   Box,
   Card,
   CardHeader,
   CardContent,
+  Divider,
   Grid,
   Typography
 } from '@material-ui/core'
-import CardioCard from 'components/programs/CardioCard'
-import WorkoutCard from 'components/workouts/WorkoutCard'
+import CardioHighlightCard from 'components/programs/CardioHighlightCard'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
@@ -49,6 +50,9 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     // padding: '5px',
     margin: '0px'
+  },
+  cardio: {
+    color: theme.palette.info.main
   }
 }))
 
@@ -97,7 +101,8 @@ const DayView = props => {
     let day = retrieveItemById(id, programContext.program.schedule.days)
     return day.routine.cardio && day.routine.cardio.length > 0 ? (
       <React.Fragment>
-        <Typography variant={'h5'} gutterBottom>
+        {/* <Typography variant={'h5'} gutterBottom style={{color:'blue'}}> */}
+        <Typography variant={'h5'} gutterBottom className={classes.cardio}>
           {'Cardio'}
         </Typography>
         {day.routine.cardio.map(cardioId => {
@@ -105,7 +110,7 @@ const DayView = props => {
             cardioId,
             programContext.program.cardio
           )
-          return <CardioCard data={[cardioRoutine]} key={cardioRoutine.id} />
+          return <CardioHighlightCard data={[cardioRoutine]} key={cardioRoutine.id} />
         })}
       </React.Fragment>
     ) : null
@@ -121,17 +126,43 @@ const DayView = props => {
         {day.routine.workouts.map(workoutId => {
           let wo = retrieveItemById(workoutId, programContext.program.workouts)
           return (
-            <WorkoutCard disabled={true} item={wo} id={wo.id} key={wo.id} />
+            // <WorkoutCard disabled={true} item={wo} id={wo.id} key={wo.id} />
+      <WorkoutHighlightCard
+        disabled={true}
+        selected={false}
+        key={wo.id}
+        id={wo.id}
+        item={wo}
+        onClick={() => handleClick(wo.id)}
+      />
           )
         })}
       </React.Fragment>
     ) : null
   }
 
+  const hasCardio = () => {
+    if (props.item.routine.cardio === undefined) return false
+    if (props.item.routine.cardio.length <= 0) return false
+    return true
+  }
+
+  const hasWorkout = () => {
+    // console.log(props.item.workouts)
+    if (props.item.routine.workouts === undefined) return false
+    if (props.item.routine.workouts.length <= 0) return false
+    return true
+  }
+
+  const hasContent = () => {
+    return hasCardio() || hasWorkout()
+  }
+
   return (
+    hasContent() ?
     <React.Fragment>
-        <Grid container direction={'column'} justify={'center'} alignItems={'flex-start'}>
-          {props.disabled === true ? (
+        <Grid container direction={'column'} justify={'center'} alignItems={'flex-start'} >
+          {props.disabled === false ? (
           <Grid item>
             <Box style={{ padding: '10px' }}>
               <FormButton
@@ -140,7 +171,8 @@ const DayView = props => {
               />
             </Box>
           </Grid>) : null}
-          <Grid item xs={12} sm={6}>
+
+          <Grid item xs={12} sm={12}>
             <Card
               className={classes.root}
               style={{ maxWidth: props.maxWidth }}
@@ -171,17 +203,21 @@ const DayView = props => {
                 }
               />
               <CardContent className={classes.cardContent}>
+                {hasCardio() ?
+                <Fragment>
                 <Box style={{ padding: '10px' }}>
                   {renderCardioForDay(props.item.id)}
-                </Box>
+                </Box><Divider/></Fragment> : null}
+                {hasWorkout() ?
                 <Box style={{ padding: '10px' }}>
                   {renderWorkoutsForDay(props.item.id)}
-                </Box>
+                </Box> : null}
               </CardContent>
             </Card>
           </Grid>
         </Grid>
     </React.Fragment>
+    : null
   )
 }
 
