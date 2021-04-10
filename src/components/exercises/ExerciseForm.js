@@ -5,7 +5,7 @@ import Select from 'components/inputs/Select.mui'
 import FormButton from 'components/inputs/FormButton'
 import { EXERCISE_TYPES } from '../../constants'
 import { addExercise } from 'api/exercisesApi'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, TextField, Typography } from '@material-ui/core'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const options = [
@@ -16,6 +16,7 @@ const options = [
 const ExerciseForm = props => {
   const [exerciseName, setExerciseName] = useState('')
   const [exerciseType, setExerciseType] = useState('')
+  const [exerciseNotes, setExerciseNotes] = useState('')
   const [showSpinner, setShowSpinner] = useState(false)
   const isMobile = useMediaQuery('(max-width:768px)');
 
@@ -25,7 +26,8 @@ const ExerciseForm = props => {
       name: exerciseName,
       reps: '',
       type: exerciseType,
-      id: ''
+      id: '',
+      notes: exerciseNotes
     }
     addExercise(exercise).then(response => {
       setShowSpinner(false)
@@ -46,6 +48,9 @@ const ExerciseForm = props => {
         break
       case 'exerciseType':
         setExerciseType(value)
+        break
+      case 'exerciseNotes':
+        setExerciseNotes(value)
         break
       default:
         console.log(`no match for ${id}`)
@@ -72,6 +77,17 @@ const ExerciseForm = props => {
         </Grid>
         <Grid item xs={12} sm={12}>
           <Select value={exerciseType} options={options} onChange={handleSelectType} label={'Type'} />
+        </Grid>
+        <Grid>
+        <TextField
+                      id='exerciseNotes'
+                      label='Notes'
+                      multiline
+                      rows={4}
+                      value={exerciseNotes}
+                      onChange={handleTextChange}
+                      variant='outlined'
+                    />
         </Grid>
         <Grid item xs={12} sm={12}>
           <FormButton value={'Submit'} onClick={addExerciseToDb} />
