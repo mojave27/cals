@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -58,7 +59,7 @@ const WorkoutFormDialog = props => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Create Workout
+              {props.dialogTitle !== '' ? props.dialogTitle : 'Workout Editor'}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleSave}>
               save
@@ -70,6 +71,13 @@ const WorkoutFormDialog = props => {
 
       </Dialog>
   );
+}
+WorkoutFormDialog.propTypes = {
+  dialogTitle: PropTypes.string
+}
+
+WorkoutFormDialog.defaultProps = {
+  dialogTitle: 'Workout Editor'
 }
 
 export default WorkoutFormDialog

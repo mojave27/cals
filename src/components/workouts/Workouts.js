@@ -16,6 +16,7 @@ const Workouts = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
   const [showSpinner, setShowSpinner] = useState(false)
+  const [dialogTitle, setDialogTitle] = useState('')
 
   useEffect(() => {
     fetchWorkouts()
@@ -33,16 +34,19 @@ const Workouts = props => {
 
   const addWorkout = () => {
     woContext.updateWorkout(emptyWorkout)
+    setDialogTitle('Create Workout')
     toggleDialog()
   }
 
   const copyWorkout = async id => {
     woContext.copyWorkout(id)
+    setDialogTitle('Copy Workout')
     toggleDialog()
   }
 
   const editWorkout = async id => {
     await setSelectedWorkoutToContext(id)
+    setDialogTitle('Edit Workout')
     toggleDialog()
   }
 
@@ -75,6 +79,7 @@ const Workouts = props => {
         open={showWorkoutDialog}
         onClose={toggleDialog}
         saveWorkout={saveWorkout}
+        dialogTitle={dialogTitle}
       />
       {/* {doStuff()} */}
       <BasicSpinner show={showSpinner} />
