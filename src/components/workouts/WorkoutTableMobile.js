@@ -1,22 +1,27 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
-import Accordion from '@material-ui/core/Accordion'
-import AccordionSummary from '@material-ui/core/AccordionSummary'
-import AccordionDetails from '@material-ui/core/AccordionDetails'
-import Typography from '@material-ui/core/Typography'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Badge,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TableHead,
+  Typography
+} from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
+
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: `${theme.mobile === true ? '100%' : 'auto'}`
+    width: `${theme.mobile === true ? '100%' : 'auto'}`,
   },
   table: {
     minWidth: '80%',
@@ -24,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   tableCell: {
     fontSize: '16px',
     padding: '5px',
-    border: 0
+    border: 0,
   },
   tableHeaderCell: {
     fontSize: '16px',
@@ -41,23 +46,34 @@ const useStyles = makeStyles(theme => ({
     boxSizing: 'content-box',
     letterSpacing: 'inherit',
     animationDuration: '10ms',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   accordion: {
-    border: `1px solid ${theme.palette.grey[300]}`
+    border: `1px solid ${theme.palette.grey[300]}`,
   },
-  expandIcon: {
-  }
+  expandIcon: {},
+  notesIcon: {marginLeft: '10px'},
 }))
 
-const WorkoutTableMobile = props => {
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    right: -5,
+    top: 5,
+    border: `2px solid ${theme.palette.success.light}`,
+    backgroundColor: theme.palette.success.light,
+  },
+}))(Badge)
+
+
+
+const WorkoutTableMobile = (props) => {
   const classes = useStyles()
 
-  const renderTableOneHeaderRowsMobile = exGroup => {
+  const renderTableOneHeaderRowsMobile = (exGroup) => {
     let headerCells = []
     let secondRowHeaderCells = []
 
-    exGroup.exercises.forEach(exercise => {
+    exGroup.exercises.forEach((exercise) => {
       headerCells.push(
         <TableCell
           key={`${exercise.id}-header`}
@@ -65,7 +81,16 @@ const WorkoutTableMobile = props => {
           classes={{ root: classes.tableHeaderCell }}
           align={'center'}
         >
-          {exercise.name}
+          <Typography className={classes.heading}>
+            {exercise.name}
+            <StyledBadge
+              variant='dot'
+              invisible={undefined === exercise.notes || exercise.notes.length <= 0}
+            >
+              {/* <div style={{marginLeft:'5px', display:'block'}}>{'Notes'}</div> */}
+              <AssignmentOutlinedIcon small classes={{ root: classes.notesIcon }} />
+            </StyledBadge>
+          </Typography>
         </TableCell>
       )
 
@@ -107,9 +132,9 @@ const WorkoutTableMobile = props => {
   }
 
   const renderRows = (exGroup, index) => {
-    return props.wo.sets.map(set => {
+    return props.wo.sets.map((set) => {
       let matchingSetExGroup = set.exerciseGroups.find(
-        setExGrp => setExGrp.id === exGroup.id
+        (setExGrp) => setExGrp.id === exGroup.id
       )
       return (
         <TableRow
@@ -117,7 +142,7 @@ const WorkoutTableMobile = props => {
           id={exGroup.id}
           style={{ borderBottom: '1px solid lightgrey' }}
         >
-          {matchingSetExGroup.exercises.map(ex => {
+          {matchingSetExGroup.exercises.map((ex) => {
             return (
               <React.Fragment key={`${set.id}-${ex.id}`}>
                 <TableCell classes={{ root: classes.tableCell }}>
@@ -138,9 +163,7 @@ const WorkoutTableMobile = props => {
                   />
                 </TableCell>
 
-                <TableCell
-                  classes={{ root: classes.tableCell }}
-                >
+                <TableCell classes={{ root: classes.tableCell }}>
                   <input
                     data-setid={set.id}
                     data-exgroupid={exGroup.id}
@@ -179,10 +202,7 @@ const WorkoutTableMobile = props => {
           </AccordionSummary>
           <AccordionDetails>
             <TableContainer component={Paper}>
-              <Table
-                className={classes.table}
-                aria-label='a dense table'
-              >
+              <Table className={classes.table} aria-label='a dense table'>
                 {renderTableOneHeaderRowsMobile(exGroup)}
                 <TableBody>{renderRows(exGroup, index)}</TableBody>
               </Table>
