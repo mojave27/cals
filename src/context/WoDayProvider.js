@@ -2,6 +2,7 @@ import React from 'react'
 import WoDayContext from './WoDayContext'
 import {
   findIndexOfStringId,
+  removeItemFromArrayByIndex,
   updateItemById,
 } from '../components/modules/common/utilties/ArrayUtils'
 import { cloneDeep } from 'lodash'
@@ -117,6 +118,12 @@ class WoDayProvider extends React.Component {
             const woday = Object.assign({}, this.state.woday)
             let workout = cloneDeep(emptyWorkout)
             woday.workouts.push(workout)
+            this.setState({ woday }) 
+          },
+          removeWorkout: index => {
+            const woday = Object.assign({}, this.state.woday)
+            const updatedWorkouts = removeItemFromArrayByIndex(index, woday.workouts)
+            woday.workouts = updatedWorkouts
             this.setState({ woday }) 
           },
           addSet: (set) => {

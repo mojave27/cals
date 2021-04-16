@@ -377,14 +377,35 @@ const ItemCard = (props) => {
   }
 
   const hasWorkout = () => {
-    if (props.item.wo === undefined) return false
-    if (props.item.wo.exerciseGroups === undefined) return false
-    if (
-      props.item.wo.exerciseGroups &&
-      props.item.wo.exerciseGroups[0].exercises.length === 0
-    )
-      return false
+    if (props.item.wo === undefined && props.item.workouts.length === 0) return false
+
+    // old style wodays
+    if (props.item.wo !== undefined){
+      if (props.item.wo.exerciseGroups === undefined) return false
+      if (
+        props.item.wo.exerciseGroups &&
+        props.item.wo.exerciseGroups[0].exercises.length === 0
+      ) return false
+      return true
+    }
+
+    // new style wodays
+    // if (props.item.workouts.length > 0){
+// 
+    // }
+
     return true
+  }
+
+  const workoutName = item => {
+    if (item.wo !== undefined) return item.wo.name
+
+    let names = []
+    if (item.workouts.length === 0) return 'none'
+    item.workouts.map(wo => {
+      names.push(wo.name)
+    })
+    return names.join(',')
   }
 
   return props.item === null ? (
@@ -397,7 +418,8 @@ const ItemCard = (props) => {
           onClick={() => props.itemSelect(props.item.id)}
           elevation={1}
         >
-          {props.item.wo.name}
+          {/* {props.item.wo.name} */}
+          {workoutName(props.item)}
         </Paper>
       ) : null}
       <div style={{height:'10px'}} />

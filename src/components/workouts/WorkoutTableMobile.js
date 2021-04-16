@@ -88,7 +88,7 @@ const WorkoutTableMobile = (props) => {
               invisible={undefined === exercise.notes || exercise.notes.length <= 0}
             >
               {/* <div style={{marginLeft:'5px', display:'block'}}>{'Notes'}</div> */}
-              <AssignmentOutlinedIcon small classes={{ root: classes.notesIcon }} />
+              <AssignmentOutlinedIcon classes={{ root: classes.notesIcon }} />
             </StyledBadge>
           </Typography>
         </TableCell>

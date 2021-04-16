@@ -365,6 +365,10 @@ const WoDay = props => {
     woDayContext.addEmptyWorkout()
   }
 
+  const deleteWorkout = woIndex => {
+    woDayContext.removeWorkout(woIndex)
+  }
+
   const showWorkoutChooser = (workoutIndex) => {
     setActiveWo(workoutIndex)
     toggleModal()
@@ -596,6 +600,7 @@ const WoDay = props => {
               </Box>
             </Grid>
           </Grid>
+          {/* --- section 3: Weights --------------------------------------- */}
           <Grid item xs={12} sm={12}>
               <ContainedButton
                 onClick={addWorkout}
@@ -604,7 +609,6 @@ const WoDay = props => {
           </Grid>
           {woDayContext.woday.workouts.map( (wo, index) => {
           return (<Grid key={wo.id} item xs={12} sm={12}>
-            {/* --- section 3: Weights --------------------------------------- */}
             <Box className={classes.section}>
               <Typography component={'h6'}>{'Weights'}</Typography>
               <Workout
@@ -614,23 +618,11 @@ const WoDay = props => {
                 showWorkoutChooser={() => showWorkoutChooser(index)}
                 onChange={handleSetChange}
                 onLeadCellChange={handleLeadCellChange}
+                deleteWorkout={() => deleteWorkout(index)}
               />
             </Box>
           </Grid>)
           })}
-          {/* <Grid item xs={12} sm={12}>
-            <Box className={classes.section}>
-              <Typography component={'h6'}>{'Weights'}</Typography>
-              <Workout
-                wo={woDayContext.woday.wo}
-                addExercise={addExercise}
-                addSet={addSet}
-                showWorkoutChooser={showWorkoutChooser}
-                onChange={handleSetChange}
-                onLeadCellChange={handleLeadCellChange}
-              />
-            </Box>
-          </Grid> */}
         </Container>
       ) : (
         <BasicSpinner show={true} />

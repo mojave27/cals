@@ -20,8 +20,11 @@ const Workout = props => {
     props.addSet()
   }
 
-  const addExercise = () => {
-    props.addExercise()
+  // const addExercise = () => {
+    // props.addExercise()
+  // }
+  const deleteWorkout = () => {
+    props.deleteWorkout()
   }
 
   const showWorkoutChooser = () => {
@@ -38,7 +41,8 @@ const Workout = props => {
       <ButtonGroup size='small' orientation={context.mobile === true ? 'vertical': 'horizontal'} variant='contained' style={{margin:'10px'}}>
         <Button style={{margin:'1px'}} onClick={showWorkoutChooser}>{'Choose Workout'}</Button>
         <Button style={{margin:'1px'}} onClick={addSet}>{'Add Set'}</Button>
-        <Button style={{margin:'1px'}} onClick={addExercise}>{'Add Exercise'}</Button>
+        {/* <Button style={{margin:'1px'}} onClick={addExercise}>{'Add Exercise'}</Button> */}
+        <Button style={{margin:'1px'}} onClick={deleteWorkout}>{'Delete Workout'}</Button>
       </ButtonGroup>
 
       <WorkoutTableMobile {...props} />
