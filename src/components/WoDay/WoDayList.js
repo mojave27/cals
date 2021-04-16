@@ -64,6 +64,15 @@ const WoDayList = props => {
 
 export default WoDayList
 
+const workoutNames = woDay => {
+  let names = []
+  if (woDay.workouts.length === 0) return 'none'
+  woDay.workouts.map(wo => {
+    names.push(wo.name)
+  })
+  return names.join(',')
+}
+
 const MobileView = props => {
   const classes = useStyles()
 
@@ -76,15 +85,15 @@ const MobileView = props => {
     }`
     return (
       undefined === woDay.wo ?
-      woDay.workouts.map( (wo,index) => {
-      return (<Grid item xs={12} key={`${date}-${woDay.id}`}>
+      // woDay.workouts.map( (wo,index) => {
+      <Grid item xs={12} key={`${date}-${woDay.id}`}>
         <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
           <CardHeader
             title={date}
-            subheader={wo.name ? wo.name : 'none'}
+            subheader={workoutNames(woDay)}
           />
         </Card>
-      </Grid>)})
+      </Grid>
       :
       <Grid item xs={12} key={`${date}-${woDay.id}`}>
       <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
