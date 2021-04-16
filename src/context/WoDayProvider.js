@@ -1,19 +1,24 @@
 import React from 'react'
 import WoDayContext from './WoDayContext'
-import { findIndexOfStringId, updateItemById } from '../components/modules/common/utilties/ArrayUtils'
-import { cloneDeep } from 'lodash'
 import {
-  retrieve as fetchWoDays,
-  updateWoDay
-} from '../api/wodaysApi'
+  findIndexOfStringId,
+  updateItemById,
+} from '../components/modules/common/utilties/ArrayUtils'
+import { cloneDeep } from 'lodash'
+import { retrieve as fetchWoDays, updateWoDay } from '../api/wodaysApi'
 
 const currentDate = () => {
   let date = new Date()
   return {
     day: date.getDate().toString(),
     month: date.getMonth().toString(),
-    year: date.getFullYear().toString()
+    year: date.getFullYear().toString(),
   }
+}
+
+const emptyWorkout = {
+  exerciseGroups: [{ id: 0, exercises: [] }],
+  sets: [{ id: 0, exerciseGroups: [{ id: 0, exercises: [] }] }],
 }
 
 export const emptyWoDay = {
@@ -26,19 +31,28 @@ export const emptyWoDay = {
   energy: 10,
   sleep: 10,
   cardio: {
-    headers: ['delete', 'type', 'targets', 'duration', 'distance', 'heart rate'],
-    exercises: []
+    headers: [
+      'delete',
+      'type',
+      'targets',
+      'duration',
+      'distance',
+      'heart rate',
+    ],
+    exercises: [],
   },
-  wo: {
-    exerciseGroups: [{ id: 0, exercises: [] }],
-    sets: [{ id: 0, exerciseGroups: [{ id: 0, exercises: [] }] }]
-  }
+  workouts: [],
+  activeWo: -1,
+  wo: () => {
+    if(this.activeWo >= 0) return this.workouts[this.activeWo]
+    return null
+  },
 }
 
 class WoDayProvider extends React.Component {
   state = {
     woday: { ...emptyWoDay },
-    wodays: []
+    wodays: [],
   }
 
   componentDidMount = async () => {
@@ -46,7 +60,7 @@ class WoDayProvider extends React.Component {
     this.setState({ wodays })
   }
 
-  saveWoDayInWoDaysList = woday => {
+  saveWoDayInWoDaysList = (woday) => {
     let wodays = [...this.state.wodays]
     if (woday.id) {
       let index = findIndexOfStringId(woday.id, wodays)
@@ -64,7 +78,7 @@ class WoDayProvider extends React.Component {
   saveWoDay = async () => {
     console.log('saving woday')
     let savedWoDay = await updateWoDay(this.state.woday)
-    await this.setState(prevState => {
+    await this.setState((prevState) => {
       let updatedWoDay = prevState.woday
       updatedWoDay.id = savedWoDay.id
       return { woday: updatedWoDay }
@@ -88,7 +102,7 @@ class WoDayProvider extends React.Component {
             return cloneDeep(this.state.woday)
           },
           saveWoDay: this.saveWoDay,
-          updateWoDay: woday => {
+          updateWoDay: (woday) => {
             this.setState({ woday })
           },
           setEmptyWoDay: async () => {
@@ -96,25 +110,34 @@ class WoDayProvider extends React.Component {
             // woday.id = generateNewId(this.state.wodays)
             await this.setState({ woday: woday })
           },
-          addSet: set => {
+          getWorkout: (index) => {
+            return cloneDeep(this.state.woday.workouts[index])
+          },
+          addEmptyWorkout: () => {
+            const woday = Object.assign({}, this.state.woday)
+            let workout = cloneDeep(emptyWorkout)
+            woday.workouts.push(workout)
+            this.setState({ woday }) 
+          },
+          addSet: (set) => {
             const woday = Object.assign({}, this.state.woday)
             woday.set.push(set)
             this.setState({ woday })
           },
-          updateSetsForWoDay: sets => {
+          updateSetsForWoDay: (sets) => {
             const woday = Object.assign({}, this.state.woday)
             woday.sets = sets
             this.setState({ woday })
           },
 
           wodays: this.state.wodays,
-          updateWoDays: wodays => {
+          updateWoDays: (wodays) => {
             this.setState({ wodays })
           },
           saveWoDayInWoDaysList: this.saveWoDayInWoDaysList,
           clearWoDays: () => {
             this.setState({ wodays: [] })
-          }
+          },
         }}
       >
         {this.props.children}

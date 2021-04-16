@@ -28,13 +28,13 @@ const Workout = props => {
     props.showWorkoutChooser()
   }
 
-  const doStuff = () => {
-    console.log(JSON.stringify(props.wo))
-  }
+  // const doStuff = () => {
+  //   console.log(JSON.stringify(props.wo))
+  // }
 
   return (
     <div className={classes.root}>
-      {doStuff()}
+      {/* {doStuff()} */}
       <ButtonGroup size='small' orientation={context.mobile === true ? 'vertical': 'horizontal'} variant='contained' style={{margin:'10px'}}>
         <Button style={{margin:'1px'}} onClick={showWorkoutChooser}>{'Choose Workout'}</Button>
         <Button style={{margin:'1px'}} onClick={addSet}>{'Add Set'}</Button>

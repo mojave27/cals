@@ -75,14 +75,25 @@ const MobileView = props => {
       woDay.date.year
     }`
     return (
-      <Grid item xs={12} key={`${date}-${woDay.id}`}>
+      undefined === woDay.wo ?
+      woDay.workouts.map( (wo,index) => {
+      return (<Grid item xs={12} key={`${date}-${woDay.id}`}>
         <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
           <CardHeader
             title={date}
-            subheader={woDay.wo.name ? woDay.wo.name : 'none'}
+            subheader={wo.name ? wo.name : 'none'}
           />
         </Card>
-      </Grid>
+      </Grid>)})
+      :
+      <Grid item xs={12} key={`${date}-${woDay.id}`}>
+      <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
+        <CardHeader
+          title={date}
+          subheader={woDay.wo.name ? woDay.wo.name : 'none'}
+        />
+      </Card>
+    </Grid>
     )
   })
 }

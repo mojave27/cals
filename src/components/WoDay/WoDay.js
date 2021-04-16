@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import 'styles/datePicker.css'
 import { retrieveWorkoutById } from 'api/workoutsApi'
 import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
+import ContainedButton from 'components/modules/common/inputs/ContainedButton'
 import Modal from 'components/modules/common/components/Modal'
 import WoDayContext from 'context/WoDayContext'
 import CardioTable from 'components/tables/CardioTable'
@@ -93,6 +94,7 @@ const WoDay = props => {
   let [showModal, setShowModal] = useState(false)
   let [savingInProgress, setSavingInProgress] = useState(false)
   let [userTriggeredSave, setUserTriggeredSave] = useState(false)
+  let [activeWo, setActiveWo] = useState(0)
   let woDayContext = useContext(WoDayContext)
   const classes = useStyles()
   const inputClasses = useStylesInput()
@@ -353,12 +355,18 @@ const WoDay = props => {
     console.log(workoutId)
     console.log(workoutTemplate)
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
-    updatedWoDay.wo = workout
+    // updatedWoDay.workouts.push(workout)
+    updatedWoDay.workouts[activeWo] = workout
     woDayContext.updateWoDay(updatedWoDay)
     toggleModal()
   }
 
-  const showWorkoutChooser = () => {
+  const addWorkout = () => {
+    woDayContext.addEmptyWorkout()
+  }
+
+  const showWorkoutChooser = (workoutIndex) => {
+    setActiveWo(workoutIndex)
     toggleModal()
   }
 
@@ -589,7 +597,28 @@ const WoDay = props => {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12}>
+              <ContainedButton
+                onClick={addWorkout}
+                value={'Add a workout'}
+              />
+          </Grid>
+          {woDayContext.woday.workouts.map( (wo, index) => {
+          return (<Grid key={wo.id} item xs={12} sm={12}>
             {/* --- section 3: Weights --------------------------------------- */}
+            <Box className={classes.section}>
+              <Typography component={'h6'}>{'Weights'}</Typography>
+              <Workout
+                wo={wo}
+                addExercise={addExercise}
+                addSet={addSet}
+                showWorkoutChooser={() => showWorkoutChooser(index)}
+                onChange={handleSetChange}
+                onLeadCellChange={handleLeadCellChange}
+              />
+            </Box>
+          </Grid>)
+          })}
+          {/* <Grid item xs={12} sm={12}>
             <Box className={classes.section}>
               <Typography component={'h6'}>{'Weights'}</Typography>
               <Workout
@@ -601,7 +630,7 @@ const WoDay = props => {
                 onLeadCellChange={handleLeadCellChange}
               />
             </Box>
-          </Grid>
+          </Grid> */}
         </Container>
       ) : (
         <BasicSpinner show={true} />
