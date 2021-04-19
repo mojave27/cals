@@ -200,14 +200,20 @@ const WoDay = props => {
     woDayContext.updateWoDay(woday)
   }
 
-  const handleSetChange = event => {
+  const handleSetChange = (event, index) => {
     let exerciseId = event.target.dataset.exerciseid
     let setId = event.target.dataset.setid
     let exGroupId = event.target.dataset.exgroupid
     let name = event.target.name
     let value = event.target.value
     let woday = woDayContext.copyWoDay()
-    let wo = woday.wo
+    //TODO: remove the conditional logic after updating all workouts
+    let wo = {}
+    if(woday.workouts !== undefined){
+      wo = woday.workouts[index]
+    }else{
+      wo = woday.wo
+    }
 
     // find set
     let setIndex = findIndexOfId(setId, wo.sets)
@@ -353,9 +359,7 @@ const WoDay = props => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
     console.log(workoutId)
-    console.log(workoutTemplate)
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
-    // updatedWoDay.workouts.push(workout)
     updatedWoDay.workouts[activeWo] = workout
     woDayContext.updateWoDay(updatedWoDay)
     toggleModal()
@@ -374,9 +378,16 @@ const WoDay = props => {
     toggleModal()
   }
 
-  const addSet = () => {
+  const getWorkoutFromWoDay = (woday, workoutIndex) => {
+    let wo = woday.workouts !== undefined ? woday.workouts[workoutIndex] : woday.wo
+    console.log(JSON.stringify(wo))
+    return wo
+  }
+
+  const addSet = workoutIndex => {
     let woday = woDayContext.copyWoDay()
-    let wo = woday.wo
+    // let wo = woday.wo
+    let wo = getWorkoutFromWoDay(woday, workoutIndex)
 
     // create new set and exercise groups, add each exercise id, and set weights reps to empty
     // TODO: set the weights to same as previous set, if there was a previous set
@@ -607,22 +618,38 @@ const WoDay = props => {
                 value={'Add a workout'}
               />
           </Grid>
-          {woDayContext.woday.workouts.map( (wo, index) => {
+          {woDayContext.woday.workouts !== undefined ?
+          woDayContext.woday.workouts.map( (wo, index) => {
           return (<Grid key={wo.id} item xs={12} sm={12}>
             <Box className={classes.section}>
               <Typography component={'h6'}>{'Weights'}</Typography>
               <Workout
                 wo={wo}
                 addExercise={addExercise}
-                addSet={addSet}
+                addSet={() => addSet(index)}
                 showWorkoutChooser={() => showWorkoutChooser(index)}
-                onChange={handleSetChange}
+                onChange={(event) => handleSetChange(event, index)}
                 onLeadCellChange={handleLeadCellChange}
                 deleteWorkout={() => deleteWorkout(index)}
               />
             </Box>
           </Grid>)
-          })}
+          })
+        :
+        <Grid item xs={12} sm={12}>
+        <Box className={classes.section}>
+          <Typography component={'h6'}>{'Weights'}</Typography>
+          <Workout
+            wo={woDayContext.woday.wo}
+            addExercise={addExercise}
+            addSet={addSet}
+            showWorkoutChooser={showWorkoutChooser}
+            onChange={handleSetChange}
+            onLeadCellChange={handleLeadCellChange}
+          />
+        </Box>
+      </Grid>
+        }
         </Container>
       ) : (
         <BasicSpinner show={true} />

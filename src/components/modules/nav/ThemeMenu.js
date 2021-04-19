@@ -38,7 +38,7 @@ const ThemeMenu = props => {
             onClose={handleClose}
           >
             <MenuItem onClick={() => handleThemeSelect('light')}>light</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('medium')}>medium</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('oranges')}>medium</MenuItem>
             <MenuItem onClick={() => handleThemeSelect('dark')}>dark</MenuItem>
           </Menu>
     </Fragment>
