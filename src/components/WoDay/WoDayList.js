@@ -67,7 +67,7 @@ export default WoDayList
 const workoutNames = woDay => {
   let names = []
   if (woDay.workouts.length === 0) return 'none'
-  woDay.workouts.map(wo => {
+  woDay.workouts.forEach(wo => {
     names.push(wo.name)
   })
   return names.join(',')

@@ -402,8 +402,8 @@ const ItemCard = (props) => {
 
     let names = []
     if (item.workouts.length === 0) return 'none'
-    item.workouts.map(wo => {
-      names.push(wo.name)
+    item.workouts.forEach((wo) => {
+        names.push(wo.name)
     })
     return names.join(',')
   }
@@ -418,7 +418,6 @@ const ItemCard = (props) => {
           onClick={() => props.itemSelect(props.item.id)}
           elevation={1}
         >
-          {/* {props.item.wo.name} */}
           {workoutName(props.item)}
         </Paper>
       ) : null}

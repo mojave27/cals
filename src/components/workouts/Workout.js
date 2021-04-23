@@ -20,9 +20,6 @@ const Workout = props => {
     props.addSet()
   }
 
-  // const addExercise = () => {
-    // props.addExercise()
-  // }
   const deleteWorkout = () => {
     props.deleteWorkout()
   }
