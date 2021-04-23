@@ -154,7 +154,8 @@ const WorkoutTableMobile = (props) => {
                     data-exgroupid={exGroup.id}
                     data-exerciseid={ex.id}
                     name={'weight'}
-                    type='text'
+                    // type='text'
+                    type="tel"
                     placeholder={'enter weight'}
                     value={ex.weight}
                     onChange={props.onChange}
@@ -169,7 +170,8 @@ const WorkoutTableMobile = (props) => {
                     data-exgroupid={exGroup.id}
                     data-exerciseid={ex.id}
                     name={'reps'}
-                    type='text'
+                    // type='text'
+                    type="tel"
                     placeholder={'enter reps'}
                     value={ex.reps}
                     onChange={props.onChange}
