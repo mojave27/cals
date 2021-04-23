@@ -8,7 +8,7 @@ import {
   IconButton
 } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { Menu, MenuItem } from '@material-ui/core'
+// import { Menu, MenuItem } from '@material-ui/core'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
@@ -24,6 +24,7 @@ import ThemeContext from '../../../context/ThemeContext'
 import { menuConfig } from './navMenuConfig'
 import { Link as RouterLink } from '@reach/router'
 import { Auth } from 'aws-amplify'
+import ThemeMenu from './ThemeMenu'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -234,7 +235,8 @@ const TopNav = props => {
             wo-log
           </Typography>
           {/* ************************************** */}
-          <Button
+          <ThemeMenu />
+          {/* <Button
             color='inherit'
             aria-controls='theme-menu'
             aria-haspopup='true'
@@ -250,10 +252,9 @@ const TopNav = props => {
             onClose={handleClose}
           >
             <MenuItem onClick={() => handleThemeSelect('light')}>light</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('medium')}>medium</MenuItem>
-            {/* <MenuItem onClick={() => handleThemeSelect('oranges')}>oranges</MenuItem> */}
+            <MenuItem onClick={() => handleThemeSelect('oranges')}>oranges</MenuItem>
             <MenuItem onClick={() => handleThemeSelect('dark')}>dark</MenuItem>
-          </Menu>
+          </Menu> */}
           {/* ************************************** */}
           <Button color='inherit' onClick={signOut}>
             Logout
