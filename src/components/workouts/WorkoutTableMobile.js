@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import {
   Accordion,
@@ -14,9 +14,9 @@ import {
   TableContainer,
   TableRow,
   TableHead,
-  Typography
+  Tooltip,
+  Typography,
 } from '@material-ui/core'
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey[300]}`,
   },
   expandIcon: {},
-  notesIcon: {marginLeft: '10px'},
+  notesIcon: { marginLeft: '10px' },
 }))
 
 const StyledBadge = withStyles((theme) => ({
@@ -64,7 +64,10 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge)
 
-
+const hasNotes = (exercise) => {
+  const empty = undefined === exercise.notes || exercise.notes.length <= 0
+  return !empty
+}
 
 const WorkoutTableMobile = (props) => {
   const classes = useStyles()
@@ -83,13 +86,15 @@ const WorkoutTableMobile = (props) => {
         >
           <Typography className={classes.heading}>
             {exercise.name}
-            <StyledBadge
-              variant='dot'
-              invisible={undefined === exercise.notes || exercise.notes.length <= 0}
-            >
-              {/* <div style={{marginLeft:'5px', display:'block'}}>{'Notes'}</div> */}
-              <AssignmentOutlinedIcon classes={{ root: classes.notesIcon }} />
-            </StyledBadge>
+            {hasNotes(exercise) ? (
+              <StyledBadge variant='dot' invisible={false}>
+                <Tooltip title={exercise.notes} aria-label='add'>
+                  <AssignmentOutlinedIcon
+                    classes={{ root: classes.notesIcon }}
+                  />
+                </Tooltip>
+              </StyledBadge>
+            ) : null}
           </Typography>
         </TableCell>
       )
@@ -155,7 +160,7 @@ const WorkoutTableMobile = (props) => {
                     data-exerciseid={ex.id}
                     name={'weight'}
                     // type='text'
-                    type="tel"
+                    type='tel'
                     placeholder={'enter weight'}
                     value={ex.weight}
                     onChange={props.onChange}
@@ -171,7 +176,7 @@ const WorkoutTableMobile = (props) => {
                     data-exerciseid={ex.id}
                     name={'reps'}
                     // type='text'
-                    type="tel"
+                    type='tel'
                     placeholder={'enter reps'}
                     value={ex.reps}
                     onChange={props.onChange}
