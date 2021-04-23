@@ -619,10 +619,12 @@ const WoDay = props => {
               />
           </Grid>
           {woDayContext.woday.workouts !== undefined ?
-          woDayContext.woday.workouts.map( (wo, index) => {
+          <React.Fragment>
+          <Typography component={'h6'}>{'Weights'}</Typography>
+          {woDayContext.woday.workouts.map( (wo, index) => {
           return (<Grid key={wo.id} item xs={12} sm={12}>
             <Box className={classes.section}>
-              <Typography component={'h6'}>{'Weights'}</Typography>
+              <Typography component={'h6'}>{wo.name}</Typography>
               <Workout
                 wo={wo}
                 addExercise={addExercise}
@@ -634,7 +636,8 @@ const WoDay = props => {
               />
             </Box>
           </Grid>)
-          })
+          })}
+          </React.Fragment>
         :
         <Grid item xs={12} sm={12}>
         <Box className={classes.section}>
