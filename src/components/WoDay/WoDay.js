@@ -60,7 +60,10 @@ const useStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey[300]}`,
   },
   accordionDetails: {
-      backgroundColor: 'rgba(0, 0, 0, .05)'
+    backgroundColor: 'rgba(0, 0, 0, .05)',
+  },
+  textField: {
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : '#fff'
   }
 }))
 
@@ -462,9 +465,8 @@ const WoDay = (props) => {
     // console.log(JSON.stringify(woDayContext.woday))
   }
 
-  const deleteRow = rowId => {
+  const deleteRow = (rowId) => {
     console.log(`deleting row from cardio table with id: ${rowId}`)
-
   }
 
   return (
@@ -483,92 +485,112 @@ const WoDay = (props) => {
           <Grid container justify='flex-start'>
             <Grid item xs={12} sm={12}>
               <Box className={classes.section}>
-                <Grid container spacing={1} justify='flex-start'>
-                  <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                      <TextField
-                        id='date'
-                        label='Date'
-                        type='date'
-                        defaultValue={getStartDate()}
-                        onChange={handleTextChange}
-                        className={classes.textField}
-                        variant={'outlined'}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                      <TextField
-                        InputProps={{ classes: inputClasses }}
-                        id={'duration'}
-                        name={'duration'}
-                        label={'Duration'}
-                        value={woDayContext.woday.duration}
-                        onChange={handleTextChange}
-                        variant='outlined'
-                        size='small'
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                      <TextField
-                        InputProps={{ classes: inputClasses }}
-                        id={'goals'}
-                        name={'goals'}
-                        label={'Goals'}
-                        defaultValue={woDayContext.woday.goals}
-                        onChange={handleTextChange}
-                        variant='outlined'
-                        size='small'
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                      <TextField
-                        InputProps={{ classes: inputClasses }}
-                        id={'weight'}
-                        name={'weight'}
-                        label={'Weight'}
-                        defaultValue={woDayContext.woday.weight}
-                        onChange={handleTextChange}
-                        variant='outlined'
-                        size='small'
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                      <RangeSlider
-                        label={'Energy'}
-                        id='energyRange'
-                        min={0}
-                        max={10}
-                        value={woDayContext.woday.energy}
-                        onChange={handleSliderChange}
-                        // theme={woDayContext.theme}
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Paper className={classes.paper}>
-                      <RangeSlider
-                        label={'Sleep'}
-                        id='sleepRange'
-                        min={0}
-                        max={10}
-                        value={woDayContext.woday.sleep}
-                        onChange={handleSliderChange}
-                        theme={woDayContext.theme}
-                      />
-                    </Paper>
-                  </Grid>
-                </Grid>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary
+                    expandIcon={
+                      <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
+                    }
+                    aria-controls='panel1a-content'
+                    id='panel1a-header'
+                  >
+                    <Typography className={classes.heading}>
+                      <StyledBadge
+                        variant='dot'
+                        invisible={woDayContext.woday.notes.length === 0}
+                      >
+                        {'Stats'}
+                      </StyledBadge>
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails className={classes.accordionDetails}>
+                    <Grid container spacing={1} justify='flex-start'>
+                      <Grid item xs={12} sm={6}>
+                        <Paper className={classes.paper}>
+                          <TextField
+                            id='date'
+                            label='Date'
+                            type='date'
+                            defaultValue={getStartDate()}
+                            onChange={handleTextChange}
+                            className={classes.textField}
+                            variant={'outlined'}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Paper className={classes.paper}>
+                          <TextField
+                            InputProps={{ classes: inputClasses }}
+                            id={'duration'}
+                            name={'duration'}
+                            label={'Duration'}
+                            value={woDayContext.woday.duration}
+                            onChange={handleTextChange}
+                            variant='outlined'
+                            size='small'
+                          />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Paper className={classes.paper}>
+                          <TextField
+                            InputProps={{ classes: inputClasses }}
+                            id={'goals'}
+                            name={'goals'}
+                            label={'Goals'}
+                            defaultValue={woDayContext.woday.goals}
+                            onChange={handleTextChange}
+                            variant='outlined'
+                            size='small'
+                          />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Paper className={classes.paper}>
+                          <TextField
+                            InputProps={{ classes: inputClasses }}
+                            id={'weight'}
+                            name={'weight'}
+                            label={'Weight'}
+                            defaultValue={woDayContext.woday.weight}
+                            onChange={handleTextChange}
+                            variant='outlined'
+                            size='small'
+                          />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Paper className={classes.paper}>
+                          <RangeSlider
+                            label={'Energy'}
+                            id='energyRange'
+                            min={0}
+                            max={10}
+                            value={woDayContext.woday.energy}
+                            onChange={handleSliderChange}
+                            // theme={woDayContext.theme}
+                          />
+                        </Paper>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Paper className={classes.paper}>
+                          <RangeSlider
+                            label={'Sleep'}
+                            id='sleepRange'
+                            min={0}
+                            max={10}
+                            value={woDayContext.woday.sleep}
+                            onChange={handleSliderChange}
+                            theme={woDayContext.theme}
+                          />
+                        </Paper>
+                      </Grid>
+                    </Grid>
+                  </AccordionDetails>
+                </Accordion>
               </Box>
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -591,8 +613,9 @@ const WoDay = (props) => {
                       </StyledBadge>
                     </Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails className={classes.accordionDetails}>
                     <TextField
+                      className={classes.textField}
                       id='notes'
                       label='Multiline'
                       fullWidth
@@ -624,7 +647,7 @@ const WoDay = (props) => {
           <Grid item xs={12} sm={12}>
             <Box className={classes.section}>
               <Grid item xs={12} sm={12}>
-                <Container style={{margin:'10px'}}>
+                <Container style={{ marginBottom: '10px' }}>
                   <Typography component={'h6'}>{'Weights'}</Typography>
                   <ContainedButton
                     onClick={addWorkout}
@@ -650,12 +673,21 @@ const WoDay = (props) => {
                             aria-controls='panel1a-content'
                             id='panel1a-header'
                           >
-                            {wo.name === undefined 
-                            ? <Typography variant={'body2'} align='center' color='error'>{<em>{'expand to choose a workout'}</em>}</Typography>
-                            : <Typography variant={'h6'}>{wo.name}</Typography>
-                            }
+                            {wo.name === undefined ? (
+                              <Typography
+                                variant={'body2'}
+                                align='center'
+                                color='error'
+                              >
+                                {<em>{'expand to choose a workout'}</em>}
+                              </Typography>
+                            ) : (
+                              <Typography variant={'h6'}>{wo.name}</Typography>
+                            )}
                           </AccordionSummary>
-                          <AccordionDetails className={classes.accordionDetails}>
+                          <AccordionDetails
+                            className={classes.accordionDetails}
+                          >
                             <Workout
                               wo={wo}
                               addExercise={addExercise}
