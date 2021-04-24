@@ -35,7 +35,7 @@ const WoDayTracker = props => {
   }
 
   const chooseWoDay = async (id) => {
-    console.log(id)
+    console.log(`woday id: ${id}`)
     const response = await retrieveWoDayById(id)
     console.log(response)
     await woDayContext.updateWoDay(response)

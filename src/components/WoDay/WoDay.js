@@ -17,7 +17,7 @@ import WorkoutChooser from 'components/workouts/WorkoutChooser'
 import WoDayAppBar from 'components/WoDay/WoDayAppBar'
 import {
   findIndexOfId,
-  generateNewId
+  generateNewId,
 } from 'components/modules/common/utilties/ArrayUtils'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
@@ -31,37 +31,37 @@ import {
   Grid,
   Paper,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   container: {
     borderRadius: '2px',
-    border: `1px solid ${theme.palette.grey[400]}`
+    border: `1px solid ${theme.palette.grey[400]}`,
   },
   section: {
     borderRadius: '2px',
     border: `1px solid ${theme.palette.grey[300]}`,
     textAlign: 'center',
     padding: '15px',
-    margin: '10px 0px'
+    margin: '10px 0px',
   },
   paper: {
     padding: theme.spacing(1),
     textAlign: 'left',
-    margin: '3px'
+    margin: '3px',
   },
   accordion: {
     // backgroundColor: theme.color2.hex,
     // color: theme.color2_text.hex,
-    border: `1px solid ${theme.palette.grey[300]}`
-  }
+    border: `1px solid ${theme.palette.grey[300]}`,
+  },
 }))
 
-const useStylesInput = makeStyles(theme => ({
+const useStylesInput = makeStyles((theme) => ({
   root: {
     // color: theme.color1_text.hex,
     border: `1px solid ${theme.palette.primary.light}`,
@@ -75,22 +75,22 @@ const useStylesInput = makeStyles(theme => ({
     '&$focused': {
       // backgroundColor: '#eee',
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-      borderColor: theme.palette.primary.light
-    }
+      borderColor: theme.palette.primary.light,
+    },
   },
-  focused: {}
+  focused: {},
 }))
 
-const StyledBadge = withStyles(theme => ({
+const StyledBadge = withStyles((theme) => ({
   badge: {
     right: -5,
     top: 5,
     border: `2px solid ${theme.palette.success.light}`,
-    backgroundColor: theme.palette.success.light
-  }
+    backgroundColor: theme.palette.success.light,
+  },
 }))(Badge)
 
-const WoDay = props => {
+const WoDay = (props) => {
   let [showModal, setShowModal] = useState(false)
   let [savingInProgress, setSavingInProgress] = useState(false)
   let [userTriggeredSave, setUserTriggeredSave] = useState(false)
@@ -102,16 +102,16 @@ const WoDay = props => {
   useEffect(() => {
     const timer = setInterval(() => {
       autoSave()
-    }, autoSaveInterval);
-               // clearing interval
-    return () => clearInterval(timer);
-  });
+    }, autoSaveInterval)
+    // clearing interval
+    return () => clearInterval(timer)
+  })
 
   const woDayLoaded = () => {
     return true
   }
 
-  const retrieveWorkout = async workoutId => {
+  const retrieveWorkout = async (workoutId) => {
     let workout = await retrieveWorkoutById(workoutId)
     return workout
   }
@@ -144,7 +144,7 @@ const WoDay = props => {
     setSavingInProgress(false)
   }
 
-  const handleTextChange = event => {
+  const handleTextChange = (event) => {
     let id = event.target.id
     let value = event.target.value
     switch (id) {
@@ -168,7 +168,7 @@ const WoDay = props => {
     }
   }
 
-  const handleExerciseChange = update => {
+  const handleExerciseChange = (update) => {
     // {
     // id: id,  <-- will be row-column (e.g. 1-2)
     // name: name, <-- will be property name
@@ -183,7 +183,7 @@ const WoDay = props => {
     woDayContext.updateWoDay(woday)
   }
 
-  const handleLeadCellChange = event => {
+  const handleLeadCellChange = (event) => {
     let value = event.target.value
     let name = event.target.name
     let exerciseId = event.target.parentNode.parentNode.id
@@ -209,9 +209,9 @@ const WoDay = props => {
     let woday = woDayContext.copyWoDay()
     //TODO: remove the conditional logic after updating all workouts
     let wo = {}
-    if(woday.workouts !== undefined){
+    if (woday.workouts !== undefined) {
       wo = woday.workouts[index]
-    }else{
+    } else {
       wo = woday.wo
     }
 
@@ -233,49 +233,49 @@ const WoDay = props => {
     woDayContext.updateWoDay(woday)
   }
 
-  const setWeight = weight => {
+  const setWeight = (weight) => {
     let woday = woDayContext.copyWoDay()
     woday.weight = weight
     woDayContext.updateWoDay(woday)
   }
 
-  const setNotes = notes => {
+  const setNotes = (notes) => {
     let woday = woDayContext.copyWoDay()
     woday.notes = notes
     woDayContext.updateWoDay(woday)
   }
 
-  const setDate = date => {
+  const setDate = (date) => {
     let upDate = new Date(date)
     let woday = woDayContext.copyWoDay()
     //TODO: figure out why we have to add '1' to the day for it to be accurate.
     woday.date = {
       day: upDate.getDate() + 1,
       month: upDate.getMonth(),
-      year: upDate.getFullYear()
+      year: upDate.getFullYear(),
     }
     woDayContext.updateWoDay(woday)
   }
 
-  const setDuration = duration => {
+  const setDuration = (duration) => {
     let woday = woDayContext.copyWoDay()
     woday.duration = duration
     woDayContext.updateWoDay(woday)
   }
 
-  const setGoals = goals => {
+  const setGoals = (goals) => {
     let woday = woDayContext.copyWoDay()
     woday.goals = goals
     woDayContext.updateWoDay(woday)
   }
 
-  const setEnergyRange = value => {
+  const setEnergyRange = (value) => {
     let woday = woDayContext.copyWoDay()
     woday.energy = value
     woDayContext.updateWoDay(woday)
   }
 
-  const setSleepRange = value => {
+  const setSleepRange = (value) => {
     let woday = woDayContext.copyWoDay()
     woday.sleep = value
     woDayContext.updateWoDay(woday)
@@ -316,7 +316,7 @@ const WoDay = props => {
       type: '',
       duration: '',
       distance: '',
-      heartRate: '? bpm'
+      heartRate: '? bpm',
     }
     let woday = woDayContext.copyWoDay()
     woday.cardio.exercises.push(newCardioExercise)
@@ -328,7 +328,7 @@ const WoDay = props => {
 
     let newExGroup = {
       id: generateNewId(woday.wo.exerciseGroups),
-      exercises: []
+      exercises: [],
     }
     newExGroup.exercises.push(generateNewExercise())
     woday.wo.exerciseGroups.push(newExGroup)
@@ -340,7 +340,7 @@ const WoDay = props => {
   }
 
   const addExerciseToSets = (sets, exGroup) => {
-    return sets.map(set => {
+    return sets.map((set) => {
       set.exerciseGroups.push(exGroup)
       return set
     })
@@ -351,11 +351,11 @@ const WoDay = props => {
       id: 0,
       name: '',
       reps: 0,
-      weight: 0
+      weight: 0,
     }
   }
 
-  const chooseWorkout = async workoutId => {
+  const chooseWorkout = async (workoutId) => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
     console.log(workoutId)
@@ -369,7 +369,7 @@ const WoDay = props => {
     woDayContext.addEmptyWorkout()
   }
 
-  const deleteWorkout = woIndex => {
+  const deleteWorkout = (woIndex) => {
     woDayContext.removeWorkout(woIndex)
   }
 
@@ -379,12 +379,13 @@ const WoDay = props => {
   }
 
   const getWorkoutFromWoDay = (woday, workoutIndex) => {
-    let wo = woday.workouts !== undefined ? woday.workouts[workoutIndex] : woday.wo
+    let wo =
+      woday.workouts !== undefined ? woday.workouts[workoutIndex] : woday.wo
     console.log(JSON.stringify(wo))
     return wo
   }
 
-  const addSet = workoutIndex => {
+  const addSet = (workoutIndex) => {
     let woday = woDayContext.copyWoDay()
     // let wo = woday.wo
     let wo = getWorkoutFromWoDay(woday, workoutIndex)
@@ -400,18 +401,18 @@ const WoDay = props => {
     } else {
       newSet = {
         id: generateNewId(wo.sets),
-        exerciseGroups: wo.exerciseGroups.map(exGroup => {
+        exerciseGroups: wo.exerciseGroups.map((exGroup) => {
           let newExGroup = {}
           newExGroup.id = exGroup.id
-          newExGroup.exercises = exGroup.exercises.map(ex => {
+          newExGroup.exercises = exGroup.exercises.map((ex) => {
             return {
               id: ex.id,
               weight: '',
-              reps: ''
+              reps: '',
             }
           })
           return newExGroup
-        })
+        }),
       }
     }
     wo.sets.push(newSet)
@@ -420,21 +421,21 @@ const WoDay = props => {
     // save to DB (we want auto-save on everything... maybe)
   }
 
-  const copyFromPreviousSet = allSets => {
+  const copyFromPreviousSet = (allSets) => {
     // get previous set
     let previousSet = allSets[allSets.length - 1]
     let newSet = cloneDeep(previousSet)
     // clear the reps from newSet
-    let newExGroups = newSet.exerciseGroups.map(exGroup => {
+    let newExGroups = newSet.exerciseGroups.map((exGroup) => {
       let newExGroup = {
         id: exGroup.id,
-        exercises: exGroup.exercises.map(ex => {
+        exercises: exGroup.exercises.map((ex) => {
           return {
             id: ex.id,
             weight: ex.weight,
-            reps: ''
+            reps: '',
           }
-        })
+        }),
       }
       return newExGroup
     })
@@ -445,12 +446,12 @@ const WoDay = props => {
   const convertCardioForTable = () => {
     let data = {
       headers: woDayContext.woday.cardio.headers,
-      rows: woDayContext.woday.cardio.exercises
+      rows: woDayContext.woday.cardio.exercises,
     }
     return data
   }
 
-  const saveToDuration = value => {
+  const saveToDuration = (value) => {
     setDuration(value)
   }
 
@@ -486,7 +487,7 @@ const WoDay = props => {
                         className={classes.textField}
                         variant={'outlined'}
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                       />
                     </Paper>
@@ -604,7 +605,7 @@ const WoDay = props => {
                 <CardioTable
                   id={0}
                   data={convertCardioForTable()}
-                  deleteRow={event => console.log(event)}
+                  deleteRow={(event) => console.log(event)}
                   addCardioExercise={addCardioExercise}
                   onChange={handleExerciseChange}
                 />
@@ -614,52 +615,75 @@ const WoDay = props => {
           {/* --- section 3: Weights --------------------------------------- */}
           <Grid item xs={12} sm={12}>
             <Box className={classes.section}>
-          <Grid item xs={12} sm={12}>
-            <Container>
-              <Typography component={'h6'}>{'Weights'}</Typography>
-              <ContainedButton
-                onClick={addWorkout}
-                value={'Add a workout'}
-              />
-              </Container>
-          </Grid>
-          {woDayContext.woday.workouts !== undefined ?
-          <React.Fragment>
-          {woDayContext.woday.workouts.map( (wo, index) => {
-          return (
-          <Grid key={index} item xs={12} sm={12}>
-            <Box  className={classes.section}>
-              <Typography component={'h6'}>{wo.name}</Typography>
-              <Workout
-                wo={wo}
-                addExercise={addExercise}
-                addSet={() => addSet(index)}
-                showWorkoutChooser={() => showWorkoutChooser(index)}
-                onChange={(event) => handleSetChange(event, index)}
-                onLeadCellChange={handleLeadCellChange}
-                deleteWorkout={() => deleteWorkout(index)}
-              />
+              <Grid item xs={12} sm={12}>
+                <Container style={{margin:'10px'}}>
+                  <Typography component={'h6'}>{'Weights'}</Typography>
+                  <ContainedButton
+                    onClick={addWorkout}
+                    value={'Add a workout'}
+                  />
+                </Container>
+              </Grid>
+              {woDayContext.woday.workouts !== undefined ? (
+                <React.Fragment>
+                  {woDayContext.woday.workouts.map((wo, index) => {
+                    return (
+                      <Grid key={index} item xs={12} sm={12}>
+                        <Accordion
+                          key={`${wo.name}-${index}`}
+                          className={classes.accordion}
+                        >
+                          <AccordionSummary
+                            expandIcon={
+                              <ExpandMoreIcon
+                                classes={{ root: classes.expandIcon }}
+                              />
+                            }
+                            aria-controls='panel1a-content'
+                            id='panel1a-header'
+                          >
+                            {wo.name === undefined 
+                            ? <Typography variant={'body2'} align='center' color='error'>{<em>{'expand to choose a workout'}</em>}</Typography>
+                            : <Typography variant={'h6'}>{wo.name}</Typography>
+                            }
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <Workout
+                              wo={wo}
+                              addExercise={addExercise}
+                              addSet={() => addSet(index)}
+                              showWorkoutChooser={() =>
+                                showWorkoutChooser(index)
+                              }
+                              onChange={(event) =>
+                                handleSetChange(event, index)
+                              }
+                              onLeadCellChange={handleLeadCellChange}
+                              deleteWorkout={() => deleteWorkout(index)}
+                            />
+                          </AccordionDetails>
+                        </Accordion>
+                      </Grid>
+                    )
+                  })}
+                </React.Fragment>
+              ) : (
+                <Grid item xs={12} sm={12}>
+                  <Box className={classes.section}>
+                    <Typography component={'h6'}>{'Weights'}</Typography>
+                    <Workout
+                      wo={woDayContext.woday.wo}
+                      addExercise={addExercise}
+                      addSet={addSet}
+                      showWorkoutChooser={showWorkoutChooser}
+                      onChange={handleSetChange}
+                      onLeadCellChange={handleLeadCellChange}
+                    />
+                  </Box>
+                </Grid>
+              )}
             </Box>
-          </Grid>)
-          })}
-          </React.Fragment>
-        :
-        <Grid item xs={12} sm={12}>
-        <Box className={classes.section}>
-          <Typography component={'h6'}>{'Weights'}</Typography>
-          <Workout
-            wo={woDayContext.woday.wo}
-            addExercise={addExercise}
-            addSet={addSet}
-            showWorkoutChooser={showWorkoutChooser}
-            onChange={handleSetChange}
-            onLeadCellChange={handleLeadCellChange}
-          />
-        </Box>
-      </Grid>
-        }
-        </Box>
-        </Grid>
+          </Grid>
         </Container>
       ) : (
         <BasicSpinner show={true} />

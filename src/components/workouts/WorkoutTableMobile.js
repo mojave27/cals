@@ -69,6 +69,16 @@ const hasNotes = (exercise) => {
   return !empty
 }
 
+const CustomTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}))(Tooltip)
+
 const WorkoutTableMobile = (props) => {
   const classes = useStyles()
 
@@ -87,13 +97,18 @@ const WorkoutTableMobile = (props) => {
           <Typography className={classes.heading}>
             {exercise.name}
             {hasNotes(exercise) ? (
-              <StyledBadge variant='dot' invisible={false}>
-                <Tooltip title={exercise.notes} aria-label='add'>
+                <CustomTooltip
+                  title={
+                    <React.Fragment>
+                      <Typography color='inherit'>Exercise Notes</Typography>
+                      <em>{exercise.notes}</em>
+                    </React.Fragment>
+                  }
+                >
                   <AssignmentOutlinedIcon
                     classes={{ root: classes.notesIcon }}
                   />
-                </Tooltip>
-              </StyledBadge>
+                </CustomTooltip>
             ) : null}
           </Typography>
         </TableCell>
