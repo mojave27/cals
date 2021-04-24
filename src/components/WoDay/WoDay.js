@@ -59,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
     // color: theme.color2_text.hex,
     border: `1px solid ${theme.palette.grey[300]}`,
   },
+  accordionDetails: {
+      backgroundColor: 'rgba(0, 0, 0, .05)'
+  }
 }))
 
 const useStylesInput = makeStyles((theme) => ({
@@ -459,6 +462,11 @@ const WoDay = (props) => {
     // console.log(JSON.stringify(woDayContext.woday))
   }
 
+  const deleteRow = rowId => {
+    console.log(`deleting row from cardio table with id: ${rowId}`)
+
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
@@ -605,7 +613,7 @@ const WoDay = (props) => {
                 <CardioTable
                   id={0}
                   data={convertCardioForTable()}
-                  deleteRow={(event) => console.log(event)}
+                  deleteRow={deleteRow}
                   addCardioExercise={addCardioExercise}
                   onChange={handleExerciseChange}
                 />
@@ -647,7 +655,7 @@ const WoDay = (props) => {
                             : <Typography variant={'h6'}>{wo.name}</Typography>
                             }
                           </AccordionSummary>
-                          <AccordionDetails>
+                          <AccordionDetails className={classes.accordionDetails}>
                             <Workout
                               wo={wo}
                               addExercise={addExercise}

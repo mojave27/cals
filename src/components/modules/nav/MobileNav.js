@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Collapse,
   Divider,
   Drawer,
   Button,
-  IconButton
+  IconButton,
 } from '@material-ui/core'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-// import { Menu, MenuItem } from '@material-ui/core'
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
@@ -20,41 +19,40 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 import EditIcon from '@material-ui/icons/Edit'
 import ListAltIcon from '@material-ui/icons/ListAlt'
-import ThemeContext from '../../../context/ThemeContext'
 import { menuConfig } from './navMenuConfig'
 import { Link as RouterLink } from '@reach/router'
 import { Auth } from 'aws-amplify'
 import ThemeMenu from './ThemeMenu'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   toolbar: {
     borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   list: {
-    width: 250
+    width: 250,
   },
   nested: {
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(4),
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 }))
 
-const icon = iconName => {
+const icon = (iconName) => {
   if (iconName.toLowerCase() === 'home') {
     return <HomeIcon fontSize={'small'} />
   }
@@ -75,34 +73,15 @@ const icon = iconName => {
   }
 }
 
-const TopNav = props => {
-  const themeContext = useContext(ThemeContext)
+const TopNav = (props) => {
   const classes = useStyles()
-  // const [expandSection, setExpandSection] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [expandSection, setExpandSection] = React.useState({})
-
-  /* MENU LOGIC **************************************/
-  const [anchorEl, setAnchorEl] = useState(null)
-
-  const handleMenuClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const handleThemeSelect = themeName => {
-    handleClose()
-    themeContext.changeTheme(themeName)
-  }
-  /* *********************************************** */
 
   useEffect(() => {
     function setupForMenu() {
       let sections = {}
-      menuConfig.forEach(item => {
+      menuConfig.forEach((item) => {
         sections[item.name] = false
       })
       setExpandSection(sections)
@@ -127,7 +106,7 @@ const TopNav = props => {
     setDrawerOpen(false)
   }
 
-  const handleClick = name => {
+  const handleClick = (name) => {
     let updatedExpandSection = {}
     // set all to false - so any currently expanded sections will collapse
     for (const section of Object.entries(expandSection)) {
@@ -234,28 +213,7 @@ const TopNav = props => {
           <Typography variant='h6' className={classes.title}>
             wo-log
           </Typography>
-          {/* ************************************** */}
           <ThemeMenu />
-          {/* <Button
-            color='inherit'
-            aria-controls='theme-menu'
-            aria-haspopup='true'
-            onClick={handleMenuClick}
-          >
-            Theme
-          </Button>
-          <Menu
-            id='simple-menu'
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={() => handleThemeSelect('light')}>light</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('oranges')}>oranges</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('dark')}>dark</MenuItem>
-          </Menu> */}
-          {/* ************************************** */}
           <Button color='inherit' onClick={signOut}>
             Logout
           </Button>

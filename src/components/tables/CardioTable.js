@@ -97,7 +97,8 @@ const CardioTable = props => {
       >
         {'Add Exercise'}
       </Button>
-      {themeContext.mobile === true ? (
+      {props.data.rows.length > 0 ?
+      themeContext.mobile === true ? (
         <MobileCardioTable {...props} />
       ) : (
         <Table>
@@ -110,7 +111,8 @@ const CardioTable = props => {
           </TableHead>
           <TableBody>{renderRows(props.data)}</TableBody>
         </Table>
-      )}
+      )
+      : null }
     </React.Fragment>
   )
 }

@@ -6,7 +6,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Badge,
   Paper,
   Table,
   TableBody,
@@ -51,18 +50,12 @@ const useStyles = makeStyles((theme) => ({
   accordion: {
     border: `1px solid ${theme.palette.grey[300]}`,
   },
+  accordionDetails: {
+    backgroundColor: 'rgba(0, 0, 0, .03)'
+  },
   expandIcon: {},
   notesIcon: { marginLeft: '10px' },
 }))
-
-const StyledBadge = withStyles((theme) => ({
-  badge: {
-    right: -5,
-    top: 5,
-    border: `2px solid ${theme.palette.success.light}`,
-    backgroundColor: theme.palette.success.light,
-  },
-}))(Badge)
 
 const hasNotes = (exercise) => {
   const empty = undefined === exercise.notes || exercise.notes.length <= 0
@@ -222,7 +215,7 @@ const WorkoutTableMobile = (props) => {
               Exercise Group {index + 1}
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails className={classes.accordionDetails}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label='a dense table'>
                 {renderTableOneHeaderRowsMobile(exGroup)}
