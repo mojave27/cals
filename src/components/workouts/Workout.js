@@ -67,7 +67,7 @@ const Workout = (props) => {
         <ButtonGroup
           size='small'
           orientation={'horizontal'}
-          variant='contained'
+          variant='outlined'
           style={{ margin: '10px' }}
         >
           <Button style={{ margin: '1px' }} onClick={showWorkoutChooser}>

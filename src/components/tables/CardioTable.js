@@ -93,7 +93,7 @@ const CardioTable = props => {
       <Button
         size='small'
         onClick={props.addCardioExercise}
-        variant='contained'
+        variant='outlined'
       >
         {'Add Exercise'}
       </Button>

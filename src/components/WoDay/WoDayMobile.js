@@ -127,7 +127,6 @@ const WorkoutModal = (props) => {
       onClose={props.handleClose}
       TransitionComponent={Transition}
     >
-      {/* <Dialog fullScreen open={props.open} onClose={props.handleClose}> */}
       <AppBar className={classes.appBar}>
         <Toolbar>
           <IconButton
@@ -139,14 +138,89 @@ const WorkoutModal = (props) => {
             <CloseIcon />
           </IconButton>
           <Typography variant='h6' className={classes.title}>
-            Sound
+            Weights
           </Typography>
-          <Button autoFocus color='inherit' onClick={props.handleClose}>
-            save
-          </Button>
         </Toolbar>
       </AppBar>
-      <List>
+      <Grid item xs={12} sm={12}>
+        <Box className={classes.section}>
+          <Grid item xs={12} sm={12}>
+            <Container style={{ marginBottom: '10px' }}>
+              <Typography component={'h6'}>{'Weights'}</Typography>
+              <ContainedButton
+                onClick={props.addWorkout}
+                value={'Add a workout'}
+              />
+            </Container>
+          </Grid>
+          {props.woday.workouts !== undefined ? (
+            <React.Fragment>
+              {props.woday.workouts.map((wo, index) => {
+                return (
+                  <Grid key={index} item xs={12} sm={12}>
+                    <Accordion
+                      key={`${wo.name}-${index}`}
+                      className={classes.accordion}
+                    >
+                      <AccordionSummary
+                        expandIcon={
+                          <ExpandMoreIcon
+                            classes={{ root: classes.expandIcon }}
+                          />
+                        }
+                        aria-controls='panel1a-content'
+                        id='panel1a-header'
+                      >
+                        {wo.name === undefined ? (
+                          <Typography
+                            variant={'body2'}
+                            align='center'
+                            color='error'
+                          >
+                            {<em>{'expand to choose a workout'}</em>}
+                          </Typography>
+                        ) : (
+                          <Typography variant={'h6'}>{wo.name}</Typography>
+                        )}
+                      </AccordionSummary>
+                      <AccordionDetails className={classes.accordionDetails}>
+                        <Workout
+                          wo={wo}
+                          addExercise={props.addExercise}
+                          addSet={() => props.addSet(index)}
+                          showWorkoutChooser={() =>
+                            props.showWorkoutChooser(index)
+                          }
+                          onChange={(event) =>
+                            props.handleSetChange(event, index)
+                          }
+                          onLeadCellChange={props.handleLeadCellChange}
+                          deleteWorkout={() => props.deleteWorkout(index)}
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  </Grid>
+                )
+              })}
+            </React.Fragment>
+          ) : (
+            <Grid item xs={12} sm={12}>
+              <Box className={classes.section}>
+                <Typography component={'h6'}>{'Weights'}</Typography>
+                <Workout
+                  wo={props.woday.wo}
+                  addExercise={props.addExercise}
+                  addSet={props.addSet}
+                  showWorkoutChooser={props.showWorkoutChooser}
+                  onChange={props.handleSetChange}
+                  onLeadCellChange={props.handleLeadCellChange}
+                />
+              </Box>
+            </Grid>
+          )}
+        </Box>
+      </Grid>
+      {/* <List>
         <ListItem button>
           <ListItemText primary='Phone ringtone' secondary='Titania' />
         </ListItem>
@@ -157,7 +231,7 @@ const WorkoutModal = (props) => {
             secondary='Tethys'
           />
         </ListItem>
-      </List>
+      </List> */}
     </Dialog>
   )
 }
@@ -545,7 +619,18 @@ const WoDay = (props) => {
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WorkoutChooser done={done} chooseWorkout={chooseWorkout} />
       </Modal>
-      <WorkoutModal open={workoutModalOpen} handleClose={toggleWorkoutModal} />
+      <WorkoutModal
+        open={workoutModalOpen}
+        handleClose={toggleWorkoutModal}
+        woday={woDayContext.woday}
+        addWorkout={addWorkout}
+        addExercise={addExercise}
+        addSet={addSet}
+        handleSetChange={handleSetChange}
+        handleLeadCellChange={handleLeadCellChange}
+        showWorkoutChooser={showWorkoutChooser}
+        deleteWorkout={deleteWorkout}
+      />
       {doStuff()}
       <WoDayAppBar
         onSave={saveWoDay}
@@ -725,87 +810,6 @@ const WoDay = (props) => {
               {'Weights'}
             </Button>
           </Grid>
-
-          {/* <Grid item xs={12} sm={12}>
-            <Box className={classes.section}>
-              <Grid item xs={12} sm={12}>
-                <Container style={{ marginBottom: '10px' }}>
-                  <Typography component={'h6'}>{'Weights'}</Typography>
-                  <ContainedButton
-                    onClick={addWorkout}
-                    value={'Add a workout'}
-                  />
-                </Container>
-              </Grid>
-              {woDayContext.woday.workouts !== undefined ? (
-                <React.Fragment>
-                  {woDayContext.woday.workouts.map((wo, index) => {
-                    return (
-                      <Grid key={index} item xs={12} sm={12}>
-                        <Accordion
-                          key={`${wo.name}-${index}`}
-                          className={classes.accordion}
-                        >
-                          <AccordionSummary
-                            expandIcon={
-                              <ExpandMoreIcon
-                                classes={{ root: classes.expandIcon }}
-                              />
-                            }
-                            aria-controls='panel1a-content'
-                            id='panel1a-header'
-                          >
-                            {wo.name === undefined ? (
-                              <Typography
-                                variant={'body2'}
-                                align='center'
-                                color='error'
-                              >
-                                {<em>{'expand to choose a workout'}</em>}
-                              </Typography>
-                            ) : (
-                              <Typography variant={'h6'}>{wo.name}</Typography>
-                            )}
-                          </AccordionSummary>
-                          <AccordionDetails
-                            className={classes.accordionDetails}
-                          >
-                            <Workout
-                              wo={wo}
-                              addExercise={addExercise}
-                              addSet={() => addSet(index)}
-                              showWorkoutChooser={() =>
-                                showWorkoutChooser(index)
-                              }
-                              onChange={(event) =>
-                                handleSetChange(event, index)
-                              }
-                              onLeadCellChange={handleLeadCellChange}
-                              deleteWorkout={() => deleteWorkout(index)}
-                            />
-                          </AccordionDetails>
-                        </Accordion>
-                      </Grid>
-                    )
-                  })}
-                </React.Fragment>
-              ) : (
-                <Grid item xs={12} sm={12}>
-                  <Box className={classes.section}>
-                    <Typography component={'h6'}>{'Weights'}</Typography>
-                    <Workout
-                      wo={woDayContext.woday.wo}
-                      addExercise={addExercise}
-                      addSet={addSet}
-                      showWorkoutChooser={showWorkoutChooser}
-                      onChange={handleSetChange}
-                      onLeadCellChange={handleLeadCellChange}
-                    />
-                  </Box>
-                </Grid>
-              )}
-            </Box>
-          </Grid> */}
         </Container>
       ) : (
         <BasicSpinner show={true} />

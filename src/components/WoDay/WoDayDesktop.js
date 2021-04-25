@@ -27,6 +27,7 @@ import {
   AccordionDetails,
   Badge,
   Box,
+  Button,
   Container,
   Grid,
   Paper,
@@ -649,11 +650,18 @@ const WoDay = (props) => {
               <Grid item xs={12} sm={12}>
                 <Container style={{ marginBottom: '10px' }}>
                   <Typography component={'h6'}>{'Weights'}</Typography>
-                  <ContainedButton
+                  <Button
+      variant='outlined'
+      onClick={addWorkout}
+      size='small'
+    >
+      {'Add a workout'}
+    </Button>
+                  {/* <ContainedButton
                     onClick={addWorkout}
                     value={'Add a workout'}
-                  />
-                </Container>
+                  />*/}
+                </Container> 
               </Grid>
               {woDayContext.woday.workouts !== undefined ? (
                 <React.Fragment>
