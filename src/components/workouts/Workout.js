@@ -1,18 +1,22 @@
 import React, { useContext } from 'react'
-import ThemeContext from '../../context/ThemeContext'
+import ThemeContext from 'context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import { Button, IconButton, Tooltip } from '@material-ui/core'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import WorkoutTableMobile from './WorkoutTableMobile'
+import WorkoutTableMobile from 'components/workouts/WorkoutTableMobile'
+import WorkoutTableDesktop from 'components/workouts/WorkoutTableDesktop'
+import TouchAppIcon from '@material-ui/icons/TouchApp'
+import AddIcon from '@material-ui/icons/Add'
+import DeleteIcon from '@material-ui/icons/Delete'
 
-const useStyles = makeStyles(context => ({
+const useStyles = makeStyles((context) => ({
   root: {
     flexGrow: 1,
-    width: `${context.mobile === true ? '100%' : 'auto'}`
-  }
+    width: `${context.mobile === true ? '100%' : 'auto'}`,
+  },
 }))
 
-const Workout = props => {
+const Workout = (props) => {
   let context = useContext(ThemeContext)
   const classes = useStyles()
 
@@ -34,15 +38,51 @@ const Workout = props => {
 
   return (
     <div className={classes.root}>
-      {/* {doStuff()} */}
-      <ButtonGroup size='small' orientation={context.mobile === true ? 'vertical': 'horizontal'} variant='contained' style={{margin:'10px'}}>
-        <Button style={{margin:'1px'}} onClick={showWorkoutChooser}>{'Choose Workout'}</Button>
-        <Button style={{margin:'1px'}} onClick={addSet}>{'Add Set'}</Button>
-        {/* <Button style={{margin:'1px'}} onClick={addExercise}>{'Add Exercise'}</Button> */}
-        <Button style={{margin:'1px'}} onClick={deleteWorkout}>{'Delete Workout'}</Button>
-      </ButtonGroup>
+      {context.mobile === true ? (
+        // <ButtonGroup
+        //   size='small'
+        //   orientation={'horizontal'}
+        //   variant='contained'
+        //   style={{ margin: '10px' }}
+        // >
+        <React.Fragment>
+          <Tooltip title='Choose Workout'>
+            <IconButton aria-label='delete' onClick={showWorkoutChooser}>
+              <TouchAppIcon color='inherit' style={{ margin: '1px' }} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Add Set'>
+            <IconButton aria-label='delete' onClick={addSet}>
+              <AddIcon color='inherit' style={{ margin: '1px' }} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Delete Workout'>
+            <IconButton aria-label='delete' onClick={deleteWorkout}>
+              <DeleteIcon color='inherit' style={{ margin: '1px' }} />
+            </IconButton>
+          </Tooltip>
+        </React.Fragment>
+        // </ButtonGroup>
+      ) : (
+        <ButtonGroup
+          size='small'
+          orientation={'horizontal'}
+          variant='contained'
+          style={{ margin: '10px' }}
+        >
+          <Button style={{ margin: '1px' }} onClick={showWorkoutChooser}>
+            {'Choose Workout'}
+          </Button>
+          <Button style={{ margin: '1px' }} onClick={addSet}>
+            {'Add Set'}
+          </Button>
+          <Button style={{ margin: '1px' }} onClick={deleteWorkout}>
+            {'Delete Workout'}
+          </Button>
+        </ButtonGroup>
+      )}
 
-      <WorkoutTableMobile {...props} />
+      {context.mobile ? <WorkoutTableMobile {...props} /> : <WorkoutTableDesktop {...props} /> }
     </div>
   )
 }
