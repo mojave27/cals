@@ -29,7 +29,7 @@ export const oranges = {
       main: '#ffa726',
       light: '#ffd95b',
       dark: '#E99924',
-      contrastText: '#222'
+      contrastText: '#fff'
     },
     secondary: {
       main: '#ffca28',

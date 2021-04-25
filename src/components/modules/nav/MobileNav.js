@@ -23,14 +23,20 @@ import { menuConfig } from './navMenuConfig'
 import { Link as RouterLink } from '@reach/router'
 import { Auth } from 'aws-amplify'
 import ThemeMenu from './ThemeMenu'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  appbar: {
+    top: 0,
+    bottom: 'auto',
+  },
   toolbar: {
-    borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
+    // borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
     color: theme.palette.primary.contrastText,
+    background: fade(theme.palette.primary.main, 0.8),
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -199,7 +205,13 @@ const TopNav = (props) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position='sticky' elevation={0} style={{ marginBottom: '30px' }}>
+      <AppBar 
+        // position='sticky' 
+        position='fixed'
+        color={'transparent'}
+        elevation={0} 
+        className={classes.appbar}
+      >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge='start'
@@ -219,6 +231,7 @@ const TopNav = (props) => {
           </Button>
         </Toolbar>
       </AppBar>
+      <Toolbar />
 
       <Drawer
         anchor={'left'}

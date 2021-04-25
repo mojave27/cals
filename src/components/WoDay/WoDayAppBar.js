@@ -5,7 +5,7 @@ import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  appBar: { }
+  appBar: {  }
 }))
 
 const WoDayAppBar = props => {

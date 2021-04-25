@@ -29,7 +29,7 @@ const ThemedContent = props => {
                   style={{
                     height: '300vh',
                     maxWidth: `${context.mobile === true ? '100%' : '80%'}`,
-                    margin: '20px auto'
+                    margin: '20px auto',
                   }}
                 >
                   <WoDayProvider>

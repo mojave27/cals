@@ -6,17 +6,18 @@ import { menuConfig } from './navMenuConfig'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ThemeMenu from 'components/modules/nav/ThemeMenu'
 import { Auth } from 'aws-amplify'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import './TopNav.css'
 
 const useStyles = makeStyles(theme => ({
   appbar: {
-    padding: '0px',
-    // backgroundColor: 'transparent'
+    top: 0,
+    bottom: 'auto',
   },
   toolbar: {
-    borderBottom: `1px solid ${theme.palette.primary.contrastText}`,
     color: theme.palette.primary.contrastText,
+    background: fade(theme.palette.primary.main, 0.8),
   },
   popover: {
     pointerEvents: 'none',
@@ -125,10 +126,12 @@ const DesktopNav = props => {
   return (
     <div style={{ marginBottom: '30px' }}>
       <AppBar
-        position='sticky'
+        // position='sticky'
+        position='fixed'
+        color={'transparent'}
         elevation={0}
         className={classes.appbar}
-        style={{ marginBottom: '30px' }}
+        // style={{ zIndex:'100', marginBottom: '30px', background: 'transparent', boxShadow: 'none'}}
       >
         <Toolbar variant={'dense'} className={classes.toolbar}>
           {menuConfig.map((menu, index) => {
@@ -141,6 +144,7 @@ const DesktopNav = props => {
           </Button>
         </Toolbar>
       </AppBar>
+      <Toolbar/>
     </div>
   )
 }
