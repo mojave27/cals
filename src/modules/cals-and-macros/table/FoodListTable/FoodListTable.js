@@ -7,33 +7,25 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
 } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: '80%'
+    minWidth: '80%',
   },
   tableCell: {
     padding: '5px',
     color: theme.color3_text.hex,
-    border: 0
+    border: 0,
   },
   tableHeaderCell: {
-    padding: '5px'
-  }
+    padding: '5px',
+  },
 }))
 
-// const StyledTableRow = withStyles(theme => ({
-//   root: {
-//     '&:nth-of-type(odd)': {
-//       backgroundColor: theme.palette.action.hover
-//     }
-//   }
-// }))(TableRow)
-
-const FoodListTable = props => {
+const FoodListTable = (props) => {
   const classes = useStyles()
 
   return (
@@ -46,70 +38,45 @@ const FoodListTable = props => {
             <TableCell>qty</TableCell>
             <TableCell>unit</TableCell>
             <TableCell>cals</TableCell>
-            <TableCell>protein <i>g</i></TableCell>
-            <TableCell>carb <i>g</i></TableCell>
-            <TableCell>fiber <i>g</i></TableCell>
-            <TableCell>fat <i>g</i></TableCell>
+            <TableCell>
+              protein <i>g</i>
+            </TableCell>
+            <TableCell>
+              carb <i>g</i>
+            </TableCell>
+            <TableCell>
+              fiber <i>g</i>
+            </TableCell>
+            <TableCell>
+              fat <i>g</i>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.foodList.map((foodItem, index) => {
-            let found = props.selectedFoodItems.find(selectedFoodItem => {
-              return selectedFoodItem.description === foodItem.description
-            })
-            let selected = found ? 'true' : 'false'
-            return (
-              <FoodListTableRow
-                key={index}
-                rowId={index}
-                rowData={foodItem}
-                onRowClick={props.rowClick}
-                selected={selected}
-              />
-            )
-          })}
+              let found = props.selectedFoodItems.find((selectedFoodItem) => {
+                return selectedFoodItem.description === foodItem.description
+              })
+              let selected = found ? 'true' : 'false'
+              return (
+                <FoodListTableRow
+                  key={index}
+                  rowId={index}
+                  rowData={foodItem}
+                  onRowClick={() => props.rowClick(foodItem.id)}
+                  selected={selected}
+                />
+              )
+            })}
         </TableBody>
       </Table>
     </TableContainer>
-    // <Table celled >
-    //   <Table.Header>
-    //     <Table.Row>
-    //       <Table.HeaderCell />
-    //       <Table.HeaderCell>description</Table.HeaderCell>
-    //       <Table.HeaderCell>Qty</Table.HeaderCell>
-    //       <Table.HeaderCell>Unit</Table.HeaderCell>
-    //       <Table.HeaderCell>Cals</Table.HeaderCell>
-    //       <Table.HeaderCell>Protein Grams</Table.HeaderCell>
-    //       <Table.HeaderCell>Carb Grams</Table.HeaderCell>
-    //       <Table.HeaderCell>Fiber Grams</Table.HeaderCell>
-    //       <Table.HeaderCell>Fat Grams</Table.HeaderCell>
-    //     </Table.Row>
-    //   </Table.Header>
-
-    //   <Table.Body>
-    //     {props.foodList.map( (foodItem, index) => {
-    //       let found = props.selectedFoodItems.find( selectedFoodItem => {
-    //         return selectedFoodItem.description === foodItem.description
-    //       })
-    //       let selected =  found ? 'true' : 'false';
-    //       return(
-    //         <FoodListTableRow
-    //           key={index}
-    //           rowId={index}
-    //           rowData={foodItem}
-    //           onRowClick={props.rowClick}
-    //           selected={selected}
-    //         />
-    //       )
-    //     })}
-    //   </Table.Body>
-    // </Table>
   )
 }
 
 FoodListTable.defaultProps = {
   foodList: [],
-  selectedFoodItems: []
+  selectedFoodItems: [],
 }
 
 export default FoodListTable

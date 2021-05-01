@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Confirm } from 'semantic-ui-react'
 import retrieveFoodList from 'api/cals-and-macros/retrieveFoodList'
 import FoodListTable from 'modules/cals-and-macros/table/FoodListTable/FoodListTable'
-import { filterItemsByNameProperty as filterItems } from 'components/modules/common/utilties/ArrayUtils'
+import { filterItemsByNameProperty as filterItems, retrieveItemById } from 'components/modules/common/utilties/ArrayUtils'
 import { sortByStringProperty } from 'list-utils'
 
 import FormButton from 'components/inputs/FormButton'
@@ -42,14 +42,11 @@ const ReusableFoodSearch = props => {
     setSearchValue(e.target.value)
   }
 
-  // const handleClick = () => {
-  //   setShowSpinner(true)
-  //   retrieve()
-  // }
-
-  const handleRowSelect = (rowId, event) => {
-    event.preventDefault()
-    props.rowSelect(foodList[rowId])
+  const handleRowSelect = (id) => {
+    console.log(id)
+    // get foodItem from foodList based on id
+    let foodItem = retrieveItemById(id, foodList)
+    props.rowSelect(foodItem)
   }
 
   const retrieve = () => {
@@ -91,12 +88,6 @@ const ReusableFoodSearch = props => {
     return sorted
   }
 
-  // const handleKeyPress = e => {
-  //   if (e.key === 'Enter') {
-  //     handleClick()
-  //   }
-  // }
-
   const show = () => {
     if (foodList.length <= 0) return true
     if (showSpinner) return true
@@ -112,20 +103,20 @@ const ReusableFoodSearch = props => {
             id='search'
             name='search'
             onChange={handleInputChange}
+            autoComplete={'off'}
           />
         </Grid>
         <Grid item xs={12} sm={2}>
-          {/* <FormButton value={'search'} onClick={handleClick} /> */}
         </Grid>
         <Grid item xs={12} sm={2}>
           <FormButton onClick={props.onClose} value={'close'} />
         </Grid>
         <Grid item xs={12}>
-          {foodList.length > 0 ? (
+          {/* {foodList.length > 0 ? ( */}
             <React.Fragment>
               <FoodListTable foodList={filterItems(searchValue, foodList, 'description')} rowClick={handleRowSelect} />
             </React.Fragment>
-          ) : null}
+          {/* ) : null} */}
         </Grid>
         <Confirm
           open={showConfirm}

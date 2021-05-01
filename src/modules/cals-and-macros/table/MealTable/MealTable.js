@@ -52,12 +52,12 @@ const MealTable = props => {
 
         <TableBody>{renderFoodRows(props)}</TableBody>
 
-        {props.foodList.length > 0 ? (
+        {/* {props.foodList.length > 0 ? ( */}
           <TableFooter>
             <SummaryRow foodList={props.foodList} />
             <MacrosRow foodList={props.foodList} />
           </TableFooter>
-        ) : null}
+        {/* ) : null} */}
       </Table>
     </TableContainer>
   )

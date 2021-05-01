@@ -178,7 +178,7 @@ class Meal extends Component {
               />
             </Grid>
             <Grid item xs={12} sm={12} >
-              {this.state.meal.foodList.length > 0 ? (
+              {/* {this.state.meal.foodList.length > 0 ? ( */}
                 <MealCard
                   item={this.state.meal}
                   rowClick={this.handleRowSelect}
@@ -188,7 +188,7 @@ class Meal extends Component {
                   tweakUp={this.tweakRowUp}
                   tweakDown={this.tweakRowDown}
                 />
-              ) : null}
+              {/* ) : null} */}
             </Grid>
             <Grid item xs={12}>
               <Button

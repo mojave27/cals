@@ -68,8 +68,6 @@ const findIndexOfStringId = (id, list) => {
 }
 
 const filterItemsByNameProperty = (searchValue, items, searchField = 'name') => {
-  console.log(searchValue)
-  console.log(items)
   // eslint-disable-next-line array-callback-return
   let filteredItems = items.filter(item => {
     if (searchValue == null) return item
