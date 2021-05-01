@@ -67,11 +67,13 @@ const findIndexOfStringId = (id, list) => {
   return index
 }
 
-const filterItemsByNameProperty = (searchValue, items) => {
+const filterItemsByNameProperty = (searchValue, items, searchField = 'name') => {
+  console.log(searchValue)
+  console.log(items)
   // eslint-disable-next-line array-callback-return
   let filteredItems = items.filter(item => {
     if (searchValue == null) return item
-    else if (item.name.toLowerCase().includes(searchValue.toLowerCase())) {
+    else if (item[searchField].toLowerCase().includes(searchValue.toLowerCase())) {
       return item
     }
   })
