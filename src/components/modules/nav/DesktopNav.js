@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from '@reach/router'
-import { AppBar, Button, Menu, MenuItem, Toolbar } from '@material-ui/core'
+import { AppBar, Button, Divider, Menu, MenuItem, Toolbar } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { menuConfig } from './navMenuConfig'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
@@ -79,11 +79,19 @@ const DesktopNav = props => {
         return renderButton(item, index)
       case 'dropdown':
         return renderDropDownMenu(item, index)
+      case 'divider':
+        return renderDivider()
       case 'functionButton':
         break
       default:
         console.log(`unknown menu item type: ${item.type}`)
     }
+  }
+
+  const renderDivider = () => {
+    return (
+      <Divider />
+    )
   }
 
   const renderButton = (item, index) => {

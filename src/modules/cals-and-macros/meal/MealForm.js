@@ -177,7 +177,7 @@ class Meal extends Component {
                 onChange={this.handleInputChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={12} >
               {this.state.meal.foodList.length > 0 ? (
                 <MealCard
                   item={this.state.meal}

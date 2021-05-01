@@ -100,7 +100,7 @@ const MealCard = props => {
           tweakUp={props.tweakUp}
           tweakDown={props.tweakDown}
           viewOnly={props.viewOnly}
-          width={'80%'}
+          width={'100%'}
         />
       </CardContent>
     </Card>
