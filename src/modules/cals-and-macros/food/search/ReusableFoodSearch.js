@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Confirm } from 'semantic-ui-react'
 import retrieveFoodList from 'api/cals-and-macros/retrieveFoodList'
 import FoodListTable from 'modules/cals-and-macros/table/FoodListTable/FoodListTable'
+import { filterItemsByNameProperty as filterItems } from 'components/modules/common/utilties/ArrayUtils'
 import { sortByStringProperty } from 'list-utils'
 
 import FormButton from 'components/inputs/FormButton'
@@ -17,11 +18,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const FoodSearch = props => {
+const ReusableFoodSearch = props => {
   const classes = useStyles()
   const [foodList, setFoodList] = useState([])
   const [message, setMessage] = useState('')
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState(null)
   const [showConfirm, setShowConfirm] = useState(false)
   const [showSpinner, setShowSpinner] = useState(true)
 
@@ -41,10 +42,10 @@ const FoodSearch = props => {
     setSearchValue(e.target.value)
   }
 
-  const handleClick = () => {
-    setShowSpinner(true)
-    retrieve()
-  }
+  // const handleClick = () => {
+  //   setShowSpinner(true)
+  //   retrieve()
+  // }
 
   const handleRowSelect = (rowId, event) => {
     event.preventDefault()
@@ -110,12 +111,11 @@ const FoodSearch = props => {
           <TextInput
             id='search'
             name='search'
-            // data={this.state.meal.name}
             onChange={handleInputChange}
           />
         </Grid>
         <Grid item xs={12} sm={2}>
-          <FormButton value={'search'} onClick={handleClick} />
+          {/* <FormButton value={'search'} onClick={handleClick} /> */}
         </Grid>
         <Grid item xs={12} sm={2}>
           <FormButton onClick={props.onClose} value={'close'} />
@@ -123,7 +123,7 @@ const FoodSearch = props => {
         <Grid item xs={12}>
           {foodList.length > 0 ? (
             <React.Fragment>
-              <FoodListTable foodList={foodList} rowClick={handleRowSelect} />
+              <FoodListTable foodList={filterItems(searchValue, foodList, 'description')} rowClick={handleRowSelect} />
             </React.Fragment>
           ) : null}
         </Grid>
@@ -139,4 +139,4 @@ const FoodSearch = props => {
   )
 }
 
-export default FoodSearch
+export default ReusableFoodSearch
