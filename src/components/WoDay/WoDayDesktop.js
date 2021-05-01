@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import 'styles/datePicker.css'
 import { retrieveWorkoutById } from 'api/workoutsApi'
 import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
-import ContainedButton from 'components/modules/common/inputs/ContainedButton'
 import Modal from 'components/modules/common/components/Modal'
 import WoDayContext from 'context/WoDayContext'
 import CardioTable from 'components/tables/CardioTable'
@@ -633,7 +632,17 @@ const WoDay = (props) => {
             <Grid item xs={12} sm={12}>
               {/* --- section 2: Cardio --------------------------------------- */}
               <Box className={classes.section}>
+                <Accordion className={classes.accordion}>
+                  <AccordionSummary
+                    expandIcon={
+                      <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
+                    }
+                    aria-controls='panel1a-content'
+                    id='panel1a-header'
+                  >
                 <Typography component={'h6'}>{'Cardio'}</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails className={classes.accordionDetails}>
                 <CardioTable
                   id={0}
                   data={convertCardioForTable()}
@@ -641,6 +650,8 @@ const WoDay = (props) => {
                   addCardioExercise={addCardioExercise}
                   onChange={handleExerciseChange}
                 />
+                  </AccordionDetails>
+                </Accordion>
               </Box>
             </Grid>
           </Grid>

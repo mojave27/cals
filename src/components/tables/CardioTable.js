@@ -60,6 +60,8 @@ const CardioTable = props => {
     )
 
     for (let i = j; i < headers.length; i++) {
+      console.log(headers[i])
+      console.log(camelCase(headers[i]))
       tds.push(
         <TableCell key={i}>
           <Input
@@ -78,7 +80,7 @@ const CardioTable = props => {
   // todo: need to give the exercise id
   const handleCellChange = event => {
     let id = event.target.id
-    let name = event.target.name
+    let name = camelCase(event.target.name)
     let value = event.target.value
 
     props.onChange({
