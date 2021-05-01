@@ -80,7 +80,7 @@ const DesktopNav = props => {
       case 'dropdown':
         return renderDropDownMenu(item, index)
       case 'divider':
-        return renderDivider()
+        return renderDivider(index)
       case 'functionButton':
         break
       default:
@@ -88,9 +88,9 @@ const DesktopNav = props => {
     }
   }
 
-  const renderDivider = () => {
+  const renderDivider = index => {
     return (
-      <Divider />
+      <Divider key={`divider-${index}`} />
     )
   }
 
