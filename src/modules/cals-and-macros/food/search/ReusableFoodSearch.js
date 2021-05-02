@@ -6,7 +6,8 @@ import { filterItemsByNameProperty as filterItems, retrieveItemById } from 'comp
 import { sortByStringProperty } from 'list-utils'
 
 import FormButton from 'components/inputs/FormButton'
-import TextInput from 'components/inputs/TextInput'
+// import TextInput from 'components/inputs/TextInput'
+import TextInputWithCancel from 'components/inputs/TextInputWithCancel'
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import BasicSpinner from 'components/spinners/BasicSpinner'
@@ -22,7 +23,7 @@ const ReusableFoodSearch = props => {
   const classes = useStyles()
   const [foodList, setFoodList] = useState([])
   const [message, setMessage] = useState('')
-  const [searchValue, setSearchValue] = useState(null)
+  const [searchValue, setSearchValue] = useState('')
   const [showConfirm, setShowConfirm] = useState(false)
   const [showSpinner, setShowSpinner] = useState(true)
 
@@ -34,8 +35,14 @@ const ReusableFoodSearch = props => {
   const handleModalCancel = () => {
     setShowConfirm(false)
   }
+
   const handleModalConfirm = () => {
     handleModalCancel()
+  }
+
+  const handleClearSearch = () => {
+    console.log('clearing search')
+    setSearchValue('')
   }
 
   const handleInputChange = e => {
@@ -99,12 +106,32 @@ const ReusableFoodSearch = props => {
       <BasicSpinner show={show()} />
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <TextInput
+          <TextInputWithCancel
             id='search'
             name='search'
+            data={searchValue}
             onChange={handleInputChange}
+            handleCancel={handleClearSearch}
             autoComplete={'off'}
           />
+          {/* <TextField
+            id='search'
+            name='search'
+            value={searchValue}
+            onChange={handleInputChange}
+            autoComplete={'off'}
+            InputProps={{ endAdornment:
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClearSearch}
+                  onMouseDown={handleClearSearch}
+                >
+                  {<ClearIcon />}
+                </IconButton>
+              </InputAdornment>
+            }}
+          /> */}
         </Grid>
         <Grid item xs={12} sm={2}>
         </Grid>
