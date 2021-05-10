@@ -75,7 +75,7 @@ const CustomTooltip = withStyles((theme) => ({
   },
 }))(Tooltip)
 
-const WorkoutTableMobile = (props) => {
+const WorkoutTableDesktop = (props) => {
   const classes = useStyles()
 
   const renderTableOneHeaderRowsMobile = (exGroup) => {
@@ -205,34 +205,46 @@ const WorkoutTableMobile = (props) => {
   }
 
   const renderExerciseGroups = () => {
-    return props.wo.exerciseGroups.map((exGroup, index) => {
+    if (props.wo.exerciseGroups.length === 1) {
+      const exGroup = props.wo.exerciseGroups[0]
       return (
-        <Accordion key={`${exGroup}-${index}`} className={classes.accordion}>
-          <AccordionSummary
-            expandIcon={
-              <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
-            }
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-          >
-            <Typography className={classes.heading}>
-              Exercise Group {index + 1}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails className={classes.accordionDetails}>
-            <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label='a dense table'>
-                {renderTableOneHeaderRowsMobile(exGroup)}
-                <TableBody>{renderRows(exGroup, index)}</TableBody>
-              </Table>
-            </TableContainer>
-          </AccordionDetails>
-        </Accordion>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label='a dense table'>
+            {renderTableOneHeaderRowsMobile(exGroup)}
+            <TableBody>{renderRows(exGroup, 0)}</TableBody>
+          </Table>
+        </TableContainer>
       )
-    })
+    } else {
+      return props.wo.exerciseGroups.map((exGroup, index) => {
+        return (
+          <Accordion key={`${exGroup}-${index}`} className={classes.accordion}>
+            <AccordionSummary
+              expandIcon={
+                <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
+              }
+              aria-controls='panel1a-content'
+              id='panel1a-header'
+            >
+              <Typography className={classes.heading}>
+                Exercise Group {index + 1}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails className={classes.accordionDetails}>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label='a dense table'>
+                  {renderTableOneHeaderRowsMobile(exGroup)}
+                  <TableBody>{renderRows(exGroup, index)}</TableBody>
+                </Table>
+              </TableContainer>
+            </AccordionDetails>
+          </Accordion>
+        )
+      })
+    }
   }
 
   return <div style={{ margin: 'auto' }}>{renderExerciseGroups()}</div>
 }
 
-export default WorkoutTableMobile
+export default WorkoutTableDesktop

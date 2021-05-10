@@ -114,24 +114,6 @@ const ReusableFoodSearch = props => {
             handleCancel={handleClearSearch}
             autoComplete={'off'}
           />
-          {/* <TextField
-            id='search'
-            name='search'
-            value={searchValue}
-            onChange={handleInputChange}
-            autoComplete={'off'}
-            InputProps={{ endAdornment:
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClearSearch}
-                  onMouseDown={handleClearSearch}
-                >
-                  {<ClearIcon />}
-                </IconButton>
-              </InputAdornment>
-            }}
-          /> */}
         </Grid>
         <Grid item xs={12} sm={2}>
         </Grid>
