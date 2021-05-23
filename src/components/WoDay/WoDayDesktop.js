@@ -668,10 +668,6 @@ const WoDay = (props) => {
     >
       {'Add a workout'}
     </Button>
-                  {/* <ContainedButton
-                    onClick={addWorkout}
-                    value={'Add a workout'}
-                  />*/}
                 </Container> 
               </Grid>
               {woDayContext.woday.workouts !== undefined ? (

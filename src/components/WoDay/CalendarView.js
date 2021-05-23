@@ -9,6 +9,7 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core'
+import { isEmpty } from '@aws-amplify/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.primary.dark,
-      color: theme.palette.primary.contrastText
+      color: theme.palette.primary.contrastText,
     },
     margin: 'auto',
   },
@@ -42,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.dark,
     '&:hover': {
       backgroundColor: theme.palette.secondary.light,
-      color: theme.palette.secondary.contrastText
+      color: theme.palette.secondary.contrastText,
     },
     margin: 'auto',
   },
   cardioBadge: {
     color: theme.palette.secondary.light,
     '&:hover': {
-      color: theme.palette.secondary.contrastText
+      color: theme.palette.secondary.contrastText,
     },
   },
   paper: {
@@ -377,35 +378,49 @@ const ItemCard = (props) => {
   }
 
   const hasWorkout = () => {
-    if (props.item.wo === undefined && props.item.workouts.length === 0) return false
+    if (props.item.wo === undefined && props.item.workouts.length === 0)
+      return false
 
-    // old style wodays
-    if (props.item.wo !== undefined){
+    if (props.item.wo !== undefined) {
       if (props.item.wo.exerciseGroups === undefined) return false
       if (
         props.item.wo.exerciseGroups &&
         props.item.wo.exerciseGroups[0].exercises.length === 0
-      ) return false
+      )
+        return false
       return true
     }
-
-    // new style wodays
-    // if (props.item.workouts.length > 0){
-// 
-    // }
 
     return true
   }
 
-  const workoutName = item => {
+  const workoutName = (item) => {
     if (item.wo !== undefined) return item.wo.name
 
     let names = []
-    if (item.workouts.length === 0) return 'none'
+    if (isEmpty(item.workouts) || item.workouts.length === 0) return 'none'
     item.workouts.forEach((wo) => {
-        names.push(wo.name)
+      if (workoutStarted(wo)) {
+        names.push(<Typography key={wo.name}>{wo.name}</Typography>)
+      } else {
+        names.push(<Typography color='error' key={wo.name}>{`${wo.name}-NOSTART`}</Typography>)
+      }
     })
-    return names.join(',')
+    return names
+  }
+
+  const workoutStarted = (wo) => {
+    let isStarted = false
+    if (isEmpty(wo.sets)) return false
+    wo.sets.forEach((set) => {
+      if (isEmpty(set.exerciseGroups)) return false
+      set.exerciseGroups.forEach((exGroup) => {
+        exGroup.exercises.forEach((ex) => {
+          if (!isEmpty(ex.reps) && Number(ex.reps) !== 0) isStarted = true
+        })
+      })
+    })
+    return isStarted
   }
 
   return props.item === null ? (
@@ -421,7 +436,7 @@ const ItemCard = (props) => {
           {workoutName(props.item)}
         </Paper>
       ) : null}
-      <div style={{height:'10px'}} />
+      <div style={{ height: '10px' }} />
       {hasCardio() ? (
         <Paper
           className={`${classes.item} ${classes.itemWithCardio}`}
