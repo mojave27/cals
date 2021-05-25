@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { autoSaveInterval } from 'config/appConfig'
 import { navigate } from '@reach/router'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'styles/datePicker.css'
 import { retrieveWorkoutById } from 'api/workoutsApi'
@@ -469,6 +469,16 @@ const WoDay = (props) => {
     console.log(`deleting row from cardio table with id: ${rowId}`)
   }
 
+  const hasStats = () => {
+    let result = false
+    if(Number(woDayContext.woday.duration) !== 0) result = true
+    if(!isEmpty(woDayContext.woday.goals)) result = true
+    if(!isEmpty(woDayContext.woday.weight)) result = true
+    if(Number(woDayContext.woday.energy) < 10) result = true
+    if(Number(woDayContext.woday.sleep) < 10) result = true
+    return result
+  }
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
@@ -496,7 +506,7 @@ const WoDay = (props) => {
                     <Typography className={classes.heading}>
                       <StyledBadge
                         variant='dot'
-                        invisible={woDayContext.woday.notes.length === 0}
+                        invisible={!hasStats()}
                       >
                         {'Stats'}
                       </StyledBadge>
