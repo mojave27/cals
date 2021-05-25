@@ -5,6 +5,7 @@ import BasicSpinner from '../spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,13 +65,39 @@ const WoDayList = props => {
 
 export default WoDayList
 
-const workoutNames = woDay => {
+const workoutNames = item => {
+// const workoutNames = woDay => {
+  // let names = []
+  // if (woDay.workouts.length === 0) return 'none'
+  // woDay.workouts.forEach(wo => {
+  //   names.push(wo.name)
+  // })
+  // return names.join(',')
   let names = []
-  if (woDay.workouts.length === 0) return 'none'
-  woDay.workouts.forEach(wo => {
-    names.push(wo.name)
+  if (isEmpty(item.workouts) || item.workouts.length === 0) return 'none'
+  item.workouts.forEach((wo) => {
+    if (workoutStarted(wo)) {
+      names.push(<font key={wo.name}>{wo.name}</font>)
+    } else {
+      // names.push(<Typography color='error' key={wo.name}>{`${wo.name}`}</Typography>)
+      names.push(<font color='pink' key={wo.name}>{`${wo.name}`}</font>)
+    }
   })
-  return names.join(',')
+  return names
+}
+
+const workoutStarted = (wo) => {
+  let isStarted = false
+  if (isEmpty(wo.sets)) return false
+  wo.sets.forEach((set) => {
+    if (isEmpty(set.exerciseGroups)) return false
+    set.exerciseGroups.forEach((exGroup) => {
+      exGroup.exercises.forEach((ex) => {
+        if (!isEmpty(ex.reps) && Number(ex.reps) !== 0) isStarted = true
+      })
+    })
+  })
+  return isStarted
 }
 
 const MobileView = props => {

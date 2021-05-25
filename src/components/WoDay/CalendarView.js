@@ -401,9 +401,10 @@ const ItemCard = (props) => {
     if (isEmpty(item.workouts) || item.workouts.length === 0) return 'none'
     item.workouts.forEach((wo) => {
       if (workoutStarted(wo)) {
-        names.push(<Typography key={wo.name}>{wo.name}</Typography>)
+        names.push(<font key={wo.name}>{wo.name}</font>)
       } else {
-        names.push(<Typography color='error' key={wo.name}>{`${wo.name}-NOSTART`}</Typography>)
+        // names.push(<Typography color='error' key={wo.name}>{`${wo.name}`}</Typography>)
+        names.push(<font color='pink' key={wo.name}>{`${wo.name}`}</font>)
       }
     })
     return names
