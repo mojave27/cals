@@ -10,7 +10,7 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core'
-import { isEmpty } from '@aws-amplify/core'
+import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -364,8 +364,6 @@ const CalendarDay = (props) => {
 }
 
 const cardioBadge = ({ item }) => {
-  // let length = item.cardio ? item.cardio.exercises.length : 0
-  // return length === 0 ? '' : cardioName(item)
   return cardioName(item)
 }
 
@@ -395,7 +393,7 @@ const cardioName = (item) => {
 }
 
 const cardioStarted = (exercise) => {
-  if (exercise.duration.length >= 0 || exercise.distance.length >= 0)
+  if (exercise.duration.length > 0 || exercise.distance.length > 0)
     return true
   return false
 }

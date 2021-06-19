@@ -19,6 +19,7 @@ import {
   generateNewId,
 } from 'components/modules/common/utilties/ArrayUtils'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { cardioStarted, workoutStarted } from 'components/workouts/WorkoutUtils'
 import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
 import {
   Accordion,
@@ -63,8 +64,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(0, 0, 0, .05)',
   },
   textField: {
-    backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : '#fff'
-  }
+    backgroundColor:
+      theme.palette.type === 'dark' ? theme.palette.grey[800] : '#fff',
+  },
 }))
 
 const useStylesInput = makeStyles((theme) => ({
@@ -471,11 +473,11 @@ const WoDay = (props) => {
 
   const hasStats = () => {
     let result = false
-    if(Number(woDayContext.woday.duration) !== 0) result = true
-    if(!isEmpty(woDayContext.woday.goals)) result = true
-    if(!isEmpty(woDayContext.woday.weight)) result = true
-    if(Number(woDayContext.woday.energy) < 10) result = true
-    if(Number(woDayContext.woday.sleep) < 10) result = true
+    if (Number(woDayContext.woday.duration) !== 0) result = true
+    if (!isEmpty(woDayContext.woday.goals)) result = true
+    if (!isEmpty(woDayContext.woday.weight)) result = true
+    if (Number(woDayContext.woday.energy) < 10) result = true
+    if (Number(woDayContext.woday.sleep) < 10) result = true
     return result
   }
 
@@ -504,10 +506,7 @@ const WoDay = (props) => {
                     id='panel1a-header'
                   >
                     <Typography className={classes.heading}>
-                      <StyledBadge
-                        variant='dot'
-                        invisible={!hasStats()}
-                      >
+                      <StyledBadge variant='dot' invisible={!hasStats()}>
                         {'Stats'}
                       </StyledBadge>
                     </Typography>
@@ -650,16 +649,23 @@ const WoDay = (props) => {
                     aria-controls='panel1a-content'
                     id='panel1a-header'
                   >
-                <Typography component={'h6'}>{'Cardio'}</Typography>
+                    <Typography component={'h6'} className={classes.heading}>
+                      <StyledBadge
+                        variant='dot'
+                        invisible={!cardioStarted(woDayContext.woday)}
+                      >
+                        {'Cardio'}
+                      </StyledBadge>
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails className={classes.accordionDetails}>
-                <CardioTable
-                  id={0}
-                  data={convertCardioForTable()}
-                  deleteRow={deleteRow}
-                  addCardioExercise={addCardioExercise}
-                  onChange={handleExerciseChange}
-                />
+                    <CardioTable
+                      id={0}
+                      data={convertCardioForTable()}
+                      deleteRow={deleteRow}
+                      addCardioExercise={addCardioExercise}
+                      onChange={handleExerciseChange}
+                    />
                   </AccordionDetails>
                 </Accordion>
               </Box>
@@ -671,14 +677,10 @@ const WoDay = (props) => {
               <Grid item xs={12} sm={12}>
                 <Container style={{ marginBottom: '10px' }}>
                   <Typography component={'h6'}>{'Weights'}</Typography>
-                  <Button
-      variant='outlined'
-      onClick={addWorkout}
-      size='small'
-    >
-      {'Add a workout'}
-    </Button>
-                </Container> 
+                  <Button variant='outlined' onClick={addWorkout} size='small'>
+                    {'Add a workout'}
+                  </Button>
+                </Container>
               </Grid>
               {woDayContext.woday.workouts !== undefined ? (
                 <React.Fragment>
@@ -707,7 +709,14 @@ const WoDay = (props) => {
                                 {<em>{'expand to choose a workout'}</em>}
                               </Typography>
                             ) : (
-                              <Typography variant={'h6'}>{wo.name}</Typography>
+                              <Typography variant={'h6'}>
+                                <StyledBadge
+                                  variant='dot'
+                                  invisible={!workoutStarted(wo)}
+                                >
+                                  {wo.name}
+                                </StyledBadge>
+                              </Typography>
                             )}
                           </AccordionSummary>
                           <AccordionDetails
