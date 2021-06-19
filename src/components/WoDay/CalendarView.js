@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
+// import FormButton from 'components/inputs/FormButton'
 import {
   Table,
   TableBody,
@@ -363,8 +364,40 @@ const CalendarDay = (props) => {
 }
 
 const cardioBadge = ({ item }) => {
+  // let length = item.cardio ? item.cardio.exercises.length : 0
+  // return length === 0 ? '' : cardioName(item)
+  return cardioName(item)
+}
+
+const cardioName = (item) => {
   let length = item.cardio ? item.cardio.exercises.length : 0
-  return length === 0 ? '' : 'C'
+  if (Number(length) === 0) return ''
+
+  let names = []
+  item.cardio.exercises.forEach((ex) => {
+    if (cardioStarted(ex)) {
+      names.push(
+        <font key={ex.type}>
+          {ex.type}
+          <br />
+        </font>
+      )
+    } else {
+      names.push(
+        <font color='pink' key={ex.type}>
+          {`${ex.type}`}
+          <br />
+        </font>
+      )
+    }
+  })
+  return names
+}
+
+const cardioStarted = (exercise) => {
+  if (exercise.duration.length >= 0 || exercise.distance.length >= 0)
+    return true
+  return false
 }
 
 const ItemCard = (props) => {
@@ -373,8 +406,7 @@ const ItemCard = (props) => {
   const hasCardio = () => {
     if (props.item.cardio === undefined) return false
     let exercises = props.item.cardio.exercises ?? []
-    if (exercises.length > 0) return true
-    return false
+    return exercises.length > 0 ? true : false
   }
 
   const hasWorkout = () => {
@@ -386,11 +418,11 @@ const ItemCard = (props) => {
       if (
         props.item.wo.exerciseGroups &&
         props.item.wo.exerciseGroups[0].exercises.length === 0
-      )
+      ) {
         return false
+      }
       return true
     }
-
     return true
   }
 
@@ -401,10 +433,19 @@ const ItemCard = (props) => {
     if (isEmpty(item.workouts) || item.workouts.length === 0) return 'none'
     item.workouts.forEach((wo) => {
       if (workoutStarted(wo)) {
-        names.push(<font key={wo.name}>{wo.name}</font>)
+        names.push(
+          <font key={wo.name}>
+            {wo.name}
+            <br />
+          </font>
+        )
       } else {
-        // names.push(<Typography color='error' key={wo.name}>{`${wo.name}`}</Typography>)
-        names.push(<font color='pink' key={wo.name}>{`${wo.name}`}</font>)
+        names.push(
+          <font color='pink' key={wo.name}>
+            {`${wo.name}`}
+            <br />
+          </font>
+        )
       }
     })
     return names
@@ -428,6 +469,9 @@ const ItemCard = (props) => {
     ''
   ) : (
     <div>
+      {/* {hasWorkout() || hasCardio() ? (
+        <FormButton value={'Copy'} onClick={() => {}} />
+      ) : null} */}
       {hasWorkout() ? (
         <Paper
           className={`${classes.item} ${classes.itemWithWo}`}
