@@ -9,7 +9,7 @@ const useAuth = () => {
       console.log('env is dev, returning true')
       return true
     case 'local':
-      console.log('env is local, returning fasle')
+      console.log('env is local, returning false')
       return false
     default:
       break;

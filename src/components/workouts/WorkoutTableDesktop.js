@@ -3,7 +3,9 @@ import { makeStyles, withStyles } from '@material-ui/core/styles'
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 // import DeleteIcon from '@material-ui/icons/Delete'
-import BlockIcon from '@material-ui/icons/Block'
+// import BlockIcon from '@material-ui/icons/Block'
+// import TouchAppIcon from '@material-ui/icons/TouchApp'
+import AddIcon from '@material-ui/icons/Add'
 import {
   Accordion,
   AccordionSummary,
@@ -19,6 +21,7 @@ import {
   Tooltip,
   Typography,
 } from '@material-ui/core'
+import { isUndefined } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,12 +89,17 @@ const WorkoutTableDesktop = (props) => {
       headerCells.push(
         <TableCell
           key={`${exercise.id}-header`}
-          colSpan={3}
+          colSpan={2}
           classes={{ root: classes.tableHeaderCell }}
           align={'center'}
         >
           <Typography className={classes.heading}>
-            {exercise.name}
+            {exercise.name} - <i>{exercise.targets}</i>
+          <Tooltip title='Add Set'>
+            <IconButton aria-label='delete' onClick={() => addSet(exGroup.id, exercise.id)}>
+              <AddIcon color='inherit' style={{ margin: '1px' }} />
+            </IconButton>
+          </Tooltip>
             {hasNotes(exercise) ? (
               <CustomTooltip
                 title={
@@ -110,12 +118,6 @@ const WorkoutTableDesktop = (props) => {
 
       secondRowHeaderCells.push(
         <React.Fragment key={`${exercise.id}-weight`}>
-          <TableCell
-            classes={{ root: classes.tableHeaderCell }}
-            align={'center'}
-          >
-            {''}
-          </TableCell>
           <TableCell
             classes={{ root: classes.tableHeaderCell }}
             align={'center'}
@@ -140,68 +142,137 @@ const WorkoutTableDesktop = (props) => {
     )
   }
 
-  const disableIt = (event) => {
-    console.log(event)
-    alert('disable')
+  const maxSets = (exGroup) => {
+    let max = 0
+    exGroup.exercises.forEach((ex) => {
+      let total = ex.sets.length
+      if (total > max) max = total
+    })
+    return max
   }
 
-  const renderRows = (exGroup, index) => {
-    return props.wo.sets.map((set) => {
-      let matchingSetExGroup = set.exerciseGroups.find(
-        (setExGrp) => setExGrp.id === exGroup.id
-      )
-      return (
+  const handleSetChange = (event) => {
+    let update = {
+      rowIndex: event.target.dataset.rowindex,
+      exerciseId: event.target.dataset.exerciseid,
+      exGroupId: event.target.dataset.exgroupid,
+      name: event.target.name,
+      value: event.target.value
+    }
+    props.onChange(update)
+  }
+
+  const renderSetForRow = (exGroup, rowIndex) => {
+    let cellBlocks = []
+    exGroup.exercises.forEach((ex) => {
+      let set = ex.sets[rowIndex]
+      if (isUndefined(set)) {
+        cellBlocks.push(disabledCellBlock(exGroup, ex, rowIndex))
+      }else{
+      cellBlocks.push(
+        <React.Fragment key={`${ex.id}-${rowIndex}`}>
+          <TableCell classes={{ root: classes.tableCell }}>
+            <input
+              data-rowindex={rowIndex}
+              data-exgroupid={exGroup.id}
+              data-exerciseid={ex.id}
+              name={'weight'}
+              type='tel'
+              placeholder={'enter weight'}
+              value={set.weight}
+              onChange={handleSetChange}
+              autoComplete={'off'}
+              className={classes.input}
+            />
+          </TableCell>
+
+          <TableCell classes={{ root: classes.tableCell }}>
+            <input
+              data-rowindex={rowIndex}
+              data-exgroupid={exGroup.id}
+              data-exerciseid={ex.id}
+              name={'reps'}
+              type='tel'
+              placeholder={'enter reps'}
+              value={set.reps}
+              onChange={handleSetChange}
+              autoComplete={'off'}
+              className={classes.input}
+            />
+          </TableCell>
+        </React.Fragment>
+      )}
+    })
+    return cellBlocks
+  }
+
+  const disabledCellBlock = (exGroup, ex, index) => {
+    return (
+        <React.Fragment key={`${ex.id}-${index}`}>
+          <TableCell classes={{ root: classes.tableCell }}>
+            <input
+              data-rowindex={'disabled'}
+              data-exgroupid={exGroup.id}
+              data-exerciseid={ex.id}
+              name={'weight'}
+              type='tel'
+              placeholder={'n/a'}
+              value={''}
+              autoComplete={'off'}
+              className={classes.input}
+              disabled={true}
+            />
+          </TableCell>
+
+          <TableCell classes={{ root: classes.tableCell }}>
+            <input
+              data-rowindex={'disabled'}
+              data-exgroupid={exGroup.id}
+              data-exerciseid={ex.id}
+              name={'reps'}
+              type='tel'
+              placeholder={'n/a'}
+              value={''}
+              autoComplete={'off'}
+              className={classes.input}
+              disabled={true}
+            />
+          </TableCell>
+        </React.Fragment>)
+  }
+
+  const renderRows = (exGroup) => {
+    /* for each row
+     * - get the max number of sets we'll need (from exercises > ex > sets)
+     * - take each ex in the exGroup
+     *   - take the set from the exercise which matches the row (row 0 = set 0, row 1 = set 1, etc)
+     // - use the reps and weight from that set in the TableCell
+     //   - if there is no matching set for the row, make the TableCell with empty & disabled
+     */
+
+    let rows = []
+
+    //  - get the max number of sets we'll need (from exercises > ex > sets)
+    let maxSetCount = maxSets(exGroup)
+    console.log(maxSetCount)
+
+    for (let rowIndex = 0; rowIndex < maxSetCount; rowIndex++) {
+      rows.push(
         <TableRow
-          key={`${set.id}-${exGroup.id}`}
+          key={`${rowIndex}-${exGroup.id}`}
           id={exGroup.id}
           style={{ borderBottom: '1px solid lightgrey' }}
         >
-          {matchingSetExGroup.exercises.map((ex) => {
-            return (
-              <React.Fragment key={`${set.id}-${ex.id}`}>
-                <TableCell classes={{ root: classes.tableCell }}>
-                  {/* <span onClick={disableIt}>{'disable'}</span> */}
-                  <IconButton aria-label='delete' onClick={disableIt}>
-                    <BlockIcon color='inherit' style={{ margin: '1px' }} />
-                  </IconButton>
-                </TableCell>
-                <TableCell classes={{ root: classes.tableCell }}>
-                  <input
-                    data-setid={set.id}
-                    data-exgroupid={exGroup.id}
-                    data-exerciseid={ex.id}
-                    name={'weight'}
-                    // type='text'
-                    type='tel'
-                    placeholder={'enter weight'}
-                    value={ex.weight}
-                    onChange={props.onChange}
-                    autoComplete={'off'}
-                    className={classes.input}
-                  />
-                </TableCell>
-
-                <TableCell classes={{ root: classes.tableCell }}>
-                  <input
-                    data-setid={set.id}
-                    data-exgroupid={exGroup.id}
-                    data-exerciseid={ex.id}
-                    name={'reps'}
-                    // type='text'
-                    type='tel'
-                    placeholder={'enter reps'}
-                    value={ex.reps}
-                    onChange={props.onChange}
-                    autoComplete={'off'}
-                    className={classes.input}
-                  />
-                </TableCell>
-              </React.Fragment>
-            )
-          })}
+          {renderSetForRow(exGroup, rowIndex)}
         </TableRow>
       )
-    })
+    }
+
+    return rows
+  }
+
+  const addSet = (exGroupId, exerciseId) => {
+    props.addSet(props.wo.id, exGroupId, exerciseId)
   }
 
   const renderExerciseGroups = () => {

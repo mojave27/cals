@@ -5,6 +5,7 @@ const URL = 'wodays'
 
 export const retrieve = async () => {
   let configWithAuth = await getAxiosConfigWithAuth()
+  // console.log(JSON.stringify(configWithAuth))
   return axios
     .get(URL, configWithAuth)
     .then(function(response) {

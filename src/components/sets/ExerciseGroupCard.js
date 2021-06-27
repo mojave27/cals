@@ -75,7 +75,12 @@ const ExerciseGroupCard = props => {
   const addExercisesToSet = async () => {
     let tempSelectedExercises = [...selectedExercises]
     let modifiedSelectedExercises = tempSelectedExercises.map(exercise => {
-      exercise.reps = ''
+      if (typeof exercise.reps !== 'undefined') {
+        exercise.targets = exercise.reps
+      } else {
+        exercise.targets = ''
+      }
+      exercise.sets = []
       return exercise
     })
 

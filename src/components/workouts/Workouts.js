@@ -69,10 +69,6 @@ const Workouts = props => {
     }
   }
 
-  // const doStuff = () => {
-  //   console.log(JSON.stringify(woContext.workout))
-  // }
-
   return (
     <React.Fragment>
       <WorkoutFormDialog
@@ -81,7 +77,6 @@ const Workouts = props => {
         saveWorkout={saveWorkout}
         dialogTitle={dialogTitle}
       />
-      {/* {doStuff()} */}
       <BasicSpinner show={showSpinner} />
       <Grid container >
         <Grid item xs={12} sm={6}>

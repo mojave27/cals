@@ -119,6 +119,7 @@ class WoDayProvider extends React.Component {
             let workout = cloneDeep(emptyWorkout)
             woday.workouts.push(workout)
             this.setState({ woday }) 
+            return (woday.workouts.length - 1)
           },
           removeWorkout: index => {
             const woday = Object.assign({}, this.state.woday)

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { retrieve as retrieveWorkouts } from 'api/workoutsApi'
-import Tracker from 'components/tracker/Tracker'
+// import Tracker from 'components/tracker/Tracker'
 import BasicSpinner from 'components/spinners/BasicSpinner'
 import WoList from 'components/workouts/WoList'
-import ContainedButton from 'components/modules/common/inputs/ContainedButton'
+// import ContainedButton from 'components/modules/common/inputs/ContainedButton'
 import { Container, Grid } from '@material-ui/core'
 import ArrayUtils from 'components/modules/common/utilties/ArrayUtils'
 
 const WorkoutChooser = props => {
   let [workoutTemplates, setWorkoutTemplates] = useState([])
-  let [showFromWorkouts, setShowFromWorkouts] = useState(false)
-  let [showFromPrograms, setShowFromPrograms] = useState(false)
+  // let [showFromWorkouts, setShowFromWorkouts] = useState(false)
+  // let [showFromPrograms, setShowFromPrograms] = useState(false)
   let [selected, setSelected] = useState([])
   let [showSpinner, setShowSpinner] = useState(false)
 
@@ -41,17 +41,17 @@ const WorkoutChooser = props => {
     chooseWorkout(workoutId)
   }
 
-  const showWorkoutsFromPrograms = () => {
-    setShowFromPrograms(true)
-  }
+  // const showWorkoutsFromPrograms = () => {
+  //   setShowFromPrograms(true)
+  // }
 
-  const showWorkoutsFromWorkouts = () => {
-    setShowFromWorkouts(true)
-  }
+  // const showWorkoutsFromWorkouts = () => {
+  //   setShowFromWorkouts(true)
+  // }
 
   return (
     <Container style={{ padding: '25px' }}>
-      {showFromPrograms === false && showFromWorkouts === false ? (
+      {/* {showFromPrograms === false && showFromWorkouts === false ? (
         <div
           style={{
             textAlign: 'center',
@@ -76,8 +76,8 @@ const WorkoutChooser = props => {
             </Grid>
           </Grid>
         </div>
-      ) : showFromWorkouts === true ? (
-        workoutTemplates.length > 0 ? (
+      ) : showFromWorkouts === true ? ( */}
+        {workoutTemplates.length > 0 ? (
           <Grid container spacing={1}>
             {showSpinner ? (
               <BasicSpinner show={true} />
@@ -91,10 +91,10 @@ const WorkoutChooser = props => {
           </Grid>
         ) : (
           <BasicSpinner show={true} />
-        )
-      ) : showFromPrograms === true ? (
-        <Tracker handleWorkoutSelect={chooseWorkout} />
-      ) : null}
+        )}
+       {/* ) : showFromPrograms === true ? (
+         <Tracker handleWorkoutSelect={chooseWorkout} />
+       ) : null} */}
     </Container>
   )
 }

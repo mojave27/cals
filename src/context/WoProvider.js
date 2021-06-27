@@ -7,8 +7,7 @@ export const emptyWorkout = {
     id: '',
     name: '',
     description: '',
-    exerciseGroups: [ { id:0, exercises: []} ],
-    sets: [ {id:0, exerciseGroups: [ { id:0, exercises: []}] } ],
+    exerciseGroups: [ { id:0, exercises: []} ]
 }
 
 class WoProvider extends React.Component {

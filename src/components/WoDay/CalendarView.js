@@ -169,12 +169,13 @@ const Year = (props) => {
   }
 
   const monthIsInFuture = (month) => {
-    let skip = false
+    let isFuture = false
+    // using "month - 1" to ensure we get one month in future - for planned workouts.
     // eslint-disable-next-line eqeqeq
-    if (today.getFullYear() == props.year && today.getMonth() < month) {
-      skip = true
+    if (today.getFullYear() == props.year && today.getMonth() < month - 1) {
+      isFuture = true
     }
-    return skip
+    return isFuture
   }
 
   return (
@@ -372,10 +373,10 @@ const cardioName = (item) => {
   if (Number(length) === 0) return ''
 
   let names = []
-  item.cardio.exercises.forEach((ex) => {
+  item.cardio.exercises.forEach((ex, index) => {
     if (cardioStarted(ex)) {
       names.push(
-        <font key={ex.type}>
+        <font key={`${ex.type}-${index}`}>
           {ex.type}
           <br />
         </font>

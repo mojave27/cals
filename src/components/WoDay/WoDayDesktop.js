@@ -17,6 +17,7 @@ import WoDayAppBar from 'components/WoDay/WoDayAppBar'
 import {
   findIndexOfId,
   generateNewId,
+  retrieveItemById,
 } from 'components/modules/common/utilties/ArrayUtils'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { cardioStarted, workoutStarted } from 'components/workouts/WorkoutUtils'
@@ -56,8 +57,6 @@ const useStyles = makeStyles((theme) => ({
     margin: '3px',
   },
   accordion: {
-    // backgroundColor: theme.color2.hex,
-    // color: theme.color2_text.hex,
     border: `1px solid ${theme.palette.grey[300]}`,
   },
   accordionDetails: {
@@ -71,17 +70,13 @@ const useStyles = makeStyles((theme) => ({
 
 const useStylesInput = makeStyles((theme) => ({
   root: {
-    // color: theme.color1_text.hex,
     border: `1px solid ${theme.palette.primary.light}`,
     overflow: 'hidden',
     borderRadius: 4,
-    // backgroundColor: theme.color1.hex,
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     '&:hover': {
-      // backgroundColor: '#eee'
     },
     '&$focused': {
-      // backgroundColor: '#eee',
       boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
       borderColor: theme.palette.primary.light,
     },
@@ -208,36 +203,40 @@ const WoDay = (props) => {
     woDayContext.updateWoDay(woday)
   }
 
-  const handleSetChange = (event, index) => {
-    let exerciseId = event.target.dataset.exerciseid
-    let setId = event.target.dataset.setid
-    let exGroupId = event.target.dataset.exgroupid
-    let name = event.target.name
-    let value = event.target.value
+  const handleSetChange = (update, index) => {
+    // index is for the row
+    const { exerciseId, exGroupId, name, value, rowIndex } = update
+    console.log(`index: ${index}`)
+    console.log(`rowIndex: ${rowIndex}`)
+    console.log(`exerciseId: ${exerciseId}`)
+    console.log(`exGroupId: ${exGroupId}`)
+    console.log(`name: ${name}`)
+    console.log(`value: ${value}`)
+
+    // get the workout
     let woday = woDayContext.copyWoDay()
-    //TODO: remove the conditional logic after updating all workouts
     let wo = {}
+
+    //TODO: remove the conditional logic after updating all workouts
     if (woday.workouts !== undefined) {
       wo = woday.workouts[index]
     } else {
       wo = woday.wo
     }
 
-    // find set
-    let setIndex = findIndexOfId(setId, wo.sets)
-    let set = wo.sets[setIndex]
+    // get the exercise group from workout.exerciseGroups
+    let exGroupIndex = findIndexOfId(exGroupId, wo.exerciseGroups)
+    let exGroup = wo.exerciseGroups[exGroupIndex]
 
-    // find exercise
-    let exGroupIndex = findIndexOfId(exGroupId, set.exerciseGroups)
-    let exIndex = findIndexOfId(
-      exerciseId,
-      set.exerciseGroups[exGroupIndex].exercises
-    )
-    let ex = set.exerciseGroups[exGroupIndex].exercises[exIndex]
+    // get the exercise from the exerciseGroup
+    let exIndex = findIndexOfId(exerciseId, exGroup.exercises)
+    let ex = exGroup.exercises[exIndex]
 
-    // update weight or reps
-    ex[name] = value
+    // get the set from the exercise
+    let set = ex.sets[rowIndex]
 
+    // update the set's weight or reps
+    set[name] = value
     woDayContext.updateWoDay(woday)
   }
 
@@ -374,7 +373,8 @@ const WoDay = (props) => {
   }
 
   const addWorkout = () => {
-    woDayContext.addEmptyWorkout()
+    let woIndex = woDayContext.addEmptyWorkout()
+    showWorkoutChooser(woIndex)
   }
 
   const deleteWorkout = (woIndex) => {
@@ -386,68 +386,30 @@ const WoDay = (props) => {
     toggleModal()
   }
 
-  const getWorkoutFromWoDay = (woday, workoutIndex) => {
-    let wo =
-      woday.workouts !== undefined ? woday.workouts[workoutIndex] : woday.wo
-    console.log(JSON.stringify(wo))
-    return wo
-  }
-
-  const addSet = (workoutIndex) => {
+  const addSet = (workoutId, exGroupId, exerciseId) => {
     let woday = woDayContext.copyWoDay()
-    // let wo = woday.wo
-    let wo = getWorkoutFromWoDay(woday, workoutIndex)
+    let wo = retrieveItemById(workoutId, woday.workouts)
 
-    // create new set and exercise groups, add each exercise id, and set weights reps to empty
-    // TODO: set the weights to same as previous set, if there was a previous set
+    // create new set in the specified exGroup.exercise
+    // get the exGroup
+    let exGroup = retrieveItemById(exGroupId, wo.exerciseGroups)
 
-    let newSetId = generateNewId(wo.sets)
+    // get the exercise
+    let exercise = retrieveItemById(exerciseId, exGroup.exercises)
+
+    // add the set (use same weight as previous set, if there was a previous set)
     let newSet = {}
-    if (newSetId > 0) {
-      newSet = copyFromPreviousSet(wo.sets, newSetId)
-      newSet.id = newSetId
-    } else {
-      newSet = {
-        id: generateNewId(wo.sets),
-        exerciseGroups: wo.exerciseGroups.map((exGroup) => {
-          let newExGroup = {}
-          newExGroup.id = exGroup.id
-          newExGroup.exercises = exGroup.exercises.map((ex) => {
-            return {
-              id: ex.id,
-              weight: '',
-              reps: '',
-            }
-          })
-          return newExGroup
-        }),
-      }
-    }
-    wo.sets.push(newSet)
+    newSet = copyFromPreviousSet(exercise.sets)
+
+    exercise.sets.push(newSet)
 
     woDayContext.updateWoDay(woday)
     // save to DB (we want auto-save on everything... maybe)
   }
 
   const copyFromPreviousSet = (allSets) => {
-    // get previous set
     let previousSet = allSets[allSets.length - 1]
-    let newSet = cloneDeep(previousSet)
-    // clear the reps from newSet
-    let newExGroups = newSet.exerciseGroups.map((exGroup) => {
-      let newExGroup = {
-        id: exGroup.id,
-        exercises: exGroup.exercises.map((ex) => {
-          return {
-            id: ex.id,
-            weight: ex.weight,
-            reps: '',
-          }
-        }),
-      }
-      return newExGroup
-    })
-    newSet.exerciseGroups = newExGroups
+    let newSet = { weight: previousSet.weight, reps: '' }
     return newSet
   }
 
@@ -507,7 +469,13 @@ const WoDay = (props) => {
                   >
                     <Typography className={classes.heading}>
                       <StyledBadge variant='dot' invisible={!hasStats()}>
-                        {'Stats'}
+                        {`Stats`}
+                      </StyledBadge>
+                    </Typography>
+                    <br/>
+                    <Typography variant='caption'>
+                      <StyledBadge variant='dot' invisible={!hasStats()}>
+                        {`Duration: ${woDayContext.woday.duration} - Weight: ${isEmpty(woDayContext.woday.weight) ? 0 : woDayContext.woday.weight}`}
                       </StyledBadge>
                     </Typography>
                   </AccordionSummary>
@@ -700,15 +668,6 @@ const WoDay = (props) => {
                             aria-controls='panel1a-content'
                             id='panel1a-header'
                           >
-                            {wo.name === undefined ? (
-                              <Typography
-                                variant={'body2'}
-                                align='center'
-                                color='error'
-                              >
-                                {<em>{'expand to choose a workout'}</em>}
-                              </Typography>
-                            ) : (
                               <Typography variant={'h6'}>
                                 <StyledBadge
                                   variant='dot'
@@ -717,7 +676,6 @@ const WoDay = (props) => {
                                   {wo.name}
                                 </StyledBadge>
                               </Typography>
-                            )}
                           </AccordionSummary>
                           <AccordionDetails
                             className={classes.accordionDetails}
@@ -725,7 +683,7 @@ const WoDay = (props) => {
                             <Workout
                               wo={wo}
                               addExercise={addExercise}
-                              addSet={() => addSet(index)}
+                              addSet={addSet}
                               showWorkoutChooser={() =>
                                 showWorkoutChooser(index)
                               }

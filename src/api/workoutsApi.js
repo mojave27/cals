@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { config } from '../config/axiosConfig'
 import { getAxiosConfigWithAuth } from '../components/Auth/Auth'
+// import { cloneDeep } from 'lodash'
 
 const URL = 'workouts'
 
@@ -24,6 +25,7 @@ export const retrieve = async () => {
     .get(URL, configWithAuth)
     .then(function(response) {
       // const data = parseResponse(response)
+      // const data = updateWorkout(response.data)
       return response.data
     })
     .catch(function(error) {
@@ -67,18 +69,6 @@ export const addWorkout = async (workout) => {
 export const updateWorkout = async (workout) => {
   let response = await addWorkout(workout)
   return response
-  // let url = `${URL}/${workout.id}`
-  // console.log(`calling PUT ${url}`)
-  // return axios
-  //   .put(url, workout, config)
-  //   .then(response => {
-  //     const data = parseResponse(response)
-  //     return data
-  //   })
-  //   .catch(error => {
-  //     console.log(`workouts api - addWorkout error: ${error}`)
-  //     return {}
-  //   })
 }
 
 export const deleteWorkout = async id => {

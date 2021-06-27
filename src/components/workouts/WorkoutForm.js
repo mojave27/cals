@@ -4,7 +4,7 @@ import {
   findIndexOfId,
   retrieveItemById,
   updateItemById,
-  generateNewId
+  generateNewId,
 } from '../modules/common/utilties/ArrayUtils'
 import ExerciseGroupTable from '../tables/ExerciseGroupTable'
 import WoContext from '../../context/WoContext'
@@ -19,42 +19,42 @@ import {
   Divider,
   Grid,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   box: {
-    margin: theme.mobile ? theme.spacing(1) : theme.spacing(3)
+    margin: theme.mobile ? theme.spacing(1) : theme.spacing(3),
   },
   container: {
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
   th: {
-    textAlign: 'left'
+    textAlign: 'left',
   },
   thLeft: {
-    width: '70%'
+    width: '70%',
   },
   td: {
-    textAlign: 'left'
+    textAlign: 'left',
   },
   tdLeft: {
-    width: '70%'
+    width: '70%',
   },
   cardHeader: {
-    padding: '6px 16px 0px 16px'
+    padding: '6px 16px 0px 16px',
   },
   cardContent: {
     padding: '8px 16px 0px 16px',
-    backgroundColor: theme.palette.background.default
-  }
+    backgroundColor: theme.palette.background.default,
+  },
 }))
 
-const WorkoutForm = props => {
+const WorkoutForm = (props) => {
   const [showExerciseGroupDialog, setShowExerciseGroupDialog] = useState(false)
   let woContext = useContext(WoContext)
   let setContext = useContext(SetContext)
@@ -62,46 +62,44 @@ const WorkoutForm = props => {
   /* eslint-disable-next-line */
   const classes = useStyles()
 
-  const toggleSetDialog = () => {
+  const toggleExerciseGroupDialog = () => {
     setShowExerciseGroupDialog(!showExerciseGroupDialog)
   }
 
-  const editSet = id => {
+  const editExerciseGroup = (id) => {
     let index = findIndexOfId(id, woContext.workout.exerciseGroups)
     setContext.updateSet(woContext.workout.exerciseGroups[index])
-    toggleSetDialog()
+    toggleExerciseGroupDialog()
   }
 
-  const showSetCard = () => {
+  const showExerciseGroupCard = () => {
     setContext.clearSet()
-    toggleSetDialog()
+    toggleExerciseGroupDialog()
   }
 
-  const handleTextChange = event => {
+  const handleTextChange = (event) => {
     let { id, value } = event.target
     let updatedWorkout = { ...woContext.workout }
     updatedWorkout[id] = value
     woContext.updateWorkout(updatedWorkout)
+    console.log(updatedWorkout)
   }
 
   // add/update exercise group in workout context
-  const addExerciseGroupToWorkout = exGroup => {
+  const addExerciseGroupToWorkout = (exGroup) => {
     if (typeof exGroup.id === 'undefined') {
-      addSetToWorkout(exGroup)
+      // addSetToWorkout(exGroup)
+      exGroup = setExGroupId(exGroup)
+      let updatedWorkout = { ...woContext.workout }
+      updatedWorkout.exerciseGroups.push(exGroup)
+      woContext.updateWorkout(updatedWorkout)
+      setShowExerciseGroupDialog(false)
     } else {
-      updateSetInWorkout(exGroup)
+      updateExerciseGroupInWorkout(exGroup)
     }
   }
 
-  const addSetToWorkout = exGroup => {
-    exGroup = setExGroupId(exGroup)
-    let updatedWorkout = { ...woContext.workout }
-    updatedWorkout.exerciseGroups.push(exGroup)
-    woContext.updateWorkout(updatedWorkout)
-    setShowExerciseGroupDialog(false)
-  }
-
-  const updateSetInWorkout = exGroup => {
+  const updateExerciseGroupInWorkout = (exGroup) => {
     let updatedWorkout = { ...woContext.workout }
     let index = findIndexOfId(exGroup.id, updatedWorkout.exerciseGroups)
     updatedWorkout.exerciseGroups[index] = exGroup
@@ -109,7 +107,7 @@ const WorkoutForm = props => {
     setShowExerciseGroupDialog(false)
   }
 
-  const setExGroupId = exGroup => {
+  const setExGroupId = (exGroup) => {
     if (typeof exGroup.id === 'undefined') {
       console.log(`exGroup id is undefined`)
       let newId = generateNewId(woContext.workout.exerciseGroups)
@@ -118,14 +116,16 @@ const WorkoutForm = props => {
     return exGroup
   }
 
-  const handleRowClick = event => {
+  const handleRowClick = (event) => {
     let id = event.currentTarget.id
     console.log(id)
   }
 
   // lots of changes going on here...
-  const handleSetChange = update => {
-    let set = { ...retrieveItemById(update.setId, woContext.workout.exerciseGroups) }
+  const handleSetChange = (update) => {
+    let set = {
+      ...retrieveItemById(update.setId, woContext.workout.exerciseGroups),
+    }
 
     // find exercise with matching id
     let targetExercise = { ...retrieveItemById(update.id, set.exercises) }
@@ -152,11 +152,11 @@ const WorkoutForm = props => {
     woContext.updateExerciseGroupsForWorkout(updatedSetList)
   }
 
-  const deleteExercise = id => {
+  const deleteExercise = (id) => {
     console.log(id)
   }
 
-  const deleteSet = id => {
+  const deleteSet = (id) => {
     let exGroups = woContext.workout.exerciseGroups
     // throw up confirmation modal
     // find set in woContext.workout.sets
@@ -173,13 +173,13 @@ const WorkoutForm = props => {
     }
   }
 
-  const renderSets = exGroups => {
+  const renderSets = (exGroups) => {
     if (exGroups && exGroups.length > 0) {
-      return exGroups.map(exGroup => {
+      return exGroups.map((exGroup) => {
         let data = {
           setId: exGroup.id,
           headers: ['name', 'reps'],
-          rows: [...exGroup.exercises]
+          rows: [...exGroup.exercises],
         }
         return (
           <ExerciseGroupTable
@@ -190,7 +190,7 @@ const WorkoutForm = props => {
             onClick={handleRowClick}
             deleteRow={deleteExercise}
             deleteItem={deleteSet}
-            editItem={editSet}
+            editItem={editExerciseGroup}
           />
         )
       })
@@ -202,72 +202,69 @@ const WorkoutForm = props => {
   return (
     <React.Fragment>
       <Box style={{ margin: 'auto', width: isMobile ? '100%' : '60%' }}>
-          <Card className={classes.root} variant='outlined'>
-            <CardContent className={classes.cardContent}>
-              {/* <Box style={{ textAlign: 'right' }}>
-                <FormButton value={'Save Workout'} onClick={saveWorkout} />
-              </Box> */}
-              <Box className={classes.box}>
-                <Grid container justify='flex-start' spacing={2}>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      style={{ float: 'left' }}
-                      id='name'
-                      label='Workout Name'
-                      defaultValue={
-                        woContext.workout.name ? woContext.workout.name : ''
-                      }
-                      onChange={handleTextChange}
-                      variant='outlined'
-                      size='small'
-                    />
+        <Card className={classes.root} variant='outlined'>
+          <CardContent className={classes.cardContent}>
+            <Box className={classes.box}>
+              <Grid container justify='flex-start' spacing={2}>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    style={{ float: 'left' }}
+                    id='name'
+                    label='Workout Name'
+                    defaultValue={
+                      woContext.workout.name ? woContext.workout.name : ''
+                    }
+                    onChange={handleTextChange}
+                    variant='outlined'
+                    size='small'
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    style={{ float: 'left', width: '80%' }}
+                    id='description'
+                    label='Workout Description'
+                    defaultValue={
+                      woContext.workout.description
+                        ? woContext.workout.description
+                        : ''
+                    }
+                    onChange={handleTextChange}
+                    variant='outlined'
+                    size='small'
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+            <Divider />
+
+            <Box className={classes.box}>
+              <div style={{ display: 'block', paddingBottom: '10px' }}>
+                <Grid container justify='center' spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Typography paragraph={true} variant={'h6'}>
+                      Exercise Groups
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      style={{ float: 'left', width: '80%' }}
-                      id='description'
-                      label='Workout Description'
-                      defaultValue={
-                        woContext.workout.description
-                          ? woContext.workout.description
-                          : ''
-                      }
-                      onChange={handleTextChange}
-                      variant='outlined'
-                      size='small'
-                    />
+                  <Grid item xs={12} sm={6}>
+                    <FormButton value={'Add Set'} onClick={showExerciseGroupCard} />
                   </Grid>
                 </Grid>
-              </Box>
-              <Divider />
+                <div style={{ margin: '0px 0px 20px 0px' }} />
+                {renderSets(woContext.workout.exerciseGroups)}
 
-              <Box className={classes.box}>
-                <div style={{ display: 'block', paddingBottom: '10px' }}>
-                  <Grid container justify='center' spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <Typography paragraph={true} variant={'h6'}>
-                        Exercise Groups
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <FormButton value={'Add Set'} onClick={showSetCard} />
-                    </Grid>
-                  </Grid>
-                  <div style={{ margin: '0px 0px 20px 0px' }} />
-                  {renderSets(woContext.workout.exerciseGroups)}
+                <div style={{ marginTop: '25px', marginBottom: '25px' }} />
 
-                  <div style={{ marginTop: '25px', marginBottom: '25px' }} />
-
-                  <SetDialog
-                    open={showExerciseGroupDialog}
-                    onSave={addExerciseGroupToWorkout}
-                    onClose={toggleSetDialog}
-                  />
-                </div>
-              </Box>
-            </CardContent>
-          </Card>
-        </Box>
+                <SetDialog
+                  open={showExerciseGroupDialog}
+                  onSave={addExerciseGroupToWorkout}
+                  onClose={toggleExerciseGroupDialog}
+                />
+              </div>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
     </React.Fragment>
   )
 }
