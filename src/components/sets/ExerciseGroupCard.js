@@ -170,7 +170,7 @@ const ExerciseGroup = props => {
                   <TextInput
                     id={exercise.id}
                     name={'exerciseReps'}
-                    data={exercise.reps}
+                    data={ typeof exercise.targets !== 'undefined' ? exercise.targets : exercise.reps}
                     onChange={props.onChange}
                   />
                 </CardContent>
