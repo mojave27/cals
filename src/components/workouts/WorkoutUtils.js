@@ -95,12 +95,10 @@ export const workoutName = (item) => {
 
 export const workoutStarted = wo => {
   let isStarted = false
-  if (isEmpty(wo.sets)) return false
-  wo.sets.forEach((set) => {
-    if (isEmpty(set.exerciseGroups)) return false
-    set.exerciseGroups.forEach((exGroup) => {
-      exGroup.exercises.forEach((ex) => {
-        if (!isEmpty(ex.reps) && Number(ex.reps) !== 0) isStarted = true
+  wo.exerciseGroups.forEach(exGroup => {
+    exGroup.exercises.forEach(ex => {
+      ex.sets.forEach(set => {
+        if (!isEmpty(set.reps) && Number(set.reps) !== 0) isStarted = true
       })
     })
   })

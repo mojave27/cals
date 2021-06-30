@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
-// import FormButton from 'components/inputs/FormButton'
+import { cardioStarted, hasCardio, hasWorkout, workoutName } from 'components/workouts/WorkoutUtils'
 import {
   Table,
   TableBody,
@@ -10,7 +10,6 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core'
-import { isEmpty } from 'lodash'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -393,85 +392,14 @@ const cardioName = (item) => {
   return names
 }
 
-const cardioStarted = (exercise) => {
-  if (exercise.duration.length > 0 || exercise.distance.length > 0)
-    return true
-  return false
-}
-
 const ItemCard = (props) => {
   const classes = useStyles()
-
-  const hasCardio = () => {
-    if (props.item.cardio === undefined) return false
-    let exercises = props.item.cardio.exercises ?? []
-    return exercises.length > 0 ? true : false
-  }
-
-  const hasWorkout = () => {
-    if (props.item.wo === undefined && props.item.workouts.length === 0)
-      return false
-
-    if (props.item.wo !== undefined) {
-      if (props.item.wo.exerciseGroups === undefined) return false
-      if (
-        props.item.wo.exerciseGroups &&
-        props.item.wo.exerciseGroups[0].exercises.length === 0
-      ) {
-        return false
-      }
-      return true
-    }
-    return true
-  }
-
-  const workoutName = (item) => {
-    if (item.wo !== undefined) return item.wo.name
-
-    let names = []
-    if (isEmpty(item.workouts) || item.workouts.length === 0) return 'none'
-    item.workouts.forEach((wo) => {
-      if (workoutStarted(wo)) {
-        names.push(
-          <font key={wo.name}>
-            {wo.name}
-            <br />
-          </font>
-        )
-      } else {
-        names.push(
-          <font color='pink' key={wo.name}>
-            {`${wo.name}`}
-            <br />
-          </font>
-        )
-      }
-    })
-    return names
-  }
-
-  const workoutStarted = (wo) => {
-    let isStarted = false
-    if (isEmpty(wo.sets)) return false
-    wo.sets.forEach((set) => {
-      if (isEmpty(set.exerciseGroups)) return false
-      set.exerciseGroups.forEach((exGroup) => {
-        exGroup.exercises.forEach((ex) => {
-          if (!isEmpty(ex.reps) && Number(ex.reps) !== 0) isStarted = true
-        })
-      })
-    })
-    return isStarted
-  }
 
   return props.item === null ? (
     ''
   ) : (
     <div>
-      {/* {hasWorkout() || hasCardio() ? (
-        <FormButton value={'Copy'} onClick={() => {}} />
-      ) : null} */}
-      {hasWorkout() ? (
+      {hasWorkout(props.item) ? (
         <Paper
           className={`${classes.item} ${classes.itemWithWo}`}
           onClick={() => props.itemSelect(props.item.id)}
@@ -481,7 +409,7 @@ const ItemCard = (props) => {
         </Paper>
       ) : null}
       <div style={{ height: '10px' }} />
-      {hasCardio() ? (
+      {hasCardio(props.item) ? (
         <Paper
           className={`${classes.item} ${classes.itemWithCardio}`}
           onClick={() => props.itemSelect(props.item.id)}
