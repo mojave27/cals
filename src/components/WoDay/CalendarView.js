@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
-import { cardioStarted, hasCardio, hasWorkout, workoutName } from 'components/workouts/WorkoutUtils'
+import { cardioExerciseStarted, hasCardio, hasWorkout, workoutName } from 'components/workouts/WorkoutUtils'
 import {
   Table,
   TableBody,
@@ -373,7 +373,7 @@ const cardioName = (item) => {
 
   let names = []
   item.cardio.exercises.forEach((ex, index) => {
-    if (cardioStarted(ex)) {
+    if (cardioExerciseStarted(ex)) {
       names.push(
         <font key={`${ex.type}-${index}`}>
           {ex.type}

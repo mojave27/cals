@@ -30,6 +30,13 @@ export const cardioName = (item) => {
   return names
 }
 
+export const cardioExerciseStarted = ex => {
+  if (typeof ex === 'undefined') return false
+  if (ex.duration.length > 0) return true
+  if (ex.distance.length > 0) return true
+  return false
+}
+
 // item is typically a woday object
 export const cardioStarted = (item) => {
   let isCardioStarted = false
@@ -46,7 +53,9 @@ export const cardioStarted = (item) => {
 }
 
 export const hasCardio = item => {
-  if (item.cardio === undefined) return false
+  if (typeof item.cardio === 'undefined') {
+    return false
+  }
   let exercises = item.cardio.exercises ?? []
   return exercises.length > 0 ? true : false
 }
