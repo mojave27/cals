@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import WoDayContext from 'context/WoDayContext'
 import BasicSpinner from '../spinners/BasicSpinner'
+import StyledLogger, { Style } from 'modules/common/logging/StyledLogger'
+import { retrieveWoDayById } from 'api/wodaysApi'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
-import { cardioExerciseStarted, hasCardio, hasWorkout, workoutName } from 'components/workouts/WorkoutUtils'
+import { WODAY_PATH } from '../../constants'
+import {
+  cardioExerciseStarted,
+  hasCardio,
+  hasWorkout,
+  workoutName,
+} from 'components/workouts/WorkoutUtils'
 import {
   Table,
   TableBody,
@@ -10,6 +19,8 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core'
+import { cloneDeep } from 'lodash'
+import { navigate } from '@reach/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -392,13 +403,80 @@ const cardioName = (item) => {
   return names
 }
 
+const convertExistingWodayToNew = (woday) => {
+  StyledLogger.log(JSON.stringify(woday), Style.warning)
+  let newWoday = cloneDeep(woday)
+  // update date
+  let dt = new Date()
+  newWoday.date.year = dt.getFullYear()
+  newWoday.date.month = dt.getMonth()
+  newWoday.date.day = dt.getDate()
+
+  // update notes
+  newWoday.notes = `\n\n-------------------------\nPrevious Notes:\n${woday.notes}`
+
+  // copy workouts for reference?
+  // ... nah - cuz this won't help with non-copied wodays
+
+  // update cardio
+  if (
+    typeof woday.cardio.exercises !== 'undefined' &&
+    woday.cardio.exercises.length > 0
+  ) {
+    newWoday.cardio.exercises = woday.cardio.exercises.map((ex) => {
+      let newEx = cloneDeep(ex)
+      newEx.duration = ''
+      newEx.distance = ''
+      newEx.heartRate = ''
+      return newEx
+    })
+  }
+
+  // update workout reps
+  let updatedWorkouts = woday.workouts.map((wo) => {
+    let updatedExGroups = wo.exerciseGroups.map((exGroup) => {
+      let updatedExercises = exGroup.exercises.map((ex) => {
+        if (typeof ex.sets != 'undefined' && ex.sets.length > 0) {
+          ex.sets.forEach((set) => {
+            set.reps = ''
+          })
+        }
+        return ex
+      })
+      exGroup.exercises = updatedExercises
+      return exGroup
+    })
+    wo.exerciseGroups = updatedExGroups
+    return wo
+  })
+
+  newWoday.workouts = updatedWorkouts
+
+  StyledLogger.log(JSON.stringify(newWoday), Style.success)
+
+  return newWoday
+}
+
+
 const ItemCard = (props) => {
   const classes = useStyles()
+  let woDayContext = useContext(WoDayContext)
+
+  const doStuff = async (id) => {
+    console.log(`woday id: ${id}`)
+    const response = await retrieveWoDayById(id)
+    let newWoDay = convertExistingWodayToNew(response)
+    await woDayContext.updateWoDay(newWoDay)
+    navigate(WODAY_PATH)
+  }
 
   return props.item === null ? (
     ''
   ) : (
     <div>
+      {hasWorkout(props.item) || hasCardio(props.item) ? (
+        <div onClick={() => doStuff(props.item.id)}>{'copy'}</div>
+      ) : null}
       {hasWorkout(props.item) ? (
         <Paper
           className={`${classes.item} ${classes.itemWithWo}`}

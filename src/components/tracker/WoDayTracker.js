@@ -9,8 +9,8 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Container from '@material-ui/core/Container'
 import FormButton from '../inputs/FormButton'
+import { WODAY_PATH } from '../../constants'
 
-const WODAY_PATH = '/woday'
 
 const useStyles = makeStyles(theme => ({
   root: {
