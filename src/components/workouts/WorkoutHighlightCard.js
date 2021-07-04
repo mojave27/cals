@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import ThemeContext from '../../context/ThemeContext'
-import WorkoutCard from './WorkoutCard'
+// import WorkoutCard from './WorkoutCard'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import VisibilityIcon from '@material-ui/icons/Visibility'
 import { Card, CardHeader, CardContent, Popover } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     pointerEvents: 'none',
 
     position: 'fixed',
-    top: '-20px',
+    top: '-100px',
     right: '5px',
     zIndex: '10',
     overflow:'none'
@@ -65,6 +66,11 @@ const WorkoutHighlightCard = (props) => {
 
   const handleMoreClose = () => {
     setAnchorEl2(null)
+  }
+
+  const viewItem = (id) => {
+    handleMoreClose()
+    if (props.viewItem) props.viewItem(id)
   }
 
   const editItem = (id) => {
@@ -137,6 +143,14 @@ const WorkoutHighlightCard = (props) => {
           <React.Fragment>
             <div>
               <IconButton
+                aria-label='View'
+                onClick={() => viewItem(props.item.id)}
+              >
+                <VisibilityIcon color='inherit' fontSize='small' />
+              </IconButton>
+            </div>
+            <div>
+              <IconButton
                 aria-label='Copy'
                 onClick={() => copyItem(props.item.id)}
               >
@@ -160,28 +174,6 @@ const WorkoutHighlightCard = (props) => {
               </IconButton>
             </div>
           </React.Fragment>
-        </Popover>
-        <Popover
-          // container={this.CardContent}
-          className={classes.popover}
-          classes={{
-            paper: classes.paper,
-          }}
-          anchorEl={anchorEl}
-          open={openCard}
-          id={id}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          onClose={handleHoverClose}
-          disableRestoreFocus
-        >
-          <WorkoutCard {...props} width={'250px'} disabled={true} />
         </Popover>
       </CardContent>
     </Card>

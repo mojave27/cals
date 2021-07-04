@@ -11,12 +11,14 @@ import FormButton from 'components/inputs/FormButton'
 import { findIndexOfStringId } from 'components/modules/common/utilties/ArrayUtils'
 import WorkoutList from 'components/workouts/WorkoutList'
 import { Grid } from '@material-ui/core'
+import StyledLogger, { Style } from 'modules/common/logging/StyledLogger'
 
 const Workouts = props => {
   let woContext = useContext(WoContext)
   const [showWorkoutDialog, setShowWorkoutDialog] = useState(false)
   const [showSpinner, setShowSpinner] = useState(false)
   const [dialogTitle, setDialogTitle] = useState('')
+  const [viewMode, setViewMode] = useState(false)
 
   useEffect(() => {
     fetchWorkouts()
@@ -29,6 +31,7 @@ const Workouts = props => {
   }
 
   const toggleDialog = () => {
+    if(!showWorkoutDialog === false) setViewMode(false)
     setShowWorkoutDialog(!showWorkoutDialog)
   }
 
@@ -41,6 +44,14 @@ const Workouts = props => {
   const copyWorkout = async id => {
     woContext.copyWorkout(id)
     setDialogTitle('Copy Workout')
+    toggleDialog()
+  }
+
+  const viewWorkout = async id => {
+    StyledLogger.log(id, Style.warning)
+    await setSelectedWorkoutToContext(id)
+    setViewMode(true)
+    setDialogTitle('View Workout')
     toggleDialog()
   }
 
@@ -64,6 +75,7 @@ const Workouts = props => {
 
   const setSelectedWorkoutToContext = workoutId => {
     let index = findIndexOfStringId(workoutId, woContext.workouts)
+    StyledLogger.log(`index: ${index}`, Style.warning)
     if (index > -1) {
       woContext.updateWorkout(woContext.workouts[index])
     }
@@ -76,6 +88,7 @@ const Workouts = props => {
         onClose={toggleDialog}
         saveWorkout={saveWorkout}
         dialogTitle={dialogTitle}
+        view={viewMode}
       />
       <BasicSpinner show={showSpinner} />
       <Grid container >
@@ -86,6 +99,7 @@ const Workouts = props => {
           <WorkoutList 
             workouts={woContext.workouts} 
             deleteWorkout={deleteWorkout}
+            viewWorkout={viewWorkout}
             editWorkout={editWorkout}
             copyWorkout={copyWorkout}
             disabled={false}

@@ -1,17 +1,18 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
+import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import CloseIcon from '@material-ui/icons/Close'
+import Slide from '@material-ui/core/Slide'
 import WoContext from 'context/WoContext'
 import WorkoutForm from 'components/workouts/WorkoutForm'
 import { addWorkout, updateWorkout } from 'api/workoutsApi'
+import WorkoutCard from './WorkoutCard'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -20,16 +21,16 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
-  }
-}));
+  },
+}))
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
-const WorkoutFormDialog = props => {
+const WorkoutFormDialog = (props) => {
   const woContext = useContext(WoContext)
-  const classes = useStyles();
+  const classes = useStyles()
   const { open, onClose } = props
 
   const handleSave = async () => {
@@ -52,32 +53,49 @@ const WorkoutFormDialog = props => {
   }
 
   return (
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              {props.dialogTitle !== '' ? props.dialogTitle : 'Workout Editor'}
-            </Typography>
-            <Button autoFocus color="inherit" onClick={handleSave}>
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+    >
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            edge='start'
+            color='inherit'
+            onClick={handleClose}
+            aria-label='close'
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant='h6' className={classes.title}>
+            {props.dialogTitle !== '' ? props.dialogTitle : 'Workout Editor'}
+          </Typography>
+          {props.view ? null
+          :(
+            <Button autoFocus color='inherit' onClick={handleSave}>
               save
             </Button>
-          </Toolbar>
-        </AppBar>
+          )}
+        </Toolbar>
+      </AppBar>
 
+      {props.view ? (
+        <WorkoutCard item={woContext.workout} width={'250px'} disabled={true} />
+      ) : (
         <WorkoutForm saveWorkout={handleSave} />
-
-      </Dialog>
-  );
+      )}
+    </Dialog>
+  )
 }
+
 WorkoutFormDialog.propTypes = {
-  dialogTitle: PropTypes.string
+  dialogTitle: PropTypes.string,
 }
 
 WorkoutFormDialog.defaultProps = {
-  dialogTitle: 'Workout Editor'
+  dialogTitle: 'Workout Editor',
 }
 
 export default WorkoutFormDialog

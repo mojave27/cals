@@ -47,6 +47,7 @@ const WoList = props => {
                 id={wo.id}
                 item={wo}
                 onClick={() => handleClick(wo.id)}
+                // viewItem={props.viewItem}
                 deleteItem={props.deleteItem}
                 editItem={props.editItem}
                 disabled={props.disabled}

@@ -119,7 +119,8 @@ const WorkoutCard = props => {
         maxWidth:props.maxWidth, 
         border: props.selected ? `1px solid ${themeContext.theme.highlightGreen.hex}` : '',
         backgroundColor: props.selected ? themeContext.theme.color3.rgba(.25) : '',
-        width:props.width
+        width:props.width,
+        height:props.height
       }}
       elevation={1}
       variant="outlined"
