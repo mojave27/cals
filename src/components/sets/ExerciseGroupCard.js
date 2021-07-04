@@ -60,7 +60,8 @@ const ExerciseGroupCard = props => {
     let { id, value } = event.target
     let exercisesForSet = [...setContext.set.exercises]
     let index = exercisesForSet.findIndex(exercise => exercise.id === id)
-    exercisesForSet[index].reps = value
+    // exercisesForSet[index].reps = value
+    exercisesForSet[index].targets = value
     setContext.updateExercisesForSet(exercisesForSet)
   }
 

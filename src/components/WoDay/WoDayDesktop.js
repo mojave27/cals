@@ -362,11 +362,36 @@ const WoDay = (props) => {
     }
   }
 
+  const Style = {
+    base: [
+      "color: #fff",
+      "background-color: #444",
+      "padding: 2px 4px",
+      "border-radius: 2px"
+    ],
+    warning: [
+      "color: #eee",
+      "background-color: red"
+    ],
+    success: [
+      "background-color: green"
+    ]
+  }
+
+  const log = (text, extra = []) => {
+    let style = Style.base.join(';') + ';';
+    style += extra.join(';'); // Add any additional styles
+    console.log(`%c${text}`, style);
+  }
+
   const chooseWorkout = async (workoutId) => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
-    console.log(workoutId)
+    // log("Warning Logs", Style.warning);
+    log(JSON.stringify(workoutTemplate), Style.warning)
+    // console.log(workoutId)
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
+    log(JSON.stringify(workout), Style.success)
     updatedWoDay.workouts[activeWo] = workout
     woDayContext.updateWoDay(updatedWoDay)
     toggleModal()

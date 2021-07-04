@@ -82,7 +82,6 @@ const WorkoutForm = (props) => {
     let updatedWorkout = { ...woContext.workout }
     updatedWorkout[id] = value
     woContext.updateWorkout(updatedWorkout)
-    console.log(updatedWorkout)
   }
 
   // add/update exercise group in workout context
