@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import ThemeContext from '../../context/ThemeContext'
 // import WorkoutCard from './WorkoutCard'
 import IconButton from '@material-ui/core/IconButton'
@@ -39,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
 const WorkoutHighlightCard = (props) => {
   let themeContext = useContext(ThemeContext)
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [anchorEl2, setAnchorEl2] = React.useState(null)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl2, setAnchorEl2] = useState(null)
 
   const openCard = Boolean(anchorEl)
   const id = openCard ? 'popper' : undefined

@@ -4,7 +4,6 @@ import { navigate } from '@reach/router'
 import { cloneDeep, isEmpty } from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'styles/datePicker.css'
-import StyledLogger, { Style } from 'modules/common/logging/StyledLogger'
 import { retrieveWorkoutById } from 'api/workoutsApi'
 import { convertTemplateToActiveWorkout } from 'components/workouts/workoutTemplateConverter'
 import Modal from 'components/modules/common/components/Modal'
@@ -366,9 +365,7 @@ const WoDay = (props) => {
   const chooseWorkout = async (workoutId) => {
     let updatedWoDay = woDayContext.copyWoDay()
     let workoutTemplate = await retrieveWorkout(workoutId)
-    // StyledLogger.log(JSON.stringify(workoutTemplate), Style.warning)
     let workout = convertTemplateToActiveWorkout(workoutTemplate)
-    // StyledLogger.log(JSON.stringify(workout), Style.success)
     updatedWoDay.workouts[activeWo] = workout
     woDayContext.updateWoDay(updatedWoDay)
     toggleModal()
