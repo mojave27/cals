@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import WoDayContext from 'context/WoDayContext'
 import BasicSpinner from '../spinners/BasicSpinner'
-import StyledLogger, { Style } from 'modules/common/logging/StyledLogger'
+import IconButton from '@material-ui/core/IconButton'
+import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { retrieveWoDayById } from 'api/wodaysApi'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
 import { WODAY_PATH } from '../../constants'
@@ -404,7 +405,6 @@ const cardioName = (item) => {
 }
 
 const convertExistingWodayToNew = (woday) => {
-  StyledLogger.log(JSON.stringify(woday), Style.warning)
   let newWoday = cloneDeep(woday)
   // update date
   let dt = new Date()
@@ -449,14 +449,10 @@ const convertExistingWodayToNew = (woday) => {
     wo.exerciseGroups = updatedExGroups
     return wo
   })
-
   newWoday.workouts = updatedWorkouts
-
-  StyledLogger.log(JSON.stringify(newWoday), Style.success)
 
   return newWoday
 }
-
 
 const ItemCard = (props) => {
   const classes = useStyles()
@@ -475,7 +471,9 @@ const ItemCard = (props) => {
   ) : (
     <div>
       {hasWorkout(props.item) || hasCardio(props.item) ? (
-        <div onClick={() => doStuff(props.item.id)}>{'copy'}</div>
+        <IconButton aria-label='Copy' onClick={() => doStuff(props.item.id)}>
+          <FileCopyIcon color='inherit' fontSize='small' />
+        </IconButton>
       ) : null}
       {hasWorkout(props.item) ? (
         <Paper

@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import ThemeContext from '../../context/ThemeContext'
-// import WorkoutCard from './WorkoutCard'
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
