@@ -5,7 +5,8 @@ import BasicSpinner from '../spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { isEmpty } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
+import { removeItemById } from 'components/modules/common/utilties/ArrayUtils'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,6 +39,12 @@ const WoDayList = props => {
     return wodays
   }
 
+  const removeWoDay = wodayId => {
+    let updatedWoDays = cloneDeep(woDays)
+    removeItemById(wodayId, updatedWoDays)
+    setWoDays(updatedWoDays)
+  }
+
   const handleSelect = id => {
     setShowSpinner(true)
     if (props.chooseWoDay) props.chooseWoDay(id)
@@ -56,7 +63,7 @@ const WoDayList = props => {
         {isMobile ? (
           <MobileView woDays={woDays} onSelect={handleSelect} />
         ) : (
-          <CalendarView items={woDays} onSelect={handleSelect} />
+          <CalendarView items={woDays} onSelect={handleSelect} onDelete={removeWoDay} />
         )}
       </Grid>
     </Container>

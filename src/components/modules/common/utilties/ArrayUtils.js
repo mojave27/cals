@@ -79,7 +79,7 @@ const filterItemsByNameProperty = (searchValue, items, searchField = 'name') => 
 }
 
 const removeItemById = (id, list) => {
-  validateIdAndListArgs(id, list)
+  // validateIdAndListArgs(id, list)
   const index = findIndexOfId(id, list)
   const updatedList = removeItemFromArrayByIndex(index, list)
   return updatedList

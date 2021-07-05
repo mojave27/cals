@@ -140,6 +140,7 @@ const CalendarView = (props) => {
           key={year}
           items={props.items}
           onSelect={handleSelect}
+          onDelete={props.onDelete}
         />
       )
     })
@@ -210,6 +211,7 @@ const Year = (props) => {
                       startDate={new Date(props.year, month)}
                       items={getItemsInScopeForYearAndMonth(props.items, month)}
                       onSelect={props.onSelect}
+                      onDelete={props.onDelete}
                     />
                   </div>
                 </TableCell>
@@ -316,6 +318,7 @@ const Month = (props) => {
           items={props.items}
           key={i}
           onSelect={props.onSelect}
+          onDelete={props.onDelete}
         />
       )
     }
@@ -357,7 +360,7 @@ const Week = (props) => {
         style={{ border: '1px solid #eee' }}
       >
         <CalendarDay displayDate={displayDate}>
-          <ItemCard item={itemForDay} itemSelect={props.onSelect} />
+          <ItemCard item={itemForDay} itemSelect={props.onSelect} onDelete={props.onDelete} />
         </CalendarDay>
       </TableCell>
     )
@@ -473,6 +476,7 @@ const ItemCard = (props) => {
   const deleteStuff = async (id) => {
     console.log(`deleting woday id: ${id}`)
     await deleteWoDay(id)
+    props.onDelete(id)
   }
 
   return props.item === null ? (
