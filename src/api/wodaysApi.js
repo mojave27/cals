@@ -54,18 +54,20 @@ export const updateWoDay = async (woday) => {
   return savedWoDay
 }
 
-// export const deleteWorkout = id => {
-//   const url = `${URL}/${id}`
-//   return axios
-//     .delete(url, config)
-//     .then(response => {
-//       return parseResponse(response)
-//     })
-//     .catch(error => {
-//       console.log(`workouts api - deleteWorkout error: ${error}`)
-//       return {}
-//     })
-// }
+export const deleteWoDay = async id => {
+  let configWithAuth = await getAxiosConfigWithAuth()
+  const url = `${URL}/${id}`
+  return axios
+    .delete(url, configWithAuth)
+    .then(response => {
+      console.log(JSON.stringify(response))
+      return parseResponse(response)
+    })
+    .catch(error => {
+      console.log(`workouts api - deleteWoDay error: ${error}`)
+      return {}
+    })
+}
 
 const parseResponse = response => {
   return response.data

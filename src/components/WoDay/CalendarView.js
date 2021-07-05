@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { deleteWoDay } from 'api/wodaysApi'
 import WoDayContext from 'context/WoDayContext'
 import BasicSpinner from '../spinners/BasicSpinner'
 import IconButton from '@material-ui/core/IconButton'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { retrieveWoDayById } from 'api/wodaysApi'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
 import { WODAY_PATH } from '../../constants'
@@ -468,14 +470,24 @@ const ItemCard = (props) => {
     navigate(WODAY_PATH)
   }
 
+  const deleteStuff = async (id) => {
+    console.log(`deleting woday id: ${id}`)
+    await deleteWoDay(id)
+  }
+
   return props.item === null ? (
     ''
   ) : (
     <div>
       {hasWorkout(props.item) || hasCardio(props.item) ? (
-        <IconButton aria-label='Copy' onClick={() => doStuff(props.item.id)}>
-          <FileCopyIcon color='inherit' fontSize='small' />
-        </IconButton>
+        <div>
+          <IconButton aria-label='Copy' onClick={() => doStuff(props.item.id)}>
+            <FileCopyIcon color='inherit' fontSize='small' />
+          </IconButton>
+          <IconButton aria-label='Copy' onClick={() => deleteStuff(props.item.id)}>
+            <DeleteForeverIcon color='inherit' fontSize='small' />
+          </IconButton>
+        </div>
       ) : null}
       {hasWorkout(props.item) ? (
         <Paper
