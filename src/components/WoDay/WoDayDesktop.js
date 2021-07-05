@@ -206,12 +206,6 @@ const WoDay = (props) => {
   const handleSetChange = (update, index) => {
     // index is for the row
     const { exerciseId, exGroupId, name, value, rowIndex } = update
-    console.log(`index: ${index}`)
-    console.log(`rowIndex: ${rowIndex}`)
-    console.log(`exerciseId: ${exerciseId}`)
-    console.log(`exGroupId: ${exGroupId}`)
-    console.log(`name: ${name}`)
-    console.log(`value: ${value}`)
 
     // get the workout
     let woday = woDayContext.copyWoDay()

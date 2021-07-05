@@ -269,7 +269,6 @@ const WorkoutTableDesktop = (props) => {
 
     //  - get the max number of sets we'll need (from exercises > ex > sets)
     let maxSetCount = maxSets(exGroup)
-    console.log(maxSetCount)
 
     for (let rowIndex = 0; rowIndex < maxSetCount; rowIndex++) {
       rows.push(

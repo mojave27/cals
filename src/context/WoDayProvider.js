@@ -99,13 +99,14 @@ class WoDayProvider extends React.Component {
       <WoDayContext.Provider
         value={{
           woday: this.state.woday,
+          saveWoDay: this.saveWoDay,
           copyWoDay: () => {
             return cloneDeep(this.state.woday)
           },
-          saveWoDay: this.saveWoDay,
           updateWoDay: (woday) => {
             this.setState({ woday })
           },
+
           setEmptyWoDay: async () => {
             let woday = cloneDeep(emptyWoDay)
             // woday.id = generateNewId(this.state.wodays)
@@ -127,22 +128,23 @@ class WoDayProvider extends React.Component {
             woday.workouts = updatedWorkouts
             this.setState({ woday }) 
           },
-          addSet: (set) => {
-            const woday = Object.assign({}, this.state.woday)
-            woday.set.push(set)
-            this.setState({ woday })
-          },
-          updateSetsForWoDay: (sets) => {
-            const woday = Object.assign({}, this.state.woday)
-            woday.sets = sets
-            this.setState({ woday })
-          },
+
+          // addSet: (set) => {
+          //   const woday = Object.assign({}, this.state.woday)
+          //   woday.set.push(set)
+          //   this.setState({ woday })
+          // },
+          // updateSetsForWoDay: (sets) => {
+          //   const woday = Object.assign({}, this.state.woday)
+          //   woday.sets = sets
+          //   this.setState({ woday })
+          // },
 
           wodays: this.state.wodays,
+          saveWoDayInWoDaysList: this.saveWoDayInWoDaysList,
           updateWoDays: (wodays) => {
             this.setState({ wodays })
           },
-          saveWoDayInWoDaysList: this.saveWoDayInWoDaysList,
           clearWoDays: () => {
             this.setState({ wodays: [] })
           },

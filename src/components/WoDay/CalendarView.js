@@ -406,6 +406,8 @@ const cardioName = (item) => {
 
 const convertExistingWodayToNew = (woday) => {
   let newWoday = cloneDeep(woday)
+  // update id
+  newWoday.id = ''
   // update date
   let dt = new Date()
   newWoday.date.year = dt.getFullYear()
