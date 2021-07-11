@@ -42,13 +42,9 @@ export const cardioStarted = (item) => {
   let isCardioStarted = false
   if (hasCardio(item) === false) return false
   item.cardio.exercises.forEach(ex => {
-    console.log(JSON.stringify(ex))
-    console.log(ex.duration.length)
-    console.log(ex.distance.length)
     if (ex.duration.length > 0) isCardioStarted = true
     if (ex.distance.length > 0) isCardioStarted = true
   })
-  console.log(`isCardioStarted: ${isCardioStarted}`)
   return isCardioStarted
 }
 

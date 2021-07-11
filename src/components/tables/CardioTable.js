@@ -60,9 +60,7 @@ const CardioTable = props => {
     )
 
     for (let i = j; i < headers.length; i++) {
-      console.log(headers[i])
-      console.log(camelCase(headers[i]))
-      tds.push(
+    tds.push(
         <TableCell key={i}>
           <Input
             id={`${row.id}-${i}`}

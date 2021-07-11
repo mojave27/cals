@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { retrieve } from '../../api/wodaysApi'
+import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
 import CalendarView from './CalendarView'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { cloneDeep, isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import { removeItemById } from 'components/modules/common/utilties/ArrayUtils'
+import WoDayContext from 'context/WoDayContext'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,33 +16,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const WoDayList = props => {
-  const [woDays, setWoDays] = useState([])
   const [showSpinner, setShowSpinner] = useState(false)
   const isMobile = useMediaQuery('(max-width:768px)')
-
-  useEffect(() => {
-    async function fetchMyAPI() {
-      let wodays = await retrieve()
-      const sortedWodays = sortWoDays(wodays)
-      setWoDays(sortedWodays)
-    }
-    fetchMyAPI()
-  }, [])
-
-  const sortWoDays = wodays => {
-    wodays.sort(function(a, b) {
-      let aDate = new Date(a.date.year, a.date.month, a.date.day)
-      let bDate = new Date(b.date.year, b.date.month, b.date.day)
-      return aDate - bDate
-    })
-    wodays.reverse()
-    return wodays
-  }
+  let woDayContext = useContext(WoDayContext)
 
   const removeWoDay = wodayId => {
-    let updatedWoDays = cloneDeep(woDays)
+    let updatedWoDays = woDayContext.copyWoDays()
     removeItemById(wodayId, updatedWoDays)
-    setWoDays(updatedWoDays)
+    woDayContext.updateWoDays(updatedWoDays)
   }
 
   const handleSelect = id => {
@@ -51,7 +32,7 @@ const WoDayList = props => {
   }
 
   const show = () => {
-    if (woDays.length === 0) return true
+    if (woDayContext.wodays.length === 0) return true
     if (showSpinner) return true
     return false
   }
@@ -61,9 +42,9 @@ const WoDayList = props => {
       <Grid container spacing={1} justify='center'>
         <BasicSpinner show={show()} />
         {isMobile ? (
-          <MobileView woDays={woDays} onSelect={handleSelect} />
+          <MobileView woDays={woDayContext.wodays} onSelect={handleSelect} />
         ) : (
-          <CalendarView items={woDays} onSelect={handleSelect} onDelete={removeWoDay} />
+          <CalendarView items={woDayContext.wodays} onSelect={handleSelect} onDelete={removeWoDay} />
         )}
       </Grid>
     </Container>
@@ -73,20 +54,12 @@ const WoDayList = props => {
 export default WoDayList
 
 const workoutNames = item => {
-// const workoutNames = woDay => {
-  // let names = []
-  // if (woDay.workouts.length === 0) return 'none'
-  // woDay.workouts.forEach(wo => {
-  //   names.push(wo.name)
-  // })
-  // return names.join(',')
   let names = []
   if (isEmpty(item.workouts) || item.workouts.length === 0) return 'none'
   item.workouts.forEach((wo) => {
     if (workoutStarted(wo)) {
       names.push(<font key={wo.name}>{wo.name}</font>)
     } else {
-      // names.push(<Typography color='error' key={wo.name}>{`${wo.name}`}</Typography>)
       names.push(<font color='pink' key={wo.name}>{`${wo.name}`}</font>)
     }
   })
