@@ -419,6 +419,13 @@ const convertExistingWodayToNew = (woday) => {
   newWoday.date.month = dt.getMonth()
   newWoday.date.day = dt.getDate()
 
+  // update stats
+  newWoday.weight = ''
+  newWoday.goals = ''
+  newWoday.duration = ''
+  newWoday.energy = 10
+  newWoday.sleep = 10
+
   // update notes
   newWoday.notes = `\n\n-------------------------\nPrevious Notes:\n${woday.notes}`
 

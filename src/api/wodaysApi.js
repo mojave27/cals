@@ -5,7 +5,6 @@ const URL = 'wodays'
 
 export const retrieve = async () => {
   let configWithAuth = await getAxiosConfigWithAuth()
-  // console.log(JSON.stringify(configWithAuth))
   return axios
     .get(URL, configWithAuth)
     .then(function(response) {
@@ -60,7 +59,6 @@ export const deleteWoDay = async id => {
   return axios
     .delete(url, configWithAuth)
     .then(response => {
-      console.log(JSON.stringify(response))
       return parseResponse(response)
     })
     .catch(error => {
