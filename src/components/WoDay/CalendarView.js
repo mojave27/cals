@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { deleteWoDay } from 'api/wodaysApi'
 import WoDayContext from 'context/WoDayContext'
@@ -6,6 +6,8 @@ import BasicSpinner from '../spinners/BasicSpinner'
 import IconButton from '@material-ui/core/IconButton'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import { retrieveWoDayById } from 'api/wodaysApi'
 import { Box, Paper, Typography, TableHead } from '@material-ui/core'
 import { WODAY_PATH } from '../../constants'
@@ -22,7 +24,7 @@ import {
   TableContainer,
   TableRow,
 } from '@material-ui/core'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { navigate } from '@reach/router'
 
 const useStyles = makeStyles((theme) => ({
@@ -88,27 +90,32 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CalendarView = (props) => {
-  const [years, setYears] = useState({})
+  const [activeMonth, setActiveMonth] = useState({})
   const [showSpinner, setShowSpinner] = useState(false)
 
-  const emptyYear = {
-    January: {},
-    February: {},
-    March: {},
-    April: {},
-    May: {},
-    June: {},
-    July: {},
-    August: {},
-    September: {},
-    October: {},
-    November: {},
-    December: {},
-  }
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
 
   useEffect(() => {
-    let years = buildYearsObject(props.items)
-    setYears(years)
+    let today = new Date()
+    let thisMonth = {
+      name: months[today.getMonth()],
+      index: today.getMonth(),
+      year: today.getFullYear()
+    }
+    setActiveMonth(thisMonth)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.items])
 
@@ -121,35 +128,83 @@ const CalendarView = (props) => {
     props.onSelect(id)
   }
 
-  const buildYearsObject = (items) => {
-    let years = {}
-
-    // TODO only render up to current month
-    items.forEach((item) => {
-      years[item.date.year] = { ...emptyYear }
+  const getItemsForYear = (items, year) => {
+    let inScopeItems = items.filter((item) => {
+      return Number(item.date.year) === Number(year)
     })
-    return years
+    return inScopeItems
   }
 
-  const renderCalendar = () => {
-    let keys = Object.keys(years)
-    return keys.reverse().map((year) => {
+  const getItemsInScopeForYearAndMonth = (items, month) => {
+    let itemsForYear = getItemsForYear(items, activeMonth.year)
+    let inScopeItems = itemsForYear.filter((item) => {
+      return Number(item.date.month) === Number(month)
+    })
+    return inScopeItems
+  }
+
+  const nextMonth = () => {
+    let year = activeMonth.year
+    let monthIndex = activeMonth.index + 1
+    // handle December --> January
+    if (activeMonth.index === 11) {
+      year = activeMonth.year + 1
+      monthIndex = 0
+    }
+    let thisMonth = {
+      name: months[monthIndex],
+      index: monthIndex,
+      year: year
+    }
+    setActiveMonth(thisMonth) 
+  }
+
+
+  const prevMonth = () => {
+    let year = activeMonth.year
+    let monthIndex = activeMonth.index - 1
+    // handle January --> December 
+    if (activeMonth.index === 0) {
+      year = activeMonth.year - 1
+      monthIndex = 11
+    }
+    let thisMonth = {
+      name: months[monthIndex],
+      index: monthIndex,
+      year: year
+    }
+    setActiveMonth(thisMonth) 
+  }
+
+  const renderActiveMonth = () => {
       return (
-        <Year
-          year={year}
-          key={year}
-          items={props.items}
+        isEmpty(activeMonth) 
+        ? 
+        <div>{'loading...'}</div>
+        :
+        <Fragment>
+          <IconButton aria-label='Next' onClick={prevMonth}>
+            <ArrowLeftIcon color='inherit' fontSize='small' />
+          </IconButton>
+          <IconButton aria-label='Next' onClick={nextMonth}>
+            <ArrowRightIcon color='inherit' fontSize='small' />
+          </IconButton>
+        <Month
+          startDate={new Date(activeMonth.year, activeMonth.index)}
+          items={getItemsInScopeForYearAndMonth(props.items, activeMonth.index)}
+          year={activeMonth.year}
+          key={activeMonth.year}
           onSelect={handleSelect}
           onDelete={props.onDelete}
         />
+        </Fragment>
       )
-    })
   }
 
   return (
     <React.Fragment>
       <BasicSpinner show={showSpinner} />
-      <div>{renderCalendar()}</div>
+      <div>{renderActiveMonth()}</div>
     </React.Fragment>
   )
 }
@@ -161,69 +216,6 @@ CalendarView.defaultProps = {
 export default CalendarView
 
 // *************************************************************
-
-const Year = (props) => {
-  const classes = useStyles()
-  const months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  const today = new Date()
-
-  const getItemsForYear = (items, year) => {
-    let inScopeItems = items.filter((item) => {
-      return Number(item.date.year) === Number(year)
-    })
-    return inScopeItems
-  }
-
-  const getItemsInScopeForYearAndMonth = (items, month) => {
-    let itemsForYear = getItemsForYear(items, props.year)
-    let inScopeItems = itemsForYear.filter((item) => {
-      return Number(item.date.month) === Number(month)
-    })
-    return inScopeItems
-  }
-
-  const monthIsInFuture = (month) => {
-    let isFuture = false
-    // using "month - 1" to ensure we get one month in future - for planned workouts.
-    // eslint-disable-next-line eqeqeq
-    if (today.getFullYear() == props.year && today.getMonth() < month - 1) {
-      isFuture = true
-    }
-    return isFuture
-  }
-
-  return (
-    <TableContainer
-      component={Paper}
-      className={classes.tableContaner}
-      key={'cardioTable'}
-    >
-      <Table size='small'>
-        <TableBody>
-          {months.reverse().map((month, index) => {
-            if (monthIsInFuture(months[index])) return null
-
-            return (
-              <TableRow key={index}>
-                <TableCell>
-                  <div style={{ margin: '10px 0px' }}>
-                    <Month
-                      startDate={new Date(props.year, month)}
-                      items={getItemsInScopeForYearAndMonth(props.items, month)}
-                      onSelect={props.onSelect}
-                      onDelete={props.onDelete}
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  )
-}
-
 const Month = (props) => {
   const classes = useStyles()
 
