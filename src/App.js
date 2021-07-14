@@ -66,11 +66,11 @@ class App extends Component {
 
   render() {
     return (
-      <AmplifyAuthenticator>
+      // <AmplifyAuthenticator>
         <ThemeProvider>
           <ThemedContent user={this.state.user} groups={getUserGroups(this.state.user)} />
         </ThemeProvider>
-      </AmplifyAuthenticator>
+      // </AmplifyAuthenticator>
     )
   }
 }

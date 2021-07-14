@@ -92,7 +92,6 @@ const MobileView = props => {
     }`
     return (
       undefined === woDay.wo ?
-      // woDay.workouts.map( (wo,index) => {
       <Grid item xs={12} key={`${date}-${woDay.id}`}>
         <Card className={classes.root} onClick={() => handleSelect(woDay.id)}>
           <CardHeader
