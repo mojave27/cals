@@ -80,14 +80,12 @@ class WoDayProvider extends React.Component {
     console.log('saving woday')
     let savedWoDay = await updateWoDay(this.state.woday)
     await this.setState((prevState) => {
-      // let updatedWoDay = prevState.woday
-      // updatedWoDay.id = savedWoDay.id
-
       let updatedWoDays = prevState.wodays
       try {
         // update existing woday in list, throw error if can't find match in list
         updatedWoDays = updateItemById(savedWoDay, savedWoDay.id, prevState.wodays)
       } catch (e) {
+        // if existing woday not in list, add it
         updatedWoDays.push(savedWoDay)
       }
 
