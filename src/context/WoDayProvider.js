@@ -80,9 +80,18 @@ class WoDayProvider extends React.Component {
     console.log('saving woday')
     let savedWoDay = await updateWoDay(this.state.woday)
     await this.setState((prevState) => {
-      let updatedWoDay = prevState.woday
-      updatedWoDay.id = savedWoDay.id
-      return { woday: updatedWoDay }
+      // let updatedWoDay = prevState.woday
+      // updatedWoDay.id = savedWoDay.id
+
+      let updatedWoDays = prevState.wodays
+      try {
+        // update existing woday in list, throw error if can't find match in list
+        updatedWoDays = updateItemById(savedWoDay, savedWoDay.id, prevState.wodays)
+      } catch (e) {
+        updatedWoDays.push(savedWoDay)
+      }
+
+      return { woday: savedWoDay, wodays: updatedWoDays }
     })
   }
 
@@ -128,17 +137,6 @@ class WoDayProvider extends React.Component {
             woday.workouts = updatedWorkouts
             this.setState({ woday }) 
           },
-
-          // addSet: (set) => {
-          //   const woday = Object.assign({}, this.state.woday)
-          //   woday.set.push(set)
-          //   this.setState({ woday })
-          // },
-          // updateSetsForWoDay: (sets) => {
-          //   const woday = Object.assign({}, this.state.woday)
-          //   woday.sets = sets
-          //   this.setState({ woday })
-          // },
 
           wodays: this.state.wodays,
           saveWoDayInWoDaysList: this.saveWoDayInWoDaysList,
