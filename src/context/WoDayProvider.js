@@ -145,6 +145,9 @@ class WoDayProvider extends React.Component {
           updateWoDays: (wodays) => {
             this.setState({ wodays })
           },
+          copyWoDays: () => {
+            return cloneDeep(this.state.wodays)
+          },
           clearWoDays: () => {
             this.setState({ wodays: [] })
           },
