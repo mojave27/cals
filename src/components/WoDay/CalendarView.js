@@ -27,7 +27,7 @@ import {
 import { cloneDeep, isEmpty } from 'lodash'
 import { navigate } from '@reach/router'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme, isToday) => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
@@ -63,6 +63,18 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: 'auto',
   },
+  itemCard: {
+    border:'1px solid #999', 
+    paddingBottom:'5px',
+    backgroundColor: theme.palette.primary.light
+  },
+  currentDay: {
+    border: '1px solid #eee',
+    backgroundColor: theme.palette.success[theme.palette.type]
+  },
+  standardDay: {
+    border: '1px solid #eee'
+  },
   cardioBadge: {
     color: theme.palette.secondary.light,
     '&:hover': {
@@ -88,6 +100,21 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${theme.palette.primary.dark}`,
   },
 }))
+
+const monthsDetails = {
+  0: { name: 'January', days: 31 },
+  1: { name: 'February', days: 28 },
+  2: { name: 'March', days: 31 },
+  3: { name: 'April', days: 30 },
+  4: { name: 'May', days: 31 },
+  5: { name: 'June', days: 30 },
+  6: { name: 'July', days: 31 },
+  7: { name: 'August', days: 31 },
+  8: { name: 'September', days: 30 },
+  9: { name: 'October', days: 31 },
+  10: { name: 'November', days: 30 },
+  11: { name: 'December', days: 31 },
+}
 
 const CalendarView = (props) => {
   const [activeMonth, setActiveMonth] = useState({})
@@ -322,6 +349,25 @@ const Month = (props) => {
 }
 
 const Week = (props) => {
+  const classes = useStyles()
+
+  const isToday = displayDate => {
+    let result = false
+    let todayDate = new Date()
+    let today = {
+      dayOfMonth: todayDate.getDate(),
+      month: todayDate.getMonth()
+    }
+    if (monthsDetails[today.month].name === props.month.name) {
+      if (today.dayOfMonth === displayDate) result = true
+    }
+    return result
+  }
+
+  let classToUse = displayDate => {
+    return isToday(displayDate) ? classes.currentDay : classes.standardDay
+  }
+
   const getItemForDay = (displayDate) => {
     let found = props.items.find((item) => {
       return Number(item.date.day) === Number(displayDate)
@@ -334,6 +380,7 @@ const Week = (props) => {
   let days = []
   let displayDate = ''
 
+  // this logic needs commenting to make it clear
   for (let dayOfWeek = 0; dayOfWeek <= 6; dayOfWeek++) {
     if (props.firstWeek) {
       let targetDayOfWeek = props.startDayOfWeek
@@ -349,7 +396,7 @@ const Week = (props) => {
     days.push(
       <TableCell
         key={dayOfWeek + dayOfMonth}
-        style={{ border: '1px solid #eee' }}
+        classes={{ root: classToUse(displayDate) }}
       >
         <CalendarDay displayDate={displayDate}>
           <ItemCard item={itemForDay} itemSelect={props.onSelect} onDelete={props.onDelete} />
@@ -364,7 +411,7 @@ const Week = (props) => {
 const CalendarDay = (props) => {
   return (
     <Box style={{ paddingBottom: '5px', minHeight: '100px', minWidth: '75px' }}>
-      <div style={{ minHeight: '20px', paddingBottom: '3px' }}>
+      <div style={{ minHeight: '20px', paddingBottom: '3px'}}>
         {props.displayDate}
       </div>
       {props.children}
@@ -478,10 +525,15 @@ const ItemCard = (props) => {
     props.onDelete(id)
   }
 
-  return props.item === null ? (
-    ''
-  ) : (
-    <div style={{border:'1px solid #999', paddingBottom:'5px'}}>
+  const showItem = () => {
+    if (props.item === null) return false
+    if (!hasWorkout(props.item) && !hasCardio(props.item)) return false
+    return true
+  }
+
+  // return props.item === null ? (
+  return showItem() ? (
+    <div className={classes.itemCard}>
       {hasWorkout(props.item) || hasCardio(props.item) ? (
         <div>
           <IconButton aria-label='Copy' onClick={() => doStuff(props.item.id)}>
@@ -512,5 +564,7 @@ const ItemCard = (props) => {
         </Paper>
       ) : null}
     </div>
+  ) : (
+    ''
   )
 }
