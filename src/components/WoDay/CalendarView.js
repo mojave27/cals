@@ -481,7 +481,7 @@ const ItemCard = (props) => {
   return props.item === null ? (
     ''
   ) : (
-    <div style={{border:'1px solid yellow'}}>
+    <div style={{border:'1px solid #999', paddingBottom:'5px'}}>
       {hasWorkout(props.item) || hasCardio(props.item) ? (
         <div>
           <IconButton aria-label='Copy' onClick={() => doStuff(props.item.id)}>
