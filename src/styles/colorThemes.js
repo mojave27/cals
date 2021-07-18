@@ -241,11 +241,13 @@ export const dark = {
     return this.darkText
   },
   color3: {
-    hex: '#EEEEEE',
+    hex: '#616161',
+    // hex: '#EEEEEE',
     rgba: alpha => buildRgba(234, 234, 234, alpha)
   },
   get color3_text() {
-    return this.darkText
+    // return this.darkText
+    return '#FFFFFF'
   },
   color2: {
     hex: '#FEFEFE',

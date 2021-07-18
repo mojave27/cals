@@ -16,8 +16,11 @@ const useStyles = makeStyles(theme => ({
     bottom: 'auto',
   },
   toolbar: {
-    color: theme.palette.primary.contrastText,
-    background: fade(theme.palette.primary.main, 0.8),
+    // color: theme.palette.primary.contrastText,
+    color: theme.color3_text.hex,
+    // background: fade(theme.palette.primary.main, 0.8),
+    // background: fade(theme.color3.hex, 0.8),
+    background: theme.color3.hex,
   },
   popover: {
     pointerEvents: 'none',
@@ -136,7 +139,7 @@ const DesktopNav = props => {
       <AppBar
         // position='sticky'
         position='fixed'
-        color={'transparent'}
+        // color={'transparent'}
         elevation={0}
         className={classes.appbar}
         // style={{ zIndex:'100', marginBottom: '30px', background: 'transparent', boxShadow: 'none'}}

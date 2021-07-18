@@ -59,9 +59,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: () => {
       switch(theme.name){
         case 'dark':
-          return theme.palette.grey["600"]
+          return theme.palette.primary.main
         default:
           return theme.palette.primary.light
+      }
+    },
+    // border: '1px solid red',
+    border: () => {
+      switch(theme.name){
+        case 'dark':
+          return `1px solid ${theme.palette.grey["500"]}`
+        default:
+          return 'inherit'
       }
     },
     '&:hover': {
@@ -69,8 +78,6 @@ const useStyles = makeStyles((theme) => ({
       color: () => {
       switch(theme.name){
         case 'dark':
-          // return theme.palette.grey["50"]
-          console.log(`theme.name: ${theme.name}`)
           return '#FFF'
         default:
           return theme.palette.primary.contrastText
