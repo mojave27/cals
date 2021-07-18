@@ -17,6 +17,7 @@ import { findIndexOfId, retrieveItemById } from '../modules/common/utilties/Arra
 const useStyles = makeStyles(theme => ({
   appBar: {
     position: 'relative',
+    backgroundColor: theme.color4.hex
   },
   title: {
     marginLeft: theme.spacing(2),

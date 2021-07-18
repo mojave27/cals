@@ -48,39 +48,51 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
   },
   itemWithWo: {
-    backgroundColor: theme.palette.primary.main,
-    '&:hover': {
-      backgroundColor: theme.palette.primary.dark,
-      color: theme.palette.primary.contrastText,
-    },
-    margin: 'auto',
-  },
-  itemWithCardio: {
     backgroundColor: () => {
       switch(theme.name){
+        case 'light':
+          return theme.palette.primary.light
         case 'dark':
           return theme.palette.primary.main
         default:
-          return theme.palette.primary.light
-      }
-    },
-    // border: '1px solid red',
-    border: () => {
-      switch(theme.name){
-        case 'dark':
-          return `1px solid ${theme.palette.grey["500"]}`
-        default:
-          return 'inherit'
+          return theme.color4.hex
       }
     },
     '&:hover': {
       backgroundColor: theme.palette.primary.dark,
       color: () => {
       switch(theme.name){
+        case 'light':
+          return theme.palette.primary.contrastText
         case 'dark':
           return '#FFF'
         default:
+          return theme.color4_text.hex
+      }}
+    },
+    margin: 'auto',
+  },
+  itemWithCardio: {
+    backgroundColor: () => {
+      switch(theme.name){
+        case 'light':
+          return theme.palette.primary.light
+        case 'dark':
+          return theme.palette.primary.main
+        default:
+          return theme.color4.hex
+      }
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+      color: () => {
+      switch(theme.name){
+        case 'light':
           return theme.palette.primary.contrastText
+        case 'dark':
+          return '#FFF'
+        default:
+          return theme.color4_text.hex
       }}
     },
     margin: 'auto',
@@ -92,7 +104,17 @@ const useStyles = makeStyles((theme) => ({
   },
   currentDay: {
     border: '1px solid #eee',
-    backgroundColor: theme.palette.success[theme.palette.type]
+    // backgroundColor: theme.palette.success[theme.palette.type]
+    backgroundColor: () => {
+      switch(theme.name) {
+        case 'light':
+          return theme.palette.success[theme.palette.type]
+        case 'dark':
+          return theme.palette.success[theme.palette.type]
+        default: 
+          return theme.color2.hex
+      }
+    }
   },
   standardDay: {
     border: '1px solid #eee'
@@ -124,8 +146,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tableHead: {
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main,
+    // color: theme.palette.primary.contrastText,
+    color: theme.color4_text.hex,
+    // backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.color4.hex,
     borderBottom: `1px solid ${theme.palette.primary.dark}`,
   },
 }))

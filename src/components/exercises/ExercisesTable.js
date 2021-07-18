@@ -124,12 +124,16 @@ const useToolbarStyles = makeStyles(theme => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+          // color: theme.palette.secondary.main,
+          // backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+          color: theme.color4_text.hex,
+          backgroundColor: lighten(theme.color4.hex, 0.85)
         }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
+          // color: theme.palette.text.primary,
+          // backgroundColor: theme.palette.secondary.dark
+          color: theme.color3_text.hex,
+          backgroundColor: lighten(theme.color3.hex, 0.85)
         },
   title: {
     flex: '1 1 100%'
@@ -269,7 +273,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
-    border: `1px solid ${theme.palette.secondary.light}`
+    border: `1px solid ${theme.color4.hex}`
   },
   table: {},
   visuallyHidden: {
@@ -287,8 +291,8 @@ const useStyles = makeStyles(theme => ({
 
 const StyledTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.common.white
+    backgroundColor: theme.color4.hex,
+    color: theme.color4_text.hex,
   },
   body: {
     fontSize: 14

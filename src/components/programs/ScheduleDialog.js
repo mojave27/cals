@@ -16,7 +16,9 @@ import TabbedContent from '../controls/TabbedContent'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative'
+    position: 'relative',
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex
   },
   title: {
     marginLeft: theme.spacing(2),

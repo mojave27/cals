@@ -26,8 +26,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '10px'
   },
   th: {
-    backgroundColor: theme.palette.type === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main,
+    // backgroundColor: theme.palette.type === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main,
     // color: theme.palette.primary.contrastText,
+    backgroundColor: theme.color4.hex,
+    color: theme.color4_text.hex,
     textAlign: 'left'
   },
   thLeft: {
@@ -57,7 +59,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const WorkoutCard = props => {
   let themeContext = useContext(ThemeContext)
-  const classes = useStyles()
+  const classes = useStyles(themeContext)
 
   const handleClick = () => {
     if (props.onClick) props.onClick(props.id)

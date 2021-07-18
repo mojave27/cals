@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
 const useStylesInput = makeStyles(theme => ({
   root: {
     // color: theme.color1_text.hex,
-    border: `1px solid ${theme.palette.primary.light}`,
+    border: `1px solid ${theme.color4.hex}`,
     overflow: 'hidden',
     borderRadius: 4,
     // backgroundColor: theme.color1.hex,
@@ -20,8 +20,8 @@ const useStylesInput = makeStyles(theme => ({
     },
     '&$focused': {
       // backgroundColor: '#eee',
-      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-      borderColor: theme.palette.primary.light
+      boxShadow: `${fade(theme.color4.hex, 0.25)} 0 0 0 2px`,
+      borderColor: theme.color3.hex
     }
   },
   focused: {}

@@ -20,8 +20,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: '10px'
   },
   th: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.color4.hex,
+    color: theme.color4_text.hex,
+    // backgroundColor: theme.palette.primary.dark,
+    // color: theme.palette.primary.contrastText,
     textAlign: 'left'
   },
   td: {

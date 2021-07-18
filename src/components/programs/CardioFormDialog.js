@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,10 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import CardioForm from 'components/programs/CardioForm'
+import ThemeContext from 'context/ThemeContext'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -24,7 +27,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const CardioFormDialog = props => {
-  const classes = useStyles();
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext);
   const { open, onClose, saveWorkout } = props
 
   const handleSave = workout => {

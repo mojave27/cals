@@ -61,17 +61,12 @@ const useStyles = makeStyles((theme) => ({
   color1: { backgroundColor: theme.color1.hex, color: theme.color1_text.hex },
 }));
 
-const doStuff = (theme) => {
-  console.log(JSON.stringify(theme))
-}
-
 const MuiPalette = props => {
   let themeContext = useContext(ThemeContext)
   let classes = useStyles(themeContext)
 
   return (
     <div style={{width:'300px'}}>
-      {doStuff(themeContext)}
       <Grid container spacing={1} justify='center' direction='row' alignContent="center">
         <Grid item xs={12} sm={4}>
           <Box className={`${classes.box} ${classes.primaryLight}`}>primary.light</Box>

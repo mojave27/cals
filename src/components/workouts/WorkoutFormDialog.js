@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
 import WoContext from 'context/WoContext'
+import ThemeContext from 'context/ThemeContext'
 import WorkoutForm from 'components/workouts/WorkoutForm'
 import { addWorkout, updateWorkout } from 'api/workoutsApi'
 import WorkoutCard from './WorkoutCard'
@@ -17,6 +18,8 @@ import WorkoutCard from './WorkoutCard'
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'sticky',
+    background: theme.color4.hex,
+    color: theme.color4_text.hex
   },
   title: {
     marginLeft: theme.spacing(2),
@@ -30,7 +33,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const WorkoutFormDialog = (props) => {
   const woContext = useContext(WoContext)
-  const classes = useStyles()
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext)
   const { open, onClose } = props
 
   const handleSave = async () => {

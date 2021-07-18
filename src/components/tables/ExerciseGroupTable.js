@@ -35,8 +35,8 @@ const useStyles = makeStyles(theme => ({
     width: '10%'
   },
   header: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
+    backgroundColor: theme.color4.hex,
+    color: theme.color4_text.hex,
   },
   cardHeader: {
     padding: '6px 16px 0px 16px'
@@ -56,8 +56,8 @@ const StyledTableRow = withStyles(theme => ({
 
 const SubHeaderTableRow = withStyles(theme => ({
   root: {
-      backgroundColor: theme.palette.primary.light,
-      color: theme.palette.primary.contrastText
+    backgroundColor: theme.color3.hex,
+    color: theme.color3_text.hex,
   }
 }))(TableRow)
 
