@@ -24,24 +24,24 @@ const highlights = {
   }
 }
 
-export const oranges = {
-  name: 'oranges',
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#ffa726',
-      light: '#ffd95b',
-      dark: '#E99924',
-      contrastText: '#fff'
-    },
-    secondary: {
-      main: '#ffca28',
-      light: '#fffd61',
-      dark: '#c79a00',
-      contrastText: '#222'
-    }
-  }
-}
+// export const oranges = {
+//   name: 'oranges',
+//   palette: {
+//     type: 'light',
+//     primary: {
+//       main: '#ffa726',
+//       light: '#ffd95b',
+//       dark: '#E99924',
+//       contrastText: '#fff'
+//     },
+//     secondary: {
+//       main: '#ffca28',
+//       light: '#fffd61',
+//       dark: '#c79a00',
+//       contrastText: '#222'
+//     }
+//   }
+// }
 
 export const light = {
   name: 'light',
@@ -131,6 +131,10 @@ export const woSheet = {
   },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#FEFFFF',
     // hex: '#06FBFB',
@@ -169,31 +173,31 @@ export const woSheet = {
   }
 }
 
-export const medium = {
-  name: 'medium',
-  palette: {
-    type: 'light',
-    background: { paper: '#aaa', default: '#9d9d9d' },
-    primary: {
-      light: '#dbdbdb',
-      main: '#8F8F8F',
-      dark: '#4f4f4f',
-      contrastText: '#fff'
-    },
-    secondary: {
-      // light: '#ffffb4',
-      light: '#b7c4d1',
-      main: '#808991',
-      dark: '#484ds2',
-      contrastText: '#fff'
-    }
-  },
-  shape :{
-    borderRadius: '1'
-  },
-  highlightYellow: highlights.lightThemeHighlightYellow,
-  highlightGreen: highlights.lightThemeHighlightGreen,
-}
+// export const medium = {
+//   name: 'medium',
+//   palette: {
+//     type: 'light',
+//     background: { paper: '#aaa', default: '#9d9d9d' },
+//     primary: {
+//       light: '#dbdbdb',
+//       main: '#8F8F8F',
+//       dark: '#4f4f4f',
+//       contrastText: '#fff'
+//     },
+//     secondary: {
+//       // light: '#ffffb4',
+//       light: '#b7c4d1',
+//       main: '#808991',
+//       dark: '#484ds2',
+//       contrastText: '#fff'
+//     }
+//   },
+//   shape :{
+//     borderRadius: '1'
+//   },
+//   highlightYellow: highlights.lightThemeHighlightYellow,
+//   highlightGreen: highlights.lightThemeHighlightGreen,
+// }
 
 export const dark = {
   name: 'dark',
@@ -264,6 +268,10 @@ export const sea = {
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#274469',
     rgba: alpha => buildRgba(39, 68, 105, alpha)
@@ -392,9 +400,14 @@ export const seaOrig = {
 
 export const villa = {
   name: 'villa',
+  palette: { type: 'light' },
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
@@ -437,6 +450,10 @@ export const crystal = {
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -525,6 +542,10 @@ export const siberianWinter = {
   palette: { type: 'dark' },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#FFFBFF',
     rgba: alpha => buildRgba(255, 251, 255, alpha)
@@ -567,6 +588,10 @@ export const stormTrooperInverse = {
   palette: { type: 'dark' },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color5: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -613,6 +638,10 @@ export const stormTrooper = {
   palette: { type: 'light' },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#EBF0F2',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -659,6 +688,10 @@ export const vader = {
   palette: { type: 'dark' },
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#dadee0',
     rgba: alpha => buildRgba(235, 240, 242, alpha)
@@ -705,6 +738,10 @@ export const bakery = {
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -751,6 +788,10 @@ export const lake = {
   type: 'custom',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
@@ -792,6 +833,10 @@ export const book = {
   name: 'book',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#F0F2F2',
     rgba: alpha => buildRgba(239, 242, 242, alpha)
@@ -833,6 +878,10 @@ export const dina = {
   name: 'dina',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#F2E6DF',
     rgba: alpha => buildRgba(242, 230, 223, alpha)
@@ -874,6 +923,10 @@ export const fordRaptor = {
   name: 'fordRaptor',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, 1)
@@ -915,6 +968,10 @@ export const themeOne = {
   name: 'themeOne',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color1: {
     hex: '#2D3540',
     rgba: alpha => buildRgba(45, 53, 64, alpha)
@@ -945,6 +1002,10 @@ export const themeTwo = {
   name: 'themeTwo',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color4: {
     hex: '#2D3540',
     rgba: alpha => buildRgba(45, 53, 6, alpha)
@@ -975,6 +1036,10 @@ export const themeThree = {
   name: 'themeThree',
   highlightYellow: highlights.lightThemeHighlightYellow,
   highlightGreen: highlights.lightThemeHighlightGreen,
+  darkText: {
+    hex: '#333333',
+    rgba: alpha => buildRgba(0, 0, 0, alpha)
+  },
   color4: {
     hex: '#F2F2F2',
     rgba: alpha => buildRgba(242, 242, 242, alpha)
@@ -1006,18 +1071,21 @@ const buildRgba = (red, green, blue, alpha) => {
 }
 
 export const themes = {
-  vader: vader,
+  bakery: bakery,
+  book: book,
+  crystal: crystal,
+  dark: dark,
+  dina: dina,
+  lake: lake,
+  light: light,
+  // medium: medium,
+  // oranges: oranges,
+  sea: sea,
+  siberianWinter: siberianWinter,
+  snow: snow,
   stormTrooper: stormTrooper,
   stormTrooperInverse: stormTrooperInverse,
+  vader: vader,
+  villa: villa,
   woSheet: woSheet,
-  siberianWinter: siberianWinter,
-  crystal: crystal,
-  bakery: bakery,
-  lake: lake,
-  oranges: oranges,
-  snow: snow,
-  sea: sea,
-  light: light,
-  medium: medium,
-  dark: dark
 }

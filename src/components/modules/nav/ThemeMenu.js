@@ -38,8 +38,15 @@ const ThemeMenu = props => {
             onClose={handleClose}
           >
             <MenuItem onClick={() => handleThemeSelect('light')}>light</MenuItem>
-            <MenuItem onClick={() => handleThemeSelect('oranges')}>medium</MenuItem>
             <MenuItem onClick={() => handleThemeSelect('dark')}>dark</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('sea')}>sea</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('woSheet')}>woSheet</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('snow')}>snow</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('bakery')}>bakery</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('villa')}>villa</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('lake')}>lake</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('book')}>book</MenuItem>
+            <MenuItem onClick={() => handleThemeSelect('dina')}>dina</MenuItem>
           </Menu>
     </Fragment>
   )

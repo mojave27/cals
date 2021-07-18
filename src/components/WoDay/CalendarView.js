@@ -27,7 +27,7 @@ import {
 import { cloneDeep, isEmpty } from 'lodash'
 import { navigate } from '@reach/router'
 
-const useStyles = makeStyles((theme, isToday) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     textAlign: 'center',
@@ -56,10 +56,25 @@ const useStyles = makeStyles((theme, isToday) => ({
     margin: 'auto',
   },
   itemWithCardio: {
-    backgroundColor: theme.palette.warning.dark,
+    backgroundColor: () => {
+      switch(theme.name){
+        case 'dark':
+          return theme.palette.grey["600"]
+        default:
+          return theme.palette.primary.light
+      }
+    },
     '&:hover': {
-      backgroundColor: theme.palette.warning.light,
-      color: theme.palette.warning.contrastText,
+      backgroundColor: theme.palette.primary.dark,
+      color: () => {
+      switch(theme.name){
+        case 'dark':
+          // return theme.palette.grey["50"]
+          console.log(`theme.name: ${theme.name}`)
+          return '#FFF'
+        default:
+          return theme.palette.primary.contrastText
+      }}
     },
     margin: 'auto',
   },
@@ -78,8 +93,15 @@ const useStyles = makeStyles((theme, isToday) => ({
   cardioBadge: {
     color: theme.palette.secondary.light,
     '&:hover': {
-      color: theme.palette.secondary.contrastText,
-    },
+      backgroundColor: theme.palette.primary.dark,
+      color: () => {
+        switch(theme.name){
+          case 'dark':
+          return '#FFF'
+        default:
+          return theme.palette.primary.contrastText
+      }}
+    }
   },
   paper: {
     padding: theme.spacing(1),
