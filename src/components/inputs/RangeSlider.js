@@ -1,20 +1,29 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import ThemeContext from 'context/ThemeContext'
 import PropTypes from 'prop-types'
 import { Box, Slider, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  box: {
+    color: theme.color4.hex,
     margin: 'auto',
     padding: '20px'
   },
+  root: {
+    color: theme.color4.hex,
+    margin: 'auto',
+    // padding: '20px'
+  },
+  thumb: { color: theme.color4.hex },
   margin: {
     height: theme.spacing(3)
   }
 }))
 
 const RangeSliderInput = props => {
-  const classes = useStyles()
+  const themeContext = useContext(ThemeContext)
+  const classes = useStyles(themeContext)
 
   function valuetext(value) {
     return `${value}`
@@ -22,9 +31,10 @@ const RangeSliderInput = props => {
 
   return (
     <React.Fragment>
-      <Box className={classes.root}>
+      <Box className={ classes.box }>
         <Typography gutterBottom>{props.label}</Typography>
         <Slider
+          classes={{ root: classes.root, thumb: classes.thumb }}
           id={props.id}
           value={props.value}
           onChange={props.onChange}

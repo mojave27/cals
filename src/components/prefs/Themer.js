@@ -36,36 +36,21 @@ const Themer = props => {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Grid container spacing={2} justify='center'>
-      <Grid item>
-        <ChangeTheme theme={'vader'} />
-      </Grid>
-      <Grid item>
-        <ChangeTheme theme={'stormTrooper'} />
-      </Grid>
-      <Grid item>
-      <ChangeTheme theme={'stormTrooperInverse'} />
-      </Grid>
-      <Grid item>
-      <ChangeTheme theme={'siberianWinter'} />
-      </Grid>
-      <Grid item>
-      <ChangeTheme theme={'woSheet'} />
-      </Grid>
-      <Grid item>
-      <ChangeTheme theme={'crystal'} />
-      </Grid>
-      <Grid item>
-      <ChangeTheme theme={'bakery'} />
-      </Grid>
+      <Grid item> <ChangeTheme theme={'crystal'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'bakery'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'book'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'dark'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'dina'} /> </Grid>
       <Grid item> <ChangeTheme theme={'lake'} /> </Grid>
       <Grid item> <ChangeTheme theme={'light'} /> </Grid>
-      <Grid item> <ChangeTheme theme={'dark'} /> </Grid>
-      <Grid item>
-      <ChangeTheme theme={'snow'} />
-      </Grid>
-      <Grid item>
-      <ChangeTheme theme={'sea'} />
-      </Grid>
+      <Grid item> <ChangeTheme theme={'sea'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'snow'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'stormTrooper'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'stormTrooperInverse'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'siberianWinter'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'vader'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'villa'} /> </Grid>
+      <Grid item> <ChangeTheme theme={'woSheet'} /> </Grid>
       </Grid>
       <div style={{ color: context.theme.color1, margin: '50px' }}>
         {context.theme.name}
