@@ -216,18 +216,6 @@ const WorkoutModal = (props) => {
           )}
         </Box>
       </Grid>
-      {/* <List>
-        <ListItem button>
-          <ListItemText primary='Phone ringtone' secondary='Titania' />
-        </ListItem>
-        <Divider />
-        <ListItem button>
-          <ListItemText
-            primary='Default notification ringtone'
-            secondary='Tethys'
-          />
-        </ListItem>
-      </List> */}
     </Dialog>
   )
 }

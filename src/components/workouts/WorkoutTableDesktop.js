@@ -2,9 +2,6 @@ import React from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-// import DeleteIcon from '@material-ui/icons/Delete'
-// import BlockIcon from '@material-ui/icons/Block'
-// import TouchAppIcon from '@material-ui/icons/TouchApp'
 import AddIcon from '@material-ui/icons/Add'
 import {
   Accordion,
@@ -39,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
     width: `${theme.mobile === true ? '100%' : 'auto'}`,
   },
   table: {
-    minWidth: '80%',
+    maxWidth: '80%',
+    margin: 'auto'
   },
   tableCell: {
     fontSize: '16px',

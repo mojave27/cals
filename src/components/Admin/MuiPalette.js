@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Grid } from '@material-ui/core';
 
@@ -49,11 +50,20 @@ const useStyles = makeStyles((theme) => ({
   greyA200: { backgroundColor: theme.palette.grey.A200 },
   greyA400: { backgroundColor: theme.palette.grey.A400 },
   greyA700: { backgroundColor: theme.palette.grey.A700 },
-
+  
+  highlightYellow: { backgroundColor: theme.highlightYellow.hex, color: theme.highlightYellow.contrastText },
+  highlightGreen: { backgroundColor: theme.highlightGreen.hex, color: theme.highlightGreen.contrastText },
+  darkText: { backgroundColor: '#fff', color: theme.darkText.hex },
+  color5: { backgroundColor: theme.color5.hex, color: theme.color5_text.hex },
+  color4: { backgroundColor: theme.color4.hex, color: theme.color4_text.hex },
+  color3: { backgroundColor: theme.color3.hex, color: theme.color3_text.hex },
+  color2: { backgroundColor: theme.color2.hex, color: theme.color2_text.hex },
+  color1: { backgroundColor: theme.color1.hex, color: theme.color1_text.hex },
 }));
 
 const MuiPalette = props => {
-  let classes = useStyles()
+  let themeContext = useContext(ThemeContext)
+  let classes = useStyles(themeContext)
 
   return (
     <div style={{width:'300px'}}>
@@ -99,13 +109,13 @@ const MuiPalette = props => {
         </Grid>
 
         <Grid item xs={12} sm={4}>
-      <Box className={`${classes.box} ${classes.successLight}`}>success.light</Box>
+          <Box className={`${classes.box} ${classes.successLight}`}>success.light</Box>
         </Grid>
         <Grid item xs={12} sm={4}>
-      <Box className={`${classes.box} ${classes.successMain}`}>success.main</Box>
+          <Box className={`${classes.box} ${classes.successMain}`}>success.main</Box>
         </Grid>
         <Grid item xs={12} sm={4}>
-      <Box className={`${classes.box} ${classes.successDark}`}>success.dark</Box>
+          <Box className={`${classes.box} ${classes.successDark}`}>success.dark</Box>
         </Grid>
         <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.warningLight}`}>warning.light</Box>
@@ -169,6 +179,31 @@ const MuiPalette = props => {
         </Grid>
         <Grid item xs={12} sm={4}>
       <Box className={`${classes.box} ${classes.greyA700}`}>grey.A700</Box>
+        </Grid>
+        
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.highlightYellow}`}>highlightYellow</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.highlightGreen}`}>highlightGreen</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.darkText}`}>darkText</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.color5}`}>color5</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.color4}`}>color4</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.color3}`}>color3</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.color2}`}>color2</Box>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Box className={`${classes.box} ${classes.color1}`}>color1</Box>
         </Grid>
       </Grid>
     </div>

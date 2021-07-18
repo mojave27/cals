@@ -9,15 +9,18 @@ To add a theme:
 const highlights = {
   lightThemeHighlightYellow: {
     hex: '#ffff00',
-    rgba: alpha => buildRgba(255, 255, 0, alpha)
+    rgba: alpha => buildRgba(255, 255, 0, alpha),
+    contrastText: "#222"
   },
   lightThemeHighlightGreen: {
     hex: '#00b300',
-    rgba: alpha => buildRgba(0, 179, 0, alpha)
+    rgba: alpha => buildRgba(0, 179, 0, alpha),
+    contrastText: "#222"
   },
   darkThemeHighlightGreen: {
     hex: '#00ff00',
-    rgba: alpha => buildRgba(0, 255, 0, alpha)
+    rgba: alpha => buildRgba(0, 255, 0, alpha),
+    contrastText: "#FFF"
   }
 }
 

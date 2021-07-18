@@ -56,17 +56,17 @@ const useStyles = makeStyles((theme, isToday) => ({
     margin: 'auto',
   },
   itemWithCardio: {
-    backgroundColor: theme.palette.secondary.dark,
+    backgroundColor: theme.palette.warning.dark,
     '&:hover': {
-      backgroundColor: theme.palette.secondary.light,
-      color: theme.palette.secondary.contrastText,
+      backgroundColor: theme.palette.warning.light,
+      color: theme.palette.warning.contrastText,
     },
     margin: 'auto',
   },
   itemCard: {
     border:'1px solid #999', 
     paddingBottom:'5px',
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey["600"] : theme.color3.hex
   },
   currentDay: {
     border: '1px solid #eee',

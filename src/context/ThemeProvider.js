@@ -8,12 +8,11 @@ const getUserTheme = (mobile) => {
   const cookies = new Cookies()
   // default to woSheet if no user theme set
   if (cookies.get('wolog-theme') === undefined) {
-    console.log('no cookie found, setting one with woSheet theme')
-    setUserTheme('woSheet')
-    return themes.woSheet
+    console.log('no cookie found, setting one with light theme')
+    setUserTheme('light')
+    return themes.light
   } else {
     let themeValue = cookies.get('wolog-theme')
-    console.log(`themeValue ${themeValue}`)
     let activeTheme = themes[themeValue]
     activeTheme.mobile = mobile
     return activeTheme
