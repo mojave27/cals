@@ -139,7 +139,7 @@ const ExerciseGroupTable = props => {
       tds.push(
         <TableCell
           className={`${classes.tdLeft} ${classes.td}`}
-          key={`${row.id}-${row.name}-delete`}>
+          key={`${row.id}-${row.name}-delete`}
         >
           <IconButton id={row.id} aria-label='Delete' onClick={props.deleteRow}>
             <DeleteForeverIcon color='inherit' fontSize='small' />

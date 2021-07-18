@@ -5,12 +5,12 @@ import ThemeContext from '../../context/ThemeContext'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  appBar: {  }
+  appBar: { backgroundColor: theme.color3.hex, color: theme.color3_text.hex }
 }))
 
 const WoDayAppBar = props => {
   let themeContext = useContext(ThemeContext)
-  const classes = useStyles()
+  const classes = useStyles(themeContext)
   let [show, setShow] = useState(false)
 
   const toggleShow = () => setShow(!show)

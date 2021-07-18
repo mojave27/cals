@@ -6,7 +6,6 @@ import { menuConfig } from './navMenuConfig'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import ThemeMenu from 'components/modules/nav/ThemeMenu'
 import { Auth } from 'aws-amplify'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 
 import './TopNav.css'
 

@@ -177,7 +177,7 @@ const WorkoutForm = (props) => {
       return exGroups.map((exGroup) => {
         let data = {
           setId: exGroup.id,
-          headers: ['name', 'reps'],
+          headers: ['name', 'targets'],
           rows: [...exGroup.exercises],
         }
         return (

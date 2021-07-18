@@ -794,6 +794,14 @@ export const lake = {
     hex: '#333333',
     rgba: alpha => buildRgba(0, 0, 0, alpha)
   },
+  // primary: this.color3,
+  // primary_text: this.color3_text,
+  // secondary: this.color4,
+  // secondary_text: this.color4_text,
+  // tertiary: this.color5,
+  // tertiary_text: this.color5_text,
+  // accent: this.color2,
+  // accent_text: this.color2_text,
   color1: {
     hex: '#FFFFFF',
     rgba: alpha => buildRgba(255, 255, 255, alpha)
