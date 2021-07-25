@@ -317,7 +317,7 @@ const WoDay = (props) => {
       type: '',
       duration: '',
       distance: '',
-      heartRate: '? bpm',
+      heartRate: '',
     }
     let woday = woDayContext.copyWoDay()
     woday.cardio.exercises.push(newCardioExercise)
