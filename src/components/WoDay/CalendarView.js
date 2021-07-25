@@ -91,8 +91,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey["600"] : theme.color3.hex
   },
   currentDay: {
+    padding: '10px',
     border: '1px solid #eee',
-    // backgroundColor: theme.palette.success[theme.palette.type]
+    verticalAlign: 'top',
     backgroundColor: () => {
       switch(theme.name) {
         case 'light':
@@ -105,7 +106,9 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   standardDay: {
-    border: '1px solid #eee'
+    padding: '10px',
+    border: '1px solid #eee',
+    verticalAlign: 'top'
   },
   cardioBadge: {
     color: theme.palette.secondary.light,
