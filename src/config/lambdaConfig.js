@@ -4,6 +4,8 @@ const ENVIRONMENT = process.env.REACT_APP_ENV || 'prod'
 const prodURL = 'https://wu5g3e1p98.execute-api.us-east-1.amazonaws.com/prod'
 const devURL = 'https://wu5g3e1p98.execute-api.us-east-1.amazonaws.com/prod'
 const localURL  = 'http://localhost:3030'
+// const devURL = localURL
+// const prodURL = localURL
 
 const getBaseURL = () => {
     console.log(`environment: ${ENVIRONMENT}`)
