@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext /*, useState */ } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import BasicSpinner from '../spinners/BasicSpinner'
 import { Card, CardHeader, Grid, Container } from '@material-ui/core'
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const WoDayList = props => {
-  const [showSpinner, setShowSpinner] = useState(false)
+  // const [showSpinner, setShowSpinner] = useState(false)
   const isMobile = useMediaQuery('(max-width:768px)')
   let woDayContext = useContext(WoDayContext)
 
@@ -27,14 +27,11 @@ const WoDayList = props => {
   }
 
   const handleSelect = id => {
-    setShowSpinner(true)
     if (props.chooseWoDay) props.chooseWoDay(id)
   }
 
   const show = () => {
-    if (woDayContext.wodays.length === 0) return true
-    if (showSpinner) return true
-    return false
+    return woDayContext.wodays.length === 0
   }
 
   return (

@@ -190,13 +190,20 @@ const CalendarView = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.items])
 
-  const toggleSpinner = () => {
-    setShowSpinner(!showSpinner)
+  const toggleSpinner = async (show) => {
+    console.log(`setting spinner to ${show}`)
+    await setShowSpinner(show)
   }
 
-  const handleSelect = (id) => {
-    toggleSpinner()
+  const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  const handleSelect = async (id) => {
+    await toggleSpinner(true)
     props.onSelect(id)
+    await sleep(2000)
+    await toggleSpinner(false)
   }
 
   const getItemsForYear = (items, year) => {

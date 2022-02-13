@@ -9,11 +9,13 @@ const useStyles = makeStyles(theme => ({
     top: 30,
     left: 30,
     boxShadow: theme.shadows[5],
-    overflow: 'auto'
+    overflow: 'auto',
+    // margin: '0px 30px'
   },
   content: {
     backgroundColor: theme.palette.background.default,
-    margin: 'auto',
+    // margin: 'auto',
+    margin: '0px 100px',
     overflow: 'auto'
 
   },

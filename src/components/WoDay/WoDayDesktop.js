@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { autoSaveInterval } from 'config/appConfig'
-import { navigate } from '@reach/router'
 import { cloneDeep, isEmpty } from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import 'styles/datePicker.css'
@@ -38,11 +37,12 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   container: {
     borderRadius: '2px',
     border: `1px solid ${theme.palette.grey[400]}`,
+    height: '100vh'
   },
   section: {
     borderRadius: '2px',
@@ -93,7 +93,7 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge)
 
-const WoDay = (props) => {
+const WoDayDesktop = props => {
   let [showModal, setShowModal] = useState(false)
   let [savingInProgress, setSavingInProgress] = useState(false)
   let [userTriggeredSave, setUserTriggeredSave] = useState(false)
@@ -128,8 +128,8 @@ const WoDay = (props) => {
     window.scrollTo(0, 0)
   }
 
-  const home = () => {
-    navigate('/')
+  const handleClose = () => {
+    props.onClose()
   }
 
   const autoSave = () => {
@@ -444,7 +444,7 @@ const WoDay = (props) => {
       {doStuff()}
       <WoDayAppBar
         onSave={saveWoDay}
-        onClose={home}
+        onClose={handleClose}
         onSaveToDuration={saveToDuration}
       />
       {woDayLoaded() ? (
@@ -717,4 +717,4 @@ const WoDay = (props) => {
   )
 }
 
-export default WoDay
+export default WoDayDesktop

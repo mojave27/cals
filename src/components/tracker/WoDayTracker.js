@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '../modules/common/components/Modal'
 import WoDayList from '../WoDay/WoDayList'
+import WoDay from '../WoDay/WoDay'
 import WoDayContext from '../../context/WoDayContext'
 import { retrieveWoDayById } from '../../api/wodaysApi'
 import { navigate } from '@reach/router'
@@ -25,6 +26,8 @@ const useStyles = makeStyles(theme => ({
 
 const WoDayTracker = props => {
   let [showModal, setShowModal] = useState(false)
+  let [showWoDayModal, setShowWoDayModal] = useState(false)
+  let [showSpinner, setShowSpinner] = useState(false)
 
   let woDayContext = useContext(WoDayContext)
   const classes = useStyles()
@@ -34,10 +37,21 @@ const WoDayTracker = props => {
     setShowModal(!showModal)
   }
 
+  const toggleWoDayModal = () => {
+    console.log('toggle woday modal')
+    window.scrollTo(0, 0)
+    setShowWoDayModal(!showWoDayModal)
+  }
+
   const chooseWoDay = async (id) => {
+    console.log(`setting spinner to true`)
+    setShowSpinner(true)
     const response = await retrieveWoDayById(id)
     await woDayContext.updateWoDay(response)
-    navigate(WODAY_PATH)
+    // navigate(WODAY_PATH)
+    console.log(`setting spinner to false`)
+    setShowSpinner(false)
+    toggleWoDayModal()
   }
 
   const newWoDay = async () => {
@@ -49,6 +63,9 @@ const WoDayTracker = props => {
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
         <WoDayList done={toggleModal} chooseWoDay={chooseWoDay} />
+      </Modal> 
+      <Modal showModal={showWoDayModal} handleClose={toggleWoDayModal}>
+        <WoDay onClose={toggleWoDayModal} />
       </Modal> 
       <Container maxWidth='xs'>
         <Paper className={classes.paper} elevation={0}>
