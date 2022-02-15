@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
 const WoDayTracker = props => {
   let [showModal, setShowModal] = useState(false)
   let [showWoDayModal, setShowWoDayModal] = useState(false)
-  let [showSpinner, setShowSpinner] = useState(false)
 
   let woDayContext = useContext(WoDayContext)
   const classes = useStyles()
@@ -44,13 +43,8 @@ const WoDayTracker = props => {
   }
 
   const chooseWoDay = async (id) => {
-    console.log(`setting spinner to true`)
-    setShowSpinner(true)
     const response = await retrieveWoDayById(id)
     await woDayContext.updateWoDay(response)
-    // navigate(WODAY_PATH)
-    console.log(`setting spinner to false`)
-    setShowSpinner(false)
     toggleWoDayModal()
   }
 
