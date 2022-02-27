@@ -47,16 +47,16 @@ const useStyles = makeStyles(theme => ({
 const MealCard = props => {
   const classes = useStyles(props)
 
-  const handleClick = () => {
-    if (props.onClick) props.onClick(props.id)
+  const handleClick = id => {
+    if (props.onClick) props.onClick(id)
   }
 
-  const editItem = id => {
-    if (props.editItem) props.editItem(id)
+  const editItem = () => {
+    if (props.editItem) props.editItem(props.item.id)
   }
 
-  const deleteItem = id => {
-    if (props.deleteItem) props.deleteItem(id)
+  const deleteItem = () => {
+    if (props.deleteItem) props.deleteItem(props.item.id)
   }
 
   return (
@@ -64,7 +64,7 @@ const MealCard = props => {
       className={classes.root}
       elevation={1}
       variant='outlined'
-      onClick={handleClick}
+      onClick={() => handleClick(props.item.id)}
       key={props.id}
     >
       <CardHeader
@@ -76,7 +76,7 @@ const MealCard = props => {
             <React.Fragment>
               <IconButton
                 aria-label='Edit'
-                onClick={() => editItem(props.item.id)}
+                onClick={editItem}
               >
                 <EditIcon color='inherit' fontSize='small' />
               </IconButton>

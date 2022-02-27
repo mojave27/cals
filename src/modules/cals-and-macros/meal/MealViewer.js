@@ -8,6 +8,7 @@ import {
 } from 'components/modules/common/utilties/ArrayUtils'
 import TextInputWithCancel from 'components/inputs/TextInputWithCancel'
 import styles from 'modules/cals-and-macros/meal/Meal.module.css'
+import deleteMeal from 'api/cals-and-macros/deleteMeal'
 
 const MealViewer = (props) => {
   const [meals, setMeals] = useState([])
@@ -22,8 +23,10 @@ const MealViewer = (props) => {
     setMeals(response)
   }
 
-  const handleSelect = (event) => {
-    console.log(event.target)
+  const handleSelect = (id) => {
+    console.log(id)
+    const item = retrieveItemById(id, meals)
+    console.log(JSON.stringify(item))
   }
 
   const handleClearSearch = () => {
@@ -33,6 +36,11 @@ const MealViewer = (props) => {
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value)
+  }
+
+  const handleDelete = async id => {
+    await deleteMeal(id)
+    await retrieve()
   }
 
   return (
@@ -51,7 +59,7 @@ const MealViewer = (props) => {
             <div style={{ paddingLeft: '10px', color: 'orange' }}>
               <h3>{meal.name}</h3>
             </div>
-            <MealCard viewOnly={true} item={meal} />
+            <MealCard disabled={false} viewOnly={true} item={meal} onClick={handleSelect} deleteItem={handleDelete} />
           </div>
         )
       })}

@@ -1,19 +1,20 @@
 import { axiosFood } from '../../config/apiConfig';
 
-const saveMeal = mealData => {
+const deleteMeal = id => {
   const options = { headers: { 'content-type': 'application/json' } }
-  const url = 'meals'
+  const url = `meals/${id}`
 
   return axiosFood
-    .post(url, mealData, options)
+    .delete(url, options)
     .then(response => {
       return response
     })
     .catch(error => {
       // handle error
-      console.log(`[ui - saveMeal] api error: ${error}`)
+      console.log(`[ui - deleteMeal] api error: ${error}`)
       return []
     })
+
 }
 
-export default saveMeal;
+export default deleteMeal;
