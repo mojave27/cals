@@ -188,7 +188,7 @@ const CalendarItemCard = (props) => {
   const deleteStuff = async (id) => {
     console.log(`deleting woday id: ${id}`)
     await deleteWoDay(id)
-    props.onDelete(id)
+    if (props.onDelete) props.onDelete(id)
   }
 
   const showItem = () => {

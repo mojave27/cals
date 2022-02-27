@@ -6,7 +6,6 @@ import { filterItemsByNameProperty as filterItems, retrieveItemById } from 'comp
 import { sortByStringProperty } from 'list-utils'
 
 import FormButton from 'components/inputs/FormButton'
-// import TextInput from 'components/inputs/TextInput'
 import TextInputWithCancel from 'components/inputs/TextInputWithCancel'
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -121,11 +120,9 @@ const ReusableFoodSearch = props => {
           <FormButton onClick={props.onClose} value={'close'} />
         </Grid>
         <Grid item xs={12}>
-          {/* {foodList.length > 0 ? ( */}
             <React.Fragment>
               <FoodListTable foodList={filterItems(searchValue, foodList, 'description')} rowClick={handleRowSelect} />
             </React.Fragment>
-          {/* ) : null} */}
         </Grid>
         <Confirm
           open={showConfirm}

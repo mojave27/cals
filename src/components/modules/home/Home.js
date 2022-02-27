@@ -1,7 +1,8 @@
 import React from 'react'
+import Dashboard from 'components/modules/dashboard'
 
 const Home = props => {
-    return(<div></div>)
+    return(<Dashboard />)
 }
 
 export default Home;

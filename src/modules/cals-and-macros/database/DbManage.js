@@ -74,6 +74,14 @@ const DbManage = () => {
     await fetchMyAPI()
   }
 
+  const sortFoods = foods => {
+    return foods.sort((a,b) => {
+      if (a.data.description.toLowerCase() > b.data.description.toLowerCase()) return 1
+      if (a.data.description.toLowerCase() < b.data.description.toLowerCase()) return -1
+      if (a.data.description.toLowerCase() == b.data.description.toLowerCase()) return 0
+    })
+  }
+
   return (
     <div className={styles.container}>
       <Modal showModal={showModal} handleClose={toggleModal}>
@@ -83,7 +91,7 @@ const DbManage = () => {
       {foodList.length > 0 ? (
         <EditableTable
           headers={foodItemHeaders}
-          rows={foodList}
+          rows={sortFoods(foodList)}
           onSelect={handleRowSelect}
           onDeleteSelected={handleDeleteSelected}
           onAddRow={handleAddRow}
