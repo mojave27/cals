@@ -13,6 +13,7 @@ import Workout from 'components/workouts/Workout'
 import BasicSpinner from 'components/spinners/BasicSpinner'
 import WorkoutChooser from 'components/workouts/WorkoutChooser'
 import WoDayAppBar from 'components/WoDay/WoDayAppBar'
+import { navigate } from '@reach/router'
 import {
   findIndexOfId,
   generateNewId,
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     borderRadius: '2px',
     border: `1px solid ${theme.palette.grey[400]}`,
-    height: '100vh'
+    minHeight: '100vh'
   },
   section: {
     borderRadius: '2px',
@@ -129,7 +130,8 @@ const WoDayDesktop = props => {
   }
 
   const handleClose = () => {
-    props.onClose()
+    if (props.onClose) props.onClose()
+    navigate('/tracker/woday')
   }
 
   const autoSave = () => {
