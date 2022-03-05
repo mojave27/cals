@@ -7,7 +7,7 @@ import { findIndexOfId } from 'list-utils'
 import { cloneDeep } from 'lodash'
 
 import TextInput from 'components/inputs/TextInput'
-import { Box, Divider, Grid, Paper, TextField } from '@material-ui/core'
+import { Box, Divider, Grid, TextField } from '@material-ui/core'
 // import { makeStyles } from '@material-ui/core/styles'
 
 const MealForm = (props) => {
@@ -193,17 +193,15 @@ const MealForm = (props) => {
     <div style={{ border: '1px solid #eee', padding: '10px' }}>
       <Box style={{ padding: '10px' }}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <TextInput
               id='mealName'
               name='meal name'
               data={meal.name}
               onChange={handleInputChange}
             />
-            {getUserName()}
           </Grid>
-          <Grid item xs={6}>
-            <Paper>
+          <Grid item xs={3}>
               <TextField
                 id='date'
                 label='Date'
@@ -211,12 +209,13 @@ const MealForm = (props) => {
                 defaultValue={getStartDate()}
                 onChange={handleTextChange}
                 // className={classes.textField}
+                style={{ borderRadius: '5px' }}
                 variant={'outlined'}
+                size='small'
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
-            </Paper>
           </Grid>
           <Grid item xs={12} sm={12}>
             {/* {this.state.meal.foodList.length > 0 ? ( */}

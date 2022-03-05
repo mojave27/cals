@@ -116,9 +116,9 @@ const ReusableFoodSearch = props => {
         </Grid>
         <Grid item xs={12} sm={2}>
         </Grid>
-        <Grid item xs={12} sm={2}>
-          <FormButton onClick={props.onClose} value={'close'} />
-        </Grid>
+        {/* <Grid item xs={12} sm={2}> */}
+          {/* <FormButton onClick={props.onClose} value={'close'} /> */}
+        {/* </Grid> */}
         <Grid item xs={12}>
             <React.Fragment>
               <FoodListTable foodList={filterItems(searchValue, foodList, 'description')} rowClick={handleRowSelect} />

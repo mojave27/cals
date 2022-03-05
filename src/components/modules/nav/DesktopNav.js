@@ -148,6 +148,7 @@ const DesktopNav = props => {
             return renderMenuItem(menu, index)
           })}
           <div className={classes.title} />
+          { typeof props.user !== 'undefined' ? props.user.attributes.email : ''}
           <ThemeMenu />
           <Button color='inherit' onClick={signOut}>
             Logout
