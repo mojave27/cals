@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@material-ui/core'
 // import MealTable from 'modules/cals-and-macros/table/MealTable/MealTable'
 import MealCard from 'modules/cals-and-macros/meal/MealCard'
@@ -11,107 +11,107 @@ import TextInput from 'components/inputs/TextInput'
 import { Box, Divider, Grid, Paper, TextField } from '@material-ui/core'
 // import { makeStyles } from '@material-ui/core/styles'
 
-class Meal extends Component {
+const Meal = (props) => {
+  const [activeFood, setActiveFood] = useState()
+  const [meal, setMeal] = useState({foodList: [], name: ''})
+  const [tweakValue, setTweakValue] = useState(0)
+  const [message, setMessage] = useState('')
+  const [selectedFoodItems, setSelectedFoodItems] = useState([])
+  const [showSearch, setShowSearch] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
+
   state = {
     activeFood: {},
     loading: false,
     meal: {
       foodList: [],
-      name: '',
+      name: ''
     },
     tweakValue: 0,
     message: '',
     searchValue: '',
     selectedFoodItems: [],
-    showSearch: false,
+    showSearch: false
   }
 
-  tweakRowUp = (id) => {
-    this.setState((prevState) => {
-      let updatedMeal = prevState.meal
-      const index = findIndexOfId(id, updatedMeal.foodList)
-      let multiplier =
-        (Number(updatedMeal.foodList[index].quantity) + 1) /
-        Number(updatedMeal.foodList[index].quantity)
+  tweakRowUp = id => {
+    let updatedMeal = cloneDeep(meal)
+    const index = findIndexOfId(id, updatedMeal.foodList)
+    let multiplier =
+      (Number(updatedMeal.foodList[index].quantity) + 1) /
+      Number(updatedMeal.foodList[index].quantity)
 
-      let foodItem = cloneDeep(updatedMeal.foodList[index])
-      foodItem.quantity = Number(foodItem.quantity) + 1
+    let foodItem = cloneDeep(updatedMeal.foodList[index])
+    foodItem.quantity = Number(foodItem.quantity) + 1
 
-      let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
-      updatedMeal.foodList[index] = updatedFoodItem
-      return { meal: updatedMeal }
-    })
+    let updatedFoodItem = updateNutrients(foodItem, multiplier)
+    updatedMeal.foodList[index] = updatedFoodItem
+    setMeal(updatedMeal)
   }
 
-  tweakRowDown = (id) => {
-    this.setState((prevState) => {
-      let updatedMeal = prevState.meal
-      const index = findIndexOfId(id, updatedMeal.foodList)
-      let multiplier =
-        (Number(updatedMeal.foodList[index].quantity) - 1) /
-        Number(updatedMeal.foodList[index].quantity)
+  tweakRowDown = id => {
+    let updatedMeal = cloneDeep(meal)
+    const index = findIndexOfId(id, updatedMeal.foodList)
+    let multiplier =
+      (Number(updatedMeal.foodList[index].quantity) - 1) /
+      Number(updatedMeal.foodList[index].quantity)
 
-      let foodItem = cloneDeep(updatedMeal.foodList[index])
+    let foodItem = cloneDeep(updatedMeal.foodList[index])
 
-      foodItem.quantity = Number(foodItem.quantity) - 1
+    foodItem.quantity = Number(foodItem.quantity) - 1
 
-      let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
-      updatedMeal.foodList[index] = updatedFoodItem
-      return { meal: updatedMeal }
-    })
+    let updatedFoodItem = updateNutrients(foodItem, multiplier)
+    updatedMeal.foodList[index] = updatedFoodItem
+    setMeal(updatedMeal)
   }
 
   handleRowSelect = (rowId, event) => {
     event.preventDefault()
-    this.setState((prevState) => {
-      let selectedFoodItems = prevState.selectedFoodItems
-      selectedFoodItems.push(prevState.foodList[rowId])
-      return { selectedFoodItems }
-    })
+    let updatedSelectedFoodItems = cloneDeep(selectedFoodItems)
+    updatedSelectedFoodItems.push(foodList[rowId])
+    setSelectedFoodItems(updatedSelectedFoodItems)
   }
 
   /* ******************************************************** */
 
-  addToMeal = (foodItem) => {
-    this.setState((prevState) => {
-      let meal = prevState.meal
-      meal.foodList.push(foodItem)
-      return { meal }
-    })
+  addToMeal = foodItem => {
+    let updatedMeal = cloneDeep(meal)
+    updatedMeal.foodList.push(foodItem)
+    setMeal(updatedMeal)
   }
 
   saveTheMeal = () => {
     saveMeal(this.state.meal)
-      .then((response) => {
+      .then(response => {
         console.log(response)
         this.setState({ meal: response.data })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   }
 
-  updateMealName = (name) => {
+  updateMealName = name => {
     let meal = this.state.meal
     meal.name = name
     this.setState({ meal })
   }
 
   toggleSearch = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return { showSearch: !prevState.showSearch }
     })
   }
 
   toggleMealModal = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return { showMealModal: !prevState.showMealModal }
     })
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     let name = event.target.value
-    this.setState((prevState) => {
+    this.setState(prevState => {
       let meal = prevState.meal
       meal.name = name
       return { meal }
@@ -132,7 +132,7 @@ class Meal extends Component {
 
   setDate = (date) => {
     let upDate = new Date(date)
-    this.setState((prevState) => {
+    this.setState(prevState => {
       let meal = prevState.meal
       meal.date = upDate
       return { meal }
@@ -161,7 +161,7 @@ class Meal extends Component {
     let quantity = data
     let id = event.target.id
     let foodItemIndex = this.state.meal.foodList.findIndex(
-      (food) => Number(food.id) === Number(id)
+      food => Number(food.id) === Number(id)
     )
     let foodItem = cloneDeep(this.state.meal.foodList[foodItemIndex])
 
@@ -170,7 +170,7 @@ class Meal extends Component {
 
     let updatedFoodItem = this.updateNutrients(foodItem, multiplier)
 
-    this.setState((prevState) => {
+    this.setState(prevState => {
       let meal = prevState.meal
       meal.foodList[foodItemIndex] = updatedFoodItem
       return { meal }
@@ -185,14 +185,14 @@ class Meal extends Component {
       carbGrams: Math.ceil(foodItem.carbGrams * multiplier * 100) / 100,
       fiberGrams: Math.ceil(foodItem.fiberGrams * multiplier * 100) / 100,
       // netCarbs: Math.ceil(foodItem.netCarbs * multiplier * 100) / 100,
-      fatGrams: Math.ceil(foodItem.fatGrams * multiplier * 100) / 100,
+      fatGrams: Math.ceil(foodItem.fatGrams * multiplier * 100) / 100
     }
   }
 
-  deleteRow = (event) => {
+  deleteRow = event => {
     let id = event.target.id
     let index = findIndexOfId(id, this.state.meal.foodList)
-    this.setState((prevState) => {
+    this.setState(prevState => {
       let meal = prevState.meal
       meal.foodList.splice(index, 1)
       return { meal }
@@ -204,7 +204,7 @@ class Meal extends Component {
       <div style={{ border: '1px solid #eee', padding: '10px' }}>
         <Box style={{ padding: '10px' }}>
           <Grid container spacing={2}>
-            <Grid item xs={3}>
+            <Grid item xs={6}>
               <TextInput
                 id='mealName'
                 name='meal name'
@@ -212,33 +212,33 @@ class Meal extends Component {
                 onChange={this.handleInputChange}
               />
             </Grid>
-            <Grid item xs={3}>
-              {/* <Paper> */}
-                <TextField
-                  id='date'
-                  label='Date'
-                  type='date'
-                  defaultValue={this.getStartDate()}
-                  onChange={this.handleTextChange}
-                  // className={classes.textField}
-                  variant={'outlined'}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              {/* </Paper> */}
+            <Grid item xs={6}>
+            <Paper>
+                          <TextField
+                            id='date'
+                            label='Date'
+                            type='date'
+                            defaultValue={this.getStartDate()}
+                            onChange={this.handleTextChange}
+                            // className={classes.textField}
+                            variant={'outlined'}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                        </Paper>
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={12} >
               {/* {this.state.meal.foodList.length > 0 ? ( */}
-              <MealCard
-                item={this.state.meal}
-                rowClick={this.handleRowSelect}
-                rowSelect={this.selectFoodItem}
-                rowDelete={this.deleteRow}
-                onQuantityChange={this.handleQuantityChange}
-                tweakUp={this.tweakRowUp}
-                tweakDown={this.tweakRowDown}
-              />
+                <MealCard
+                  item={this.state.meal}
+                  rowClick={this.handleRowSelect}
+                  rowSelect={this.selectFoodItem}
+                  rowDelete={this.deleteRow}
+                  onQuantityChange={this.handleQuantityChange}
+                  tweakUp={this.tweakRowUp}
+                  tweakDown={this.tweakRowDown}
+                />
               {/* ) : null} */}
             </Grid>
             <Grid item xs={12}>

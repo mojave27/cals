@@ -16,7 +16,7 @@ import WoDay from './WoDay/WoDay'
 import Workouts from './workouts/Workouts'
 import WoDayTracker from './tracker/WoDayTracker'
 
-const Routes = () => {
+const Routes = props => {
   return (
     <Router>
       <Home path='/' />
@@ -33,7 +33,7 @@ const Routes = () => {
       <WoDayTracker path='/tracker/woday' />
       <Login path='/login' />
       <MealForm path='/meal' />
-      <MealViewer path='/meals' />
+      <MealViewer {...props} path='/meals' />
       <DbManage path='/manage/food-db' />
     </Router>
   )

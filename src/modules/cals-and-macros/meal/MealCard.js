@@ -70,6 +70,7 @@ const MealCard = props => {
       <CardHeader
         className={classes.cardHeader}
         title={props.item.name}
+        subheader={new Date(props.item.date).toLocaleDateString() ?? ''}
         titleTypographyProps={{ variant: 'h6' }}
         action={
           props.disabled === false ? (

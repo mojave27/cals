@@ -33,7 +33,7 @@ const ThemedContent = props => {
                   }}
                 >
                   <WoDayProvider>
-                    <Routes />
+                    <Routes {...props} />
                   </WoDayProvider>
                 </div>
               </div>

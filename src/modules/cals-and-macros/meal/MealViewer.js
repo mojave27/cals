@@ -43,8 +43,14 @@ const MealViewer = (props) => {
     await retrieve()
   }
 
+  const doStuff = props => {
+    console.log(props)
+    return <div style={{ padding: '10px' }}>{props.user?.attributes?.email}</div>
+  }
+
   return (
     <div className={styles.container}>
+      {doStuff(props)}
       <TextInputWithCancel
         id='search'
         name='search'
