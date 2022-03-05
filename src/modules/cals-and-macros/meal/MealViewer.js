@@ -43,14 +43,8 @@ const MealViewer = (props) => {
     await retrieve()
   }
 
-  const doStuff = props => {
-    console.log(props)
-    return <div style={{ padding: '10px' }}>{props.user?.attributes?.email}</div>
-  }
-
   return (
     <div className={styles.container}>
-      {doStuff(props)}
       <TextInputWithCancel
         id='search'
         name='search'
@@ -65,7 +59,7 @@ const MealViewer = (props) => {
             <div style={{ paddingLeft: '10px', color: 'orange' }}>
               <h3>{meal.name}</h3>
             </div>
-            <MealCard disabled={false} viewOnly={true} item={meal} onClick={handleSelect} deleteItem={handleDelete} />
+            <MealCard {...props} disabled={false} viewOnly={true} item={meal} onClick={handleSelect} deleteItem={handleDelete} />
           </div>
         )
       })}

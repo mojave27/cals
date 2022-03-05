@@ -7,9 +7,10 @@ import saveMeal from 'api/cals-and-macros/saveMeal'
 import { findIndexOfId } from 'list-utils'
 import { cloneDeep } from 'lodash'
 
+import { Auth } from 'aws-amplify'
+
 import TextInput from 'components/inputs/TextInput'
-import { Box, Divider, Grid, Paper, TextField } from '@material-ui/core'
-// import { makeStyles } from '@material-ui/core/styles'
+import { Box, Divider, Grid, TextField } from '@material-ui/core'
 
 class Meal extends Component {
   state = {
@@ -24,6 +25,32 @@ class Meal extends Component {
     searchValue: '',
     selectedFoodItems: [],
     showSearch: false,
+    user: {}
+  }
+
+  componentDidMount = () => {
+    this.getUser()
+    .then(user => {
+      console.log('componentDidMount: ' + user)
+      this.setState(prevState => {
+        let newState = {...prevState}
+        newState.user = user
+        return {...newState}
+      })
+    })
+  }
+
+  getUser = () => {
+    Auth.currentAuthenticatedUser({})
+    .then(user => {
+      console.log('found user')
+      console.log(user)
+      return user
+    })
+    .catch(err => {
+      console.log('error getting user')
+      return undefined
+    })
   }
 
   tweakRowUp = (id) => {
@@ -202,6 +229,7 @@ class Meal extends Component {
   render() {
     return (
       <div style={{ border: '1px solid #eee', padding: '10px' }}>
+        {/* {this.getUser()} */}
         <Box style={{ padding: '10px' }}>
           <Grid container spacing={2}>
             <Grid item xs={3}>

@@ -1,6 +1,6 @@
 import React from 'react'
 import MealTable from 'modules/cals-and-macros/table/MealTable/MealTable'
-import { Card, CardHeader, CardContent, IconButton } from '@material-ui/core'
+import { Card, CardHeader, CardContent, IconButton, Typography } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles } from '@material-ui/core/styles'
@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
     width: '70%'
   },
   cardHeader: {
-    padding: '6px 16px 0px 16px'
+    padding: '6px 16px 0px 16px',
+    textAlign: 'left'
   },
   cardContent: {
     padding: '8px 16px 0px 16px'
@@ -69,16 +70,12 @@ const MealCard = props => {
     >
       <CardHeader
         className={classes.cardHeader}
-        title={props.item.name}
-        subheader={new Date(props.item.date).toLocaleDateString() ?? ''}
+        subheader={props.item.name}
         titleTypographyProps={{ variant: 'h6' }}
         action={
           props.disabled === false ? (
             <React.Fragment>
-              <IconButton
-                aria-label='Edit'
-                onClick={editItem}
-              >
+              <IconButton aria-label='Edit' onClick={editItem}>
                 <EditIcon color='inherit' fontSize='small' />
               </IconButton>
               <IconButton
@@ -92,17 +89,21 @@ const MealCard = props => {
         }
       />
       <CardContent className={classes.cardContent}>
-        <MealTable
-          foodList={props.item.foodList}
-          rowClick={props.rowClick}
-          rowDelete={props.rowDelete}
-          rowSelect={props.rowSelect}
-          onQuantityChange={props.onQuantityChange}
-          tweakUp={props.tweakUp}
-          tweakDown={props.tweakDown}
-          viewOnly={props.viewOnly}
-          width={'100%'}
-        />
+        <>
+          <div style={{ textAlign: 'left' }}><Typography variant='caption'>{ props.item.date ? new Date(props.item.date).toLocaleDateString() : '' }</Typography></div>
+          <div style={{ textAlign: 'left' }}><Typography variant='caption'>{ props.item.user ? props.item.user.email : '' }</Typography></div>
+          <MealTable
+            foodList={props.item.foodList}
+            rowClick={props.rowClick}
+            rowDelete={props.rowDelete}
+            rowSelect={props.rowSelect}
+            onQuantityChange={props.onQuantityChange}
+            tweakUp={props.tweakUp}
+            tweakDown={props.tweakDown}
+            viewOnly={props.viewOnly}
+            width={'100%'}
+          />
+        </>
       </CardContent>
     </Card>
   )

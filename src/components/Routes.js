@@ -6,7 +6,8 @@ import Login from './Auth/Login'
 import Tracker from './tracker/Tracker'
 import ProgramForm from './programs/ProgramForm'
 import Exercises from './exercises/Exercises'
-import MealForm from 'modules/cals-and-macros/meal/MealForm'
+// import MealForm from 'modules/cals-and-macros/meal/MealForm'
+import MealForm2 from 'modules/cals-and-macros/meal/MealForm2'
 import MealViewer from 'modules/cals-and-macros/meal/MealViewer'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
@@ -32,7 +33,7 @@ const Routes = props => {
       <WoDay path='/woday' />
       <WoDayTracker path='/tracker/woday' />
       <Login path='/login' />
-      <MealForm path='/meal' />
+      <MealForm2 {...props} path='/meal' />
       <MealViewer {...props} path='/meals' />
       <DbManage path='/manage/food-db' />
     </Router>

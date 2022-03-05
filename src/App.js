@@ -8,7 +8,6 @@ import Amplify, { Auth } from 'aws-amplify'
 import awsconfig from './aws-exports'
 import mockUser from 'mocks/mockUser'
 Amplify.configure(awsconfig)
-// Amplify.configure({ ...awsconfig, ssr: true });
 
 /*
  * TODO: the app is AWS centric in terms of auth, and the lambdaConfig used in apis.  
@@ -60,7 +59,7 @@ class App extends Component {
 
   componentDidMount = async () => {
     let user = await useUser()
-    console.log(user)
+    // console.log(user)
     this.setState({ user: user})
   }
 
