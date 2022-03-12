@@ -89,9 +89,6 @@ const MealCard = props => {
         }
       />
       <CardContent className={classes.cardContent}>
-        <>
-          <div style={{ textAlign: 'left' }}><Typography variant='caption'>{ props.item.date ? new Date(props.item.date).toLocaleDateString() : '' }</Typography></div>
-          <div style={{ textAlign: 'left' }}><Typography variant='caption'>{ props.item.user ? props.item.user.email : '' }</Typography></div>
           <MealTable
             foodList={props.item.foodList}
             rowClick={props.rowClick}
@@ -103,7 +100,6 @@ const MealCard = props => {
             viewOnly={props.viewOnly}
             width={'100%'}
           />
-        </>
       </CardContent>
     </Card>
   )

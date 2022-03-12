@@ -134,7 +134,7 @@ const FoodRow = props => {
           value={calcDefaultValue(props.rowData.quantity)}
           onChange={handleQtyChange}
           id={props.rowData.id}
-          disabled={props.viewOnly}
+          // disabled={props.viewOnly
         />
         </Grid>
         <Grid item xs={4} sm={4}>

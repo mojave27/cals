@@ -8,7 +8,8 @@ import {
   TableHead,
   TableBody,
   TableRow,
-  TableFooter
+  TableFooter,
+  Typography
 } from '@material-ui/core'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import FoodRow from 'modules/cals-and-macros/table/MealTable/FoodRow'
@@ -32,32 +33,36 @@ const MealTable = props => {
   // eslint-disable-next-line no-unused-vars
   const classes = useStyles(props)
 
+  const headers = [
+    '',
+    <Typography variant='body2'>description</Typography>,
+    <Typography variant='body2'>qty</Typography>,
+    <Typography variant='body2'>unit</Typography>,
+    <Typography variant='body2'>cals</Typography>,
+    <Typography variant='body2'>p <i>g</i></Typography>,
+    <Typography variant='body2'>f <i>g</i></Typography>,
+    <Typography variant='body2'>c <i>g</i></Typography>,
+    <Typography variant='body2'>fiber</Typography>,
+    <Typography variant='body2'>net c <i>g</i></Typography>
+  ]
+
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Table size={'small'}>
         <TableHead>
           <StyledHeaderRow>
-            <TableCell />
-            <TableCell>description</TableCell>
-            <TableCell>qty</TableCell>
-            <TableCell>unit</TableCell>
-            <TableCell>cals</TableCell>
-            <TableCell>protein <i>g</i></TableCell>
-            <TableCell>carb <i>g</i></TableCell>
-            <TableCell>fiber <i>g</i></TableCell>
-            <TableCell>net carb <i>g</i></TableCell>
-            <TableCell>fat <i>g</i></TableCell>
+            {headers.map((header,index) => {
+              return(<TableCell key={`${header}-${index}`}>{header}</TableCell>)
+            })}
           </StyledHeaderRow>
         </TableHead>
 
         <TableBody>{renderFoodRows(props)}</TableBody>
 
-        {/* {props.foodList.length > 0 ? ( */}
           <TableFooter>
             <SummaryRow foodList={props.foodList} />
             <MacrosRow foodList={props.foodList} />
           </TableFooter>
-        {/* ) : null} */}
       </Table>
     </TableContainer>
   )
@@ -88,10 +93,10 @@ const SummaryRow = props => {
       <TableCell colSpan={4}>{'Totals'}</TableCell>
       <TableCell>{sumIt('calories', props.foodList)}</TableCell>
       <TableCell>{sumIt('proteinGrams', props.foodList)}</TableCell>
+      <TableCell>{sumIt('fatGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('carbGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('fiberGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('netCarbGrams', props.foodList)}</TableCell>
-      <TableCell>{sumIt('fatGrams', props.foodList)}</TableCell>
     </TableRow>
   )
 }
@@ -133,14 +138,14 @@ const MacrosRow = props => {
           {percentIt('proteinGrams')} %
         </span>
       </TableCell>
-      <TableCell>{percentIt('carbGrams')} %</TableCell>
-      <TableCell>{percentIt('fiberGrams')} %</TableCell>
-      <TableCell>{percentIt('netCarbGrams')} %</TableCell>
       <TableCell>
         <span style={{ fontWeight: 'bold', color: 'red' }}>
           {percentIt('fatGrams')} %
         </span>
       </TableCell>
+      <TableCell>{percentIt('carbGrams')} %</TableCell>
+      <TableCell>{percentIt('fiberGrams')} %</TableCell>
+      <TableCell>{percentIt('netCarbGrams')} %</TableCell>
     </TableRow>
   )
 }
