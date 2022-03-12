@@ -35,6 +35,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
+import TabbedContent from 'modules/common/TabbedContent'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -413,6 +414,47 @@ const WoDayDesktop = (props) => {
     return result
   }
 
+  const items = [
+    {
+      name: 'Stats',
+      content: (
+        <Stats
+          hasStats={hasStats}
+          getStartDate={getStartDate}
+          handleTextChange={handleTextChange}
+          handleSliderChange={handleSliderChange}
+        />
+      ),
+    },
+    {
+      name: 'Notes',
+      content: <Notes handleTextChange={handleTextChange} />,
+    },
+    {
+      name: 'Cardio',
+      content: (
+        <Cardio
+          deleteRow={deleteRow}
+          handleExerciseChange={handleExerciseChange}
+        />
+      ),
+    },
+    {
+      name: 'Weights',
+      content: (
+        <Weights
+          addExercise={addExercise}
+          addSet={addSet}
+          addWorkout={addWorkout}
+          handleSetChange={handleSetChange}
+          handleLeadCellChange={handleLeadCellChange}
+          showWorkoutChooser={showWorkoutChooser}
+          deleteWorkout={deleteWorkout}
+        />
+      ),
+    },
+  ]
+
   return (
     <React.Fragment>
       <Modal showModal={showModal} handleClose={toggleModal}>
@@ -426,35 +468,8 @@ const WoDayDesktop = (props) => {
       />
       {woDayLoaded() ? (
         <Container className={classes.container}>
-          <Grid container justify='flex-start'>
-            <Grid item xs={12} sm={12}>
-              <Stats
-                hasStats={hasStats}
-                getStartDate={getStartDate}
-                handleTextChange={handleTextChange}
-                handleSliderChange={handleSliderChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Notes handleTextChange={handleTextChange} />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Cardio
-                deleteRow={deleteRow}
-                handleExerciseChange={handleExerciseChange}
-              />
-            </Grid>
-          </Grid>
           <Grid item xs={12} sm={12}>
-            <Weights
-              addExercise={addExercise}
-              addSet={addSet}
-              addWorkout={addWorkout}
-              handleSetChange={handleSetChange}
-              handleLeadCellChange={handleLeadCellChange}
-              showWorkoutChooser={showWorkoutChooser}
-              deleteWorkout={deleteWorkout}
-            />
+            <TabbedContent items={items} />
           </Grid>
         </Container>
       ) : (
@@ -477,127 +492,103 @@ const Stats = ({
   let woDayContext = useContext(WoDayContext)
   return (
     <Box id='stats' className={classes.section}>
-      <Accordion className={classes.accordion}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon classes={{ root: classes.expandIcon }} />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography className={classes.heading}>
-            <StyledBadge variant='dot' invisible={!hasStats()}>
-              {`Stats`}
-            </StyledBadge>
-          </Typography>
-          <br />
-          <Typography variant='caption'>
-            <StyledBadge variant='dot' invisible={!hasStats()}>
-              {`Duration: ${woDayContext.woday.duration} - Weight: ${
-                isEmpty(woDayContext.woday.weight)
-                  ? 0
-                  : woDayContext.woday.weight
-              }`}
-            </StyledBadge>
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.accordionDetails}>
-          <Grid container spacing={1} justify='flex-start'>
-            <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
-                <TextField
-                  id='date'
-                  label='Date'
-                  type='date'
-                  defaultValue={getStartDate()}
-                  onChange={handleTextChange}
-                  className={classes.textField}
-                  variant={'outlined'}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
-                <TextField
-                  InputProps={{ classes: inputClasses }}
-                  id={'duration'}
-                  name={'duration'}
-                  label={'Duration'}
-                  value={woDayContext.woday.duration}
-                  onChange={handleTextChange}
-                  variant='outlined'
-                  size='small'
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
-                <TextField
-                  InputProps={{ classes: inputClasses }}
-                  id={'goals'}
-                  name={'goals'}
-                  label={'Goals'}
-                  defaultValue={woDayContext.woday.goals}
-                  onChange={handleTextChange}
-                  variant='outlined'
-                  size='small'
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
-                <TextField
-                  InputProps={{ classes: inputClasses }}
-                  id={'weight'}
-                  name={'weight'}
-                  label={'Weight'}
-                  defaultValue={woDayContext.woday.weight}
-                  onChange={handleTextChange}
-                  variant='outlined'
-                  size='small'
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
-                <RangeSlider
-                  label={'Energy'}
-                  id='energyRange'
-                  min={0}
-                  max={10}
-                  value={woDayContext.woday.energy}
-                  onChange={handleSliderChange}
-                  // theme={woDayContext.theme}
-                />
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
-                <RangeSlider
-                  label={'Sleep'}
-                  id='sleepRange'
-                  min={0}
-                  max={10}
-                  value={woDayContext.woday.sleep}
-                  onChange={handleSliderChange}
-                  theme={woDayContext.theme}
-                />
-              </Paper>
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
+      <Grid container spacing={1} justify='flex-start'>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <TextField
+              id='date'
+              label='Date'
+              type='date'
+              defaultValue={getStartDate()}
+              onChange={handleTextChange}
+              className={classes.textField}
+              variant={'outlined'}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <TextField
+              InputProps={{ classes: inputClasses }}
+              id={'duration'}
+              name={'duration'}
+              label={'Duration'}
+              value={woDayContext.woday.duration}
+              onChange={handleTextChange}
+              variant='outlined'
+              size='small'
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <TextField
+              InputProps={{ classes: inputClasses }}
+              id={'goals'}
+              name={'goals'}
+              label={'Goals'}
+              defaultValue={woDayContext.woday.goals}
+              onChange={handleTextChange}
+              variant='outlined'
+              size='small'
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <TextField
+              InputProps={{ classes: inputClasses }}
+              id={'weight'}
+              name={'weight'}
+              label={'Weight'}
+              defaultValue={woDayContext.woday.weight}
+              onChange={handleTextChange}
+              variant='outlined'
+              size='small'
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <RangeSlider
+              label={'Energy'}
+              id='energyRange'
+              min={0}
+              max={10}
+              value={woDayContext.woday.energy}
+              onChange={handleSliderChange}
+              // theme={woDayContext.theme}
+            />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <RangeSlider
+              label={'Sleep'}
+              id='sleepRange'
+              min={0}
+              max={10}
+              value={woDayContext.woday.sleep}
+              onChange={handleSliderChange}
+              theme={woDayContext.theme}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
   )
 }
 
+// TODO: put indicator on the tab to show there are notes
 const Notes = ({ handleTextChange }) => {
   const classes = useStyles()
   let woDayContext = useContext(WoDayContext)
   return (
     <Box id='notes' className={classes.section}>
-      <Accordion className={classes.accordion}>
+      {/* <Accordion className={classes.accordion}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon classes={{ root: classes.expandIcon }} />}
           aria-controls='panel1a-content'
@@ -611,8 +602,8 @@ const Notes = ({ handleTextChange }) => {
               {'Notes'}
             </StyledBadge>
           </Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.accordionDetails}>
+        </AccordionSummary> */}
+        {/* <AccordionDetails className={classes.accordionDetails}> */}
           <TextField
             className={classes.textField}
             id='notes'
@@ -624,12 +615,13 @@ const Notes = ({ handleTextChange }) => {
             onChange={handleTextChange}
             variant='outlined'
           />
-        </AccordionDetails>
-      </Accordion>
+        {/* </AccordionDetails>
+      </Accordion> */}
     </Box>
   )
 }
 
+// TODO: put indicator on the tab to show there are exercise
 const Cardio = ({ deleteRow, handleExerciseChange }) => {
   const classes = useStyles()
   let woDayContext = useContext(WoDayContext)
@@ -656,7 +648,7 @@ const Cardio = ({ deleteRow, handleExerciseChange }) => {
 
   return (
     <Box id='cardio' className={classes.section}>
-      <Accordion className={classes.accordion}>
+      {/* <Accordion className={classes.accordion}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon classes={{ root: classes.expandIcon }} />}
           aria-controls='panel1a-content'
@@ -671,7 +663,7 @@ const Cardio = ({ deleteRow, handleExerciseChange }) => {
             </StyledBadge>
           </Typography>
         </AccordionSummary>
-        <AccordionDetails className={classes.accordionDetails}>
+        <AccordionDetails className={classes.accordionDetails}> */}
           <CardioTable
             id={0}
             data={convertCardioForTable()}
@@ -679,13 +671,21 @@ const Cardio = ({ deleteRow, handleExerciseChange }) => {
             addCardioExercise={addCardioExercise}
             onChange={handleExerciseChange}
           />
-        </AccordionDetails>
-      </Accordion>
+        {/* </AccordionDetails>
+      </Accordion> */}
     </Box>
   )
 }
 
-const Weights = ({ addExercise, addSet, addWorkout, handleSetChange, handleLeadCellChange, showWorkoutChooser, deleteWorkout }) => {
+const Weights = ({
+  addExercise,
+  addSet,
+  addWorkout,
+  handleSetChange,
+  handleLeadCellChange,
+  showWorkoutChooser,
+  deleteWorkout,
+}) => {
   const classes = useStyles()
   let woDayContext = useContext(WoDayContext)
 
