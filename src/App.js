@@ -3,8 +3,6 @@ import './App.css'
 import ThemedContent from './components/ThemedContent'
 import ThemeProvider from './context/ThemeProvider'
 // import { config } from './config/config'
-// import { AmplifyAuthenticator } from '@aws-amplify/ui-react'
-// import Amplify, { Auth } from 'aws-amplify'
 // import awsconfig from './aws-exports'
 // import mockUser from 'mocks/mockUser'
 // Amplify.configure(awsconfig)
@@ -60,12 +58,9 @@ class App extends Component {
 
   render() {
     return (
-      // <AmplifyAuthenticator>
         <ThemeProvider>
-          {/* <ThemedContent user={this.state.user} groups={getUserGroups(this.state.user)} /> */}
           <ThemedContent />
         </ThemeProvider>
-      // </AmplifyAuthenticator>
     )
   }
 }
