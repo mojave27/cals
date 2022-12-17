@@ -26,9 +26,9 @@ const FoodListTableRow = props => {
       <TableCell>{props.rowData.unit}</TableCell>
       <TableCell>{props.rowData.calories}</TableCell>
       <TableCell>{props.rowData.proteinGrams}</TableCell>
-      <TableCell>{props.rowData.carbGrams}</TableCell>
-      <TableCell>{0}</TableCell>
       <TableCell>{props.rowData.fatGrams}</TableCell>
+      <TableCell>{props.rowData.carbGrams}</TableCell>
+      {/* <TableCell>{0}</TableCell> */}
     </StyledTableRow>
   );
 };

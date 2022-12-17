@@ -8,59 +8,22 @@ import { cloneDeep } from 'lodash'
 
 import TextInput from 'components/inputs/TextInput'
 import { Box, Divider, Grid, TextField } from '@material-ui/core'
-// import { makeStyles } from '@material-ui/core/styles'
 
 const MealForm = (props) => {
   const [activeFood, setActiveFood] = useState()
   const [meal, setMeal] = useState({ foodList: [], name: '', date: '' })
-  // const [tweakValue, setTweakValue] = useState(0)
-  // const [message, setMessage] = useState('')
   const [selectedFoodItems, setSelectedFoodItems] = useState([])
   const [showSearch, setShowSearch] = useState(false)
-  // const [showMealModal, setShowMealModal] = useState(false)
-  // const [searchValue, setSearchValue] = useState('')
   const [user, setUser] = useState({ attributes: { email: '' }})
 
   useEffect(() => {
     if (props.user) {
-      // console.log(`setting user with ${JSON.stringify(props.user)}`)
       let updMeal = meal
       meal.user = props.user.attributes
       setMeal(updMeal)
       setUser(props.user)
     }
   }, [meal, props.user])
-
-  const tweakRowUp = (id) => {
-    let updatedMeal = cloneDeep(meal)
-    const index = findIndexOfId(id, updatedMeal.foodList)
-    let foodItem = cloneDeep(updatedMeal.foodList[index])
-    let multiplier =
-      (Number(updatedMeal.foodList[index].quantity) + 1) /
-      Number(updatedMeal.foodList[index].quantity)
-
-    foodItem.quantity = Number(foodItem.quantity) + 1
-
-    let updatedFoodItem = updateNutrients(foodItem, multiplier)
-    updatedMeal.foodList[index] = updatedFoodItem
-    setMeal(updatedMeal)
-  }
-
-  const tweakRowDown = (id) => {
-    let updatedMeal = cloneDeep(meal)
-    const index = findIndexOfId(id, updatedMeal.foodList)
-    let multiplier =
-      (Number(updatedMeal.foodList[index].quantity) - 1) /
-      Number(updatedMeal.foodList[index].quantity)
-
-    let foodItem = cloneDeep(updatedMeal.foodList[index])
-
-    foodItem.quantity = Number(foodItem.quantity) - 1
-
-    let updatedFoodItem = updateNutrients(foodItem, multiplier)
-    updatedMeal.foodList[index] = updatedFoodItem
-    setMeal(updatedMeal)
-  }
 
   const handleRowSelect = (rowId, event) => {
     event.preventDefault()
@@ -128,19 +91,19 @@ const MealForm = (props) => {
     setMeal(newMeal)
   }
 
-  const getStartDate = () => {
-    // let date = woDayContext.woday.date
-    let date = Date.now()
-    let startDate = new Date(date.year, date.month, date.day)
-    let month =
-      startDate.getMonth() + 1 < 10
-        ? `0${startDate.getMonth() + 1}`
-        : startDate.getMonth() + 1
-    let day =
-      startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate()
-    let dateString = `${startDate.getFullYear()}-${month}-${day}`
-    return dateString
-  }
+  // const getStartDate = () => {
+  //   // let date = woDayContext.woday.date
+  //   let date = Date.now()
+  //   let startDate = new Date(date.year, date.month, date.day)
+  //   let month =
+  //     startDate.getMonth() + 1 < 10
+  //       ? `0${startDate.getMonth() + 1}`
+  //       : startDate.getMonth() + 1
+  //   let day =
+  //     startDate.getDate() < 10 ? `0${startDate.getDate()}` : startDate.getDate()
+  //   let dateString = `${startDate.getFullYear()}-${month}-${day}`
+  //   return dateString
+  // }
 
   // const convertNutrient = (nutrient, multiplier) => {
   //   return Math.round(nutrient * multiplier * 100) / 100
@@ -179,13 +142,14 @@ const MealForm = (props) => {
     setMeal(newMeal)
   }
 
-  const getUserName = () => {
-    return user.attributes.email
-    // console.log(user?.attributes?.email)
-  }
+  // const getUserName = () => {
+  //   return user.attributes.email
+  //   // console.log(user?.attributes?.email)
+  // }
 
   return (
-    <div style={{ border: '1px solid #eee', padding: '10px' }}>
+    // <div style={{ border: '1px solid #eee', padding: '10px' }}>
+    <div style={{ padding: '10px' }}>
       <Box style={{ padding: '10px' }}>
         <Grid container spacing={2}>
           <Grid item xs={3}>
@@ -219,8 +183,6 @@ const MealForm = (props) => {
               rowSelect={handleRowSelect}
               rowDelete={deleteRow}
               onQuantityChange={handleQuantityChange}
-              tweakUp={tweakRowUp}
-              tweakDown={tweakRowDown}
             />
           </Grid>
           <Grid item xs={12}>
@@ -232,6 +194,8 @@ const MealForm = (props) => {
       </Box>
 
       <Divider />
+
+      <div>Move the below section to a modal</div>
 
       <ReusableFoodSearch
         onClose={toggleSearch}

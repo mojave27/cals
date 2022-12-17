@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import CalendarItemCard from 'components/WoDay/CalendarItemCard'
-import BasicSpinner from '../spinners/BasicSpinner'
+import CalendarItemCard from 'modules/common/data-display/CalendarItemCard'
+import BasicSpinner from 'components/spinners/BasicSpinner'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
@@ -208,7 +208,8 @@ const CalendarView = (props) => {
 
   const getItemsForYear = (items, year) => {
     let inScopeItems = items.filter((item) => {
-      return Number(item.date.year) === Number(year)
+      const itemDate = new Date(item.date)
+      return Number(itemDate.year) === Number(year)
     })
     return inScopeItems
   }
@@ -450,7 +451,10 @@ const Week = (props) => {
         classes={{ root: classToUse(displayDate) }}
       >
         <CalendarDay displayDate={displayDate}>
-          <CalendarItemCard item={itemForDay} itemSelect={props.onSelect} onDelete={props.onDelete} />
+          {/* <CalendarItemCard item={itemForDay} itemSelect={props.onSelect} onDelete={props.onDelete} /> */}
+          <CalendarItemCard>
+            {itemForDay.content}
+          </CalendarItemCard>
         </CalendarDay>
       </TableCell>
     )

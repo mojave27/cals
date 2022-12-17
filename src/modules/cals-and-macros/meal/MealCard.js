@@ -95,8 +95,6 @@ const MealCard = props => {
             rowDelete={props.rowDelete}
             rowSelect={props.rowSelect}
             onQuantityChange={props.onQuantityChange}
-            tweakUp={props.tweakUp}
-            tweakDown={props.tweakDown}
             viewOnly={props.viewOnly}
             width={'100%'}
           />

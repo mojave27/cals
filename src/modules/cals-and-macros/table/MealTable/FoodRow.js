@@ -1,37 +1,28 @@
 import React, { useState } from 'react'
-import { Input } from 'semantic-ui-react'
-import { Grid, TableCell, TableRow } from '@material-ui/core'
+import { TableCell, TableRow, Input } from '@material-ui/core'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
-
-const buttonStyle = {
-  backgroundColor: '#4CAF50',
-  border: 'none',
-  color: 'white',
-  padding: '2px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  fontSize: '12px',
-  width: '1em',
-  fontWeight: '700',
-  lineHeight: '1em',
-  margin: '2px 2px',
-  borderRadius: '50%'
-}
 
 const useStyles = makeStyles(theme => ({
   tableContainer: {
     border: `1px solid`
   },
   cell: {
-    border: '1px solid'
+    lineHeight: '1.3125rem',
+    fontSize: '0.85rem'
   },
   leadCell: {
     maxWidth: '25px'
   },
   qtyCell: {
+    lineHeight: '1.3125rem',
+    fontSize: '0.85rem',
+    width: '150px',
     maxWidth: '200px'
+  },
+  qtyInput: {
+    lineHeight: '1.3125rem',
+    fontSize: '0.75rem'
   }
 }))
 
@@ -75,41 +66,6 @@ const FoodRow = props => {
     props.onQuantityChange(event, value)
   }
 
-  const tweakUp = event => {
-    const rowid = event.target.dataset.rowid
-    props.tweakUp(rowid)
-  }
-
-  const tweakDown = event => {
-    const rowid = event.target.dataset.rowid
-    props.tweakDown(rowid)
-  }
-
-  const renderTweakButtons = viewOnly => {
-    if (viewOnly) {
-      return null
-    } else {
-      return (
-        <div>
-          <button
-            data-rowid={props.rowData.id}
-            style={buttonStyle}
-            onClick={tweakDown}
-          >
-            -
-          </button>
-          <button
-            data-rowid={props.rowData.id}
-            style={buttonStyle}
-            onClick={tweakUp}
-          >
-            +
-          </button>
-        </div>
-      )
-    }
-  }
-
   const renderLeadCell = viewOnly => {
     return viewOnly ? (
       <TableCell />
@@ -121,36 +77,33 @@ const FoodRow = props => {
   }
 
   return (
-    // <TableRow active={props.rowData.active}>
     <StyledTableRow>
       {renderLeadCell(props.viewOnly)}
-      <TableCell className={classes.cell}>
+      <TableCell className={classes.cell} size='small'>
         {props.rowData.description}
       </TableCell>
-      <TableCell className={classes.qtyCell}>
-        <Grid container >
-        <Grid item xs={8} sm={8}>
+      <TableCell className={classes.qtyCell} size='small'>
         <Input
+          className={classes.qtyInput}
+          type='text'
+          size='small'
+          id={props.rowData.id.toString()}
           value={calcDefaultValue(props.rowData.quantity)}
           onChange={handleQtyChange}
-          id={props.rowData.id}
-          // disabled={props.viewOnly
+          variant='outlined'
+          disabled={props.viewOnly}
+          inputProps={{ fontSize: '0.85rem' }}
         />
-        </Grid>
-        <Grid item xs={4} sm={4}>
-          {renderTweakButtons(props.viewOnly)}
-        </Grid>
-        </Grid>
       </TableCell>
-      <TableCell className={classes.cell}>{props.rowData.unit}</TableCell>
-      <TableCell className={classes.cell}>{props.rowData.calories}</TableCell>
-      <TableCell className={classes.cell}>
+      <TableCell className={classes.cell} size='small'>{props.rowData.unit}</TableCell>
+      <TableCell className={classes.cell} size='small'>{props.rowData.calories}</TableCell>
+      <TableCell className={classes.cell} size='small'>
         {props.rowData.proteinGrams}
       </TableCell>
-      <TableCell className={classes.cell}>{props.rowData.carbGrams}</TableCell>
-      <TableCell className={classes.cell}>{0}</TableCell>
-      <TableCell className={classes.cell}>{0}</TableCell>
-      <TableCell className={classes.cell}>{props.rowData.fatGrams}</TableCell>
+      <TableCell className={classes.cell} size='small'>{props.rowData.fatGrams}</TableCell>
+      <TableCell className={classes.cell} size='small'>{props.rowData.carbGrams}</TableCell>
+      {/* <TableCell className={classes.cell} size='small'>{0}</TableCell> */}
+      {/* <TableCell className={classes.cell} size='small'>{0}</TableCell> */}
     </StyledTableRow>
   )
 }

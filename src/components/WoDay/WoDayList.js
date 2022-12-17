@@ -143,16 +143,11 @@ const workoutStarted = (wo) => {
 const MobileView = (props) => {
   let woDayContext = useContext(WoDayContext)
   const classes = useStyles()
-  const [showSpinner, setShowSpinner] = useState(false)
-
-  // const handleSelect = id => {
-    // console.log(`selecting id ${id}`)
-    // if (props.onSelect) props.onSelect(id)
-  // }
+  // const [showSpinner, setShowSpinner] = useState(false)
 
   const toggleSpinner = async (show) => {
     console.log(`setting spinner to ${show}`)
-    await setShowSpinner(show)
+    // await setShowSpinner(show)
   }
 
   const handleSelect = async (id) => {

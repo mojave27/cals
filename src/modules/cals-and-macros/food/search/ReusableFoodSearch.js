@@ -5,7 +5,6 @@ import FoodListTable from 'modules/cals-and-macros/table/FoodListTable/FoodListT
 import { filterItemsByNameProperty as filterItems, retrieveItemById } from 'components/modules/common/utilties/ArrayUtils'
 import { sortByStringProperty } from 'list-utils'
 
-import FormButton from 'components/inputs/FormButton'
 import TextInputWithCancel from 'components/inputs/TextInputWithCancel'
 import { Box, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'

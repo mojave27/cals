@@ -131,8 +131,9 @@ const CalendarItemCard = ({ item, children }) => {
   const classes = useStyles()
 
   const showItem = () => {
+    if (typeof item === 'undefined') return false
     if (item === null) return false
-    if (item.show) return true
+    if (item?.show) return true
     return true
   }
 

@@ -13,20 +13,17 @@ import Workout from 'components/workouts/Workout'
 import BasicSpinner from 'components/spinners/BasicSpinner'
 import WorkoutChooser from 'components/workouts/WorkoutChooser'
 import WoDayAppBar from 'components/WoDay/WoDayAppBar'
+import TabbedContent from 'modules/common/TabbedContent'
 import { navigate } from '@reach/router'
 import {
   findIndexOfId,
   generateNewId,
   retrieveItemById,
 } from 'components/modules/common/utilties/ArrayUtils'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { cardioStarted, workoutStarted } from 'components/workouts/WorkoutUtils'
-import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+// import { cardioStarted, workoutStarted } from 'components/workouts/WorkoutUtils'
+import { fade, makeStyles } from '@material-ui/core/styles'
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Badge,
   Box,
   Button,
   Container,
@@ -35,7 +32,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core'
-import TabbedContent from 'modules/common/TabbedContent'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,14 +81,14 @@ const useStylesInput = makeStyles((theme) => ({
   focused: {},
 }))
 
-const StyledBadge = withStyles((theme) => ({
-  badge: {
-    right: -5,
-    top: 5,
-    border: `2px solid ${theme.palette.success.light}`,
-    backgroundColor: theme.palette.success.light,
-  },
-}))(Badge)
+// const StyledBadge = withStyles((theme) => ({
+//   badge: {
+//     right: -5,
+//     top: 5,
+//     border: `2px solid ${theme.palette.success.light}`,
+//     backgroundColor: theme.palette.success.light,
+//   },
+// }))(Badge)
 
 const WoDayDesktop = (props) => {
   let [showModal, setShowModal] = useState(false)
@@ -306,7 +302,7 @@ const WoDayDesktop = (props) => {
         setSleepRange(value)
         break
       default:
-        console.log('Sorry, no match for ' + event)
+        console.log('Sorry, no match for ' + id)
     }
   }
 
@@ -621,7 +617,7 @@ const Notes = ({ handleTextChange }) => {
   )
 }
 
-// TODO: put indicator on the tab to show there are exercise
+// TODO: put indicator on the tab to show there are exercises
 const Cardio = ({ deleteRow, handleExerciseChange }) => {
   const classes = useStyles()
   let woDayContext = useContext(WoDayContext)
@@ -689,58 +685,37 @@ const Weights = ({
   const classes = useStyles()
   let woDayContext = useContext(WoDayContext)
 
+  const getWorkouts = () => {
+    return woDayContext.woday.workouts.map((wo, index) => {
+      return (
+        {
+          name: wo.name,
+          content: <Workout
+                     wo={wo}
+                     addExercise={addExercise}
+                     addSet={addSet}
+                     showWorkoutChooser={() => showWorkoutChooser(index)}
+                     onChange={(event) => handleSetChange(event, index)}
+                     onLeadCellChange={handleLeadCellChange}
+                     deleteWorkout={() => deleteWorkout(index)}
+                   />
+        }
+      )
+    })
+  }
+
   return (
     <Box id='weights' className={classes.section}>
       <Grid item xs={12} sm={12}>
         <Container style={{ marginBottom: '10px' }}>
-          <Typography component={'h6'}>{'Weights'}</Typography>
           <Button variant='outlined' onClick={addWorkout} size='small'>
             {'Add a workout'}
           </Button>
         </Container>
       </Grid>
       {woDayContext.woday.workouts !== undefined ? (
-        <React.Fragment>
-          {woDayContext.woday.workouts.map((wo, index) => {
-            return (
-              <Grid key={index} item xs={12} sm={12}>
-                <Accordion
-                  key={`${wo.name}-${index}`}
-                  className={classes.accordion}
-                >
-                  <AccordionSummary
-                    expandIcon={
-                      <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
-                    }
-                    aria-controls='panel1a-content'
-                    id='panel1a-header'
-                  >
-                    <Typography variant={'h6'}>
-                      <StyledBadge
-                        variant='dot'
-                        invisible={!workoutStarted(wo)}
-                      >
-                        {wo.name}
-                      </StyledBadge>
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails className={classes.accordionDetails}>
-                    <Workout
-                      wo={wo}
-                      addExercise={addExercise}
-                      addSet={addSet}
-                      showWorkoutChooser={() => showWorkoutChooser(index)}
-                      onChange={(event) => handleSetChange(event, index)}
-                      onLeadCellChange={handleLeadCellChange}
-                      deleteWorkout={() => deleteWorkout(index)}
-                    />
-                  </AccordionDetails>
-                </Accordion>
-              </Grid>
-            )
-          })}
-        </React.Fragment>
-      ) : (
+        <TabbedContent items={getWorkouts()} />
+      )  : (
         <Grid item xs={12} sm={12}>
           <Box className={classes.section}>
             <Typography component={'h6'}>{'Weights'}</Typography>

@@ -41,9 +41,9 @@ const MealTable = props => {
     <Typography variant='body2'>cals</Typography>,
     <Typography variant='body2'>p <i>g</i></Typography>,
     <Typography variant='body2'>f <i>g</i></Typography>,
-    <Typography variant='body2'>c <i>g</i></Typography>,
-    <Typography variant='body2'>fiber</Typography>,
-    <Typography variant='body2'>net c <i>g</i></Typography>
+    <Typography variant='body2'>c <i>g</i></Typography>
+    // <Typography variant='body2'>fiber</Typography>,
+    // <Typography variant='body2'>net c <i>g</i></Typography>
   ]
 
   return (
@@ -79,8 +79,6 @@ const renderFoodRows = props => {
         rowDelete={props.rowDelete}
         onSelect={props.rowSelect}
         onQuantityChange={props.onQuantityChange}
-        tweakUp={props.tweakUp}
-        tweakDown={props.tweakDown}
         viewOnly={props.viewOnly}
       />
     )
@@ -95,8 +93,8 @@ const SummaryRow = props => {
       <TableCell>{sumIt('proteinGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('fatGrams', props.foodList)}</TableCell>
       <TableCell>{sumIt('carbGrams', props.foodList)}</TableCell>
-      <TableCell>{sumIt('fiberGrams', props.foodList)}</TableCell>
-      <TableCell>{sumIt('netCarbGrams', props.foodList)}</TableCell>
+      {/* <TableCell>{sumIt('fiberGrams', props.foodList)}</TableCell> */}
+      {/* <TableCell>{sumIt('netCarbGrams', props.foodList)}</TableCell> */}
     </TableRow>
   )
 }
@@ -144,8 +142,8 @@ const MacrosRow = props => {
         </span>
       </TableCell>
       <TableCell>{percentIt('carbGrams')} %</TableCell>
-      <TableCell>{percentIt('fiberGrams')} %</TableCell>
-      <TableCell>{percentIt('netCarbGrams')} %</TableCell>
+      {/* <TableCell>{percentIt('fiberGrams')} %</TableCell> */}
+      {/* <TableCell>{percentIt('netCarbGrams')} %</TableCell> */}
     </TableRow>
   )
 }

@@ -1,13 +1,8 @@
 import React from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AddIcon from '@material-ui/icons/Add'
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Badge,
   IconButton,
   Paper,
   Table,
@@ -19,16 +14,17 @@ import {
   Tooltip,
   Typography,
 } from '@material-ui/core'
-import { isEmpty, isUndefined } from 'lodash'
+import { isUndefined } from 'lodash'
+import TabbedContent from 'modules/common/TabbedContent'
 
-const StyledBadge = withStyles((theme) => ({
-  badge: {
-    right: -5,
-    top: 5,
-    border: `2px solid ${theme.palette.success.light}`,
-    backgroundColor: theme.palette.success.light,
-  },
-}))(Badge)
+// const StyledBadge = withStyles((theme) => ({
+//   badge: {
+//     right: -5,
+//     top: 5,
+//     border: `2px solid ${theme.palette.success.light}`,
+//     backgroundColor: theme.palette.success.light,
+//   },
+// }))(Badge)
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -299,52 +295,41 @@ const WorkoutTableDesktop = (props) => {
         </TableContainer>
       )
     } else {
+      return (
+        <TabbedContent items={getExerciseGroups()} />
+      )
+    }
+  }
+
+  const getExerciseGroups = () => {
       return props.wo.exerciseGroups.map((exGroup, index) => {
         return (
-          <Accordion key={`${exGroup}-${index}`} className={classes.accordion}>
-            <AccordionSummary
-              expandIcon={
-                <ExpandMoreIcon classes={{ root: classes.expandIcon }} />
-              }
-              aria-controls='panel1a-content'
-              id='panel1a-header'
-            >
-              <Typography className={classes.heading}>
-                <StyledBadge
-                  variant='dot'
-                  invisible={!exerciseGroupStarted(exGroup)}
-                >
-                  Exercise Group {index + 1}
-                </StyledBadge>
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails className={classes.accordionDetails}>
-              <TableContainer component={Paper}>
+          {
+            name: `Exercise Group ${index + 1}`,
+            content: <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label='a dense table'>
                   {renderTableOneHeaderRowsMobile(exGroup)}
                   <TableBody>{renderRows(exGroup, index)}</TableBody>
                 </Table>
               </TableContainer>
-            </AccordionDetails>
-          </Accordion>
+          }
         )
-      })
-    }
+    })
   }
 
   return <div style={{ margin: 'auto' }}>{renderExerciseGroups()}</div>
 }
 
-const exerciseGroupStarted = exGroup => {
-  let isStarted = false
-  exGroup.exercises.forEach(ex => {
-    if(!isEmpty(ex.sets)) {
-      ex.sets.forEach(set => {
-        if (set.reps > 0) isStarted = true
-      })
-    }
-  })
-  return isStarted
-}
+// const exerciseGroupStarted = exGroup => {
+//   let isStarted = false
+//   exGroup.exercises.forEach(ex => {
+//     if(!isEmpty(ex.sets)) {
+//       ex.sets.forEach(set => {
+//         if (set.reps > 0) isStarted = true
+//       })
+//     }
+//   })
+//   return isStarted
+// }
 
 export default WorkoutTableDesktop

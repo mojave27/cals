@@ -42,14 +42,14 @@ const FoodListTable = (props) => {
               protein <i>g</i>
             </TableCell>
             <TableCell>
-              carb <i>g</i>
-            </TableCell>
-            <TableCell>
-              fiber <i>g</i>
-            </TableCell>
-            <TableCell>
               fat <i>g</i>
             </TableCell>
+            <TableCell>
+              carb <i>g</i>
+            </TableCell>
+            {/* <TableCell>
+              fiber <i>g</i>
+            </TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>

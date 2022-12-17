@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import WorkoutCard from 'components/workouts/WorkoutCard'
-import ScheduleDay from 'components/programs/ScheduleDay'
 import TabPanel from 'components/controls/TabPanel'
 import Spinner from 'components/Spinner'
 import PropTypes from 'prop-types'

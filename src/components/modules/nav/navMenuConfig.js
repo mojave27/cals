@@ -40,24 +40,24 @@ export const menuConfig = [
   },
 
   // --------------------------------------------------------
-  { type: 'divider'},
-  {
-    name: 'woday',
-    type: 'button',
-    auth: false,
-    icon: 'Assignment',
-    link: { to: '/tracker/woday', text: 'day' }
-  },
+  // { type: 'divider'},
+  // {
+  //   name: 'woday',
+  //   type: 'button',
+  //   auth: false,
+  //   icon: 'Assignment',
+  //   link: { to: '/tracker/woday', text: 'day' }
+  // },
 
   // --------------------------------------------------------
-  { type: 'divider'},
-  {
-    name: 'programs',
-    type: 'button',
-    auth: false,
-    icon: 'Assignment',
-    link: { to: '/program-tracker', text: 'program' },
-  },
+  // { type: 'divider'},
+  // {
+  //   name: 'programs',
+  //   type: 'button',
+  //   auth: false,
+  //   icon: 'Assignment',
+  //   link: { to: '/program-tracker', text: 'program' },
+  // },
 
   // --------------------------------------------------------
   // { type: 'divider'},
@@ -73,32 +73,32 @@ export const menuConfig = [
   // },
 
   // --------------------------------------------------------
-  { type: 'divider'},
+  // { type: 'divider'},
 
-  {
-    name: 'progress',
-    type: 'button',
-    auth: false,
-    icon: 'TrendingUp',
-    link: { to: '/progress', text: 'progress' }
-  },
+  // {
+  //   name: 'progress',
+  //   type: 'button',
+  //   auth: false,
+  //   icon: 'TrendingUp',
+  //   link: { to: '/progress', text: 'progress' }
+  // },
 
   // --------------------------------------------------------
-  { type: 'divider'},
+  // { type: 'divider'},
 
-  {
-    name: 'manage',
-    type: 'dropdown',
-    auth: false,
-    icon: 'Edit',
-    items: [
-      // { to: '/programs', text: 'programs' },
-      { to: '/program-form', text: 'programs' },
-      { to: '/manage/workouts', text: 'workouts' },
-      { to: '/exercises', text: 'exercises' },
-      { to: '/prefs/themer', text: 'theme' }
-    ]
-  },
+  // {
+  //   name: 'manage',
+  //   type: 'dropdown',
+  //   auth: false,
+  //   icon: 'Edit',
+  //   items: [
+  //     // { to: '/programs', text: 'programs' },
+  //     { to: '/program-form', text: 'programs' },
+  //     { to: '/manage/workouts', text: 'workouts' },
+  //     { to: '/exercises', text: 'exercises' },
+  //     { to: '/prefs/themer', text: 'theme' }
+  //   ]
+  // },
 
   // --------------------------------------------------------
   { type: 'divider'},
@@ -123,8 +123,9 @@ export const menuConfig = [
     icon: 'ListAlt',
     items: [
       { to: '/meal', text: 'meal form' },
-      { to: '/meals', text: 'view meals' },
-      { to: '/manage/food-db', text: 'add food' },
+      { to: '/meals', text: 'meals list' },
+      { to: '/meals-cal', text: 'meals calendar' },
+      { to: '/manage/food-db', text: 'food list' },
     ]
   },
 
