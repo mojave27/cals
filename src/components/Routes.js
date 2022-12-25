@@ -10,6 +10,7 @@ import Login from './Auth/Login'
 import MealForm from 'modules/cals-and-macros/meal/MealForm'
 import MealViewer from 'modules/cals-and-macros/meal/MealViewer'
 import MealCalendar from 'modules/cals-and-macros/meal/MealCalendar'
+import MealCalendarV2 from 'modules/cals-and-macros/meal/MealCalendarV2'
 import DataConsistency from './Admin/DataConsistency'
 import Test from './Admin/Test'
 import MuiPalette from './Admin/MuiPalette'
@@ -35,6 +36,7 @@ const Routes = props => {
       <Login path='/login' />
       <MealForm {...props} path='/meal' />
       <MealCalendar path='/meals-cal' />
+      <MealCalendarV2 path='/meals-cal-v2' />
       <MealViewer {...props} path='/meals' />
       <DbManage path='/manage/food-db' />
     </Router>

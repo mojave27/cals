@@ -125,6 +125,7 @@ export const menuConfig = [
       { to: '/meal', text: 'meal form' },
       { to: '/meals', text: 'meals list' },
       { to: '/meals-cal', text: 'meals calendar' },
+      { to: '/meals-cal-v2', text: 'meals calendar v2' },
       { to: '/manage/food-db', text: 'food list' },
     ]
   },
